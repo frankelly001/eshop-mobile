@@ -139,7 +139,7 @@ const smallStyles = StyleSheet.create({
     flexDirection: 'row',
     width: '100%',
     // height: 0.05 * dimensions.height,
-    // backgroundColor: 'red',
+    backgroundColor: 'red',
     // flex: 1,
   },
   input: {
