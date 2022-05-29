@@ -11,6 +11,7 @@ import AuthContext from '../auth/AuthContext';
 import AppText from '../components/AppText';
 import ProductCard from '../components/ProductCard';
 import colors from '../config/colors';
+import {fontSz, hp} from '../config/responsiveSize';
 // import navigation from '../navigation/rootNavigation';
 import routes from '../navigation/routes';
 import {formatData} from '../utilities/formatData';
@@ -132,7 +133,7 @@ const styles = StyleSheet.create({
   titleContainer: {
     alignItems: 'center',
     justifyContent: 'center',
-    height: 35,
+    height: hp(35),
     // height: '5%',
   },
   cats: {
@@ -143,7 +144,7 @@ const styles = StyleSheet.create({
   },
   listofCatHeader: {
     color: colors.white,
-    fontSize: 13,
+    fontSize: fontSz(13),
     fontWeight: '700',
     textAlign: 'center',
   },
@@ -155,14 +156,14 @@ const styles = StyleSheet.create({
   },
   catNameContainer: {
     width: '100%',
-    height: 70,
+    height: hp(70),
     // backgroundColor: 'yellow',
     alignItems: 'center',
     justifyContent: 'center',
     padding: 5,
   },
   catName: {
-    fontSize: 12,
+    fontSize: fontSz(12),
     textAlign: 'center',
     textTransform: 'capitalize',
   },
@@ -175,7 +176,7 @@ const styles = StyleSheet.create({
   },
   noProductCatView: {
     width: '100%',
-    height: 0.815 * dimenson.height,
+    flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
   },

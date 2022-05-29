@@ -1,11 +1,12 @@
 import React from 'react';
-import {StyleSheet, View, Dimensions} from 'react-native';
+import {StyleSheet, View, Dimensions, TouchableOpacity} from 'react-native';
 import {AccountDetails, AccountSettings} from '../api/account';
 import AppGradientText from '../components/AppGradientText';
 import AppText from '../components/AppText';
 import ListCard from '../components/ListCard';
 import Screen from '../components/Screen';
 import colors from '../config/colors';
+import {fontSz} from '../config/responsiveSize';
 
 const dimensions = Dimensions.get('screen');
 const AccountScreen = props => {
@@ -26,6 +27,9 @@ const AccountScreen = props => {
       </View>
       <ListCard data={AccountDetails} />
       <ListCard data={AccountSettings} />
+      <TouchableOpacity>
+        <AppGradientText style={styles.logout}>Log out</AppGradientText>
+      </TouchableOpacity>
     </Screen>
   );
 };
@@ -41,7 +45,7 @@ const styles = StyleSheet.create({
   },
   welcome: {
     // fontWeight: '700',
-    fontSize: 13.5,
+    fontSize: fontSz(13.5),
     // color: colors.grey_dark_3,
   },
   welcomeColor: {
@@ -60,6 +64,12 @@ const styles = StyleSheet.create({
   },
   bal: {
     fontWeight: '700',
+  },
+  logout: {
+    alignSelf: 'center',
+    fontSize: fontSz(15),
+    fontWeight: '700',
+    margin: 30,
   },
 });
 

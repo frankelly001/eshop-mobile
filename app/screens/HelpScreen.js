@@ -19,6 +19,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import {LinearTextGradient} from 'react-native-text-gradient';
 import AppGradientBtn from '../components/AppGradientBtn';
 import AppGradientText from '../components/AppGradientText';
+import {fontSz, wp} from '../config/responsiveSize';
 
 const dimensions = Dimensions.get('screen');
 const HelpScreen = props => {
@@ -37,16 +38,16 @@ const HelpScreen = props => {
         <AppGradientText style={styles.join}>JOIN US ON</AppGradientText>
         <View style={styles.handlesContainer}>
           <TouchableOpacity>
-            <FacebookIcon width={40} height={40} margin={5} />
+            <FacebookIcon width={wp(40)} height={wp(40)} margin={5} />
           </TouchableOpacity>
           <TouchableOpacity>
-            <InstagramIcon width={40} height={40} margin={5} />
+            <InstagramIcon width={wp(40)} height={wp(40)} margin={5} />
           </TouchableOpacity>
           <TouchableOpacity>
-            <TwitterIcon width={40} height={40} margin={5} />
+            <TwitterIcon width={wp(40)} height={wp(40)} margin={5} />
           </TouchableOpacity>
           <TouchableOpacity>
-            <YoutubeIcon width={40} height={40} margin={5} />
+            <YoutubeIcon width={wp(40)} height={wp(40)} margin={5} />
           </TouchableOpacity>
         </View>
       </View>
@@ -56,21 +57,6 @@ const HelpScreen = props => {
 
 const styles = StyleSheet.create({
   container: {},
-  instagramButton: {
-    padding: 10,
-    borderRadius: 10,
-    // margin: 20,
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: 10,
-    borderRadius: 30,
-  },
-  text: {
-    fontFamily: 'Roboto',
-    fontSize: 18,
-    fontWeight: '600',
-    color: colors.white,
-  },
   careContainer: {
     width: '100%',
     height: 0.13 * dimensions.height,
@@ -98,6 +84,7 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     marginBottom: 5,
     color: colors.purple,
+    fontSize: fontSz(13),
   },
 });
 

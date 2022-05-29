@@ -142,9 +142,9 @@ const App = () => {
   //   () => ordered.map(el => el.quantity).reduce((prev, cur) => prev + cur, 0),
   //   [ordered],
   // );
-  if (products.length < 1) {
-    return null;
-  }
+  // if (products.length < 1) {
+  //   return null;
+  // }
 
   return (
     <AuthContext.Provider

@@ -5,6 +5,7 @@ import HomeScreen from '../screens/HomeScreen';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import HeaderActions from '../components/HeaderActions';
 import ProductDetailsScreen from '../screens/ProductDetailsScreen';
+import {fontSz} from '../config/responsiveSize';
 
 const Stack = createNativeStackNavigator();
 
@@ -19,7 +20,7 @@ const HomeNavigator = () => {
         component={HomeScreen}
         options={{
           title: 'eShop',
-          headerTitleStyle: {fontSize: 30},
+          headerTitleStyle: {fontSize: fontSz(30)},
           // headerRight: () => <HeaderActions />,
         }}
       />

@@ -12,13 +12,14 @@ import AppText from '../components/AppText';
 import PlusMinusInputBtn from '../components/PlusMinusInputBtn';
 import colors from '../config/colors';
 import {formatToCurrency} from '../utilities/formatToCurr';
-import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {starRating} from '../utilities/starRating';
 import LikeBtn from '../components/LikeBtn';
 import Screen from '../components/Screen';
 import AuthContext from '../auth/AuthContext';
 import ProductCard from '../components/ProductCard';
 import AppGradientBtn from '../components/AppGradientBtn';
+import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
+import {fontSz, hp} from '../config/responsiveSize';
 
 const dimenson = Dimensions.get('screen');
 
@@ -86,9 +87,9 @@ const ProductDetailsScreen = ({route}) => {
                 {starRating(product.rating.rate).map(starType => (
                   <FontAwesomeIcon
                     color={colors.yellow}
-                    size={20}
+                    size={fontSz(20)}
                     key={starType.id}
-                    icon={starType.star}
+                    name={starType.star}
                   />
                 ))}
               </View>
@@ -146,6 +147,7 @@ const ProductDetailsScreen = ({route}) => {
           showsHorizontalScrollIndicator={false}
           data={productCategogies}
           style={{marginBottom: 20}}
+          contentContainerStyle={{padding: 5, paddingTop: 0}}
           key={product => product.id.toString()}
           renderItem={({item}) => {
             return (
@@ -157,22 +159,6 @@ const ProductDetailsScreen = ({route}) => {
             );
           }}
         />
-        {/* <ScrollView horizontal>
-          <View style={styles.related}>
-            {productCategogies.map(product => (
-              <ProductCard
-                key={product.id}
-                product={product}
-                small
-                onPress={() => {
-                  setProductId(product.id);
-                  goToTop();
-                  // scrollView.current.scrollTo({x: 0, y: 0, animated: true});
-                }}
-              />
-            ))}
-          </View>
-        </ScrollView> */}
       </View>
     </Screen>
   );
@@ -191,12 +177,12 @@ const styles = StyleSheet.create({
     height: '100%',
   },
   title: {
-    fontSize: 23,
+    fontSize: fontSz(20),
     fontWeight: '700',
     // backgroundColor: 'yellow',
   },
   price: {
-    fontSize: 30,
+    fontSize: fontSz(25),
     fontWeight: '800',
     color: colors.grey_dark_2,
     marginVertical: 5,
@@ -213,11 +199,11 @@ const styles = StyleSheet.create({
     marginBottom: 5,
   },
   label: {
-    fontSize: 15,
+    fontSize: fontSz(13),
     marginLeft: 5,
   },
   headerLabel: {
-    fontSize: 15,
+    fontSize: fontSz(14),
     fontWeight: '700',
     marginVertical: 10,
   },
@@ -225,7 +211,7 @@ const styles = StyleSheet.create({
     color: colors.grey_dark_2,
   },
   description: {
-    fontSize: 16,
+    fontSize: fontSz(13.5),
     marginTop: -5,
   },
   quantityContainer: {
@@ -238,10 +224,7 @@ const styles = StyleSheet.create({
   },
   addToCartBtn: {
     marginTop: 10,
-  },
-  related: {
-    flexDirection: 'row',
-    marginBottom: 20,
+    paddingVertical: 10,
   },
   relatedHeader: {
     paddingHorizontal: 10,

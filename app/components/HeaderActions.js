@@ -7,16 +7,22 @@ import AuthContext from '../auth/AuthContext';
 import colors from '../config/colors';
 import routes from '../navigation/routes';
 import navigation from '../navigation/rootNavigation';
+import {wp, fontSz} from '../config/responsiveSize';
 
 const HeaderActions = () => {
   const {orderedNum} = useContext(AuthContext);
   // console.log(orderedNum);
+  const size = wp(20);
   return (
     <View style={styles.container}>
-      <SearchIcon width={20} hieght={20} />
-      <NoficationActiveIcon marginHorizontal={20} width={20} hieght={20} />
+      <SearchIcon width={size} hieght={size} />
+      <NoficationActiveIcon
+        marginHorizontal={size}
+        width={size}
+        hieght={size}
+      />
       <TouchableOpacity onPress={() => navigation.navigate(routes.CART)}>
-        <CartIcon width={20} hieght={20}></CartIcon>
+        <CartIcon width={size} hieght={size}></CartIcon>
         {orderedNum > 0 && (
           <Text numberOfLines={1} style={styles.cartCount}>
             {orderedNum}
@@ -35,9 +41,9 @@ const styles = StyleSheet.create({
   cartCount: {
     backgroundColor: colors.red_dark,
     textAlign: 'center',
-    width: 16,
-    height: 16,
-    fontSize: 12,
+    width: wp(16),
+    height: wp(16),
+    fontSize: fontSz(12),
     fontWeight: '800',
     color: colors.white,
     alignItems: 'center',

@@ -1,92 +1,132 @@
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
-import React from 'react';
-import {StyleSheet, View, Image, Dimensions} from 'react-native';
-import {hp, wp} from '../utilities/Responsive';
+import React, {useContext, useState} from 'react';
+import {
+  StyleSheet,
+  View,
+  Image,
+  Dimensions,
+  TouchableOpacity,
+} from 'react-native';
+import colors from '../config/colors';
+import {fontSz, hp, wp} from '../config/responsiveSize';
 import AppText from './AppText';
 import PlusMinusInputBtn from './PlusMinusInputBtn';
+import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
+const dimensions = Dimensions.get('window');
+const scdimensions = Dimensions.get('screen');
+import {formatToCurrency} from '../utilities/formatToCurr';
+import ActionRemoveBtn from './ActionRemoveBtn';
+// import Swipeable from 'react-native-gesture-handler/Swipeable';
+// import {GestureHandlerRootView} from 'react-native-gesture-handler';
 
-const dimensions = Dimensions.get('screen');
-
-const CartItemCard = props => {
+const CartItemCard = ({product, renderRightActions, id, setId}) => {
+  // const {dispatch} = useContext(AuthContext);
   return (
     <View style={styles.container}>
       <View style={styles.descriptionContainer}>
         <View style={styles.imageContainer}>
           <Image
             style={styles.image}
+            resizeMode="stretch"
             source={{
-              uri: 'https://fakestoreapi.com/img/61U7T1koQqL._AC_SX679_.jpg',
+              uri: product.image,
             }}
           />
         </View>
         <View style={styles.details}>
-          <AppText style={styles.title}>
-            Samsung 49-Inch CHG90 144Hz Curved Gaming Monitor (LC49HG90DMNXZA) –
-            Super Ultrawide Screen QLED
-          </AppText>
-          <AppText style={styles.totalPrice}>
-            ₦429,995
-            <AppText style={styles.totalPriceSum}>(₦429,995 by 1 item)</AppText>
-          </AppText>
+          <AppText style={styles.title}>{product.title}</AppText>
+          <View style={styles.priceContainer}>
+            <AppText style={styles.totalPrice}>
+              {formatToCurrency(product.price)}
+            </AppText>
+            <AppText style={styles.totalPriceSum}>
+              ({formatToCurrency(product.price)} by {product.quantity} item)
+            </AppText>
+          </View>
           <View style={styles.input}>
-            <PlusMinusInputBtn small />
+            <PlusMinusInputBtn
+              small
+              value={product.quantity}
+              dispatchAdd={{type: 'addToCart', id: product.id}}
+              dispatchSub={{type: 'subFromCart', id: product.id}}
+              dispatchInput={{type: 'mutateCart', id: product.id}}
+            />
           </View>
         </View>
       </View>
-      <View style={styles.options}>
-        <FontAwesomeIcon
-          style={{backgroundColor: 'blue'}}
-          icon={['far', 'heart']}
-        />
-      </View>
+      {/* <TouchableOpacity
+            style={styles.options}
+            onPress={() => setId(product.id)}>
+            <SimpleLineIcons size={fontSz(15)} name="options-vertical" />
+          </TouchableOpacity>
+          {product.id === id && (
+            <ActionRemoveBtn
+              contentContainerStyle={styles.actionBtnContainer}
+            />
+          )} */}
     </View>
   );
 };
 
-// console.log(dimensions);
+console.log(dimensions, scdimensions);
 
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    width: '100%',
-    height: 0.28 * dimensions.width,
-    // margin: 5,
+    margin: 10,
+    backgroundColor: colors.white,
   },
   descriptionContainer: {
     flexDirection: 'row',
-    // alignItems: 'center',
-    width: '90%',
-    backgroundColor: 'red',
-    // justifyContent: 'space-between',
+    flex: 10,
   },
   imageContainer: {
-    width: 0.25 * dimensions.width,
-    height: 0.25 * dimensions.width,
-    marginRight: 5,
+    width: wp(100),
+    height: wp(100),
   },
   image: {
     width: '100%',
     height: '100%',
   },
   details: {
-    backgroundColor: 'yellow',
     flex: 1,
-    // height: '100%',
+    padding: 5,
     justifyContent: 'space-between',
   },
   title: {
-    fontSize: 15 * dimensions.fontScale,
-    // fontSize: hp(2),
+    fontSize: fontSz(13),
+    fontWeight: '700',
+  },
+  totalPrice: {
+    fontSize: fontSz(15),
+    fontWeight: '700',
+    color: colors.grey_dark_2,
+  },
+  totalPriceSum: {
+    fontSize: fontSz(12),
+    color: colors.grey_dark,
   },
   options: {
-    width: '10%',
     alignItems: 'center',
     justifyContent: 'center',
+    flex: 0.8,
   },
   input: {
     width: '60%',
+  },
+  priceContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  actionBtnContainer: {
+    backgroundColor: colors.grey_light,
+    position: 'absolute',
+    borderRadius: 10,
+    right: 10,
+    bottom: 0,
+    padding: 5,
   },
 });
 

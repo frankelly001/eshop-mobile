@@ -3,9 +3,9 @@ export const starRating = num => {
 
   if (num >= 0 && num <= 5) {
     // <FontAwesomeIcon icon={['far', 'star']} />
-    const fullStar = ['fas', 'star'];
-    const halfStar = ['far', 'star-half-stroke'];
-    const emptyStar = ['far', 'star'];
+    const fullStar = 'star';
+    const halfStar = 'star-half-empty';
+    const emptyStar = 'star-o';
 
     // const checkIfDecimal = !!(num % 1);
     const pushStar = (num, starType) => {

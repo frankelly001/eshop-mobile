@@ -6,8 +6,11 @@ import ProductDetailsScreen from '../screens/ProductDetailsScreen';
 import AppNavigator from './AppNavigator';
 import routes from './routes';
 import CartScreen from '../screens/CartScreen';
+import CheckoutScreen from '../screens/CheckoutScreen';
+import Header from '../components/Header';
 
 const Stack = createNativeStackNavigator();
+
 const HomeStack = props => {
   return (
     <Stack.Navigator
@@ -27,6 +30,8 @@ const HomeStack = props => {
         component={ProductDetailsScreen}
         options={{
           title: 'Details',
+          header: ({navigation}) => <Header navigation={navigation} />,
+          headerStyle: {},
         }}
       />
       <Stack.Screen
@@ -34,6 +39,15 @@ const HomeStack = props => {
         component={CartScreen}
         options={{
           title: 'Cart',
+          // headerStyle: {backgroundColor: 'red'},
+        }}
+      />
+      <Stack.Screen
+        name={routes.CHECKOUT}
+        component={CheckoutScreen}
+        options={{
+          title: 'Checkout',
+          // headerStyle: {backgroundColor: 'red'},
         }}
       />
     </Stack.Navigator>

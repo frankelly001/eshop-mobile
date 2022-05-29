@@ -1,9 +1,9 @@
-import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import React from 'react';
 import {StyleSheet, View, TouchableOpacity} from 'react-native';
 import colors from '../config/colors';
 import AppText from './AppText';
 import LinearGradient from 'react-native-linear-gradient';
+import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 
 const ListCard = ({data}) => {
   return (
@@ -30,15 +30,15 @@ const ListCard = ({data}) => {
         <TouchableOpacity key={list._id} style={styles.ListItemContainer}>
           <View style={styles.listItem}>
             {list.icon && (
-              <FontAwesomeIcon
+              <list.IconTag
                 size={20}
-                icon={['far', list.icon]}
+                name={list.icon}
                 style={{marginRight: 5}}
               />
             )}
             <AppText>{list.name}</AppText>
           </View>
-          <FontAwesomeIcon icon="angle-right" />
+          <FontAwesomeIcon size={20} name="angle-right" />
         </TouchableOpacity>
       ))}
     </View>

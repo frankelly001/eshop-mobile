@@ -1,13 +1,46 @@
-import React from 'react';
-import {StyleSheet, View} from 'react-native';
+import React, {useContext, useState, useEffect} from 'react';
+import {
+  StyleSheet,
+  View,
+  FlatList,
+  Keyboard,
+  Pressable,
+  TouchableHighlight,
+} from 'react-native';
+import AuthContext from '../auth/AuthContext';
+import ActionRemoveBtn from '../components/ActionRemoveBtn';
+import AppButton from '../components/AppButton';
+import AppGradientBtn from '../components/AppGradientBtn';
 import AppGradientText from '../components/AppGradientText';
 import AppText from '../components/AppText';
 import CartItemCard from '../components/CartItemCard';
 import colors from '../config/colors';
+import {fontSz, wp} from '../config/responsiveSize';
+import routes from '../navigation/routes';
 
-const CartScreen = props => {
+const CartScreen = ({navigation}) => {
+  const {ordered} = useContext(AuthContext);
+  const [id, setId] = useState(null);
+  const [keyboardStatus, setKeyboardStatus] = useState(undefined);
+
+  useEffect(() => {
+    const showSubscription = Keyboard.addListener('keyboardDidShow', () => {
+      setKeyboardStatus(true);
+    });
+    const hideSubscription = Keyboard.addListener('keyboardDidHide', () => {
+      setKeyboardStatus(false);
+    });
+
+    return () => {
+      showSubscription.remove();
+      hideSubscription.remove();
+    };
+  }, [keyboardStatus]);
+
+  console.log(keyboardStatus);
+
   return (
-    <View style={styles.container}>
+    <View style={styles.container} onPress={() => setId(null)}>
       <View style={styles.feeSummaryContainer}>
         <View style={[styles.feeTitleContainer, styles.bottomSeperator]}>
           <AppText style={styles.feesummaryLabel}>Cart Summart</AppText>
@@ -25,13 +58,43 @@ const CartScreen = props => {
           <AppText style={styles.price}>₦241,000</AppText>
         </View>
       </View>
-      <CartItemCard />
+      <FlatList
+        data={ordered}
+        contentContainerStyle={{paddingBottom: keyboardStatus ? 120 : 70}}
+        showsVerticalScrollIndicator={false}
+        key={product => product.id.toString()}
+        renderItem={({item}) => (
+          <CartItemCard
+            product={item}
+            id={id}
+            setId={setId}
+            renderRightActions={() => (
+              <ActionRemoveBtn contentContainerStyle={styles.renderRight} />
+            )}
+          />
+        )}
+      />
+      {!keyboardStatus && (
+        <View style={styles.checkout}>
+          <AppButton
+            label="Checkout"
+            icon="heart"
+            bgStyle={styles.checkoutbtn}
+            onPress={() => {
+              setId(null);
+              navigation.navigate(routes.CHECKOUT);
+            }}
+          />
+        </View>
+      )}
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {},
+  container: {
+    flex: 1,
+  },
   feeSummaryContainer: {
     width: '100%',
     paddingHorizontal: 10,
@@ -59,6 +122,22 @@ const styles = StyleSheet.create({
   price: {
     fontWeight: '700',
     color: colors.grey_dark_2,
+  },
+  checkout: {
+    position: 'absolute',
+    width: '80%',
+    alignSelf: 'center',
+    bottom: 20,
+  },
+  checkoutbtn: {
+    backgroundColor: colors.green,
+  },
+  renderRight: {
+    justifyContent: 'space-between',
+    // backgroundColor: 'red',
+    // width: wp(100),
+    // padding: 0,
+    // margin: 5,
   },
 });
 

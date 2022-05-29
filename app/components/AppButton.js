@@ -1,7 +1,8 @@
-import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import React from 'react';
 import {StyleSheet, TouchableOpacity, Text} from 'react-native';
 import colors from '../config/colors';
+import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
+import {fontSz} from '../config/responsiveSize';
 
 const AppButton = ({label, labelStyle, bgStyle, onPress, icon}) => {
   return (
@@ -9,7 +10,7 @@ const AppButton = ({label, labelStyle, bgStyle, onPress, icon}) => {
       {icon && (
         <FontAwesomeIcon
           size={20}
-          icon={icon}
+          name={icon}
           color={colors.white}
           style={{marginRight: 10}}
         />
@@ -31,7 +32,7 @@ const styles = StyleSheet.create({
   },
   Text: {
     fontFamily: 'Roboto',
-    fontSize: 18,
+    fontSize: fontSz(15),
     fontWeight: '600',
     color: colors.white,
   },

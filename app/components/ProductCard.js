@@ -1,4 +1,4 @@
-import React, {useContext, memo} from 'react';
+import React, {useContext} from 'react';
 import {
   StyleSheet,
   View,
@@ -8,6 +8,7 @@ import {
 } from 'react-native';
 import AuthContext from '../auth/AuthContext';
 import colors from '../config/colors';
+import {fontSz, wp} from '../config/responsiveSize';
 import {formatToCurrency} from '../utilities/formatToCurr';
 import AppButton from './AppButton';
 import AppGradientBtn from './AppGradientBtn';
@@ -24,8 +25,6 @@ const ProductCard = ({product, onPress, small, medium}) => {
     else if (medium) return mediumCardstyles;
     return bigCardstyles;
   })();
-
-  // console.log('Product Card rendering');
 
   return (
     <TouchableOpacity style={styles.container} onPress={onPress}>
@@ -90,12 +89,12 @@ const bigCardstyles = StyleSheet.create({
   },
 
   title: {
-    fontSize: 15,
+    fontSize: fontSz(13),
     fontWeight: '700',
   },
 
   price: {
-    fontSize: 20,
+    fontSize: fontSz(18),
     fontWeight: '900',
     marginVertical: 3,
     color: colors.grey_dark_2,
@@ -103,14 +102,15 @@ const bigCardstyles = StyleSheet.create({
 
   btnLabel: {
     textTransform: 'uppercase',
-    fontSize: 12,
+    fontSize: fontSz(12),
     fontWeight: '800',
   },
 });
 
 const smallCardstyles = StyleSheet.create({
   container: {
-    width: 0.3 * dimenson.width,
+    // width: 0.3 * dimenson.width,
+    width: wp(120),
     borderRadius: 20,
     // overflow: 'hidden',
     margin: 1,
@@ -130,7 +130,8 @@ const smallCardstyles = StyleSheet.create({
   imageContainer: {
     overflow: 'hidden',
     width: '100%',
-    height: 0.3 * dimenson.width,
+    // height: 0.3 * dimenson.width,
+    height: wp(120),
   },
 
   image: {
@@ -144,12 +145,12 @@ const smallCardstyles = StyleSheet.create({
   },
 
   title: {
-    fontSize: 10,
+    fontSize: fontSz(11),
     fontWeight: '700',
   },
 
   price: {
-    fontSize: 15,
+    fontSize: fontSz(15),
     fontWeight: '900',
     marginVertical: 3,
     color: colors.grey_dark_2,
@@ -157,7 +158,7 @@ const smallCardstyles = StyleSheet.create({
 
   btnLabel: {
     textTransform: 'uppercase',
-    fontSize: 10,
+    fontSize: fontSz(10),
     fontWeight: '800',
   },
 });
@@ -197,12 +198,12 @@ const mediumCardstyles = StyleSheet.create({
   },
 
   title: {
-    fontSize: 12.5,
+    fontSize: fontSz(12),
     fontWeight: '700',
   },
 
   price: {
-    fontSize: 15,
+    fontSize: fontSz(15),
     fontWeight: '900',
     marginVertical: 3,
     color: colors.grey_dark_2,
@@ -210,7 +211,7 @@ const mediumCardstyles = StyleSheet.create({
 
   btnLabel: {
     textTransform: 'uppercase',
-    fontSize: 10,
+    fontSize: fontSz(10),
     fontWeight: '800',
   },
 });

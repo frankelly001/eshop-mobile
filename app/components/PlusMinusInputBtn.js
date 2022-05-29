@@ -1,7 +1,8 @@
-import React, {useState, useContext, useEffect} from 'react';
+import React, {useState, useContext, useEffect, memo} from 'react';
 import {StyleSheet, View, TextInput, Dimensions} from 'react-native';
 import AuthContext from '../auth/AuthContext';
 import colors from '../config/colors';
+import {fontSz, hp, wp} from '../config/responsiveSize';
 import AppButton from './AppButton';
 import AppGradientBtn from './AppGradientBtn';
 import AppText from './AppText';
@@ -23,7 +24,7 @@ const PlusMinusInputBtn = ({
 
   const handleChange = newVal => {
     setVal(newVal ? parseInt(newVal) : newVal);
-    if (dispatchInput) dispatch({...dispatchInput, payload: inputVal});
+    if (dispatchInput) dispatch({...dispatchInput, payload: newVal});
   };
   // console.log(val);
 
@@ -60,15 +61,12 @@ const PlusMinusInputBtn = ({
   return (
     <View style={styles.container}>
       <AppGradientBtn
-        // label="–"
         label="－" // －	Fullwidth Hyphen-minus	&#65293;	&#xFF0D;
         style={[styles.btn, styles.leftBtn]}
         labelStyle={styles.btnLabel}
         onPress={sub}
-        width="15%"
-        // width="15%"
+        width={small ? '20%' : '15%'}
       />
-      {/* <View> */}
       <TextInput
         value={`${val}`}
         keyboardType="numeric"
@@ -76,13 +74,12 @@ const PlusMinusInputBtn = ({
         onChangeText={text => handleChange(text)}
         // defaultValue={'1'}
       />
-      {/* </View> */}
       <AppGradientBtn
         label="＋" // ＋	Fullwidth Plus Sign	&#65291;	&#xFF0B;
         style={[styles.btn, styles.rightBtn]}
         labelStyle={styles.btnLabel}
         onPress={add}
-        width="15%"
+        width={small ? '20%' : '15%'}
       />
     </View>
   );
@@ -92,19 +89,15 @@ const bigStyles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     width: '100%',
-    // height: 0.05 * dimensions.height,
-    // backgroundColor: 'red',
-    // flex: 1,
   },
   input: {
     backgroundColor: colors.grey_light_2,
-    // paddingHorizontal: 20,
-    // width: '70%',
     flex: 5,
     textAlign: 'center',
-    fontSize: 20,
-    fontWeight: '600',
-    paddingVertical: 8,
+    fontSize: fontSz(18),
+    fontWeight: '700',
+    // paddingVertical: fontSz(8),
+    paddingVertical: hp(7.5),
   },
   btn: {
     backgroundColor: colors.purple,
@@ -121,16 +114,9 @@ const bigStyles = StyleSheet.create({
     borderBottomLeftRadius: 0,
   },
   btnLabel: {
-    fontSize: 20,
+    fontSize: fontSz(15),
     fontWeight: '700',
     textAlign: 'center',
-    // position: 'absolute',
-    // top: 0,
-    // left: 0,
-    // bottom: 0,
-    // right: 0,
-    // backgroundColor: 'blue',
-    // padding: 0,
   },
 });
 
@@ -138,19 +124,14 @@ const smallStyles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     width: '100%',
-    // height: 0.05 * dimensions.height,
-    backgroundColor: 'red',
-    // flex: 1,
   },
   input: {
     backgroundColor: colors.grey_light_2,
-    // paddingHorizontal: 20,
-    // width: '100%',
-    flex: 2,
+    flex: 5,
     textAlign: 'center',
-    fontSize: 15,
+    fontSize: fontSz(15),
     fontWeight: '600',
-    paddingVertical: 1,
+    padding: 0,
   },
   btn: {
     backgroundColor: colors.purple,
@@ -167,20 +148,13 @@ const smallStyles = StyleSheet.create({
     borderBottomLeftRadius: 0,
   },
   btnLabel: {
-    fontSize: 15,
+    fontSize: fontSz(13),
     fontWeight: '700',
     textAlign: 'center',
-    // position: 'absolute',
-    // top: 0,
-    // left: 0,
-    // bottom: 0,
-    // right: 0,
-    // backgroundColor: 'blue',
-    // padding: 0,
   },
 });
 
-export default PlusMinusInputBtn;
+export default memo(PlusMinusInputBtn);
 
 // const styles = StyleSheet.create({
 //   container: {

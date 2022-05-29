@@ -36,7 +36,6 @@ const Screen = ({children, scrollView}) => {
       {/* <StatusBar /> */}
       <ScrollView
         ref={scrollView}
-        horizontal={false}
         showsVerticalScrollIndicator={false}
         // onContentSizeChange={() =>
         //   scrollView.current.scrollTo({x: 0, y: 0, animated: true})

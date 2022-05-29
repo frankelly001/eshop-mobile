@@ -1,24 +1,26 @@
-import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
+// import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import React, {useContext, memo} from 'react';
 import {StyleSheet, View, TouchableOpacity} from 'react-native';
 import AuthContext from '../auth/AuthContext';
 import colors from '../config/colors';
+import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
+import {wp} from '../config/responsiveSize';
 
 const LikeBtn = ({product}) => {
   const {onLike} = useContext(AuthContext);
-  const type = product.like ? 'fas' : 'far';
+  const heartType = product.like ? 'heart' : 'heart-o';
   console.log('LikeBtn rendering', 'check---', product.like);
   return (
     <TouchableOpacity style={styles.container} onPress={() => onLike(product)}>
-      <FontAwesomeIcon size={30} color={colors.purple} icon={[type, 'heart']} />
+      <FontAwesomeIcon size={wp(25)} name={heartType} color={colors.purple} />
     </TouchableOpacity>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    width: 45,
-    height: 45,
+    width: wp(40),
+    height: wp(40),
     backgroundColor: colors.purple_Transparent,
     alignItems: 'center',
     justifyContent: 'center',

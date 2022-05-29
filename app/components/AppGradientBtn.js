@@ -2,20 +2,26 @@ import React from 'react';
 import {StyleSheet, TouchableOpacity, Text} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import colors from '../config/colors';
+import {fontSz} from '../config/responsiveSize';
 import AppText from './AppText';
 
 const AppGradientBtn = ({
   label,
   labelStyle,
   style,
+  containerStyle,
   onPress,
   width = '100%',
+  inActive,
 }) => {
+  const color = !inActive
+    ? ['#5d05b5', '#9E1E7C', '#dc3545']
+    : ['#5d05b5a2', '#dc3545a2'];
   return (
-    <TouchableOpacity style={{width}} onPress={onPress}>
+    <TouchableOpacity style={[{width}, containerStyle]} onPress={onPress}>
       <LinearGradient
         colors={['#5d05b5', '#9E1E7C', '#dc3545']}
-        style={[styles.gradientContainer, style]}
+        style={[styles.gradientContainer, style, inActive && {opacity: 0.5}]}
         // start={{x: 0.494, y: 0}}
         // end={{x: 0.5, y: 0.95}}
 
@@ -38,7 +44,7 @@ const styles = StyleSheet.create({
   },
   text: {
     fontFamily: 'Roboto',
-    fontSize: 18,
+    fontSize: fontSz(15),
     fontWeight: '600',
     color: colors.white,
   },
