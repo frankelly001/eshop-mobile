@@ -69,7 +69,10 @@ const CartScreen = ({navigation}) => {
             id={id}
             setId={setId}
             renderRightActions={() => (
-              <ActionRemoveBtn contentContainerStyle={styles.renderRight} />
+              <ActionRemoveBtn
+                contentContainerStyle={styles.renderRight}
+                product={item}
+              />
             )}
           />
         )}
@@ -134,6 +137,7 @@ const styles = StyleSheet.create({
   },
   renderRight: {
     justifyContent: 'space-between',
+    backgroundColor: colors.red_light,
     // backgroundColor: 'red',
     // width: wp(100),
     // padding: 0,

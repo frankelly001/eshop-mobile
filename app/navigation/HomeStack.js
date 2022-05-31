@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {StyleSheet} from 'react-native';
 import HeaderActions from '../components/HeaderActions';
@@ -8,14 +8,17 @@ import routes from './routes';
 import CartScreen from '../screens/CartScreen';
 import CheckoutScreen from '../screens/CheckoutScreen';
 import Header from '../components/Header';
+import AuthContext from '../auth/AuthContext';
 
 const Stack = createNativeStackNavigator();
 
 const HomeStack = props => {
+  const {orderedNum} = useContext(AuthContext);
   return (
     <Stack.Navigator
       screenOptions={{
-        headerRight: () => <HeaderActions />,
+        // headerRight: () => <HeaderActions />,
+        header: ({...allProps}) => <Header {...allProps} />,
       }}>
       <Stack.Screen
         name={'eShop'}
@@ -30,7 +33,9 @@ const HomeStack = props => {
         component={ProductDetailsScreen}
         options={{
           title: 'Details',
-          header: ({navigation}) => <Header navigation={navigation} />,
+          // header: ({navigation, route}) => (
+          //   <Header navigation={navigation} title={options.title} />
+          // ),
           headerStyle: {},
         }}
       />
@@ -38,7 +43,16 @@ const HomeStack = props => {
         name={routes.CART}
         component={CartScreen}
         options={{
-          title: 'Cart',
+          title: `Cart ${orderedNum > 0 ? `(${orderedNum})` : ''}`,
+          // header: ({navigation}) => (
+          //   <Header
+          //     navigation={navigation}
+          //     title="Cart"
+          //     disableHeaderRight
+          //     backIcon="close"
+          //   />
+          // ),
+          animation: 'slide_from_right',
           // headerStyle: {backgroundColor: 'red'},
         }}
       />
@@ -47,6 +61,13 @@ const HomeStack = props => {
         component={CheckoutScreen}
         options={{
           title: 'Checkout',
+          // header: ({navigation}) => (
+          //   <Header
+          //     navigation={navigation}
+          //     title="Checkout"
+          //     disableHeaderRight
+          //   />
+          // ),
           // headerStyle: {backgroundColor: 'red'},
         }}
       />

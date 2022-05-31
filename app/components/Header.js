@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import React, {useContext, useState, useEffect} from 'react';
 import {
   StyleSheet,
   View,
@@ -12,43 +12,110 @@ import CartIcon from '../assets/icons/eShopCart.svg';
 import AuthContext from '../auth/AuthContext';
 import colors from '../config/colors';
 import routes from '../navigation/routes';
-// import navigation from '../navigation/rootNavigation';
-import {wp, fontSz} from '../config/responsiveSize';
+import {wp, fontSz, hp} from '../config/responsiveSize';
 import AppText from './AppText';
-import MaterialIcons from 'react-native-vector-icons/Ionicons';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
-const Header = ({navigation}) => {
+const Header = ({
+  navigation,
+  options,
+  route,
+  // backIcon = 'arrow-left',
+  // disableBackBtn,
+  // disableSearchBtn,
+  // disableNotifyBtn,
+  // disableCartBtn,
+  // disableHeaderRight,
+}) => {
   const {orderedNum} = useContext(AuthContext);
   const size = wp(20);
+  const [disableBackBtn, setDisableBackBtn] = useState(false);
+  const [disableSearchBtn, setDisableSearchBtn] = useState(false);
+  const [disableNotifyBtn, setDisableNotifyBtn] = useState(false);
+  const [disableCartBtn, setDisableCartBtn] = useState(false);
+  const [disableHeaderRight, setDisableHeaderRight] = useState(false);
+  const [backIcon, setBackIcon] = useState('arrow-left');
+
+  useEffect(() => {
+    const backBtnConditions = [
+      routes.HOME,
+      routes.CATEGORIES,
+      routes.FEED,
+      routes.ACCOUNT,
+      routes.HELP,
+      routes.SIGNUP,
+    ];
+
+    const headerRightConditions = [
+      routes.ACCOUNT,
+      routes.SIGNUP,
+      routes.LOGIN,
+      routes.HELP,
+      routes.CART,
+      routes.CHECKOUT,
+    ];
+
+    if (backBtnConditions.includes(route.name)) setDisableBackBtn(true);
+    if (headerRightConditions.includes(route.name)) {
+      setDisableHeaderRight(true);
+    }
+
+    if (route.name === routes.CART) {
+      // setDisableHeaderRight(true);
+      setBackIcon('close');
+    }
+  }, [route.name]);
 
   return (
     <View style={styles.container}>
       <View style={styles.headerLeft}>
-        <TouchableHighlight
-          // hitSlop={{top: 20, bottom: 20, right: 20, left: 20}}
-          onPress={() => navigation.goBack()}
-          underlayColor={colors.grey_light_4}
-          style={styles.backBtn}>
-          <MaterialIcons size={size} color={colors.black} name="arrow-back" />
-        </TouchableHighlight>
-        <AppText style={styles.title}>Details</AppText>
+        {!disableBackBtn && (
+          <TouchableHighlight
+            // hitSlop={{top: 20, bottom: 20, right: 20, left: 20}}
+            onPress={() => navigation.goBack()}
+            underlayColor={colors.grey_light_4}
+            style={styles.backBtn}>
+            <MaterialCommunityIcons
+              size={size}
+              color={colors.black}
+              name={backIcon}
+            />
+          </TouchableHighlight>
+        )}
+        <AppText style={styles.title}>
+          {options.title ? options.title : route.name}
+        </AppText>
       </View>
-      <View style={styles.headerRight}>
-        <SearchIcon width={size} hieght={size} />
-        <NoficationActiveIcon
-          marginHorizontal={size}
-          width={size}
-          hieght={size}
-        />
-        <TouchableOpacity onPress={() => navigation.navigate(routes.CART)}>
-          <CartIcon width={size} hieght={size}></CartIcon>
-          {orderedNum > 0 && (
-            <Text numberOfLines={1} style={styles.cartCount}>
-              {orderedNum}
-            </Text>
+      {!disableHeaderRight && (
+        <View style={styles.headerRight}>
+          {!disableSearchBtn && (
+            <TouchableOpacity>
+              <SearchIcon width={size} hieght={size} />
+            </TouchableOpacity>
           )}
-        </TouchableOpacity>
-      </View>
+          {!disableNotifyBtn && (
+            <TouchableOpacity>
+              <NoficationActiveIcon
+                marginHorizontal={size}
+                width={size}
+                hieght={size}
+              />
+            </TouchableOpacity>
+          )}
+          {!disableCartBtn && (
+            <TouchableOpacity
+              // style={{backgroundColor: 'yellow'}}
+              onPress={() => navigation.navigate(routes.CART)}>
+              <CartIcon width={size} hieght={size}></CartIcon>
+              {orderedNum > 0 && (
+                <Text numberOfLines={1} style={styles.cartCount}>
+                  {orderedNum}
+                </Text>
+              )}
+            </TouchableOpacity>
+          )}
+        </View>
+      )}
     </View>
   );
 };
@@ -65,6 +132,7 @@ const styles = StyleSheet.create({
   },
   headerRight: {
     flexDirection: 'row',
+    // backgroundColor: 'red',
   },
   cartCount: {
     backgroundColor: colors.purple,
@@ -78,12 +146,12 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     borderRadius: 10,
     position: 'absolute',
-    top: 3,
+    top: hp(3),
     right: -8,
   },
   title: {
     fontSize: fontSz(20),
-    fontWeight: '600',
+    fontWeight: '700',
   },
   headerLeft: {
     flexDirection: 'row',

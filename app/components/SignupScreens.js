@@ -51,7 +51,7 @@ const SignupScreen2 = ({onPrev, onNext}) => {
       />
       <AppFormInput
         autoCapitalize="none"
-        keyboardType="number"
+        keyboardType="numeric"
         autoCorrect={false}
         name="number"
         width="35%"
@@ -67,7 +67,7 @@ const SignupScreen2 = ({onPrev, onNext}) => {
         textContentType="name"
       />
       <AppFormInput
-        keyboardType="number"
+        keyboardType="numeric"
         name="zipcode"
         placeholder="Zipcode"
       />
@@ -98,7 +98,7 @@ const SignupScreen3 = ({onPrev}) => {
         placeholder="Email"
         textContentType="emailAddress"
       />
-      <AppFormInput keyboardType="number" name="phone" placeholder="Phone" />
+      <AppFormInput keyboardType="numeric" name="phone" placeholder="Phone" />
       <AppFormInput
         autoCapitalize="none"
         autoCorrect={false}

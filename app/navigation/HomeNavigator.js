@@ -6,6 +6,7 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import HeaderActions from '../components/HeaderActions';
 import ProductDetailsScreen from '../screens/ProductDetailsScreen';
 import {fontSz} from '../config/responsiveSize';
+import Header from '../components/Header';
 
 const Stack = createNativeStackNavigator();
 
@@ -13,7 +14,11 @@ const HomeNavigator = () => {
   return (
     <Stack.Navigator
       screenOptions={{
-        headerRight: () => <HeaderActions />,
+        // headerRight: () => <HeaderActions />,
+        // header: ({route, navigation}) => (
+        //   <Header title={route.name} navigation={navigation} disableBackBtn />
+        // ),
+        header: ({...allProps}) => <Header {...allProps} />,
       }}>
       <Stack.Screen
         name={routes.HOME}

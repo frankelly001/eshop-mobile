@@ -1,6 +1,7 @@
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import React from 'react';
 import {StyleSheet, View} from 'react-native';
+import Header from '../components/Header';
 import HelpScreen from '../screens/HelpScreen';
 import routes from './routes';
 
@@ -8,7 +9,8 @@ const Stack = createNativeStackNavigator();
 
 const HelpNavigator = props => {
   return (
-    <Stack.Navigator>
+    <Stack.Navigator
+      screenOptions={{header: ({...allProps}) => <Header {...allProps} />}}>
       <Stack.Screen name={routes.HELP} component={HelpScreen} />
     </Stack.Navigator>
   );

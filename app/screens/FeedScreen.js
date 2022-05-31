@@ -26,7 +26,8 @@ const FeedScreen = props => {
 const styles = StyleSheet.create({
   container: {
     paddingHorizontal: 15,
-    marginBottomBottom: 30,
+    paddingBottom: 25,
+
     backgroundColor: colors.grey_light,
   },
 });

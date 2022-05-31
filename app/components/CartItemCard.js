@@ -16,45 +16,47 @@ const dimensions = Dimensions.get('window');
 const scdimensions = Dimensions.get('screen');
 import {formatToCurrency} from '../utilities/formatToCurr';
 import ActionRemoveBtn from './ActionRemoveBtn';
-// import Swipeable from 'react-native-gesture-handler/Swipeable';
-// import {GestureHandlerRootView} from 'react-native-gesture-handler';
+import Swipeable from 'react-native-gesture-handler/Swipeable';
+import {GestureHandlerRootView} from 'react-native-gesture-handler';
 
 const CartItemCard = ({product, renderRightActions, id, setId}) => {
   // const {dispatch} = useContext(AuthContext);
   return (
-    <View style={styles.container}>
-      <View style={styles.descriptionContainer}>
-        <View style={styles.imageContainer}>
-          <Image
-            style={styles.image}
-            resizeMode="stretch"
-            source={{
-              uri: product.image,
-            }}
-          />
-        </View>
-        <View style={styles.details}>
-          <AppText style={styles.title}>{product.title}</AppText>
-          <View style={styles.priceContainer}>
-            <AppText style={styles.totalPrice}>
-              {formatToCurrency(product.price)}
-            </AppText>
-            <AppText style={styles.totalPriceSum}>
-              ({formatToCurrency(product.price)} by {product.quantity} item)
-            </AppText>
+    <GestureHandlerRootView>
+      <Swipeable renderRightActions={renderRightActions}>
+        <View style={styles.container}>
+          <View style={styles.descriptionContainer}>
+            <View style={styles.imageContainer}>
+              <Image
+                style={styles.image}
+                resizeMode="stretch"
+                source={{
+                  uri: product.image,
+                }}
+              />
+            </View>
+            <View style={styles.details}>
+              <AppText style={styles.title}>{product.title}</AppText>
+              <View style={styles.priceContainer}>
+                <AppText style={styles.totalPrice}>
+                  {formatToCurrency(product.price)}
+                </AppText>
+                <AppText style={styles.totalPriceSum}>
+                  ({formatToCurrency(product.price)} by {product.quantity} item)
+                </AppText>
+              </View>
+              <View style={styles.input}>
+                <PlusMinusInputBtn
+                  small
+                  value={product.quantity}
+                  dispatchAdd={{type: 'addToCart', id: product.id}}
+                  dispatchSub={{type: 'subFromCart', id: product.id}}
+                  dispatchInput={{type: 'mutateCart', id: product.id}}
+                />
+              </View>
+            </View>
           </View>
-          <View style={styles.input}>
-            <PlusMinusInputBtn
-              small
-              value={product.quantity}
-              dispatchAdd={{type: 'addToCart', id: product.id}}
-              dispatchSub={{type: 'subFromCart', id: product.id}}
-              dispatchInput={{type: 'mutateCart', id: product.id}}
-            />
-          </View>
-        </View>
-      </View>
-      {/* <TouchableOpacity
+          {/* <TouchableOpacity
             style={styles.options}
             onPress={() => setId(product.id)}>
             <SimpleLineIcons size={fontSz(15)} name="options-vertical" />
@@ -64,7 +66,9 @@ const CartItemCard = ({product, renderRightActions, id, setId}) => {
               contentContainerStyle={styles.actionBtnContainer}
             />
           )} */}
-    </View>
+        </View>
+      </Swipeable>
+    </GestureHandlerRootView>
   );
 };
 
@@ -124,9 +128,10 @@ const styles = StyleSheet.create({
     backgroundColor: colors.grey_light,
     position: 'absolute',
     borderRadius: 10,
-    right: 10,
+    right: 0,
     bottom: 0,
-    padding: 5,
+    paddingVertical: 0,
+    height: hp(100),
   },
 });
 
