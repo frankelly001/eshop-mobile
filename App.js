@@ -12,13 +12,14 @@ import HomeStack from './app/navigation/HomeStack';
 import {getProducts} from './app/api/products';
 import reducerFunction from './app/hooks/useRuducer';
 import {shuffle} from './app/utilities/randomArr';
-import {library} from '@fortawesome/fontawesome-svg-core';
-import {fas} from '@fortawesome/free-solid-svg-icons';
-import {far} from '@fortawesome/free-regular-svg-icons';
 import {getCategories} from './app/api/categories';
 import {navigationRef} from './app/navigation/rootNavigation';
-
-library.add(fas, far);
+import AppText from './app/components/AppText';
+import Screen from './app/components/Screen';
+import AppNavigator from './app/navigation/AppNavigator';
+import HomeNavigator from './app/navigation/HomeNavigator';
+import CategoriesNavigator from './app/navigation/CategoriesNavigator';
+import FeedNavigator from './app/navigation/FeedNavigator';
 
 const initialState = {
   cartsCount: [],
@@ -132,19 +133,12 @@ const App = () => {
     );
     // return function cleanUp() {};
   }, [allCounters.cartsCount]);
-  // console.log(ordered);
 
-  // const orderedNum = ordered
-  //   .map(el => el.quantity)
-  //   .reduce((prev, cur) => prev + cur, 0);
-
-  // const orderedNum = useMemo(
-  //   () => ordered.map(el => el.quantity).reduce((prev, cur) => prev + cur, 0),
-  //   [ordered],
+  // return (
+  //   <Screen>
+  //     <AppText>heyyy</AppText>
+  //   </Screen>
   // );
-  // if (products.length < 1) {
-  //   return null;
-  // }
 
   return (
     <AuthContext.Provider
@@ -158,6 +152,7 @@ const App = () => {
       }}>
       <NavigationContainer ref={navigationRef} theme={navigationTheme}>
         <HomeStack />
+        {/* <FeedNavigator /> */}
       </NavigationContainer>
     </AuthContext.Provider>
   );

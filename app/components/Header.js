@@ -16,17 +16,7 @@ import {wp, fontSz, hp} from '../config/responsiveSize';
 import AppText from './AppText';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
-const Header = ({
-  navigation,
-  options,
-  route,
-  // backIcon = 'arrow-left',
-  // disableBackBtn,
-  // disableSearchBtn,
-  // disableNotifyBtn,
-  // disableCartBtn,
-  // disableHeaderRight,
-}) => {
+const Header = ({navigation, options, route}) => {
   const {orderedNum} = useContext(AuthContext);
   const size = wp(20);
   const [disableBackBtn, setDisableBackBtn] = useState(false);

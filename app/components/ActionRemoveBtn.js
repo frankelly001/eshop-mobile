@@ -63,6 +63,9 @@ const styles = StyleSheet.create({
     // paddingVertical: 10,
     marginVertical: 10,
     overflow: 'hidden',
+    // width: 100,
+    // flex: 1,
+    alignSelf: 'flex-end',
   },
   actionBtn: {
     flexDirection: 'row',

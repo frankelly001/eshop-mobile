@@ -1,4 +1,3 @@
-import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import React, {useContext, useState} from 'react';
 import {
   StyleSheet,
@@ -12,21 +11,26 @@ import {fontSz, hp, wp} from '../config/responsiveSize';
 import AppText from './AppText';
 import PlusMinusInputBtn from './PlusMinusInputBtn';
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
-const dimensions = Dimensions.get('window');
-const scdimensions = Dimensions.get('screen');
 import {formatToCurrency} from '../utilities/formatToCurr';
-import ActionRemoveBtn from './ActionRemoveBtn';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
+import navigation from '../navigation/rootNavigation';
+import routes from '../navigation/routes';
+
+const dimensions = Dimensions.get('window');
+const scdimensions = Dimensions.get('screen');
 
 const CartItemCard = ({product, renderRightActions, id, setId}) => {
-  // const {dispatch} = useContext(AuthContext);
   return (
     <GestureHandlerRootView>
       <Swipeable renderRightActions={renderRightActions}>
         <View style={styles.container}>
           <View style={styles.descriptionContainer}>
-            <View style={styles.imageContainer}>
+            <TouchableOpacity
+              style={styles.imageContainer}
+              onPress={() =>
+                navigation.navigate(routes.PRODUCTDETAILS, product.id)
+              }>
               <Image
                 style={styles.image}
                 resizeMode="stretch"
@@ -34,7 +38,7 @@ const CartItemCard = ({product, renderRightActions, id, setId}) => {
                   uri: product.image,
                 }}
               />
-            </View>
+            </TouchableOpacity>
             <View style={styles.details}>
               <AppText style={styles.title}>{product.title}</AppText>
               <View style={styles.priceContainer}>
