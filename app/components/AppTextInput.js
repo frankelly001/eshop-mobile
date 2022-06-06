@@ -3,11 +3,12 @@ import {StyleSheet, View, TextInput} from 'react-native';
 import colors from '../config/colors';
 import {fontSz} from '../config/responsiveSize';
 
-const AppTextInput = ({...otherProps}) => {
+const AppTextInput = ({style, inputRef, ...otherProps}) => {
   return (
     // <View style={styles.container}>
     <TextInput
-      style={[styles.inputField]}
+      ref={inputRef}
+      style={[styles.inputField, style]}
       placeholderTextColor={colors.grey_dark}
       {...otherProps}
     />

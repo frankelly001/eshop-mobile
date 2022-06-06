@@ -9,6 +9,7 @@ import CartScreen from '../screens/CartScreen';
 import CheckoutScreen from '../screens/CheckoutScreen';
 import Header from '../components/Header';
 import AuthContext from '../auth/AuthContext';
+import SearchResultScreen from '../screens/SearchResultScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -70,6 +71,21 @@ const HomeStack = props => {
           // ),
           // headerStyle: {backgroundColor: 'red'},
         }}
+      />
+      <Stack.Screen
+        name={routes.SEARCHED}
+        component={SearchResultScreen}
+        options={({route}) => ({
+          title: route.params,
+          // header: ({navigation}) => (
+          //   <Header
+          //     navigation={navigation}
+          //     title="Checkout"
+          //     disableHeaderRight
+          //   />
+          // ),
+          // headerStyle: {backgroundColor: 'red'},
+        })}
       />
     </Stack.Navigator>
   );

@@ -17,9 +17,10 @@ import CartItemCard from '../components/CartItemCard';
 import colors from '../config/colors';
 import {fontSz, wp} from '../config/responsiveSize';
 import routes from '../navigation/routes';
+import {formatToCurrency} from '../utilities/formatToCurr';
 
 const CartScreen = ({navigation}) => {
-  const {ordered} = useContext(AuthContext);
+  const {ordered, subtotal, delivery, total} = useContext(AuthContext);
   const [id, setId] = useState(null);
   const [keyboardStatus, setKeyboardStatus] = useState(undefined);
 
@@ -47,15 +48,15 @@ const CartScreen = ({navigation}) => {
         </View>
         <View style={styles.feeTitleContainer}>
           <AppText>SubTotal</AppText>
-          <AppText style={styles.price}>₦236,075</AppText>
+          <AppText style={styles.price}>{formatToCurrency(subtotal)}</AppText>
         </View>
         <View style={styles.feeTitleContainer}>
           <AppText>Delivery fee</AppText>
-          <AppText style={styles.price}>₦5,000</AppText>
+          <AppText style={styles.price}>{formatToCurrency(delivery)}</AppText>
         </View>
         <View style={[styles.feeTitleContainer, styles.topSeperator]}>
           <AppText>Total</AppText>
-          <AppText style={styles.price}>₦241,000</AppText>
+          <AppText style={styles.price}>{formatToCurrency(total)}</AppText>
         </View>
       </View>
       <FlatList

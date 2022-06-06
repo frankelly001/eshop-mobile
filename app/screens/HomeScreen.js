@@ -25,7 +25,7 @@ const HomeScreen = ({navigation}) => {
       key={product => product.id.toString()}
       renderItem={({item}) => {
         if (item.empty)
-          return <View style={{flex: 1, backgroundColor: 'red'}}></View>;
+          return <View style={{flex: 1, backgroundColor: 'red'}} />;
         return (
           <ProductCard
             product={item}

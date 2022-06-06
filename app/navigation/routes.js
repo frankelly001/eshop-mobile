@@ -14,4 +14,5 @@ export default Object.freeze({
   CHECKOUT: 'Checkout',
   LOGIN: 'login',
   SIGNUP: 'Signup',
+  SEARCHED: 'Searched',
 });

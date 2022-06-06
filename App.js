@@ -15,11 +15,6 @@ import {shuffle} from './app/utilities/randomArr';
 import {getCategories} from './app/api/categories';
 import {navigationRef} from './app/navigation/rootNavigation';
 import AppText from './app/components/AppText';
-import Screen from './app/components/Screen';
-import AppNavigator from './app/navigation/AppNavigator';
-import HomeNavigator from './app/navigation/HomeNavigator';
-import CategoriesNavigator from './app/navigation/CategoriesNavigator';
-import FeedNavigator from './app/navigation/FeedNavigator';
 
 const initialState = {
   cartsCount: [],
@@ -31,7 +26,7 @@ const App = () => {
   const [allCounters, dispatch] = useReducer(reducerFunction, initialState);
   // const [allAddToCart, setAllAddToCart] = useState([]);
   const [ordered, setOrdered] = useState([]);
-  const [orderedNum, setOrderedNum] = useState();
+  const [recentQueries, setRecentQueries] = useState([]);
 
   const allProducts = async () => {
     const {data, ok, problem} = await getProducts();
@@ -63,13 +58,6 @@ const App = () => {
 
     return function cleanUp() {};
   }, []);
-
-  // const handleLike = product => {
-  //   const newState = [...products];
-  //   const index = newState.indexOf(product);
-  //   newState[index].like = !newState[index].like;
-  //   setProducts(newState);
-  // };
 
   const handleLike = useCallback(
     product => {
@@ -128,9 +116,7 @@ const App = () => {
     orderdItems.map(el => el.quantity).reduce((prev, cur) => prev + cur, 0);
     console.log('useffect rennding');
     setOrdered(orderdItems);
-    setOrderedNum(
-      orderdItems.map(el => el.quantity).reduce((prev, cur) => prev + cur, 0),
-    );
+
     // return function cleanUp() {};
   }, [allCounters.cartsCount]);
 
@@ -139,6 +125,18 @@ const App = () => {
   //     <AppText>heyyy</AppText>
   //   </Screen>
   // );
+  const orderedNum = ordered
+    .map(el => el.quantity)
+    .reduce((prev, cur) => prev + cur, 0);
+  const subtotal =
+    Math.round(
+      ordered
+        .map(el => el.price * el.quantity)
+        .reduce((prev, cur) => prev + cur, 0) * 10,
+    ) / 10;
+  const delivery =
+    ordered.map(el => el.quantity).reduce((prev, cur) => prev + cur, 0) * 1000;
+  const total = subtotal + delivery;
 
   return (
     <AuthContext.Provider
@@ -149,10 +147,14 @@ const App = () => {
         onLike: handleLike,
         dispatch,
         orderedNum,
+        subtotal,
+        delivery,
+        total,
+        setRecentQueries,
+        recentQueries,
       }}>
       <NavigationContainer ref={navigationRef} theme={navigationTheme}>
         <HomeStack />
-        {/* <FeedNavigator /> */}
       </NavigationContainer>
     </AuthContext.Provider>
   );
