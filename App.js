@@ -15,6 +15,8 @@ import {shuffle} from './app/utilities/randomArr';
 import {getCategories} from './app/api/categories';
 import {navigationRef} from './app/navigation/rootNavigation';
 import AppText from './app/components/AppText';
+import {gestureHandlerRootHOC} from 'react-native-gesture-handler';
+import {Host} from 'react-native-portalize';
 
 const initialState = {
   cartsCount: [],
@@ -154,10 +156,12 @@ const App = () => {
         recentQueries,
       }}>
       <NavigationContainer ref={navigationRef} theme={navigationTheme}>
-        <HomeStack />
+        <Host>
+          <HomeStack />
+        </Host>
       </NavigationContainer>
     </AuthContext.Provider>
   );
 };
 
-export default App;
+export default gestureHandlerRootHOC(App);
