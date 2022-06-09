@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {StyleSheet, View} from 'react-native';
 import AppText from './AppText';
 import AppForm from './form/AppForm';
@@ -30,23 +30,28 @@ const validationSchema = Yup.object().shape({
   zipcode: Yup.number().required().min(1).label('Zipcode'),
 });
 
-const CheckoutInfo = ({onSubmit}) => {
+const initialValues = {
+  firstname: '',
+  lastname: '',
+  email: '',
+  phone1: '',
+  phone2: '',
+  city: '',
+  number: '',
+  street: '',
+  zipcode: '',
+};
+
+const CheckoutInfo = ({savedValues, setSavedValues, onSubmit}) => {
+  // const [savedValues, setSavedValues] = useState(null);
+  // console.log(savedValues);
+
   return (
     <Screen>
       <View style={styles.container}>
         <AppText style={styles.header}>Customer Delivery Information</AppText>
         <AppForm
-          initialValues={{
-            firstname: '',
-            lastname: '',
-            email: '',
-            phone1: '',
-            phone2: '',
-            city: '',
-            number: '',
-            street: '',
-            zipcode: '',
-          }}
+          initialValues={savedValues || initialValues}
           validationSchema={validationSchema}
           onSubmit={onSubmit}>
           <View style={[styles.formContainer]}>
@@ -114,17 +119,12 @@ const CheckoutInfo = ({onSubmit}) => {
               placeholder="Zipcode"
             />
           </View>
-          <AppGradientBtn
+          <SubmitButton
             labelStyle={styles.btnLabel}
             label="Proceed payment"
-            onPress={onSubmit}
             containerStyle={styles.btnContainerStyle}
+            onSaveValues={setSavedValues}
           />
-          {/* <SubmitButton
-          labelStyle={styles.btnLabel}
-          label="Proceed payment"
-          containerStyle={styles.btnContainerStyle}
-        /> */}
         </AppForm>
       </View>
     </Screen>

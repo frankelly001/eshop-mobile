@@ -1,4 +1,4 @@
-import React, {useRef} from 'react';
+import React, {useRef, useContext} from 'react';
 import {StyleSheet, View, TouchableOpacity} from 'react-native';
 import colors from '../config/colors';
 import {fontSz} from '../config/responsiveSize';
@@ -11,18 +11,21 @@ import {Portal} from 'react-native-portalize';
 import DeliverySummary from './CheckOutSummay/DeliverySummary';
 import BottomSheet from './BottomSheet';
 import OrderSummary from './CheckOutSummay/OrderSummary';
+import AuthContext from '../auth/AuthContext';
+import {formatToCurrency} from '../utilities/formatToCurr';
 
-const CheckoutPay = props => {
+const CheckoutPay = ({deliveryInfo, onGoBack}) => {
   const deliverySummaryRef = useRef();
   const orderSummaryRef = useRef();
+  const {total} = useContext(AuthContext);
 
   const onOpen = ref => {
     ref.current?.open();
     // console.log(ref);
   };
-  const onClose = ref => {
-    ref.current?.close();
-  };
+  // const onClose = ref => {
+  //   ref.current?.close();
+  // };
 
   return (
     <View style={styles.paymentContainer}>
@@ -36,10 +39,19 @@ const CheckoutPay = props => {
           </TouchableOpacity>
         </View>
         <View style={styles.deliverySummaryContainer}>
-          <AppText>Okeke - Frankelly344@gmail.com</AppText>
-          <AppText>Lagos - 56 sowemimo Street, Ojo Alaba</AppText>
-          <AppText>080123578899</AppText>
-          <TouchableOpacity>
+          <AppText>
+            {`${deliveryInfo.firstname} ${deliveryInfo.lastname}`} -{' '}
+            {deliveryInfo.email}
+          </AppText>
+          <AppText>
+            {deliveryInfo.city} -{' '}
+            {`${deliveryInfo.number} ${deliveryInfo.street}`}
+          </AppText>
+          <AppText>
+            {deliveryInfo.phone1}{' '}
+            {deliveryInfo.phone2 && `/ ${deliveryInfo.phone2}`}
+          </AppText>
+          <TouchableOpacity onPress={onGoBack}>
             <AppText style={styles.changeBtn}>Change</AppText>
           </TouchableOpacity>
         </View>
@@ -63,18 +75,20 @@ const CheckoutPay = props => {
         </View>
         <View style={styles.totalSummaryContainer}>
           <AppText style={styles.totalLabel}>TOTAL</AppText>
-          <AppText style={[styles.totalLabel, styles.price]}>₦241,605</AppText>
+          <AppText style={[styles.totalLabel, styles.price]}>
+            {formatToCurrency(total)}
+          </AppText>
         </View>
       </View>
       <AppGradientBtn
-        label="PAY NOW: ₦241,605"
+        label={`PAY NOW: ${formatToCurrency(total)}`}
         labelStyle={{fontWeight: '700'}}
       />
 
       <PaymentNotice />
 
       <BottomSheet modalRef={deliverySummaryRef}>
-        <DeliverySummary />
+        <DeliverySummary deliveryInfo={deliveryInfo} />
       </BottomSheet>
 
       <BottomSheet modalRef={orderSummaryRef}>

@@ -1,4 +1,4 @@
-import {StyleSheet} from 'react-native';
+import {StyleSheet, StatusBar} from 'react-native';
 import colors from '../../config/colors';
 import {fontSz} from '../../config/responsiveSize';
 
@@ -63,9 +63,15 @@ const SummaryStyles = StyleSheet.create({
     backgroundColor: colors.purple,
     paddingHorizontal: 15,
     paddingVertical: 5,
+    width: '100%',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  bottomContainer: {
     // position: 'absolute',
-    // width: '100%',
-    // bottom: 0,
+    // bottom: StatusBar.,
+    // backgroundColor: 'white',
   },
 });
 

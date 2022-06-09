@@ -130,7 +130,7 @@ const App = () => {
   const orderedNum = ordered
     .map(el => el.quantity)
     .reduce((prev, cur) => prev + cur, 0);
-  const subtotal =
+  const subTotal =
     Math.round(
       ordered
         .map(el => el.price * el.quantity)
@@ -138,7 +138,7 @@ const App = () => {
     ) / 10;
   const delivery =
     ordered.map(el => el.quantity).reduce((prev, cur) => prev + cur, 0) * 1000;
-  const total = subtotal + delivery;
+  const total = subTotal + delivery;
 
   return (
     <AuthContext.Provider
@@ -149,7 +149,7 @@ const App = () => {
         onLike: handleLike,
         dispatch,
         orderedNum,
-        subtotal,
+        subTotal,
         delivery,
         total,
         setRecentQueries,

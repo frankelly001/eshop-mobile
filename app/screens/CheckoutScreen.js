@@ -10,6 +10,7 @@ import CheckoutPay from '../components/CheckoutPay';
 
 const CheckoutScreen = props => {
   const [selectedTab, setSelectedTab] = useState('deliveryInfo');
+  const [savedValues, setSavedValues] = useState(null);
 
   const deliveryInfoView = selectedTab === 'deliveryInfo';
   const paymentView = selectedTab === 'payment';
@@ -40,8 +41,19 @@ const CheckoutScreen = props => {
           />
         </View>
       </View>
-      {deliveryInfoView && <CheckoutInfo onSubmit={handleSubmit} />}
-      {paymentView && <CheckoutPay />}
+      {deliveryInfoView && (
+        <CheckoutInfo
+          savedValues={savedValues}
+          setSavedValues={setSavedValues}
+          onSubmit={handleSubmit}
+        />
+      )}
+      {paymentView && (
+        <CheckoutPay
+          deliveryInfo={savedValues}
+          onGoBack={() => setSelectedTab('deliveryInfo')}
+        />
+      )}
     </View>
     // </Host>
   );
