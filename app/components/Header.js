@@ -1,4 +1,4 @@
-import React, {useContext, useState, useEffect} from 'react';
+import React, {useContext, useState, useEffect, useRef} from 'react';
 import {
   StyleSheet,
   View,
@@ -6,7 +6,6 @@ import {
   TouchableHighlight,
   TouchableOpacity,
   ScrollView,
-  SafeAreaView,
 } from 'react-native';
 import SearchIcon from '../assets/icons/search.svg';
 import NoficationActiveIcon from '../assets/icons/notification_active.svg';
@@ -17,13 +16,13 @@ import routes from '../navigation/routes';
 import {wp, fontSz, hp} from '../config/responsiveSize';
 import AppText from './AppText';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import Animated, {EasingNode} from 'react-native-reanimated';
+import Octicons from 'react-native-vector-icons/Octicons';
+import Animated from 'react-native-reanimated';
 import AppTextInput from './AppTextInput';
-import AnimatedSearchBar from './AnimatedSearchBar';
-import AnimatedHeader from './AnimatedHeader';
+import useAnimatedHeaderStyles from '../hooks/useAnimatedHeaderStyles';
 
 const Header = ({navigation, options, route}) => {
-  const {orderedNum} = useContext(AuthContext);
+  const {orderedNum, recentQueries, setRecentQueries} = useContext(AuthContext);
   const size = wp(20);
   const [disableBackBtn, setDisableBackBtn] = useState(false);
   const [disableSearchBtn, setDisableSearchBtn] = useState(false);
@@ -31,54 +30,18 @@ const Header = ({navigation, options, route}) => {
   const [disableCartBtn, setDisableCartBtn] = useState(false);
   const [disableHeaderRight, setDisableHeaderRight] = useState(false);
   const [backIcon, setBackIcon] = useState('arrow-left');
+  const [searchToggle, setSearchToggle] = useState(false);
+  const [query, setQuery] = useState('');
 
-  const [focused, setFocused] = useState(false);
+  const inputRef = useRef();
 
-  const keyword = '';
-
-  const {Value, timing} = Animated;
-
-  const inputTranslateX = new Value(0);
-  const backBtnOpaCity = new Value(0);
-  const contentTranslateY = new Value(0);
-  const contentOpacity = new Value(0);
-
-  const onFocus = () => {
-    setFocused(true);
-
-    // animation config
-    // input box
-    const inputBoxTranslate_X_Config = {
-      duration: 200,
-      toValue: 0,
-      easing: EasingNode.inOut(EasingNode.ease),
-    };
-    const backBtnOpacity_Config = {
-      duration: 200,
-      toValue: 1,
-      easing: EasingNode.inOut(EasingNode.ease),
-    };
-
-    // content
-    const contentTranslate_Y_Config = {
-      duration: 0,
-      toValue: 1,
-      easing: EasingNode.inOut(EasingNode.ease),
-    };
-
-    const contentOpacity_Config = {
-      duration: 200,
-      toValue: 1,
-      easing: EasingNode.inOut(EasingNode.ease),
-    };
-
-    timing(inputTranslateX, inputBoxTranslate_X_Config).start();
-    timing(backBtnOpaCity, backBtnOpacity_Config).start();
-    timing(contentTranslateY, contentTranslate_Y_Config).start();
-    timing(contentOpacity, contentOpacity_Config).start();
-  };
-
-  const onBlur = () => {};
+  const {
+    headerLeftAnimatedStyle,
+    headerRightAnimatedStyle,
+    inputContainerAnimatedStyle,
+    recentSearchContainerAnimatedStyle,
+    seachBtnContainerAnimatedStyle,
+  } = useAnimatedHeaderStyles(searchToggle, inputRef);
 
   useEffect(() => {
     const backBtnConditions = [
@@ -105,24 +68,38 @@ const Header = ({navigation, options, route}) => {
     }
 
     if (route.name === routes.CART) {
-      // setDisableHeaderRight(true);
       setBackIcon('close');
     }
   }, [route.name]);
 
-  if (1)
-    return (
-      <AnimatedHeader navigation={navigation} options={options} route={route} />
-    );
+  // console.log(recentQueries, 'recent');
+
+  const handleSearch = recentQuery => {
+    setSearchToggle(!searchToggle);
+    const newQuery = recentQuery ? recentQuery : query;
+    if (searchToggle && newQuery) {
+      if (!recentQuery)
+        setRecentQueries([
+          newQuery,
+          ...recentQueries.filter(el => el !== newQuery),
+        ]);
+      navigation.navigate(routes.SEARCHED, newQuery);
+      setQuery('');
+    }
+  };
 
   return (
     <>
       <View style={styles.container}>
         <View style={styles.headerLeft}>
-          {!disableBackBtn && (
+          {(!disableBackBtn || searchToggle) && (
             <TouchableHighlight
               // hitSlop={{top: 20, bottom: 20, right: 20, left: 20}}
-              onPress={() => navigation.goBack()}
+              onPress={() =>
+                searchToggle
+                  ? setSearchToggle(!searchToggle)
+                  : navigation.goBack()
+              }
               underlayColor={colors.grey_light_4}
               style={styles.backBtn}>
               <MaterialCommunityIcons
@@ -132,102 +109,90 @@ const Header = ({navigation, options, route}) => {
               />
             </TouchableHighlight>
           )}
-          <AppText style={styles.title}>
-            {options.title ? options.title : route.name}
-          </AppText>
+          <Animated.View style={headerLeftAnimatedStyle}>
+            <AppText style={styles.title}>
+              {options.title ? options.title : route.name}
+            </AppText>
+          </Animated.View>
         </View>
-        {!disableHeaderRight && (
-          <View style={styles.headerRight}>
-            {!disableSearchBtn && (
-              <TouchableOpacity onPress={onFocus}>
-                <SearchIcon width={size} hieght={size} />
-              </TouchableOpacity>
-            )}
-            {!disableNotifyBtn && (
-              <TouchableOpacity>
-                <NoficationActiveIcon
-                  marginHorizontal={size}
-                  width={size}
-                  hieght={size}
-                />
-              </TouchableOpacity>
-            )}
-            {!disableCartBtn && (
-              <TouchableOpacity
-                // style={{backgroundColor: 'yellow'}}
-                onPress={() => navigation.navigate(routes.CART)}>
-                <CartIcon width={size} hieght={size}></CartIcon>
-                {orderedNum > 0 && (
-                  <Text numberOfLines={1} style={styles.cartCount}>
-                    {orderedNum}
-                  </Text>
-                )}
-              </TouchableOpacity>
-            )}
-            {/* <Animated.View
-              style={[
-                styles.input,
-                {transform: [{translateX: inputTranslateX}]},
-              ]}>
-              <Animated.View
-                style={{opacity: backBtnOpaCity, backgroundColor: 'red'}}>
-                <TouchableHighlight
-                  // hitSlop={{top: 20, bottom: 20, right: 20, left: 20}}
-                  onPress={() => navigation.goBack()}
-                  underlayColor={colors.grey_light_4}
-                  style={styles.backBtn}>
-                  <MaterialCommunityIcons
-                    size={size}
-                    color={colors.black}
-                    name={backIcon}
-                  />
-                </TouchableHighlight>
-              </Animated.View>
 
-              <AppTextInput />
-            </Animated.View> */}
-          </View>
-        )}
+        <Animated.View style={inputContainerAnimatedStyle}>
+          <AppTextInput
+            style={[styles.searchInputField]}
+            value={query}
+            onChangeText={text => setQuery(text)}
+            inputRef={inputRef}
+            // autoFocus={searchToggle}
+            placeholder="Search eShop"
+          />
+        </Animated.View>
+
+        <Animated.View style={[headerRightAnimatedStyle]}>
+          {!disableHeaderRight && (
+            <View style={styles.headerRight}>
+              {!disableSearchBtn && (
+                <TouchableOpacity onPress={() => handleSearch()}>
+                  <Animated.View style={seachBtnContainerAnimatedStyle}>
+                    <SearchIcon
+                      width={size}
+                      stroke={searchToggle ? colors.white : colors.black}
+                    />
+                  </Animated.View>
+                </TouchableOpacity>
+              )}
+              {!disableNotifyBtn && (
+                <TouchableOpacity>
+                  <NoficationActiveIcon marginHorizontal={size} width={size} />
+                </TouchableOpacity>
+              )}
+              {!disableCartBtn && (
+                <TouchableOpacity
+                  // style={{backgroundColor: 'yellow'}}
+                  onPress={() => navigation.navigate(routes.CART)}>
+                  <CartIcon width={size}></CartIcon>
+                  {orderedNum > 0 && (
+                    <Text numberOfLines={1} style={styles.cartCount}>
+                      {orderedNum}
+                    </Text>
+                  )}
+                </TouchableOpacity>
+              )}
+            </View>
+          )}
+        </Animated.View>
       </View>
-      {/* <Animated.View
-        style={[
-          styles.content,
-          {
-            opacity: contentOpacity,
-            transform: [{translateY: contentTranslateY}],
-          },
-        ]}>
-        <SafeAreaView style={{flex: 1}}>
-          <View style={styles.separator}>
-            {keyword === '' ? (
-              <View>
-                <AppText>enter a few words</AppText>
-              </View>
-            ) : (
-              <ScrollView>
-                <View>
-                  <AppText>item1</AppText>
-                </View>
-                <View>
-                  <AppText>item1</AppText>
-                </View>
-                <View>
-                  <AppText>item1</AppText>
-                </View>
-                <View>
-                  <AppText>item1</AppText>
-                </View>
-                <View>
-                  <AppText>item1</AppText>
-                </View>
-                <View>
-                  <AppText>item1</AppText>
-                </View>
-              </ScrollView>
-            )}
-          </View>
-        </SafeAreaView>
-      </Animated.View> */}
+      <Animated.View style={recentSearchContainerAnimatedStyle}>
+        <AppText
+          style={{
+            fontSize: fontSz(12),
+            fontWeight: '700',
+            backgroundColor: colors.grey_light_4,
+            padding: 5,
+            paddingHorizontal: 15,
+          }}>
+          Recents Search
+        </AppText>
+        <ScrollView>
+          {recentQueries.map(el => (
+            <TouchableOpacity
+              key={el}
+              onPress={() => handleSearch(el)}
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                padding: 5,
+                paddingHorizontal: 15,
+              }}>
+              <Octicons
+                size={size - 5}
+                name="search"
+                style={{marginRight: 5}}
+              />
+              <AppText style={{fontSize: fontSz(12)}}>{el}</AppText>
+            </TouchableOpacity>
+          ))}
+        </ScrollView>
+      </Animated.View>
     </>
   );
 };
@@ -242,7 +207,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
     height: 50,
     overflow: 'hidden',
-    // backgroundColor: 'red',
+    // backgroundColor: 'yellow',
   },
   headerRight: {
     flexDirection: 'row',
@@ -272,7 +237,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   backBtn: {
-    marginRight: 5,
+    marginRight: 3,
+    marginLeft: -10,
     width: wp(35),
     height: wp(35),
     borderRadius: 50,
@@ -295,6 +261,11 @@ const styles = StyleSheet.create({
     marginTop: 5,
     height: 1,
     backgroundColor: colors.black,
+  },
+  searchInputField: {
+    borderRadius: 0,
+    width: '100%',
+    paddingHorizontal: 0,
   },
 });
 

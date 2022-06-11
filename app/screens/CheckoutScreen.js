@@ -20,7 +20,6 @@ const CheckoutScreen = props => {
   };
 
   return (
-    // <Host>
     <View style={styles.container}>
       <View style={styles.tabContainer}>
         <View style={styles.tabBtnContainer}>
@@ -55,7 +54,6 @@ const CheckoutScreen = props => {
         />
       )}
     </View>
-    // </Host>
   );
 };
 

@@ -7,6 +7,7 @@ import AppFormInput from '../components/form/AppFormInput';
 import * as Yup from 'yup';
 import MultiStepSignUpWizard from '../components/MultiStepSignUpWizard';
 import AuthForm from '../components/AuthForm';
+import AppTextarea from '../components/AppTextarea';
 
 const validationSchema = Yup.object().shape({
   firstname: Yup.string().required().min(1).label('Firstname'),

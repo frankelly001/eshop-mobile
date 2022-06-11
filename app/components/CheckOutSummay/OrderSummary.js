@@ -25,7 +25,7 @@ const OrderSummary = props => {
         </View>
         <ScrollView showsVerticalScrollIndicator={false}>
           {ordered.map(product => (
-            <ProductSummaryCard product={product} />
+            <ProductSummaryCard key={product.id} product={product} />
           ))}
         </ScrollView>
       </View>

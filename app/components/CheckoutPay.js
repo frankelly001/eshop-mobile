@@ -6,8 +6,6 @@ import AppGradientBtn from './AppGradientBtn';
 import AppText from './AppText';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 import PaymentNotice from './PaymentNotice';
-import {Modalize} from 'react-native-modalize';
-import {Portal} from 'react-native-portalize';
 import DeliverySummary from './CheckOutSummay/DeliverySummary';
 import BottomSheet from './BottomSheet';
 import OrderSummary from './CheckOutSummay/OrderSummary';

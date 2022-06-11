@@ -20,7 +20,7 @@ import routes from '../navigation/routes';
 import {formatToCurrency} from '../utilities/formatToCurr';
 
 const CartScreen = ({navigation}) => {
-  const {ordered, subtotal, delivery, total} = useContext(AuthContext);
+  const {ordered, subTotal, delivery, total} = useContext(AuthContext);
   const [id, setId] = useState(null);
   const [keyboardStatus, setKeyboardStatus] = useState(undefined);
 
@@ -48,7 +48,7 @@ const CartScreen = ({navigation}) => {
         </View>
         <View style={styles.feeTitleContainer}>
           <AppText>SubTotal</AppText>
-          <AppText style={styles.price}>{formatToCurrency(subtotal)}</AppText>
+          <AppText style={styles.price}>{formatToCurrency(subTotal)}</AppText>
         </View>
         <View style={styles.feeTitleContainer}>
           <AppText>Delivery fee</AppText>

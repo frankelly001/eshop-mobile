@@ -7,7 +7,11 @@ export const formatData = (data, numColumns) => {
       numberOfElementsLastRow !== numColumns &&
       numberOfElementsLastRow !== 0
     ) {
-      data.push({key: `blank-${numberOfElementsLastRow}`, empty: true});
+      data.push({
+        id: `empty${numberOfElementsLastRow}`,
+        key: `blank-${numberOfElementsLastRow}`,
+        empty: true,
+      });
       numberOfElementsLastRow++;
     }
 

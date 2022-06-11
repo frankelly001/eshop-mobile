@@ -62,8 +62,4 @@ const DeliverySummary = ({deliveryInfo}) => {
   );
 };
 
-const styles = StyleSheet.create({
-  container: {},
-});
-
 export default DeliverySummary;

@@ -1,8 +1,11 @@
 import React, {useContext, useCallback, memo} from 'react';
-import {StyleSheet, View, Text, FlatList} from 'react-native';
+import {StyleSheet, View, Text, FlatList, SectionList} from 'react-native';
 import AuthContext from '../auth/AuthContext';
+import AppText from '../components/AppText';
+import ImageCarousel from '../components/ImageCarousel';
 import ProductCard from '../components/ProductCard';
-import Screen from '../components/Screen';
+import SectionComponent from '../components/SectionComponent';
+import SectionListRenderItem from '../components/SectionListRenderItem';
 import routes from '../navigation/routes';
 import {formatData} from '../utilities/formatData';
 
@@ -13,27 +16,29 @@ const HomeScreen = ({navigation}) => {
   //   navigation.navigate(routes.PRODUCTDETAILS, id);
   // }, []);
 
-  console.log('Home Screen rendering');
+  // console.log('Home Screen rendering');
+
+  // if (products.length > 0) return <SectionComponent />;
 
   return (
-    <FlatList
-      showsVerticalScrollIndicator={false}
-      numColumns={2}
-      data={formatData(products, 2)}
-      // style={{flex: 1}}
-      // contentContainerStyle={styles.container}
-      key={product => product.id.toString()}
-      renderItem={({item}) => {
-        if (item.empty)
-          return <View style={{flex: 1, backgroundColor: 'red'}} />;
-        return (
-          <ProductCard
-            product={item}
-            // onPress={() => navigate(item.id)}
-            onPress={() => navigation.navigate(routes.PRODUCTDETAILS, item.id)}
-          />
-        );
-      }}
+    <SectionList
+      ListHeaderComponent={() => <ImageCarousel />}
+      renderItem={({item, ...props}) => (
+        <SectionListRenderItem
+          numColumns={2}
+          ItemComponent={ProductCard}
+          navigation={navigation}
+          item={item}
+          {...props}
+        />
+      )}
+      renderSectionHeader={() => (
+        <View style={{backgroundColor: 'red', width: '100%', height: 40}}>
+          <AppText>heyyy</AppText>
+        </View>
+      )}
+      sections={[{data: products}]}
+      stickySectionHeadersEnabled={true}
     />
   );
 };

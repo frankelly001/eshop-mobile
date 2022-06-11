@@ -14,7 +14,6 @@ import reducerFunction from './app/hooks/useRuducer';
 import {shuffle} from './app/utilities/randomArr';
 import {getCategories} from './app/api/categories';
 import {navigationRef} from './app/navigation/rootNavigation';
-import AppText from './app/components/AppText';
 import {gestureHandlerRootHOC} from 'react-native-gesture-handler';
 import {Host} from 'react-native-portalize';
 
