@@ -46,8 +46,9 @@ const CheckoutPay = ({deliveryInfo, onGoBack}) => {
             {`${deliveryInfo.number} ${deliveryInfo.street}`}
           </AppText>
           <AppText>
-            {deliveryInfo.phone1}{' '}
-            {deliveryInfo.phone2 && `/ ${deliveryInfo.phone2}`}
+            {deliveryInfo.phone}{' '}
+            {deliveryInfo.additionalPhone &&
+              `/ ${deliveryInfo.additionalPhone}`}
           </AppText>
           <TouchableOpacity onPress={onGoBack}>
             <AppText style={styles.changeBtn}>Change</AppText>
