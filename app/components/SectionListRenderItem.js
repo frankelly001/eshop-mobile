@@ -9,42 +9,18 @@ const SectionListRenderItem = ({
   index,
   numColumns = 1,
   ItemComponent,
-  navigation,
-  item,
 }) => {
   if (index % numColumns !== 0) return null;
 
   const items = [];
-  //   console.log(item);
-
-  const allItems = formatData(section.data, numColumns);
-  console.log(allItems);
 
   for (let i = index; i < index + numColumns; i++) {
     if (i >= section.data.length) {
       console.log('break');
       break;
     }
-
-    allItems[i].empty
-      ? items.push(
-          <View
-            key={allItems[i].id}
-            style={{flex: 1, backgroundColor: 'red', width: '100%'}}
-          />,
-        )
-      : items.push(
-          <ItemComponent
-            key={allItems[i].id}
-            product={allItems[i]}
-            onPress={() =>
-              navigation.navigate(routes.PRODUCTDETAILS, allItems[i].id)
-            }
-          />,
-        );
+    items.push(ItemComponent(section.data[i]));
   }
-
-  // console.log(items);
   return <View style={styles.container}>{items}</View>;
 };
 
@@ -52,8 +28,10 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    // backgroundColor: 'yellow',
+    // backgroundColor: 'red',
   },
 });
 
 export default SectionListRenderItem;
+
+// ({itm)=>decodeURI(item)

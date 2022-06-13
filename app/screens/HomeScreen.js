@@ -3,9 +3,11 @@ import {StyleSheet, View, Text, FlatList, SectionList} from 'react-native';
 import AuthContext from '../auth/AuthContext';
 import AppText from '../components/AppText';
 import ImageCarousel from '../components/ImageCarousel';
+import NewSection from '../components/NewSection';
 import ProductCard from '../components/ProductCard';
 import SectionComponent from '../components/SectionComponent';
 import SectionListRenderItem from '../components/SectionListRenderItem';
+import colors from '../config/colors';
 import routes from '../navigation/routes';
 import {formatData} from '../utilities/formatData';
 
@@ -18,27 +20,51 @@ const HomeScreen = ({navigation}) => {
 
   // console.log('Home Screen rendering');
 
-  // if (products.length > 0) return <SectionComponent />;
+  if (products.length < 1) return null;
+
+  const numOfCols = 2;
 
   return (
     <SectionList
       ListHeaderComponent={() => <ImageCarousel />}
-      renderItem={({item, ...props}) => (
+      renderSectionHeader={() => (
+        <View
+          style={{
+            backgroundColor: colors.grey_light_4,
+            width: '100%',
+            height: 40,
+            justifyContent: 'center',
+            paddingHorizontal: 10,
+          }}>
+          <AppText>New Arrivals</AppText>
+        </View>
+      )}
+      sections={[{data: formatData(products, numOfCols)}]}
+      stickySectionHeadersEnabled
+      renderItem={({...props}) => (
         <SectionListRenderItem
-          numColumns={2}
-          ItemComponent={ProductCard}
-          navigation={navigation}
-          item={item}
+          numColumns={numOfCols}
+          ItemComponent={item => {
+            if (item.empty)
+              return (
+                <View
+                  key={item.id}
+                  style={{flex: 1, backgroundColor: 'transparent'}}
+                />
+              );
+            return (
+              <ProductCard
+                product={item}
+                key={item.id}
+                onPress={() =>
+                  navigation.navigate(routes.PRODUCTDETAILS, item.id)
+                }
+              />
+            );
+          }}
           {...props}
         />
       )}
-      renderSectionHeader={() => (
-        <View style={{backgroundColor: 'red', width: '100%', height: 40}}>
-          <AppText>heyyy</AppText>
-        </View>
-      )}
-      sections={[{data: products}]}
-      stickySectionHeadersEnabled={true}
     />
   );
 };

@@ -29,14 +29,14 @@ const DeliverySummary = ({deliveryInfo}) => {
         </View>
         <View style={SummaryStyles.modalDetail}>
           <AppText style={SummaryStyles.modalDetailLabel}>Phone:</AppText>
-          <AppText>{deliveryInfo.phone1}</AppText>
+          <AppText>{deliveryInfo.phone}</AppText>
         </View>
         <View style={SummaryStyles.modalDetail}>
           <AppText style={SummaryStyles.modalDetailLabel}>
             Additional Phone:
           </AppText>
-          {deliveryInfo.phone2 ? (
-            <AppText>{deliveryInfo.phone2}</AppText>
+          {deliveryInfo.additionalPhone ? (
+            <AppText>{deliveryInfo.additionalPhone}</AppText>
           ) : (
             <AppText style={{color: colors.red_dark}}>Not Available</AppText>
           )}

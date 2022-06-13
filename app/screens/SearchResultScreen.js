@@ -13,8 +13,8 @@ const SearchResultScreen = ({navigation, route}) => {
   useEffect(() => {
     const searched = products.filter(
       el =>
-        el.title.toLowerCase().includes(route.params.toLowerCase()) ||
-        el.category.toLowerCase().includes(route.params.toLowerCase()),
+        el?.title.toLowerCase().includes(route.params.toLowerCase()) ||
+        el?.category.toLowerCase().includes(route.params.toLowerCase()),
     );
     setSearchedProduct(searched);
   }, [route]);

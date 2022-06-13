@@ -8,34 +8,26 @@ import AppGradientBtn from './AppGradientBtn';
 import {fontSz} from '../config/responsiveSize';
 import SubmitButton from './form/SubmitButton';
 import Screen from './Screen';
+import validationSchema from './form/validationSchema';
 
-const validationSchema = Yup.object().shape({
-  firstname: Yup.string().required().min(1).label('Firstname'),
-  lastname: Yup.string().required().min(1).label('Lastname'),
-  email: Yup.string().required().email().label('Email'),
-  phone1: Yup.string()
-    .required()
-    .min(11)
-    .max(11)
-    .label('Phone')
-    .matches(/^[0-9]+$/, 'Phone must be only digits'),
-  phone2: Yup.string()
-    .min(11)
-    .max(11)
-    .label('Additional phone')
-    .matches(/^[0-9]+$/, 'Additional phone must be only digits'),
-  city: Yup.string().required().min(1).label('City'),
-  number: Yup.number().required().min(1).label('Street no'),
-  street: Yup.string().required().min(1).label('Street Address'),
-  zipcode: Yup.number().required().min(1).label('Zipcode'),
+const checkoutInfo_VS = Yup.object().shape({
+  firstname: validationSchema.firstname,
+  lastname: validationSchema.lastname,
+  email: validationSchema.email,
+  phone: validationSchema.phone,
+  additionalPhone: validationSchema.additionalPhone,
+  city: validationSchema.city,
+  number: validationSchema.number,
+  street: validationSchema.street,
+  zipcode: validationSchema.zipcode,
 });
 
 const initialValues = {
   firstname: '',
   lastname: '',
   email: '',
-  phone1: '',
-  phone2: '',
+  phone: '',
+  additionalPhone: '',
   city: '',
   number: '',
   street: '',
@@ -52,7 +44,7 @@ const CheckoutInfo = ({savedValues, setSavedValues, onSubmit}) => {
         <AppText style={styles.header}>Customer Delivery Information</AppText>
         <AppForm
           initialValues={savedValues || initialValues}
-          validationSchema={validationSchema}
+          validationSchema={checkoutInfo_VS}
           onSubmit={onSubmit}>
           <View style={[styles.formContainer]}>
             <AppFormInput
@@ -81,12 +73,12 @@ const CheckoutInfo = ({savedValues, setSavedValues, onSubmit}) => {
             />
             <AppFormInput
               keyboardType="numeric"
-              name="phone1"
+              name="phone"
               placeholder="Phone"
             />
             <AppFormInput
               keyboardType="numeric"
-              name="phone2"
+              name="additionalPhone"
               placeholder="Additional phone (Optional)"
             />
             <AppFormInput

@@ -5,7 +5,7 @@ import AppFormInput from './form/AppFormInput';
 import {fontSz} from '../config/responsiveSize';
 import SubmitButton from './form/SubmitButton';
 
-const SignupScreen1 = ({onNext}) => {
+const SignupScreen1 = () => {
   return (
     <View style={[styles.container, {justifyContent: 'center'}]}>
       <AppFormInput
@@ -29,17 +29,16 @@ const SignupScreen1 = ({onNext}) => {
         placeholder="Username"
         textContentType="name"
       />
-      <AppGradientBtn
+      <SubmitButton
         labelStyle={styles.btnLabel}
         label="Next"
-        onPress={() => onNext()}
         containerStyle={styles.btnContainerStyle}
       />
     </View>
   );
 };
 
-const SignupScreen2 = ({onPrev, onNext}) => {
+const SignupScreen2 = ({onPrev}) => {
   return (
     <View style={styles.container}>
       <AppFormInput
@@ -77,17 +76,16 @@ const SignupScreen2 = ({onPrev, onNext}) => {
         onPress={() => onPrev()}
         containerStyle={styles.btnContainerStyle}
       />
-      <AppGradientBtn
+      <SubmitButton
         labelStyle={styles.btnLabel}
         label="Next"
-        onPress={() => onNext()}
         containerStyle={styles.btnContainerStyle}
       />
     </View>
   );
 };
 
-const SignupScreen3 = ({onPrev}) => {
+const SignupScreen3 = ({onPrev, setValidatedValues}) => {
   return (
     <View style={styles.container}>
       <AppFormInput
@@ -123,6 +121,7 @@ const SignupScreen3 = ({onPrev}) => {
         labelStyle={styles.btnLabel}
         label="Done"
         containerStyle={styles.btnContainerStyle}
+        onSaveValues={setValidatedValues}
       />
     </View>
   );

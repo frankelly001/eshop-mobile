@@ -39,7 +39,7 @@ const App = () => {
         return {productId: pId.id, quantity: 0};
       });
       dispatch({type: 'INITIALIZE', data: allCartObj});
-      setProducts(shuffle(data.map(el => ({...el, price: el.price * 430}))));
+      setProducts(data.map(el => ({...el, price: el.price * 430})));
     }
   };
 

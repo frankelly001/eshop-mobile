@@ -8,37 +8,51 @@ import * as Yup from 'yup';
 import MultiStepSignUpWizard from '../components/MultiStepSignUpWizard';
 import AuthForm from '../components/AuthForm';
 import AppTextarea from '../components/AppTextarea';
+import validationSchema from '../components/form/validationSchema';
 
-const validationSchema = Yup.object().shape({
-  firstname: Yup.string().required().min(1).label('Firstname'),
-  lastname: Yup.string().required().min(1).label('Lastname'),
-  username: Yup.string().required().min(1).label('Username'),
-  city: Yup.string().required().min(1).label('City'),
-  number: Yup.number().required().min(1).label('Street no'),
-  street: Yup.string().required().min(1).label('Street Address'),
-  zipcode: Yup.number().required().min(1).label('Zipcode'),
-  email: Yup.string().required().email().label('Email'),
-  phone: Yup.string()
-    .required()
-    .min(11)
-    .max(11)
-    .label('Phone')
-    .matches(/^[0-9]+$/, 'Phone must be only digits'),
-  password: Yup.string().required().min(4).label('Password'),
-  confirmPassword: Yup.string()
-    .oneOf([Yup.ref('password'), null], 'Confirm Password must match Password')
-    .required()
-    .label('Confirm password'),
+const signup1_VS = Yup.object().shape({
+  firstname: validationSchema.firstname,
+  lastname: validationSchema.lastname,
+  username: validationSchema.username,
+});
 
-  // confirmPassword: Yup.string()
-  //   .oneOf([Yup.ref('password'), null], 'Confirm Password must match Password')
-  //   .required('Confirm password is required')
-  // category: Yup.object().required().nullable().label('Category'),
-  // images: Yup.array().min(1, 'Please select at least one image'),
-  // description: Yup.string().label('Description'),
+const signup2_VS = Yup.object().shape({
+  city: validationSchema.city,
+  number: validationSchema.number,
+  street: validationSchema.street,
+  zipcode: validationSchema.zipcode,
+});
+
+const signup3_VS = Yup.object().shape({
+  email: validationSchema.email,
+  phone: validationSchema.phone,
+  password: validationSchema.password,
+  confirmPassword: validationSchema.confirmPassword,
 });
 
 const SignupScreen = props => {
+  const [step, setStep] = useState(1);
+  const [validatedValues, setValidatedValues] = useState(null);
+
+  const nextStep = () => {
+    setStep(step + 1);
+  };
+
+  const prevStep = () => {
+    setStep(step - 1);
+  };
+
+  const handleValidation = step => {
+    if (step === 1) return signup1_VS;
+    else if (step === 2) return signup2_VS;
+    else return signup3_VS;
+  };
+
+  const handleSubmit = () => {
+    if (step !== 3) return nextStep();
+    console.log(validatedValues, 'Success');
+  };
+
   return (
     <AuthForm
       welcomeMessage="Welcome to eShop"
@@ -58,8 +72,13 @@ const SignupScreen = props => {
         // lat: '10111',
         // long: '100101',
       }}
-      validationSchema={validationSchema}>
-      <MultiStepSignUpWizard />
+      validationSchema={handleValidation(step)}
+      onSubmit={handleSubmit}>
+      <MultiStepSignUpWizard
+        step={step}
+        prevStep={prevStep}
+        setValidatedValues={setValidatedValues}
+      />
     </AuthForm>
   );
 
