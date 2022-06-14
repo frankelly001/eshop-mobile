@@ -27,6 +27,8 @@ const AuthForm = ({
       <AppText style={styles.welcome}>{welcomeMessage}</AppText>
       <AppText style={styles.authLabel}>{authTypeLabel}</AppText>
       <AppForm
+        enableReinitialize
+        validateOnMount
         initialValues={initialValues}
         validationSchema={validationSchema}
         onSubmit={onSubmit}>

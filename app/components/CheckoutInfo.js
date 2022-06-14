@@ -45,6 +45,8 @@ const CheckoutInfo = ({savedValues, setSavedValues, onSubmit}) => {
         <AppForm
           initialValues={savedValues || initialValues}
           validationSchema={checkoutInfo_VS}
+          enableReinitialize
+          validateOnMount={true}
           onSubmit={onSubmit}>
           <View style={[styles.formContainer]}>
             <AppFormInput

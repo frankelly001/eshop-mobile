@@ -26,6 +26,7 @@ const HomeScreen = ({navigation}) => {
 
   return (
     <SectionList
+      showsVerticalScrollIndicator={false}
       ListHeaderComponent={() => <ImageCarousel />}
       renderSectionHeader={() => (
         <View

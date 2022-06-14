@@ -38,7 +38,7 @@ const CartScreen = ({navigation}) => {
     };
   }, [keyboardStatus]);
 
-  console.log(keyboardStatus);
+  // console.log(keyboardStatus);
 
   return (
     <View style={styles.container} onPress={() => setId(null)}>

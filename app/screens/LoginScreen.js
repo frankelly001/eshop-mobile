@@ -8,10 +8,11 @@ import AppGradientBtn from '../components/AppGradientBtn';
 import {fontSz} from '../config/responsiveSize';
 import SubmitButton from '../components/form/SubmitButton';
 import colors from '../config/colors';
+import validationSchema from '../components/form/validationSchema';
 
-const validationSchema = Yup.object().shape({
-  username: Yup.string().required().min(1).label('Username'),
-  password: Yup.string().required().min(4).label('Password'),
+const login_VS = Yup.object().shape({
+  username: validationSchema.username,
+  password: validationSchema.password,
 });
 
 const LoginScreen = () => {
@@ -23,7 +24,7 @@ const LoginScreen = () => {
         username: '',
         password: '',
       }}
-      validationSchema={validationSchema}>
+      validationSchema={login_VS}>
       <View style={[styles.container, {justifyContent: 'center'}]}>
         <AppFormInput
           autoCapitalize="none"
