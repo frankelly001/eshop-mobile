@@ -11,6 +11,7 @@ import BottomSheet from './BottomSheet';
 import OrderSummary from './CheckOutSummay/OrderSummary';
 import AuthContext from '../auth/AuthContext';
 import {formatToCurrency} from '../utilities/formatToCurr';
+import FlutterPayBtn from './FlutterPayBtn';
 
 const CheckoutPay = ({deliveryInfo, onGoBack}) => {
   const deliverySummaryRef = useRef();
@@ -79,10 +80,11 @@ const CheckoutPay = ({deliveryInfo, onGoBack}) => {
           </AppText>
         </View>
       </View>
-      <AppGradientBtn
+      <FlutterPayBtn total={total} email={deliveryInfo.email} />
+      {/* <AppGradientBtn
         label={`PAY NOW: ${formatToCurrency(total)}`}
         labelStyle={{fontWeight: '700'}}
-      />
+      /> */}
 
       <PaymentNotice />
 

@@ -1,14 +1,14 @@
 import React from 'react';
 import {StyleSheet, TouchableOpacity, Text} from 'react-native';
 import colors from '../config/colors';
-import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {fontSz} from '../config/responsiveSize';
 
 const AppButton = ({label, labelStyle, bgStyle, onPress, icon}) => {
   return (
     <TouchableOpacity style={[styles.container, bgStyle]} onPress={onPress}>
       {icon && (
-        <FontAwesomeIcon
+        <MaterialCommunityIcons
           size={20}
           name={icon}
           color={colors.white}

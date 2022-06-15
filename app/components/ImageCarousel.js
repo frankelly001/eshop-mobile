@@ -84,10 +84,10 @@ const ImageCarousel = () => {
   );
 };
 
-const carouselHeight = height / 3;
+const carouselHeight = height / 3.5;
 const styles = StyleSheet.create({
   container: {
-    width: '100%',
+    width: width,
     height: carouselHeight,
     // alignSelf: 'flex-start',
   },
@@ -97,7 +97,7 @@ const styles = StyleSheet.create({
   },
   circleContainer: {
     position: 'absolute',
-    bottom: 15,
+    bottom: 10,
     height: 10,
     flexDirection: 'row',
     justifyContent: 'center',
