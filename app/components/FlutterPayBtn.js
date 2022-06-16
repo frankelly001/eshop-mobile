@@ -17,7 +17,7 @@ const FlutterPayBtn = ({total, email}) => {
     return `flw_tx_ref_${result}`;
   };
 
-  console.log(generateTransactionRef(10));
+  // console.log(generateTransactionRef(10));
 
   const handleOnRedirect = data => {
     console.log(data, "incase status it's successful, cancelled or failed");

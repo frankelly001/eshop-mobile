@@ -60,15 +60,12 @@ const App = () => {
     return function cleanUp() {};
   }, []);
 
-  const handleLike = useCallback(
-    product => {
-      const newState = [...products];
-      const index = newState.indexOf(product);
-      newState[index].like = !newState[index].like;
-      setProducts(newState);
-    },
-    [products],
-  );
+  const handleLike = useCallback(product => {
+    const newState = [...products];
+    const index = newState.indexOf(product);
+    newState[index].like = !newState[index].like;
+    setProducts(newState);
+  }, []);
 
   // useEffect(() => {
   //   const added = allCounters.cartsCount.filter(

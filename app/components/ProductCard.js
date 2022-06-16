@@ -13,6 +13,7 @@ import {formatToCurrency} from '../utilities/formatToCurr';
 import AppButton from './AppButton';
 import AppGradientBtn from './AppGradientBtn';
 import AppText from './AppText';
+import LikeBtn from './LikeBtn';
 
 const dimenson = Dimensions.get('screen');
 
@@ -50,6 +51,11 @@ const ProductCard = ({product, onPress, small, medium}) => {
           onPress={() => dispatch({type: 'addToCart', id: product.id})}
         />
       </View>
+      {!small && !medium && (
+        <View style={{position: 'absolute', right: 5, top: 5}}>
+          <LikeBtn product={product} size={20} />
+        </View>
+      )}
     </TouchableOpacity>
   );
 };
