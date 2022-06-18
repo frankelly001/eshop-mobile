@@ -23,15 +23,15 @@ const checkoutInfo_VS = Yup.object().shape({
 });
 
 const initialValues = {
-  firstname: 'frank',
-  lastname: 'okeke',
-  email: 'frankelly344@gmail.com',
-  phone: '08176507344',
+  firstname: '',
+  lastname: '',
+  email: '',
+  phone: '',
   additionalPhone: '',
-  city: 'Lagos',
-  number: '56',
-  street: 'sowemimo street',
-  zipcode: '110110',
+  city: '',
+  number: '',
+  street: '',
+  zipcode: '',
 };
 
 const CheckoutInfo = ({savedValues, setSavedValues, onSubmit}) => {

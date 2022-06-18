@@ -8,7 +8,7 @@ import ActivityIndicator from '../components/ActivityIndicator';
 
 const SearchResultScreen = ({navigation, route}) => {
   const {products} = useContext(AuthContext);
-  const [searchedProduct, setSearchedProduct] = useState([]);
+  const [searchedProduct, setSearchedProduct] = useState(null);
 
   useEffect(() => {
     const searched = products.filter(
@@ -19,6 +19,7 @@ const SearchResultScreen = ({navigation, route}) => {
     setSearchedProduct(searched);
   }, [route]);
 
+  if (!searchedProduct) return null;
   return (
     <>
       {searchedProduct.length > 0 ? (

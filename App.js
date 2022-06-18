@@ -16,6 +16,7 @@ import {getCategories} from './app/api/categories';
 import {navigationRef} from './app/navigation/rootNavigation';
 import {gestureHandlerRootHOC} from 'react-native-gesture-handler';
 import {Host} from 'react-native-portalize';
+import SplashScreen from 'react-native-splash-screen';
 
 const initialState = {
   cartsCount: [],
@@ -56,16 +57,20 @@ const App = () => {
   useEffect(() => {
     allCategories();
     allProducts();
+    SplashScreen.hide();
 
     return function cleanUp() {};
   }, []);
 
-  const handleLike = useCallback(product => {
-    const newState = [...products];
-    const index = newState.indexOf(product);
-    newState[index].like = !newState[index].like;
-    setProducts(newState);
-  }, []);
+  const handleLike = useCallback(
+    product => {
+      const newState = [...products];
+      const index = newState.indexOf(product);
+      newState[index].like = !newState[index].like;
+      setProducts(newState);
+    },
+    [products],
+  );
 
   // useEffect(() => {
   //   const added = allCounters.cartsCount.filter(

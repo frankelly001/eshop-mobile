@@ -75,7 +75,6 @@ const useAnimatedHeaderStyles = (animationSwitch, inputRef) => {
 
   useEffect(() => {
     if (animationSwitch) {
-      inputRef.current?.focus();
       headerLeftTranlateX.value = -wp(200);
       headerRightTranlateX.value = wp(85);
       searchBtnStyleVal.value = 10;
@@ -84,6 +83,7 @@ const useAnimatedHeaderStyles = (animationSwitch, inputRef) => {
       inputDisplay.value = 'flex';
       inputFieldpaddingX.value = 15;
       recentSearchContainerHeight.value = height;
+      inputRef.current?.focus();
     } else {
       inputRef.current?.blur();
       headerLeftTranlateX.value = 0;

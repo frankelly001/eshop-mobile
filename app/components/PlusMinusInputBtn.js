@@ -96,6 +96,7 @@ const bigStyles = StyleSheet.create({
     textAlign: 'center',
     fontSize: fontSz(18),
     fontWeight: '700',
+    color: colors.black,
     // paddingVertical: fontSz(8),
     paddingVertical: hp(7.5),
   },
@@ -131,6 +132,7 @@ const smallStyles = StyleSheet.create({
     textAlign: 'center',
     fontSize: fontSz(15),
     fontWeight: '600',
+    color: colors.black,
     padding: 0,
   },
   btn: {
