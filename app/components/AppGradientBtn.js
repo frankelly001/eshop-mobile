@@ -2,6 +2,7 @@ import React from 'react';
 import {StyleSheet, TouchableOpacity, Text} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import colors from '../config/colors';
+import fonts from '../config/fonts';
 import {fontSz} from '../config/responsiveSize';
 import AppText from './AppText';
 
@@ -43,9 +44,8 @@ const styles = StyleSheet.create({
     borderRadius: 30,
   },
   text: {
-    fontFamily: 'Roboto',
-    fontSize: fontSz(15),
-    fontWeight: '600',
+    // fontSize: fontSz(15),
+    fontFamily: fonts.bold,
     color: colors.white,
   },
 });

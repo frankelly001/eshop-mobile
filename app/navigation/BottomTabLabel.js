@@ -2,6 +2,7 @@ import React from 'react';
 import {StyleSheet, Text} from 'react-native';
 import AppGradientText from '../components/AppGradientText';
 import colors from '../config/colors';
+import fonts from '../config/fonts';
 
 const BottomTabLabel = ({children, focused}) => {
   return focused ? (
@@ -19,7 +20,7 @@ const styles = StyleSheet.create({
     color: colors.black,
   },
   gradientText: {
-    fontWeight: '700',
+    fontFamily: fonts.bold,
   },
 });
 

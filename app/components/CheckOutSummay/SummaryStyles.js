@@ -1,5 +1,6 @@
 import {StyleSheet, StatusBar} from 'react-native';
 import colors from '../../config/colors';
+import fonts from '../../config/fonts';
 import {fontSz} from '../../config/responsiveSize';
 
 const SummaryStyles = StyleSheet.create({
@@ -17,12 +18,12 @@ const SummaryStyles = StyleSheet.create({
   },
   modalHeader: {
     fontSize: fontSz(18),
-    fontWeight: '700',
+    fontFamily: fonts.bold,
     color: colors.white,
   },
   modalSubHeader: {
     fontSize: fontSz(12),
-    fontWeight: '700',
+    fontFamily: fonts.bold,
     color: colors.grey_dark_2,
   },
   modalDetailsContainer: {},
@@ -35,7 +36,7 @@ const SummaryStyles = StyleSheet.create({
     // backgroundColor: 'red',
   },
   modalDetailLabel: {
-    fontWeight: '700',
+    fontFamily: fonts.bold,
     color: colors.grey_dark_2,
   },
   LeftContainer: {
@@ -49,7 +50,7 @@ const SummaryStyles = StyleSheet.create({
   },
   title: {
     fontSize: fontSz(12.5),
-    fontWeight: '700',
+    fontFamily: fonts.bold,
   },
   subTitle: {
     fontSize: fontSz(11),
@@ -57,7 +58,7 @@ const SummaryStyles = StyleSheet.create({
   },
   itemTotal: {
     fontSize: fontSz(11),
-    fontWeight: '700',
+    fontFamily: fonts.bold,
   },
   modalBottomHeaderContainer: {
     backgroundColor: colors.purple,

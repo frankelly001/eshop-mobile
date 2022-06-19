@@ -12,6 +12,7 @@ import OrderSummary from './CheckOutSummay/OrderSummary';
 import AuthContext from '../auth/AuthContext';
 import {formatToCurrency} from '../utilities/formatToCurr';
 import FlutterPayBtn from './FlutterPayBtn';
+import fonts from '../config/fonts';
 
 const CheckoutPay = ({deliveryInfo, onGoBack}) => {
   const deliverySummaryRef = useRef();
@@ -120,11 +121,10 @@ const styles = StyleSheet.create({
   },
   header: {
     fontSize: fontSz(13),
-    fontWeight: '700',
+    fontFamily: fonts.bold,
     color: colors.grey_dark_4,
   },
   headerPressable: {
-    fontWeight: '600',
     color: colors.purple,
   },
   deliverySummaryContainer: {
@@ -133,7 +133,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
   changeBtn: {
-    fontWeight: '700',
+    fontFamily: fonts.bold,
     alignSelf: 'flex-end',
     color: colors.purple,
   },
@@ -146,7 +146,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   totalLabel: {
-    fontWeight: '700',
+    fontFamily: fonts.bold,
   },
   price: {
     color: colors.grey_dark_3,

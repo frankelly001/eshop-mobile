@@ -1,0 +1,16 @@
+export default {
+  black: 'NunitoSans-Black',
+  black_itaic: 'NunitoSans-BlackItalic',
+  bold: 'NunitoSans-Bold',
+  bold_italic: 'NunitoSans-BoldItalic',
+  extra_bold: 'NunitoSans-ExtraBold',
+  extra_bold_italic: 'NunitoSans-ExtraBoldItalic',
+  extra_light: 'NunitoSans-ExtraLight',
+  extra_light_italic: 'NunitoSans-ExtraLightItalic',
+  italic: 'NunitoSans-Italic',
+  light: 'NunitoSans-Light',
+  light_italic: 'NunitoSans-LightItalic',
+  regular: 'NunitoSans-Regular',
+  semi_bold: 'NunitoSans-SemiBold',
+  semi_bold_italic: 'NunitoSans-SemiBoldItalic',
+};

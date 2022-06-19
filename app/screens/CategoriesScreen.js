@@ -11,6 +11,7 @@ import AuthContext from '../auth/AuthContext';
 import AppText from '../components/AppText';
 import ProductCard from '../components/ProductCard';
 import colors from '../config/colors';
+import fonts from '../config/fonts';
 import {fontSz, hp} from '../config/responsiveSize';
 // import navigation from '../navigation/rootNavigation';
 import routes from '../navigation/routes';
@@ -145,12 +146,12 @@ const styles = StyleSheet.create({
   listofCatHeader: {
     color: colors.white,
     fontSize: fontSz(13),
-    fontWeight: '700',
+    fontFamily: fonts.bold,
     textAlign: 'center',
   },
   titleOfCat: {
     textAlign: 'center',
-    fontWeight: '700',
+    fontFamily: fonts.bold,
     color: colors.white,
     textTransform: 'capitalize',
   },

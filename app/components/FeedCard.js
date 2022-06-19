@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import colors from '../config/colors';
+import fonts from '../config/fonts';
 import {fontSz, hp, wp} from '../config/responsiveSize';
 import AppGradientText from './AppGradientText';
 import AppText from './AppText';
@@ -65,7 +66,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: fontSz(20),
-    fontWeight: '700',
+    fontFamily: fonts.bold,
     textAlign: 'center',
     marginBottom: 3,
   },

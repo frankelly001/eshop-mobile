@@ -2,6 +2,7 @@ import React, {useState, useContext, useEffect, memo} from 'react';
 import {StyleSheet, View, TextInput, Dimensions} from 'react-native';
 import AuthContext from '../auth/AuthContext';
 import colors from '../config/colors';
+import fonts from '../config/fonts';
 import {fontSz, hp, wp} from '../config/responsiveSize';
 import AppButton from './AppButton';
 import AppGradientBtn from './AppGradientBtn';
@@ -95,7 +96,7 @@ const bigStyles = StyleSheet.create({
     flex: 5,
     textAlign: 'center',
     fontSize: fontSz(18),
-    fontWeight: '700',
+    fontFamily: fonts.bold,
     color: colors.black,
     // paddingVertical: fontSz(8),
     paddingVertical: hp(7.5),
@@ -131,7 +132,7 @@ const smallStyles = StyleSheet.create({
     flex: 5,
     textAlign: 'center',
     fontSize: fontSz(15),
-    fontWeight: '600',
+    fontFamily: fonts.bold,
     color: colors.black,
     padding: 0,
   },

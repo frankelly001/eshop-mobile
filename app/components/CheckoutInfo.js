@@ -9,6 +9,7 @@ import {fontSz} from '../config/responsiveSize';
 import SubmitButton from './form/SubmitButton';
 import Screen from './Screen';
 import validationSchema from './form/validationSchema';
+import fonts from '../config/fonts';
 
 const checkoutInfo_VS = Yup.object().shape({
   firstname: validationSchema.firstname,
@@ -114,7 +115,6 @@ const CheckoutInfo = ({savedValues, setSavedValues, onSubmit}) => {
             />
           </View>
           <SubmitButton
-            labelStyle={styles.btnLabel}
             label="Proceed payment"
             containerStyle={styles.btnContainerStyle}
             onSaveValues={setSavedValues}
@@ -136,7 +136,7 @@ const styles = StyleSheet.create({
   },
   header: {
     fontSize: fontSz(18),
-    fontWeight: '700',
+    fontFamily: fonts.bold,
     marginBottom: 15,
   },
   formContainer: {
@@ -145,12 +145,8 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     // backgroundColor: 'yellow',
   },
-  btnLabel: {
-    fontSize: fontSz(15),
-    fontWeight: '700',
-  },
   btnContainerStyle: {
-    width: '49.5%',
+    width: '70%',
     marginVertical: 10,
     // alignSelf: 'center',
   },

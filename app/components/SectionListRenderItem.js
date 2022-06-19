@@ -1,8 +1,5 @@
 import React from 'react';
 import {StyleSheet, View} from 'react-native';
-import routes from '../navigation/routes';
-import {formatData} from '../utilities/formatData';
-import ProductCard from './ProductCard';
 
 const SectionListRenderItem = ({
   section,

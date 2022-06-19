@@ -8,6 +8,7 @@ import {
 } from 'react-native';
 import AuthContext from '../auth/AuthContext';
 import colors from '../config/colors';
+import fonts from '../config/fonts';
 import {fontSz, wp} from '../config/responsiveSize';
 import {formatToCurrency} from '../utilities/formatToCurr';
 import AppButton from './AppButton';
@@ -96,12 +97,13 @@ const bigCardstyles = StyleSheet.create({
 
   title: {
     fontSize: fontSz(13),
-    fontWeight: '700',
+    // fontWeight: '700',
+    fontFamily: fonts.bold,
   },
 
   price: {
     fontSize: fontSz(18),
-    fontWeight: '900',
+    fontFamily: fonts.extra_bold,
     marginVertical: 3,
     color: colors.grey_dark_2,
   },
@@ -109,7 +111,7 @@ const bigCardstyles = StyleSheet.create({
   btnLabel: {
     textTransform: 'uppercase',
     fontSize: fontSz(12),
-    fontWeight: '800',
+    fontFamily: fonts.bold,
   },
 });
 
@@ -151,13 +153,12 @@ const smallCardstyles = StyleSheet.create({
   },
 
   title: {
-    fontSize: fontSz(11),
-    fontWeight: '700',
+    fontSize: fontSz(10),
+    fontFamily: fonts.bold,
   },
 
   price: {
-    fontSize: fontSz(15),
-    fontWeight: '900',
+    fontFamily: fonts.extra_bold,
     marginVertical: 3,
     color: colors.grey_dark_2,
   },
@@ -165,7 +166,7 @@ const smallCardstyles = StyleSheet.create({
   btnLabel: {
     textTransform: 'uppercase',
     fontSize: fontSz(10),
-    fontWeight: '800',
+    fontFamily: fonts.bold,
   },
 });
 
@@ -204,13 +205,14 @@ const mediumCardstyles = StyleSheet.create({
   },
 
   title: {
-    fontSize: fontSz(12),
-    fontWeight: '700',
+    // fontSize: fontSz(12),
+    fontSize: fontSz(10),
+    fontFamily: fonts.bold,
   },
 
   price: {
     fontSize: fontSz(15),
-    fontWeight: '900',
+    fontFamily: fonts.extra_bold,
     marginVertical: 3,
     color: colors.grey_dark_2,
   },
@@ -218,7 +220,7 @@ const mediumCardstyles = StyleSheet.create({
   btnLabel: {
     textTransform: 'uppercase',
     fontSize: fontSz(10),
-    fontWeight: '800',
+    fontFamily: fonts.bold,
   },
 });
 

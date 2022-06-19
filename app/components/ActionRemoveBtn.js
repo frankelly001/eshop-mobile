@@ -10,6 +10,7 @@ import {fontSz, wp} from '../config/responsiveSize';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import AppText from './AppText';
 import AuthContext from '../auth/AuthContext';
+import fonts from '../config/fonts';
 
 const ActionRemoveBtn = ({contentContainerStyle, product}) => {
   const {dispatch, onLike} = useContext(AuthContext);
@@ -79,7 +80,7 @@ const styles = StyleSheet.create({
   actionLabel: {
     fontSize: fontSz(12),
     color: colors.white,
-    fontWeight: '700',
+    fontFamily: fonts.bold,
   },
 });
 

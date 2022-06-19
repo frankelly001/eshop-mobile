@@ -9,6 +9,7 @@ import {fontSz} from '../config/responsiveSize';
 import SubmitButton from '../components/form/SubmitButton';
 import colors from '../config/colors';
 import validationSchema from '../components/form/validationSchema';
+import fonts from '../config/fonts';
 
 const login_VS = Yup.object().shape({
   username: validationSchema.username,
@@ -66,10 +67,9 @@ const styles = StyleSheet.create({
   },
   btnLabel: {
     fontSize: fontSz(15),
-    fontWeight: '700',
   },
   link: {
-    fontWeight: '700',
+    // fontFamily: fonts.bold,
     // marginTop: 5,
     color: colors.purple,
   },

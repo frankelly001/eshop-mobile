@@ -5,7 +5,6 @@ import AppText from '../components/AppText';
 import ImageCarousel from '../components/ImageCarousel';
 import NewSection from '../components/NewSection';
 import ProductCard from '../components/ProductCard';
-import SectionComponent from '../components/SectionComponent';
 import SectionListRenderItem from '../components/SectionListRenderItem';
 import colors from '../config/colors';
 import routes from '../navigation/routes';

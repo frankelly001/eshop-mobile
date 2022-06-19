@@ -6,6 +6,7 @@ import routes from '../navigation/routes';
 import AppText from './AppText';
 import AppForm from './form/AppForm';
 import navigation from '../navigation/rootNavigation';
+import fonts from '../config/fonts';
 
 const AuthForm = ({
   children,
@@ -59,14 +60,14 @@ const styles = StyleSheet.create({
   },
   authLabel: {
     fontSize: fontSz(20),
-    fontWeight: '700',
+    fontFamily: fonts.bold,
     marginBottom: 10,
   },
   linkLabel: {
     marginTop: 10,
   },
   link: {
-    fontWeight: '700',
+    fontFamily: fonts.bold,
     marginTop: 5,
     color: colors.purple,
   },

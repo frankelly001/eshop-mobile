@@ -7,6 +7,7 @@ import AppFormInput from '../components/form/AppFormInput';
 import CheckoutInfo from '../components/CheckoutInfo';
 import colors from '../config/colors';
 import CheckoutPay from '../components/CheckoutPay';
+import fonts from '../config/fonts';
 
 const CheckoutScreen = props => {
   const [selectedTab, setSelectedTab] = useState('deliveryInfo');
@@ -72,16 +73,11 @@ const styles = StyleSheet.create({
   },
   tabBtnLabel: {
     fontSize: fontSz(13),
-    fontWeight: '700',
   },
   btnContainerStyle: {
     width: '49.5%',
     marginVertical: 10,
     // alignSelf: 'center',
-  },
-  btnLabel: {
-    fontSize: fontSz(15),
-    fontWeight: '700',
   },
 });
 

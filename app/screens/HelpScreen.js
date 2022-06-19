@@ -20,6 +20,7 @@ import {LinearTextGradient} from 'react-native-text-gradient';
 import AppGradientBtn from '../components/AppGradientBtn';
 import AppGradientText from '../components/AppGradientText';
 import {fontSz, wp} from '../config/responsiveSize';
+import fonts from '../config/fonts';
 
 const dimensions = Dimensions.get('screen');
 const HelpScreen = props => {
@@ -81,7 +82,7 @@ const styles = StyleSheet.create({
   },
   join: {
     textAlign: 'center',
-    fontWeight: '700',
+    fontFamily: fonts.bold,
     marginBottom: 5,
     color: colors.purple,
     fontSize: fontSz(13),

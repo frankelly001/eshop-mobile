@@ -3,6 +3,8 @@ import {StyleSheet, TouchableOpacity, Text} from 'react-native';
 import colors from '../config/colors';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {fontSz} from '../config/responsiveSize';
+import fonts from '../config/fonts';
+import AppText from './AppText';
 
 const AppButton = ({label, labelStyle, bgStyle, onPress, icon}) => {
   return (
@@ -15,7 +17,7 @@ const AppButton = ({label, labelStyle, bgStyle, onPress, icon}) => {
           style={{marginRight: 10}}
         />
       )}
-      <Text style={[styles.Text, labelStyle]}>{label}</Text>
+      <AppText style={[styles.Text, labelStyle]}>{label}</AppText>
     </TouchableOpacity>
   );
 };
@@ -31,9 +33,8 @@ const styles = StyleSheet.create({
     borderRadius: 30,
   },
   Text: {
-    fontFamily: 'Roboto',
-    fontSize: fontSz(15),
-    fontWeight: '600',
+    fontFamily: fonts.bold,
+    // fontSize: fontSz(15),
     color: colors.white,
   },
 });

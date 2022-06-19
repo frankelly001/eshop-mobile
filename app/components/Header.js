@@ -20,6 +20,7 @@ import Octicons from 'react-native-vector-icons/Octicons';
 import Animated from 'react-native-reanimated';
 import AppTextInput from './AppTextInput';
 import useAnimatedHeaderStyles from '../hooks/useAnimatedHeaderStyles';
+import fonts from '../config/fonts';
 
 const Header = ({navigation, options, route}) => {
   const {orderedNum, recentQueries, setRecentQueries} = useContext(AuthContext);
@@ -165,7 +166,8 @@ const Header = ({navigation, options, route}) => {
         <AppText
           style={{
             fontSize: fontSz(12),
-            fontWeight: '700',
+            // fontWeight: '700',
+            fontFamily: fonts.bold,
             backgroundColor: colors.grey_light_4,
             padding: 5,
             paddingHorizontal: 15,
@@ -219,7 +221,7 @@ const styles = StyleSheet.create({
     width: wp(16),
     height: wp(16),
     fontSize: fontSz(12),
-    fontWeight: '700',
+    // fontWeight: '700',
     color: colors.white,
     alignItems: 'center',
     justifyContent: 'center',
@@ -230,7 +232,8 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: fontSz(20),
-    fontWeight: '700',
+    // fontWeight: '700',
+    fontFamily: fonts.bold,
   },
   headerLeft: {
     flexDirection: 'row',

@@ -16,9 +16,7 @@ import Swipeable from 'react-native-gesture-handler/Swipeable';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import navigation from '../navigation/rootNavigation';
 import routes from '../navigation/routes';
-
-const dimensions = Dimensions.get('window');
-const scdimensions = Dimensions.get('screen');
+import fonts from '../config/fonts';
 
 const CartItemCard = ({product, renderRightActions, id, setId}) => {
   return (
@@ -76,7 +74,7 @@ const CartItemCard = ({product, renderRightActions, id, setId}) => {
   );
 };
 
-console.log(dimensions, scdimensions);
+// console.log(dimensions, scdimensions);
 
 const styles = StyleSheet.create({
   container: {
@@ -105,11 +103,11 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: fontSz(13),
-    fontWeight: '700',
+    fontFamily: fonts.bold,
   },
   totalPrice: {
     fontSize: fontSz(15),
-    fontWeight: '700',
+    fontFamily: fonts.bold,
     color: colors.grey_dark_2,
   },
   totalPriceSum: {

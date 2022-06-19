@@ -16,6 +16,7 @@ import AppText from '../components/AppText';
 import CartItemCard from '../components/CartItemCard';
 import GradientBackground from '../components/GradientBackground';
 import colors from '../config/colors';
+import fonts from '../config/fonts';
 import {fontSz, wp} from '../config/responsiveSize';
 import routes from '../navigation/routes';
 import {formatToCurrency} from '../utilities/formatToCurr';
@@ -121,7 +122,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
   },
   feesummaryLabel: {
-    fontWeight: '700',
+    fontFamily: fonts.bold,
     // width: '100%',
     color: colors.white,
   },
@@ -142,7 +143,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.black,
   },
   price: {
-    fontWeight: '700',
+    fontFamily: fonts.bold,
     color: colors.grey_dark_2,
   },
   checkout: {

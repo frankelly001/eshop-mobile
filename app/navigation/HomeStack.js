@@ -1,7 +1,5 @@
 import React, {useContext} from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import {StyleSheet} from 'react-native';
-import HeaderActions from '../components/HeaderActions';
 import ProductDetailsScreen from '../screens/ProductDetailsScreen';
 import AppNavigator from './AppNavigator';
 import routes from './routes';
@@ -18,7 +16,6 @@ const HomeStack = props => {
   return (
     <Stack.Navigator
       screenOptions={{
-        // headerRight: () => <HeaderActions />,
         header: ({...allProps}) => <Header {...allProps} />,
       }}>
       <Stack.Screen
@@ -34,9 +31,6 @@ const HomeStack = props => {
         component={ProductDetailsScreen}
         options={{
           title: 'Details',
-          // header: ({navigation, route}) => (
-          //   <Header navigation={navigation} title={options.title} />
-          // ),
           headerStyle: {},
         }}
       />
@@ -45,14 +39,7 @@ const HomeStack = props => {
         component={CartScreen}
         options={{
           title: `Cart ${orderedNum > 0 ? `(${orderedNum})` : ''}`,
-          // header: ({navigation}) => (
-          //   <Header
-          //     navigation={navigation}
-          //     title="Cart"
-          //     disableHeaderRight
-          //     backIcon="close"
-          //   />
-          // ),
+
           animation: 'slide_from_right',
           // headerStyle: {backgroundColor: 'red'},
         }}
@@ -62,14 +49,6 @@ const HomeStack = props => {
         component={CheckoutScreen}
         options={{
           title: 'Checkout',
-          // header: ({navigation}) => (
-          //   <Header
-          //     navigation={navigation}
-          //     title="Checkout"
-          //     disableHeaderRight
-          //   />
-          // ),
-          // headerStyle: {backgroundColor: 'red'},
         }}
       />
       <Stack.Screen
@@ -77,14 +56,6 @@ const HomeStack = props => {
         component={SearchResultScreen}
         options={({route}) => ({
           title: route.params,
-          // header: ({navigation}) => (
-          //   <Header
-          //     navigation={navigation}
-          //     title="Checkout"
-          //     disableHeaderRight
-          //   />
-          // ),
-          // headerStyle: {backgroundColor: 'red'},
         })}
       />
     </Stack.Navigator>

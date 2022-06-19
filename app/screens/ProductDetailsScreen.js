@@ -20,6 +20,7 @@ import ProductCard from '../components/ProductCard';
 import AppGradientBtn from '../components/AppGradientBtn';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 import {fontSz, hp} from '../config/responsiveSize';
+import fonts from '../config/fonts';
 
 const dimenson = Dimensions.get('screen');
 
@@ -178,12 +179,13 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: fontSz(20),
-    fontWeight: '700',
+    fontFamily: fonts.bold,
+    // fontWeight: '700',
     // backgroundColor: 'yellow',
   },
   price: {
     fontSize: fontSz(25),
-    fontWeight: '800',
+    fontFamily: fonts.extra_bold,
     color: colors.grey_dark_2,
     marginVertical: 5,
   },
@@ -192,11 +194,14 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     marginVertical: 5,
+    // backgroundColor: 'red',
+    marginBottom: 10,
   },
 
   iconRatings: {
     flexDirection: 'row',
-    marginBottom: 5,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   label: {
     fontSize: fontSz(13),
@@ -204,7 +209,7 @@ const styles = StyleSheet.create({
   },
   headerLabel: {
     fontSize: fontSz(14),
-    fontWeight: '700',
+    fontFamily: fonts.bold,
     marginVertical: 10,
   },
   orderedQty: {

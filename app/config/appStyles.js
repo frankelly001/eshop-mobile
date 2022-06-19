@@ -1,4 +1,5 @@
 import colors from './colors';
+import fonts from './fonts';
 import {fontSz} from './responsiveSize';
 // const colors = {
 //   purple: '#b5057a',
@@ -36,6 +37,6 @@ export const AppStyles = {
   text: {
     color: colors.black,
     fontSize: fontSz(15),
-    fontFamily: 'Roboto',
+    fontFamily: fonts.regular,
   },
 };

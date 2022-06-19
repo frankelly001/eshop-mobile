@@ -6,6 +6,7 @@ import AppText from '../components/AppText';
 import ListCard from '../components/ListCard';
 import Screen from '../components/Screen';
 import colors from '../config/colors';
+import fonts from '../config/fonts';
 import {fontSz} from '../config/responsiveSize';
 
 const dimensions = Dimensions.get('screen');
@@ -49,7 +50,7 @@ const styles = StyleSheet.create({
     // color: colors.grey_dark_3,
   },
   welcomeColor: {
-    fontWeight: '700',
+    fontFamily: fonts.bold,
     // color: colors.purple,
   },
   actBalContainer: {
@@ -68,7 +69,7 @@ const styles = StyleSheet.create({
   logout: {
     alignSelf: 'center',
     fontSize: fontSz(15),
-    fontWeight: '700',
+    fontFamily: fonts.bold,
     margin: 30,
   },
 });
