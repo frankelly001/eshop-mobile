@@ -28,6 +28,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     fontSize: fontSz(15),
     fontFamily: fonts.regular,
+    textDecorationLine: 'none',
   },
 });
 

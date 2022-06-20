@@ -56,6 +56,7 @@ const CategoriesScreen = ({navigation}) => {
           data={allCategories}
           showsVerticalScrollIndicator={false}
           key={category => category}
+          ItemSeparatorComponent={() => <View style={styles.seperator} />}
           renderItem={({item}) => {
             return (
               <TouchableOpacity
@@ -136,6 +137,12 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     height: hp(35),
     // height: '5%',
+  },
+  seperator: {
+    width: '100%',
+    minHeight: hp(0.35),
+    // backgroundColor: colors.black,
+    backgroundColor: colors.grey_dark_3,
   },
   cats: {
     backgroundColor: colors.grey_dark_3,

@@ -12,7 +12,7 @@ export default Object.freeze({
   PRODUCTDETAILS: 'ProductDetails',
   CART: 'Cart',
   CHECKOUT: 'Checkout',
-  LOGIN: 'login',
+  LOGIN: 'Login',
   SIGNUP: 'Signup',
   SEARCHED: 'Searched',
 });

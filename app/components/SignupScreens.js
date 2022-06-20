@@ -29,11 +29,7 @@ const SignupScreen1 = () => {
         placeholder="Username"
         textContentType="name"
       />
-      <SubmitButton
-        labelStyle={styles.btnLabel}
-        label="Next"
-        containerStyle={styles.btnContainerStyle}
-      />
+      <SubmitButton label="Next" containerStyle={styles.btnContainerStyle} />
     </View>
   );
 };
@@ -71,16 +67,11 @@ const SignupScreen2 = ({onPrev}) => {
         placeholder="Zipcode"
       />
       <AppGradientBtn
-        labelStyle={styles.btnLabel}
         label="Back"
         onPress={() => onPrev()}
         containerStyle={styles.btnContainerStyle}
       />
-      <SubmitButton
-        labelStyle={styles.btnLabel}
-        label="Next"
-        containerStyle={styles.btnContainerStyle}
-      />
+      <SubmitButton label="Next" containerStyle={styles.btnContainerStyle} />
     </View>
   );
 };
@@ -112,13 +103,11 @@ const SignupScreen3 = ({onPrev, setValidatedValues}) => {
         textContentType="name"
       />
       <AppGradientBtn
-        labelStyle={styles.btnLabel}
         label="Back"
         onPress={() => onPrev()}
         containerStyle={styles.btnContainerStyle}
       />
       <SubmitButton
-        labelStyle={styles.btnLabel}
         label="Done"
         containerStyle={styles.btnContainerStyle}
         onSaveValues={setValidatedValues}
@@ -136,10 +125,6 @@ const styles = StyleSheet.create({
   btnContainerStyle: {
     width: '49.5%',
     marginVertical: 10,
-  },
-  btnLabel: {
-    fontSize: fontSz(15),
-    fontWeight: '700',
   },
 });
 
