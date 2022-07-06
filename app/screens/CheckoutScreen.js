@@ -16,8 +16,11 @@ const CheckoutScreen = props => {
   const deliveryInfoView = selectedTab === 'deliveryInfo';
   const paymentView = selectedTab === 'payment';
 
-  const handleSubmit = () => {
+  const handleSubmit = (values, {resetForm}) => {
+    setSavedValues(values);
     setSelectedTab('payment');
+    // console.log(values, 'checkout');
+    resetForm();
   };
 
   return (
@@ -44,7 +47,7 @@ const CheckoutScreen = props => {
       {deliveryInfoView && (
         <CheckoutInfo
           savedValues={savedValues}
-          setSavedValues={setSavedValues}
+          // setSavedValues={setSavedValues}
           onSubmit={handleSubmit}
         />
       )}

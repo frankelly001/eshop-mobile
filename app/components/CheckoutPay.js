@@ -19,6 +19,8 @@ const CheckoutPay = ({deliveryInfo, onGoBack}) => {
   const orderSummaryRef = useRef();
   const {total} = useContext(AuthContext);
 
+  console.log(deliveryInfo, 'check pay');
+
   const onOpen = ref => {
     ref.current?.open();
     // console.log(ref);
@@ -26,7 +28,7 @@ const CheckoutPay = ({deliveryInfo, onGoBack}) => {
   // const onClose = ref => {
   //   ref.current?.close();
   // };
-
+  // if (1) return null;
   return (
     <View style={styles.paymentContainer}>
       <View style={styles.detailsContainer}>
@@ -44,8 +46,8 @@ const CheckoutPay = ({deliveryInfo, onGoBack}) => {
             {deliveryInfo.email}
           </AppText>
           <AppText>
-            {deliveryInfo.city} -{' '}
-            {`${deliveryInfo.number} ${deliveryInfo.street}`}
+            {deliveryInfo.city},{' '}
+            {`${deliveryInfo.state} - ${deliveryInfo.address}`}
           </AppText>
           <AppText>
             {deliveryInfo.phone}{' '}

@@ -17,6 +17,10 @@ import {navigationRef} from './app/navigation/rootNavigation';
 import {gestureHandlerRootHOC} from 'react-native-gesture-handler';
 import {Host} from 'react-native-portalize';
 import SplashScreen from 'react-native-splash-screen';
+import {auth} from './app/api/setup/config';
+import {getUser} from './app/api/setup/getUser';
+import {getUserData, storeUserData} from './app/api/storage/authStorage';
+import {useNetInfo} from '@react-native-community/netinfo';
 
 const initialState = {
   cartsCount: [],
@@ -29,6 +33,52 @@ const App = () => {
   // const [allAddToCart, setAllAddToCart] = useState([]);
   const [ordered, setOrdered] = useState([]);
   const [recentQueries, setRecentQueries] = useState([]);
+  const [user, setUser] = useState();
+  const [initializing, setInitializing] = useState(false);
+
+  // console.log(user, 'App State Login');
+
+  const netinfo = useNetInfo();
+  // console.log(netinfo);
+
+  const onAuthStateChanged = account => {
+    getUser(account?.uid)
+      .then(data => {
+        const newUser = {...data._data, verified: account.emailVerified};
+        if (data._data) {
+          setUser(newUser);
+          storeUserData(newUser);
+          console.log('heyy  firebase is updating user');
+        } else {
+          setUser(null);
+        }
+      })
+      .catch(() => {
+        setUser(null);
+      });
+    setInitializing(false);
+  };
+
+  const getUserFromAsynStorage = () => {
+    getUserData()
+      .then(data => {
+        setUser(data);
+        console.log('heyy am setting user');
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  };
+
+  useEffect(() => {
+    const {isConnected, isInternetReachable} = netinfo;
+    if (isConnected && isInternetReachable) {
+      const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
+      return subscriber;
+    } else {
+      getUserFromAsynStorage();
+    }
+  }, [netinfo]);
 
   const allProducts = async () => {
     const {data, ok, problem} = await getProducts();
@@ -72,33 +122,6 @@ const App = () => {
     [products],
   );
 
-  // useEffect(() => {
-  //   const added = allCounters.cartsCount.filter(
-  //     counters => counters.quantity > 0,
-  //   );
-  //   setAllAddToCart(added);
-  //   return function cleanUp() {};
-  // }, [allCounters.cartsCount]);
-
-  // useEffect(() => {
-  //   const orderedID = allAddToCart.map(el => el.productId);
-  //   const orderdItems = products.filter(el => {
-  //     return orderedID.includes(el.id);
-  //   });
-
-  //   orderdItems.map(el => {
-  //     return allAddToCart.forEach(cart => {
-  //       if (el.id === cart.productId) {
-  //         el.quantity = cart.quantity;
-  //       }
-  //       return el;
-  //     });
-  //   });
-
-  //   setOrdered(orderdItems);
-  //   return function cleanUp() {};
-  // }, [allAddToCart]);
-
   useEffect(() => {
     const allAddToCart = allCounters.cartsCount.filter(
       counters => counters.quantity > 0,
@@ -117,17 +140,12 @@ const App = () => {
       });
     });
     orderdItems.map(el => el.quantity).reduce((prev, cur) => prev + cur, 0);
-    console.log('useffect rennding');
+    // console.log('useffect rennding');
     setOrdered(orderdItems);
 
     // return function cleanUp() {};
   }, [allCounters.cartsCount]);
 
-  // return (
-  //   <Screen>
-  //     <AppText>heyyy</AppText>
-  //   </Screen>
-  // );
   const orderedNum = ordered
     .map(el => el.quantity)
     .reduce((prev, cur) => prev + cur, 0);
@@ -141,6 +159,7 @@ const App = () => {
     ordered.map(el => el.quantity).reduce((prev, cur) => prev + cur, 0) * 1000;
   const total = subTotal + delivery;
 
+  if (initializing) return null;
   return (
     <AuthContext.Provider
       value={{
@@ -155,6 +174,8 @@ const App = () => {
         total,
         setRecentQueries,
         recentQueries,
+        user,
+        setUser,
       }}>
       <NavigationContainer ref={navigationRef} theme={navigationTheme}>
         <Host>

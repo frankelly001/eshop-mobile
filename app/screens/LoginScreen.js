@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {StyleSheet, View, TouchableOpacity} from 'react-native';
 import AppText from '../components/AppText';
 import AuthForm from '../components/AuthForm';
@@ -10,29 +10,136 @@ import SubmitButton from '../components/form/SubmitButton';
 import colors from '../config/colors';
 import validationSchema from '../components/form/validationSchema';
 import fonts from '../config/fonts';
+import firestore from '@react-native-firebase/firestore';
+import auth from '@react-native-firebase/auth';
+import {GoogleSignin} from '@react-native-google-signin/google-signin';
+import {LoginManager, AccessToken} from 'react-native-fbsdk-next';
+import {loginWithEmailAndPassword} from '../api/setup/login';
+import {useApi} from '../hooks/useApi';
+import routes from '../navigation/routes';
+import AuthContext from '../auth/AuthContext';
 
+// GoogleSignin.configure({
+//   scopes: ['https://www.googleapis.com/auth/userinfo.profile'],
+//   webClientId:
+//     '55467029004-jo4ssf47lkg4e482m5elgcevf0or1dgs.apps.googleusercontent.com',
+// });
+
+// ./gradlew signingReport
+// keytool -keystore debug.keystore -list -v
+// keytool -genkey -v -keystore debug.keystore -alias androiddebugkey -storepass android -keypass android -keyalg RSA -validity 10000
+
+// GoogleSignin.hasPlayServices({autoResolve: true})
+//   .then(snapshot => {
+//     console.log(snapshot, 'checking snapshot');
+//   })
+//   .catch(err => {
+//     console.log(
+//       'Play services code::>',
+//       err.code,
+//       'Play services message::>',
+//       err.message,
+//     );
+//   });
 const login_VS = Yup.object().shape({
-  username: validationSchema.username,
+  email: validationSchema.email,
   password: validationSchema.password,
 });
 
-const LoginScreen = () => {
+const LoginScreen = ({navigation}) => {
+  // const [user, setUser] = useState();
+  const productCollectionRef = firestore().collection('products');
+  // console.log(usersCollection);
+
+  // const onFetchData = () => {
+  //   productCollectionRef
+  //     .get()
+  //     .then(snapshot => {
+  //       snapshot.forEach(el => {
+  //         console.log(el.data());
+  //       });
+  //     })
+  //     .catch(error => {
+  //       console.log(error);
+  //     });
+  // };
+
+  // const handleVerification = () => {
+  //   auth().onAuthStateChanged(user => {
+  //     user
+  //       .sendEmailVerification()
+  //       .then(snapshot => {
+  //         console.log(snapshot, 'success HV');
+  //       })
+  //       .catch(error => {
+  //         console.log(error, 'error HV');
+  //       });
+  //   });
+  // };
+  // const signup = ({username: email, password}) => {
+  //   auth()
+  //     .createUserWithEmailAndPassword(email, password)
+  //     .then(snapshot => {
+  //       console.log(snapshot, 'heyyyy');
+  //       handleVerification(snapshot.user.email);
+  //     })
+  //     .catch(error => {
+  //       console.log(error, 'heyyy');
+  //     });
+  //   // console.log(email, password);
+  // };
+
+  // const logout = () => {
+  //   auth().signOut();
+  // };
+
+  // const [func, setFunc] = useState(loginWithEmailAndPassword);
+
+  // const {data, error, loading, request} = useApi(loginWithEmailAndPassword);
+
+  // const onAuthStateChanged = user => {
+  //   return user ? navigation.navigate(routes.ACCOUNT) : null;
+  // };
+
+  const [error, setError] = useState();
+
+  const {user} = useContext(AuthContext);
+
+  const handleSubmit = userInfo => {
+    loginWithEmailAndPassword(userInfo)
+      .then(() => {
+        alert('Sign in Successful');
+        navigation.replace(routes.ACCOUNT);
+      })
+      .catch(error => {
+        setError(error.message);
+      });
+    // request(userInfo);
+  };
+
+  // useEffect(() => {
+  // }, [user]);
+
   return (
     <AuthForm
       welcomeMessage="Welcome to Back!"
       authTypeLabel="Login"
       initialValues={{
-        username: '',
+        email: '',
         password: '',
       }}
-      validationSchema={login_VS}>
+      validationSchema={login_VS}
+      navigation={navigation}
+      error={error}
+      onSubmit={handleSubmit}>
       <View style={[styles.container, {justifyContent: 'center'}]}>
         <AppFormInput
           autoCapitalize="none"
           autoCorrect={false}
-          name="username"
-          placeholder="Username"
-          textContentType="name"
+          keyboardType="email-address"
+          name="email"
+          placeholder="Email"
+          textContentType="emailAddress"
         />
         <AppFormInput
           autoCapitalize="none"
@@ -47,6 +154,9 @@ const LoginScreen = () => {
           containerStyle={styles.btnContainerStyle}
         />
       </View>
+      {/* <AppGradientBtn label="Sign in with Google" onPress={signInwithGoogle} />
+      <AppGradientBtn label="Sign in with Facebook" onPress={facebookSignin} />
+      <AppGradientBtn label="logout" onPress={logout} /> */}
       <TouchableOpacity style={{marginVertical: 10}}>
         <AppText style={styles.link}>Forgot Password?</AppText>
       </TouchableOpacity>

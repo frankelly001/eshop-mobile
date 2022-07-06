@@ -15,6 +15,7 @@ import AppGradientText from '../components/AppGradientText';
 import AppText from '../components/AppText';
 import CartItemCard from '../components/CartItemCard';
 import GradientBackground from '../components/GradientBackground';
+import Seperator from '../components/Seperator';
 import colors from '../config/colors';
 import fonts from '../config/fonts';
 import {fontSz, wp} from '../config/responsiveSize';
@@ -57,7 +58,7 @@ const CartScreen = ({navigation}) => {
             <AppText>Delivery fee</AppText>
             <AppText style={styles.price}>{formatToCurrency(delivery)}</AppText>
           </View>
-          <View style={styles.seperator} />
+          <Seperator />
           <View style={[styles.feeTitleContainer]}>
             <AppText>Total</AppText>
             <AppText style={styles.price}>{formatToCurrency(total)}</AppText>
@@ -126,21 +127,8 @@ const styles = StyleSheet.create({
     // width: '100%',
     color: colors.white,
   },
-  // bottomSeperator: {
-  //   borderBottomWidth: 0.35,
-  //   marginBottom: 5,
-  // },
-  // topSeperator: {
-  //   borderTopWidth: 0.35,
-  //   marginTop: 5,
-  // },
   subContainer: {
     paddingHorizontal: 10,
-  },
-  seperator: {
-    width: '100%',
-    height: 0.35,
-    backgroundColor: colors.black,
   },
   price: {
     fontFamily: fonts.bold,

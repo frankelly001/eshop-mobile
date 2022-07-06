@@ -51,7 +51,6 @@ const Header = ({navigation, options, route}) => {
       routes.FEED,
       routes.ACCOUNT,
       routes.HELP,
-      routes.SIGNUP,
     ];
 
     const headerRightConditions = [

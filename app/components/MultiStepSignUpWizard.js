@@ -13,7 +13,7 @@ const MultiStepSignUpWizard = ({step, setValidatedValues, prevStep}) => {
     case 3:
       return (
         <SignupScreen3
-          setValidatedValues={setValidatedValues}
+          // setValidatedValues={setValidatedValues}
           onPrev={prevStep}
         />
       );

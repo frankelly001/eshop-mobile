@@ -13,9 +13,9 @@ const AccountNavigator = props => {
   return (
     <Stack.Navigator
       screenOptions={{header: ({...allProps}) => <Header {...allProps} />}}>
+      <Stack.Screen name={routes.ACCOUNT} component={AccountScreen} />
       <Stack.Screen name={routes.SIGNUP} component={SignupScreen} />
       <Stack.Screen name={routes.LOGIN} component={LoginScreen} />
-      <Stack.Screen name={routes.ACCOUNT} component={AccountScreen} />
     </Stack.Navigator>
   );
 };

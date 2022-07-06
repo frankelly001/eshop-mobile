@@ -4,6 +4,7 @@ import {StyleSheet, View} from 'react-native';
 import AppFormInput from './form/AppFormInput';
 import {fontSz} from '../config/responsiveSize';
 import SubmitButton from './form/SubmitButton';
+import AppFormTextArea from './form/AppFormTextArea';
 
 const SignupScreen1 = () => {
   return (
@@ -37,34 +38,34 @@ const SignupScreen1 = () => {
 const SignupScreen2 = ({onPrev}) => {
   return (
     <View style={styles.container}>
+      <AppFormInput keyboardType="numeric" name="phone" placeholder="Phone" />
+      <AppFormInput
+        keyboardType="numeric"
+        name="addtional_phone"
+        placeholder="Additional Phone"
+      />
+      <AppFormInput
+        autoCapitalize="none"
+        autoCorrect={false}
+        name="state"
+        placeholder="State"
+        width="49%"
+        textContentType="name"
+      />
       <AppFormInput
         autoCapitalize="none"
         autoCorrect={false}
         name="city"
         placeholder="City"
+        width="49%"
         textContentType="name"
       />
-      <AppFormInput
-        autoCapitalize="none"
-        keyboardType="numeric"
+      <AppFormTextArea
+        autoCapitalize="words"
         autoCorrect={false}
-        name="number"
-        width="35%"
-        placeholder="Street No"
-        textContentType="name"
-      />
-      <AppFormInput
-        autoCapitalize="none"
-        autoCorrect={false}
-        name="street"
-        width="64%"
-        placeholder="Streer Address"
-        textContentType="name"
-      />
-      <AppFormInput
-        keyboardType="numeric"
-        name="zipcode"
-        placeholder="Zipcode"
+        name="address"
+        placeholder="Address"
+        textContentType="fullStreetAddress"
       />
       <AppGradientBtn
         label="Back"
@@ -87,7 +88,6 @@ const SignupScreen3 = ({onPrev, setValidatedValues}) => {
         placeholder="Email"
         textContentType="emailAddress"
       />
-      <AppFormInput keyboardType="numeric" name="phone" placeholder="Phone" />
       <AppFormInput
         autoCapitalize="none"
         autoCorrect={false}
@@ -98,7 +98,7 @@ const SignupScreen3 = ({onPrev, setValidatedValues}) => {
       <AppFormInput
         autoCapitalize="none"
         autoCorrect={false}
-        name="confirmPassword"
+        name="confirm_password"
         placeholder="Confirm Password"
         textContentType="name"
       />
@@ -110,7 +110,7 @@ const SignupScreen3 = ({onPrev, setValidatedValues}) => {
       <SubmitButton
         label="Done"
         containerStyle={styles.btnContainerStyle}
-        onSaveValues={setValidatedValues}
+        // onSaveValues={setValidatedValues}
       />
     </View>
   );

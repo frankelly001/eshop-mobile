@@ -3,16 +3,14 @@ import {StyleSheet, View} from 'react-native';
 import {useFormikContext} from 'formik';
 import AppTextInput from '../AppTextInput';
 import ErrorMessage from './ErrorMessage';
+import AppTextarea from '../AppTextarea';
 
-const AppFormInput = ({name, width = '100%', style, ...otherProps}) => {
+const AppFormTextArea = ({name, width = '100%', ...otherProps}) => {
   const {setFieldTouched, setFieldValue, values, errors, touched} =
     useFormikContext();
-  // console.log(touched);
-  // console.log(errors);
   return (
-    // <>
     <View style={[styles.container, {width}]}>
-      <AppTextInput
+      <AppTextarea
         onBlur={() => setFieldTouched(name)}
         // onChangeText={handleChange(name)}
         onChangeText={text => setFieldValue(name, text)}
@@ -22,7 +20,6 @@ const AppFormInput = ({name, width = '100%', style, ...otherProps}) => {
       />
       <ErrorMessage error={errors[name]} visible={touched[name]} />
     </View>
-    // </>
   );
 };
 
@@ -33,4 +30,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default AppFormInput;
+export default AppFormTextArea;

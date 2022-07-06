@@ -42,20 +42,16 @@ const DeliverySummary = ({deliveryInfo}) => {
           )}
         </View>
         <View style={SummaryStyles.modalDetail}>
+          <AppText style={SummaryStyles.modalDetailLabel}>State:</AppText>
+          <AppText>{deliveryInfo.state}</AppText>
+        </View>
+        <View style={SummaryStyles.modalDetail}>
           <AppText style={SummaryStyles.modalDetailLabel}>City:</AppText>
           <AppText>{deliveryInfo.city}</AppText>
         </View>
         <View style={SummaryStyles.modalDetail}>
-          <AppText style={SummaryStyles.modalDetailLabel}>Street No:</AppText>
-          <AppText>{deliveryInfo.number}</AppText>
-        </View>
-        <View style={SummaryStyles.modalDetail}>
-          <AppText style={SummaryStyles.modalDetailLabel}>Street:</AppText>
-          <AppText>{deliveryInfo.street}</AppText>
-        </View>
-        <View style={SummaryStyles.modalDetail}>
-          <AppText style={SummaryStyles.modalDetailLabel}>Zipcode:</AppText>
-          <AppText>{deliveryInfo.zipcode}</AppText>
+          <AppText style={SummaryStyles.modalDetailLabel}>Address:</AppText>
+          <AppText>{deliveryInfo.address}</AppText>
         </View>
       </View>
     </>

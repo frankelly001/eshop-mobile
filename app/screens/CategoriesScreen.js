@@ -10,6 +10,7 @@ import {
 import AuthContext from '../auth/AuthContext';
 import AppText from '../components/AppText';
 import ProductCard from '../components/ProductCard';
+import Seperator from '../components/Seperator';
 import colors from '../config/colors';
 import fonts from '../config/fonts';
 import {fontSz, hp} from '../config/responsiveSize';
@@ -56,7 +57,7 @@ const CategoriesScreen = ({navigation}) => {
           data={allCategories}
           showsVerticalScrollIndicator={false}
           key={category => category}
-          ItemSeparatorComponent={() => <View style={styles.seperator} />}
+          ItemSeparatorComponent={() => <Seperator />}
           renderItem={({item}) => {
             return (
               <TouchableOpacity
@@ -138,12 +139,12 @@ const styles = StyleSheet.create({
     height: hp(35),
     // height: '5%',
   },
-  seperator: {
-    width: '100%',
-    minHeight: hp(0.35),
-    // backgroundColor: colors.black,
-    backgroundColor: colors.grey_dark_3,
-  },
+  // seperator: {
+  //   width: '100%',
+  //   height: hp(0.35),
+  //   // backgroundColor: colors.black,
+  //   backgroundColor: colors.grey_dark_3,
+  // },
   cats: {
     backgroundColor: colors.grey_dark_3,
   },

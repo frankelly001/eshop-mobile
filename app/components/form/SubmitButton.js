@@ -8,7 +8,8 @@ const SubmitButton = ({onSaveValues, ...otherProps}) => {
   const {handleSubmit, values, isValid} = useFormikContext();
   const submit = () => {
     handleSubmit();
-    if (onSaveValues) isValid && onSaveValues(values);
+    // initialTouched = {};
+    // if (onSaveValues) isValid && onSaveValues(values);
   };
   return (
     <AppGradientBtn

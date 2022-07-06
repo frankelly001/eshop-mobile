@@ -1,14 +1,13 @@
-import React, {useState} from 'react';
-import {StyleSheet, View} from 'react-native';
-import AppText from '../components/AppText';
-import AppTextInput from '../components/AppTextInput';
-import AppForm from '../components/form/AppForm';
-import AppFormInput from '../components/form/AppFormInput';
+import React, {useEffect, useState} from 'react';
 import * as Yup from 'yup';
 import MultiStepSignUpWizard from '../components/MultiStepSignUpWizard';
 import AuthForm from '../components/AuthForm';
 import AppTextarea from '../components/AppTextarea';
 import validationSchema from '../components/form/validationSchema';
+import {signup} from '../api/setup/register';
+import {useApi} from '../hooks/useApi';
+import routes from '../navigation/routes';
+import {logoutUser} from '../api/setup/logout';
 
 const signup1_VS = Yup.object().shape({
   firstname: validationSchema.firstname,
@@ -17,26 +16,28 @@ const signup1_VS = Yup.object().shape({
 });
 
 const signup2_VS = Yup.object().shape({
+  phone: validationSchema.phone,
+  additional_phone: validationSchema.additional_phone,
+  state: validationSchema.state,
   city: validationSchema.city,
-  number: validationSchema.number,
-  street: validationSchema.street,
-  zipcode: validationSchema.zipcode,
+  address: validationSchema.address,
+  // zipcode: validationSchema.zipcode,
 });
 
 const signup3_VS = Yup.object().shape({
   email: validationSchema.email,
-  phone: validationSchema.phone,
   password: validationSchema.password,
-  confirmPassword: validationSchema.confirmPassword,
+  confirm_password: validationSchema.confirm_password,
 });
 
-const SignupScreen = props => {
+const SignupScreen = ({navigation}) => {
   const [step, setStep] = useState(1);
-  const [validatedValues, setValidatedValues] = useState(null);
 
   const nextStep = () => {
     setStep(step + 1);
   };
+
+  // console.log(user);
 
   const prevStep = () => {
     setStep(step - 1);
@@ -48,40 +49,102 @@ const SignupScreen = props => {
     else return signup3_VS;
   };
 
-  const handleSubmit = () => {
+  // const {data, error, loading, request} = useApi(signup);
+
+  // console.log('data:', data, 'Error:', `${error}`);
+
+  // const [user, setUser] = useState();
+  // const onAuthStateChanged = user => {
+  //   setUser(user);
+  //   // console.log(user);
+  // };
+
+  // useEffect(()=> {
+  //   const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
+  //   return subscriber;
+  // }, [])
+
+  const [error, setError] = useState();
+
+  const handleSubmit = userInfo => {
     if (step !== 3) return nextStep();
-    console.log(validatedValues, 'Success');
+    signup(userInfo)
+      .then(() => {
+        logoutUser()
+          .then(() => {
+            console.log('logOut succussful');
+            navigation.replace(routes.LOGIN);
+          })
+          .catch(error => {
+            alert(error);
+          });
+      })
+      .catch(error => {
+        setError(error.message);
+      });
+    // request(userInfo);
   };
+
+  // const handleSubmit = userInfo => {
+  //   if (step !== 3) return nextStep();
+  //   request(userInfo);
+  //   if (data) navigation.navigate(routes.LOGIN);
+
+  //   // // console.log(validatedValues, 'Success');
+  //   // signup(userInfo)
+  //   //   .then(user => {
+  //   //     setUser(user);
+  //   //   })
+  //   //   .catch(error => {
+  //   //     // alert(`error`);
+  //   //     setError(`${error}`.replace('Error: [auth/email-already-in-use]', ''));
+  //   //   });
+  // };
 
   return (
     <AuthForm
       welcomeMessage="Welcome to eShop"
       authTypeLabel="Sign Up"
       initialValues={{
-        firstname: '',
-        lastname: '',
-        username: '',
-        city: '',
-        number: '',
-        street: '',
-        zipcode: '',
-        email: '',
-        phone: '',
-        password: '',
-        confirmPassword: '',
-        // lat: '10111',
-        // long: '100101',
+        firstname: 'frank',
+        lastname: 'okeke',
+        username: 'frankelly',
+        state: 'imo',
+        city: 'owerri',
+        address: 'alandinma',
+        phone: '08176507344',
+        addtional_phone: '',
+        email: 'frankelly344@gmail.com',
+        password: '123456',
+        confirm_password: '123456',
       }}
+      error={error}
       validationSchema={handleValidation(step)}
-      onSubmit={handleSubmit}>
+      onSubmit={handleSubmit}
+      navigation={navigation}>
       <MultiStepSignUpWizard
         step={step}
         prevStep={prevStep}
-        setValidatedValues={setValidatedValues}
+        // setValidatedValues={setValidatedValues}
       />
     </AuthForm>
   );
 
+  // initialValues={{
+  //   firstname: '',
+  //   lastname: '',
+  //   username: '',
+  //   city: '',
+  //   number: '',
+  //   street: '',
+  //   zipcode: '',
+  //   email: '',
+  //   phone: '',
+  //   password: '',
+  //   confirmPassword: '',
+  //   // lat: '10111',
+  //   // long: '100101',
+  // }}
   // return (
   //   <View style={styles.container}>
   //     <AppForm

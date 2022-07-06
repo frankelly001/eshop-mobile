@@ -10,17 +10,17 @@ import SubmitButton from './form/SubmitButton';
 import Screen from './Screen';
 import validationSchema from './form/validationSchema';
 import fonts from '../config/fonts';
+import AppFormTextArea from './form/AppFormTextArea';
 
 const checkoutInfo_VS = Yup.object().shape({
   firstname: validationSchema.firstname,
   lastname: validationSchema.lastname,
   email: validationSchema.email,
   phone: validationSchema.phone,
-  additionalPhone: validationSchema.additionalPhone,
+  additional_phone: validationSchema.additional_phone,
+  state: validationSchema.state,
   city: validationSchema.city,
-  number: validationSchema.number,
-  street: validationSchema.street,
-  zipcode: validationSchema.zipcode,
+  address: validationSchema.address,
 });
 
 const initialValues = {
@@ -29,13 +29,12 @@ const initialValues = {
   email: '',
   phone: '',
   additionalPhone: '',
+  state: '',
   city: '',
-  number: '',
-  street: '',
-  zipcode: '',
+  address: '',
 };
 
-const CheckoutInfo = ({savedValues, setSavedValues, onSubmit}) => {
+const CheckoutInfo = ({savedValues, onSubmit}) => {
   // const [savedValues, setSavedValues] = useState(null);
   // console.log(savedValues);
 
@@ -51,7 +50,7 @@ const CheckoutInfo = ({savedValues, setSavedValues, onSubmit}) => {
           onSubmit={onSubmit}>
           <View style={[styles.formContainer]}>
             <AppFormInput
-              autoCapitalize="none"
+              autoCapitalize="words"
               autoCorrect={false}
               name="firstname"
               width="49.5%"
@@ -59,7 +58,7 @@ const CheckoutInfo = ({savedValues, setSavedValues, onSubmit}) => {
               textContentType="name"
             />
             <AppFormInput
-              autoCapitalize="none"
+              autoCapitalize="words"
               autoCorrect={false}
               name="lastname"
               width="49.5%"
@@ -81,43 +80,35 @@ const CheckoutInfo = ({savedValues, setSavedValues, onSubmit}) => {
             />
             <AppFormInput
               keyboardType="numeric"
-              name="additionalPhone"
+              name="additional_phone"
               placeholder="Additional phone (Optional)"
             />
             <AppFormInput
-              autoCapitalize="none"
+              autoCapitalize="words"
+              autoCorrect={false}
+              name="state"
+              placeholder="State"
+              textContentType="name"
+            />
+            <AppFormInput
+              autoCapitalize="words"
               autoCorrect={false}
               name="city"
               placeholder="City"
               textContentType="name"
             />
-            <AppFormInput
-              autoCapitalize="none"
-              keyboardType="numeric"
+            <AppFormTextArea
+              autoCapitalize="words"
               autoCorrect={false}
-              name="number"
-              width="35%"
-              placeholder="Street No"
-              textContentType="name"
-            />
-            <AppFormInput
-              autoCapitalize="none"
-              autoCorrect={false}
-              name="street"
-              width="64%"
-              placeholder="Streer Address"
-              textContentType="name"
-            />
-            <AppFormInput
-              keyboardType="numeric"
-              name="zipcode"
-              placeholder="Zipcode"
+              name="address"
+              placeholder="Address"
+              textContentType="fullStreetAddress"
             />
           </View>
           <SubmitButton
             label="Proceed payment"
             containerStyle={styles.btnContainerStyle}
-            onSaveValues={setSavedValues}
+            // onSaveValues={setSavedValues}
           />
         </AppForm>
       </View>
