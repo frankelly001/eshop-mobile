@@ -6,7 +6,7 @@ const validationSchema = {
   username: Yup.string().required().min(1).label('Username'),
   state: Yup.string().required().min(1).label('State'),
   city: Yup.string().required().min(1).label('City'),
-  address: Yup.string().required().min(1).label('Address'),
+  address: Yup.string().required().min(5).label('Address'),
   phone: Yup.string()
     .required()
     .min(11)
@@ -24,7 +24,11 @@ const validationSchema = {
     .oneOf([Yup.ref('password'), null], 'Confirm Password must match Password')
     .required()
     .label('Confirm password'),
-
+  images: Yup.array().min(1, 'Please select at least one image'),
+  title: Yup.string().required().min(3).label('Firstname'),
+  price: Yup.number().required().min(1).label('Street no'),
+  category: Yup.string().required().min(1).label('Firstname'),
+  description: Yup.string().required().min(20).label('Firstname'),
   // confirmPassword: Yup.string()
   //   .oneOf([Yup.ref('password'), null], 'Confirm Password must match Password')
   //   .required('Confirm password is required')
@@ -32,38 +36,4 @@ const validationSchema = {
   // images: Yup.array().min(1, 'Please select at least one image'),
   // description: Yup.string().label('Description'),
 };
-// const validationSchema = {
-//   firstname: Yup.string().required().min(1).label('Firstname'),
-//   lastname: Yup.string().required().min(1).label('Lastname'),
-//   username: Yup.string().required().min(1).label('Username'),
-//   city: Yup.string().required().min(1).label('City'),
-//   number: Yup.number().required().min(1).label('Street no'),
-//   street: Yup.string().required().min(1).label('Street Address'),
-//   zipcode: Yup.number().required().min(1).label('Zipcode'),
-//   email: Yup.string().required().email().label('Email'),
-//   phone: Yup.string()
-//     .required()
-//     .min(11)
-//     .max(11)
-//     .label('Phone')
-//     .matches(/^[0-9]+$/, 'Phone must be only digits'),
-//   additionalPhone: Yup.string()
-//     .min(11)
-//     .max(11)
-//     .label('Additional phone')
-//     .matches(/^[0-9]+$/, 'Additional phone must be only digits'),
-//   password: Yup.string().required().min(4).label('Password'),
-//   confirmPassword: Yup.string()
-//     .oneOf([Yup.ref('password'), null], 'Confirm Password must match Password')
-//     .required()
-//     .label('Confirm password'),
-
-//   // confirmPassword: Yup.string()
-//   //   .oneOf([Yup.ref('password'), null], 'Confirm Password must match Password')
-//   //   .required('Confirm password is required')
-//   // category: Yup.object().required().nullable().label('Category'),
-//   // images: Yup.array().min(1, 'Please select at least one image'),
-//   // description: Yup.string().label('Description'),
-// };
-
 export default validationSchema;

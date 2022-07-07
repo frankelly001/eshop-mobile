@@ -14,6 +14,7 @@ import colors from '../config/colors';
 import fonts from '../config/fonts';
 import {fontSz, wp} from '../config/responsiveSize';
 import routes from '../navigation/routes';
+import UploadScreen from './UploadScreen';
 
 const dimensions = Dimensions.get('screen');
 
@@ -45,6 +46,8 @@ const AccountScreen = ({navigation}) => {
   //   return subscriber;
   // }, []);
 
+  if (1) return <UploadScreen />;
+
   return (
     <Screen>
       <View style={styles.welcomeContainer}>
@@ -53,10 +56,10 @@ const AccountScreen = ({navigation}) => {
             <AppGradientText style={[styles.welcome, styles.welcomeColor]}>
               Welcome{user ? ' ' : '!'}
             </AppGradientText>
-            {user && 'Franklyn!'}
+            {user && user.name.firstname}
           </AppGradientText>
           <AppText style={styles.welcome}>
-            {user ? `Frankelly344@gmail.com` : `Enter your account`}
+            {user ? user.email : `Enter your account`}
           </AppText>
         </View>
         {!user && (

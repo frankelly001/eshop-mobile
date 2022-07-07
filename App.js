@@ -36,7 +36,7 @@ const App = () => {
   const [user, setUser] = useState();
   const [initializing, setInitializing] = useState(false);
 
-  // console.log(user, 'App State Login');
+  console.log(user, 'App State Login');
 
   const netinfo = useNetInfo();
   // console.log(netinfo);

@@ -6,16 +6,16 @@ import AppGradientBtn from '../AppGradientBtn';
 
 const SubmitButton = ({onSaveValues, ...otherProps}) => {
   const {handleSubmit, values, isValid} = useFormikContext();
-  const submit = () => {
-    handleSubmit();
-    // initialTouched = {};
-    // if (onSaveValues) isValid && onSaveValues(values);
-  };
+  // const submit = () => {
+  //   handleSubmit();
+  //   // initialTouched = {};
+  //   // if (onSaveValues) isValid && onSaveValues(values);
+  // };
   return (
     <AppGradientBtn
       // style={{opacity: isValid ? 1 : 0.5}}
       {...otherProps}
-      onPress={submit}
+      onPress={handleSubmit}
     />
   );
 };
