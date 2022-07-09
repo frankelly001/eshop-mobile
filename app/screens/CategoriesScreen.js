@@ -86,7 +86,7 @@ const CategoriesScreen = ({navigation}) => {
             showsVerticalScrollIndicator={false}
             data={formatData(productCategory, 2)}
             // style={{flex: 1}}
-            // contentContainerStyle={styles.container}
+            contentContainerStyle={{padding: 2}}
             key={product => product.id.toString()}
             renderItem={({item}) => {
               if (item.empty)

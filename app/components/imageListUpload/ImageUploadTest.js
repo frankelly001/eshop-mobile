@@ -10,12 +10,12 @@ const ImageUploadTest = props => {
       width: 400,
       height: 400,
       cropping: true,
-      //   multiple: true,
+      multiple: true,
     })
       .then(image => {
         // console.log(typeof image.path, 'heyyyyyyyyyyyyyy');
-        // console.log(image.path);
-        uploadFile(image.path);
+        console.log(image);
+        // uploadFile(image.path);
       })
       .catch(error => {
         console.log(error, 'failed.........');

@@ -43,6 +43,7 @@ const HomeScreen = ({navigation}) => {
       stickySectionHeadersEnabled
       renderItem={({...props}) => (
         <SectionListRenderItem
+          contentContainerStyle={{padding: 2}}
           numColumns={numOfCols}
           ItemComponent={item => {
             if (item.empty)

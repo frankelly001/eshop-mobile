@@ -13,6 +13,9 @@ import AppText from '../components/AppText';
 import AppFormImagePicker from '../components/form/AppFormImagePicker';
 import ImageInputList from '../components/imageListUpload/ImageInputList';
 import ImageUploadTest from '../components/imageListUpload/ImageUploadTest';
+import {dirNames, uploadFile} from '../api/setup/uploadFile';
+import {addProducts} from '../api/setup/addProducts';
+import {firestore} from '../api/setup/config';
 
 const upload_VS = Yup.object().shape({
   // title:
@@ -32,14 +35,29 @@ const initialValues = {
 };
 
 const UploadScreen = () => {
-  const handleSubmit = values => {
-    console.log(values, 'heyyy ....');
+  const handleSubmit = async values => {
+    const imagePaths = values.images;
+    let imageUrls = [];
+    for (let i = 0; i < imagePaths.length; i++) {
+      imageUrls.push(await uploadFile(dirNames.PRODUCTS_IMAGES, imagePaths[i]));
+    }
+
+    const newValues = {
+      date: firestore.FieldValue.serverTimestamp(),
+      ...values,
+      images: imageUrls,
+      rating: {
+        count: parseInt(Math.random() * 500),
+        rate: parseFloat((Math.random() * 5).toFixed(1)),
+      },
+    };
+    addProducts(newValues);
   };
 
   return (
     <Screen>
       <View style={styles.container}>
-        <ImageUploadTest />
+        {/* <ImageUploadTest /> */}
         <AppText style={styles.header}>Upload product to Server</AppText>
         <AppForm
           initialValues={initialValues}
@@ -71,7 +89,7 @@ const UploadScreen = () => {
               textContentType="name"
             />
             <AppFormTextArea
-              autoCapitalize="words"
+              autoCapitalize="sentences"
               autoCorrect={false}
               name="description"
               placeholder="Description"

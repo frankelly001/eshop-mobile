@@ -6,6 +6,7 @@ const SectionListRenderItem = ({
   index,
   numColumns = 1,
   ItemComponent,
+  contentContainerStyle,
 }) => {
   if (index % numColumns !== 0) return null;
 
@@ -18,7 +19,7 @@ const SectionListRenderItem = ({
     }
     items.push(ItemComponent(section.data[i]));
   }
-  return <View style={styles.container}>{items}</View>;
+  return <View style={[styles.container, contentContainerStyle]}>{items}</View>;
 };
 
 const styles = StyleSheet.create({
