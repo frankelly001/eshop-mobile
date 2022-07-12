@@ -37,7 +37,7 @@ const styles = StyleSheet.create({
     // width: '100%',
     flex: 1,
     height: wp(180),
-    // backgroundColor: 'yellow',
+    // backgroundColor: 'yellow',zz
     justifyContent: 'flex-end',
     marginVertical: 10,
   },

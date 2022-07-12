@@ -39,7 +39,14 @@ const UploadScreen = () => {
     const imagePaths = values.images;
     let imageUrls = [];
     for (let i = 0; i < imagePaths.length; i++) {
-      imageUrls.push(await uploadFile(dirNames.PRODUCTS_IMAGES, imagePaths[i]));
+      imageUrls.push(
+        await uploadFile(
+          `${dirNames.PRODUCTS_IMAGES}/${
+            values.category
+          }/${values.title.replace(/[^A-Z0-9']+/gi, '-')}`,
+          imagePaths[i],
+        ),
+      );
     }
 
     const newValues = {
