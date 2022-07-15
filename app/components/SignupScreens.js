@@ -5,6 +5,10 @@ import AppFormInput from './form/AppFormInput';
 import {fontSz} from '../config/responsiveSize';
 import SubmitButton from './form/SubmitButton';
 import AppFormTextArea from './form/AppFormTextArea';
+import AppFormSelectInput from './form/AppFormSelectInput';
+import stateRegion from '../utilities/stateRegion';
+
+// console.log(stateRegion['Lagos']);
 
 const SignupScreen1 = () => {
   return (
@@ -36,29 +40,67 @@ const SignupScreen1 = () => {
 };
 
 const SignupScreen2 = ({onPrev}) => {
+  const handleState_Data = () => {
+    const data = Object.keys(stateRegion).map((key, index) => {
+      return {label: key, value: key};
+    });
+
+    return data;
+  };
+
+  const handleCity_Data = values => {
+    const data = values['state']
+      ? stateRegion[values['state']].map(key => {
+          return {label: key, value: key};
+        })
+      : [{label: 'State not Selected'}];
+
+    return data;
+  };
+  // const lga = values['state']
+  //   ? stateRegion[values['state']].map(key => {
+  //       return {label: key, value: key};
+  //     })
+  //   : [{label: 'State not Selected'}];
+
+  // console.log(values.city, 'heyyyy');
+  // const lga = stateRegion[values['state']]
+  //   ? stateRegion[values['state']].map(key => {
+  //       return {label: key, value: key};
+  //     })
+  //   : [{label: 'State not Selected', value: ''}];
+
+  // const lga = {...stateRegion, 'no-data': [null]}[
+  //   values.state ? values.state : 'no-data'
+  // ].map(key => {
+  //   return {label: key ? key : 'State not Selected', value: key ? key : ''};
+  // });
+
+  // console.log(values['state'], 'heyyyy zucci');
+  // console.log(lga);
+
   return (
     <View style={styles.container}>
       <AppFormInput keyboardType="numeric" name="phone" placeholder="Phone" />
       <AppFormInput
         keyboardType="numeric"
-        name="addtional_phone"
+        name="additional_phone"
         placeholder="Additional Phone"
       />
-      <AppFormInput
-        autoCapitalize="none"
-        autoCorrect={false}
-        name="state"
-        placeholder="State"
-        width="49%"
-        textContentType="name"
+      <AppFormSelectInput
+        name={'state'}
+        // data={stateList}
+        onHandleData={handleState_Data}
+        placeholder="Select State"
+        valueResetNames={['city']}
+        searchPlaceholder="Search State..."
       />
-      <AppFormInput
-        autoCapitalize="none"
-        autoCorrect={false}
-        name="city"
-        placeholder="City"
-        width="49%"
-        textContentType="name"
+      <AppFormSelectInput
+        name={'city'}
+        // data={lga}
+        onHandleData={handleCity_Data}
+        placeholder="Select City"
+        searchPlaceholder="Search City..."
       />
       <AppFormTextArea
         autoCapitalize="words"

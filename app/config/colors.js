@@ -17,7 +17,7 @@ export default {
 
   grey_dark: '#b1b1b1',
   grey_dark_2: '#7c7474',
-  grey_dark_2_tranparent: ' #7c74748c',
+  grey_dark_2_tranparent: '#7c74748c',
   grey_dark_3: '#616161',
   grey_dark_4: '#6161619d',
 };

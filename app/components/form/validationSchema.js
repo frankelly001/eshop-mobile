@@ -27,7 +27,12 @@ const validationSchema = {
   images: Yup.array().min(1, 'Please select at least one image'),
   title: Yup.string().required().min(3).label('Firstname'),
   price: Yup.number().required().min(1).label('Street no'),
-  category: Yup.string().required().min(1).label('Firstname'),
+  category: Yup.string().required().min(1).label('Category'),
+  categoryGroupTitle: Yup.string().required().min(1).label('Category Group'),
+  categoryGroupType: Yup.string()
+    .required()
+    .min(1)
+    .label('Category Group Type'),
   description: Yup.string().required().min(20).label('Firstname'),
   // confirmPassword: Yup.string()
   //   .oneOf([Yup.ref('password'), null], 'Confirm Password must match Password')

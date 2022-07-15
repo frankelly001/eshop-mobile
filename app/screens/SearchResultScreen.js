@@ -5,6 +5,7 @@ import ProductCard from '../components/ProductCard';
 import routes from '../navigation/routes';
 import {formatData} from '../utilities/formatData';
 import ActivityIndicator from '../components/ActivityIndicator';
+import colors from '../config/colors';
 
 const SearchResultScreen = ({navigation, route}) => {
   const {products} = useContext(AuthContext);
@@ -48,6 +49,8 @@ const SearchResultScreen = ({navigation, route}) => {
         <ActivityIndicator
           animatedIconSource={require('../assets/icons/animatedIcons/ladypagenotfound.json')}
           visible
+          animatedIconStyles={styles.animatedIcon}
+          containerStyles={styles.activityContainer}
         />
       )}
     </>
@@ -56,6 +59,13 @@ const SearchResultScreen = ({navigation, route}) => {
 
 const styles = StyleSheet.create({
   container: {},
+  animatedIcon: {
+    marginBottom: 80,
+  },
+  activityContainer: {
+    backgroundColor: colors.white,
+    opacity: 1,
+  },
 });
 
 export default SearchResultScreen;

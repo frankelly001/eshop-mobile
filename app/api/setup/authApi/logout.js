@@ -1,5 +1,5 @@
-import {removeUserData} from '../storage/authStorage';
-import {auth} from './config';
+import {removeUserData} from '../../storage/authStorage';
+import {auth} from '../config';
 
 export const logoutUser = () => {
   return new Promise(function (resolve, reject) {

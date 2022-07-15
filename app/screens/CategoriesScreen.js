@@ -26,24 +26,24 @@ const CategoriesScreen = ({navigation}) => {
   const {categories, products} = useContext(AuthContext);
 
   const productCategory = products.filter(
-    product => product.category === selectedCategory,
+    product => product.category == selectedCategory.toLowerCase(),
   );
 
   // console.log(productCategory);
 
   useEffect(() => {
     setAllCategories([
-      ...categories,
-      'Phones & Tablets',
-      'Computing',
-      'Fashion',
-      'Automobiles',
-      'Home & office',
-      'Supermarket',
-      'Baby Products',
-      'Health & Beauty',
-      'Sporting goods',
-      'Other Cateories',
+      ...categories.map(el => el.title),
+      // 'Phones & Tablets',
+      // 'Computing',
+      // 'Fashion',
+      // 'Automobiles',
+      // 'Home & office',
+      // 'Supermarket',
+      // 'Baby Products',
+      // 'Health & Beauty',
+      // 'Sporting goods',
+      // 'Other Cateories',
     ]);
   }, []);
   // console.log(allCategories);

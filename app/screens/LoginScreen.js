@@ -14,10 +14,11 @@ import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
 import {LoginManager, AccessToken} from 'react-native-fbsdk-next';
-import {loginWithEmailAndPassword} from '../api/setup/login';
+import {loginWithEmailAndPassword} from '../api/setup/authApi/login';
 import {useApi} from '../hooks/useApi';
 import routes from '../navigation/routes';
 import AuthContext from '../auth/AuthContext';
+import ActivityIndicator from '../components/ActivityIndicator';
 
 // GoogleSignin.configure({
 //   scopes: ['https://www.googleapis.com/auth/userinfo.profile'],
@@ -95,72 +96,94 @@ const LoginScreen = ({navigation}) => {
 
   // const [func, setFunc] = useState(loginWithEmailAndPassword);
 
-  // const {data, error, loading, request} = useApi(loginWithEmailAndPassword);
-
   // const onAuthStateChanged = user => {
   //   return user ? navigation.navigate(routes.ACCOUNT) : null;
   // };
 
-  const [error, setError] = useState();
+  // const {data, error, loading, request} = useApi(loginWithEmailAndPassword);
+  const {error, loading, request} = useApi(loginWithEmailAndPassword);
+  // const [error, setError] = useState();
 
-  const {user} = useContext(AuthContext);
+  const handleSubmit = (userInfo, {resetForm}) => {
+    // loginWithEmailAndPassword(userInfo)
+    //   .then(() => {
+    //     alert('Sign in Successful');
+    //     navigation.replace(routes.ACCOUNT);
+    //   })
+    //   .catch(error => {
+    //     setError(error.message);
+    //   });
 
-  const handleSubmit = userInfo => {
-    loginWithEmailAndPassword(userInfo)
-      .then(() => {
-        alert('Sign in Successful');
+    request(userInfo)
+      .then(data => {
+        resetForm();
+        console.log(data);
+        alert('Sign In Successfull');
         navigation.replace(routes.ACCOUNT);
       })
       .catch(error => {
-        setError(error.message);
+        console.log(error);
       });
-    // request(userInfo);
   };
+  // const handleSubmit = userInfo => {
+  //   loginWithEmailAndPassword(userInfo)
+  //     .then(() => {
+  //       alert('Sign in Successful');
+  //       navigation.replace(routes.ACCOUNT);
+  //     })
+  //     .catch(error => {
+  //       setError(error.message);
+  //     });
+  //   // request(userInfo);
+  // };
 
   // useEffect(() => {
   // }, [user]);
 
   return (
-    <AuthForm
-      welcomeMessage="Welcome to Back!"
-      authTypeLabel="Login"
-      initialValues={{
-        email: '',
-        password: '',
-      }}
-      validationSchema={login_VS}
-      navigation={navigation}
-      error={error}
-      onSubmit={handleSubmit}>
-      <View style={[styles.container, {justifyContent: 'center'}]}>
-        <AppFormInput
-          autoCapitalize="none"
-          autoCorrect={false}
-          keyboardType="email-address"
-          name="email"
-          placeholder="Email"
-          textContentType="emailAddress"
-        />
-        <AppFormInput
-          autoCapitalize="none"
-          autoCorrect={false}
-          name="password"
-          placeholder="Password"
-          textContentType="name"
-        />
-        <SubmitButton
-          labelStyle={styles.btnLabel}
-          label="Login"
-          containerStyle={styles.btnContainerStyle}
-        />
-      </View>
-      {/* <AppGradientBtn label="Sign in with Google" onPress={signInwithGoogle} />
+    <>
+      <ActivityIndicator visible={loading} />
+      <AuthForm
+        welcomeMessage="Welcome to Back!"
+        authTypeLabel="Login"
+        initialValues={{
+          email: '',
+          password: '',
+        }}
+        validationSchema={login_VS}
+        navigation={navigation}
+        error={error}
+        onSubmit={handleSubmit}>
+        <View style={[styles.container, {justifyContent: 'center'}]}>
+          <AppFormInput
+            autoCapitalize="none"
+            autoCorrect={false}
+            keyboardType="email-address"
+            name="email"
+            placeholder="Email"
+            textContentType="emailAddress"
+          />
+          <AppFormInput
+            autoCapitalize="none"
+            autoCorrect={false}
+            name="password"
+            placeholder="Password"
+            textContentType="name"
+          />
+          <SubmitButton
+            labelStyle={styles.btnLabel}
+            label="Login"
+            containerStyle={styles.btnContainerStyle}
+          />
+        </View>
+        {/* <AppGradientBtn label="Sign in with Google" onPress={signInwithGoogle} />
       <AppGradientBtn label="Sign in with Facebook" onPress={facebookSignin} />
       <AppGradientBtn label="logout" onPress={logout} /> */}
-      <TouchableOpacity style={{marginVertical: 10}}>
-        <AppText style={styles.link}>Forgot Password?</AppText>
-      </TouchableOpacity>
-    </AuthForm>
+        <TouchableOpacity style={{marginVertical: 10}}>
+          <AppText style={styles.link}>Forgot Password?</AppText>
+        </TouchableOpacity>
+      </AuthForm>
+    </>
   );
 };
 

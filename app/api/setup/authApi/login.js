@@ -1,5 +1,5 @@
-import {auth} from './config';
-import {getUser} from './getUser';
+import {auth} from '../config';
+import {getUser} from '../getApi/getUser';
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
 
 export const loginWithEmailAndPassword = ({email, password}) => {

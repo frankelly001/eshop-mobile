@@ -22,7 +22,7 @@ const styles = StyleSheet.create({
   //   marginVertical: 10,
   // },
   inputField: {
-    borderRadius: 50,
+    borderRadius: 20,
     backgroundColor: colors.grey_light_2,
     paddingVertical: 5,
     paddingHorizontal: 15,

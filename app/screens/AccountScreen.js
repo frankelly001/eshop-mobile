@@ -2,7 +2,7 @@ import React, {useContext, useEffect, useState} from 'react';
 import {StyleSheet, View, Dimensions, TouchableOpacity} from 'react-native';
 import {AccountDetails, AccountSettings} from '../api/account';
 import {auth} from '../api/setup/config';
-import {logoutUser} from '../api/setup/logout';
+import {logoutUser} from '../api/setup/authApi/logout';
 import AuthContext from '../auth/AuthContext';
 import AppButton from '../components/AppButton';
 import AppGradientBtn from '../components/AppGradientBtn';
@@ -46,13 +46,14 @@ const AccountScreen = ({navigation}) => {
   //   return subscriber;
   // }, []);
 
-  if (1) return <UploadScreen />;
+  // if (1) return <UploadScreen />;
 
   return (
     <Screen>
       <View style={styles.welcomeContainer}>
         <View style={styles.subWelcomeContainer}>
-          <AppGradientText style={styles.welcome}>
+          <AppGradientText
+            style={[styles.welcome, {textTransform: 'capitalize'}]}>
             <AppGradientText style={[styles.welcome, styles.welcomeColor]}>
               Welcome{user ? ' ' : '!'}
             </AppGradientText>
@@ -120,6 +121,7 @@ const styles = StyleSheet.create({
   welcome: {
     // fontWeight: '700',
     fontSize: fontSz(13.5),
+
     // color: colors.grey_dark_3,
   },
   welcomeColor: {

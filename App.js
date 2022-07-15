@@ -9,18 +9,21 @@ import AuthContext from './app/auth/AuthContext';
 import {NavigationContainer} from '@react-navigation/native';
 import navigationTheme from './app/navigation/navigationTheme';
 import HomeStack from './app/navigation/HomeStack';
-import {getProducts} from './app/api/products';
 import reducerFunction from './app/hooks/useRuducer';
 import {shuffle} from './app/utilities/randomArr';
-import {getCategories} from './app/api/categories';
+// import {getCategories} from './app/api/categories';
 import {navigationRef} from './app/navigation/rootNavigation';
 import {gestureHandlerRootHOC} from 'react-native-gesture-handler';
 import {Host} from 'react-native-portalize';
 import SplashScreen from 'react-native-splash-screen';
 import {auth} from './app/api/setup/config';
-import {getUser} from './app/api/setup/getUser';
+import {getUser} from './app/api/setup/getApi/getUser';
 import {getUserData, storeUserData} from './app/api/storage/authStorage';
 import {useNetInfo} from '@react-native-community/netinfo';
+import {getCategories} from './app/api/setup/getApi/getCategories';
+import AppButton from './app/components/AppButton';
+import {getProducts} from './app/api/products';
+import {getProducts as getNewProducts} from './app/api/setup/getApi/getProducts';
 
 const initialState = {
   cartsCount: [],
@@ -92,21 +95,63 @@ const App = () => {
       dispatch({type: 'INITIALIZE', data: allCartObj});
       setProducts(shuffle(data.map(el => ({...el, price: el.price * 430}))));
     }
+    // getProducts()
+    //   .then(snapshot => {
+    //     const allData = [];
+    //     snapshot.forEach(el => {
+    //       allData.push(el.data());
+    //     });
+    //     setProducts(allData);
+    //   })
+    //   .catch(error => {
+    //     console.log(error.message, 'kkkkkkkkkkk');
+    //   });
+  };
+
+  const [newProducts, setNewProducts] = useState([]);
+
+  const fetchProducts = () => {
+    getNewProducts()
+      .then(snapshot => {
+        const allData = [];
+        snapshot.forEach(el => {
+          // console.log(el.id, 'Each element');
+          allData.push({id: el.id, ...el.data()});
+        });
+        setNewProducts(allData);
+      })
+      .catch(error => {
+        console.log(error.message, 'kkkkkkkkkkk');
+      });
   };
 
   console.log('App.js rendering');
 
-  const allCategories = async () => {
-    const {data, ok, problem} = await getCategories();
-    if (!ok) {
-      console.log(problem, 'from Categories');
-      return;
-    }
-    return setCategories(data);
+  const allCategories = () => {
+    // const {data, ok, problem} = await getCategories();
+    // if (!ok) {
+    //   console.log(problem, 'from Categories');
+    //   return;
+    // }
+    // return setCategories(data);
+    getCategories()
+      .then(snapshot => {
+        const allCat = [];
+        snapshot.forEach(el => {
+          // console.log(el.data());
+          allCat.push(el.data());
+        });
+        setCategories(allCat);
+      })
+      .catch(error => {
+        console.log(error);
+      });
   };
+
   useEffect(() => {
     allCategories();
     allProducts();
+    fetchProducts();
     SplashScreen.hide();
 
     return function cleanUp() {};
@@ -165,6 +210,7 @@ const App = () => {
       value={{
         products,
         categories,
+        newProducts,
         ordered,
         onLike: handleLike,
         dispatch,

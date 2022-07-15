@@ -28,6 +28,7 @@ const ProductCard = ({product, onPress, small, medium}) => {
     return bigCardstyles;
   })();
 
+  // console.log(pro);
   return (
     <TouchableOpacity style={styles.container} onPress={onPress}>
       <View style={styles.imageContainer}>
@@ -35,7 +36,7 @@ const ProductCard = ({product, onPress, small, medium}) => {
           resizeMode="stretch"
           style={styles.image}
           source={{
-            uri: product.image,
+            uri: product.images[0],
           }}
         />
       </View>
@@ -45,6 +46,7 @@ const ProductCard = ({product, onPress, small, medium}) => {
         </AppText>
         <AppText style={styles.price}>
           {formatToCurrency(product.price)}
+          {/* {product.price} */}
         </AppText>
         <AppGradientBtn
           label="add to cart"

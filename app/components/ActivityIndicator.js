@@ -30,7 +30,7 @@ const styles = StyleSheet.create({
     // flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: colors.white,
+    backgroundColor: colors.grey_light_3,
     position: 'absolute',
     zIndex: 1,
 
@@ -38,10 +38,10 @@ const styles = StyleSheet.create({
     // bottom: 0,
     // left: 0,
     // right: 0,
-    // opacity: 0.8,
+    opacity: 0.5,
   },
   animatedIcon: {
-    marginBottom: 80,
+    // marginBottom: 80,
   },
 });
 

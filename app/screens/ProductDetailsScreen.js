@@ -6,6 +6,8 @@ import {
   Dimensions,
   ScrollView,
   FlatList,
+  TouchableOpacity,
+  Pressable,
 } from 'react-native';
 import AppButton from '../components/AppButton';
 import AppText from '../components/AppText';
@@ -19,15 +21,15 @@ import AuthContext from '../auth/AuthContext';
 import ProductCard from '../components/ProductCard';
 import AppGradientBtn from '../components/AppGradientBtn';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
-import {fontSz, hp} from '../config/responsiveSize';
+import {fontSz, hp, wp} from '../config/responsiveSize';
 import fonts from '../config/fonts';
 
-const dimenson = Dimensions.get('screen');
+const {width, height} = Dimensions.get('screen');
 
 const ProductDetailsScreen = ({route}) => {
   const [loading, setLoading] = useState(false);
   const [productId, setProductId] = useState(route.params);
-  const {products, dispatch, ordered} = useContext(AuthContext);
+  const {products, newProducts, dispatch, ordered} = useContext(AuthContext);
 
   const [product, setProduct] = useState({});
   const [productCategogies, setProductCategogies] = useState([]);
@@ -40,7 +42,7 @@ const ProductDetailsScreen = ({route}) => {
   // const product = products.find(product => product.id === productId);
 
   useEffect(() => {
-    const productObj = products.find(product => product.id === productId);
+    const productObj = newProducts.find(product => product.id === productId);
     const productObjCategogies = products.filter(
       el => el.category === productObj.category && el.id !== productObj.id,
     );
@@ -65,20 +67,71 @@ const ProductDetailsScreen = ({route}) => {
     setValue(val);
   };
 
-  console.log('Product Details Screen rendering ');
+  const [selectedIndex, setSelectedIndex] = useState(0);
+
+  const scrollRef = useRef(null);
+
+  useEffect(() => {
+    scrollRef?.current?.scrollTo({
+      animated: true,
+      y: 0,
+      x: width * selectedIndex + 1,
+    });
+  }, [selectedIndex]);
+
+  const uptSelectedIndex = event => {
+    // width of the viewSize
+    const viewSize = event.nativeEvent.layoutMeasurement.width;
+    // get current position of the scrollview
+    const contentOffset = event.nativeEvent.contentOffset.x;
+    const currentIndex = Math.floor(contentOffset / viewSize);
+    setSelectedIndex(currentIndex);
+  };
+
+  // console.log('Product Details Screen rendering ');
   if (Object.entries(product).length < 1) return null;
   return (
     <Screen scrollView={scrollView}>
       {!loading && (
         <View style={styles.container}>
-          <View style={styles.imageContainer}>
-            <Image
-              resizeMode="stretch"
-              style={styles.image}
-              source={{uri: product.image}}
-            />
+          <View style={[styles.imageContainer, {backgroundColor: 'red'}]}>
+            <ScrollView
+              horizontal
+              pagingEnabled
+              onMomentumScrollEnd={uptSelectedIndex}
+              // onScroll={uptSelectedIndex}
+              showsHorizontalScrollIndicator={false}
+              ref={scrollRef}>
+              {product.images.map(img => (
+                // <Image key={img} source={{uri: img}} style={styles.carouselImage} />
+                <Image
+                  resizeMode="stretch"
+                  key={img}
+                  source={{uri: img}}
+                  style={styles.image}
+                />
+              ))}
+            </ScrollView>
+            <View style={styles.circleContainer}>
+              {product.images.map((img, i) => (
+                <Pressable
+                  style={[
+                    styles.whiteCircle,
+                    {opacity: i !== selectedIndex ? 0.3 : 1},
+                  ]}
+                  key={img}
+                  onPress={() => setSelectedIndex(i)}>
+                  <Image
+                    resizeMode="stretch"
+                    key={img}
+                    source={{uri: img}}
+                    style={{width: '100%', height: '100%'}}
+                  />
+                </Pressable>
+              ))}
+            </View>
           </View>
-          <View>
+          <View style={{padding: 12}}>
             <AppText style={styles.title}>{product.title}</AppText>
             <AppText style={styles.price}>
               {formatToCurrency(product.price)}
@@ -132,7 +185,7 @@ const ProductDetailsScreen = ({route}) => {
             </View>
             <View>
               <AppText style={styles.headerLabel}>Product Description</AppText>
-              <AppText style={styles.description}>
+              <AppText style={styles.description} numberOfLines={20}>
                 {product.description}
               </AppText>
             </View>
@@ -166,16 +219,46 @@ const ProductDetailsScreen = ({route}) => {
 };
 
 const styles = StyleSheet.create({
+  circleContainer: {
+    backgroundColor: '#9491912d',
+    position: 'absolute',
+    height: 0.05 * height,
+    bottom: 0,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    // alignSelf: 'center',
+    width: '100%',
+    paddingVertical: 2,
+    // opacity: 0.5,
+  },
+  whiteCircle: {
+    width: wp(40),
+    height: '100%',
+    // borderRadius: 3,
+    margin: 5,
+    backgroundColor: '#fff',
+  },
   container: {
-    padding: 10,
+    // padding: 10,
+    // backgroundColor: 'red',
   },
   imageContainer: {
-    width: '100%',
-    height: 0.45 * dimenson.height,
+    width: width,
+    height: 0.45 * height,
+    // shadowColor: '#000',
+    // shadowOffset: {
+    //   width: 0,
+    //   height: 1,
+    // },
+    // shadowOpacity: 0.2,
+    // shadowRadius: 1.41,
+
+    // elevation: 2,
   },
   image: {
-    width: '100%',
-    height: '100%',
+    width: width,
+    height: 0.45 * height,
   },
   title: {
     fontSize: fontSz(20),

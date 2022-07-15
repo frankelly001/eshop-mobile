@@ -1,4 +1,4 @@
-import {firestore, auth} from './config';
+import {auth, firestore} from '../config';
 
 const usersCollectionRef = firestore().collection('users');
 

@@ -1,4 +1,4 @@
-const {firestore} = require('./config');
+import {firestore} from '../config';
 
 const usersCollectionRef = firestore().collection('users');
 

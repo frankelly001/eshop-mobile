@@ -4,75 +4,87 @@ import MultiStepSignUpWizard from '../components/MultiStepSignUpWizard';
 import AuthForm from '../components/AuthForm';
 import AppTextarea from '../components/AppTextarea';
 import validationSchema from '../components/form/validationSchema';
-import {signup} from '../api/setup/register';
+import {signup} from '../api/setup/authApi/register';
 import {useApi} from '../hooks/useApi';
 import routes from '../navigation/routes';
-import {logoutUser} from '../api/setup/logout';
+import {logoutUser} from '../api/setup/authApi/logout';
+import ActivityIndicator from '../components/ActivityIndicator';
 
-const signup1_VS = Yup.object().shape({
-  firstname: validationSchema.firstname,
-  lastname: validationSchema.lastname,
-  username: validationSchema.username,
-});
+const handleValidation = step => {
+  let schema;
+  if (step === 1)
+    schema = {
+      firstname: validationSchema.firstname,
+      lastname: validationSchema.lastname,
+      username: validationSchema.username,
+    };
+  else if (step === 2)
+    schema = {
+      phone: validationSchema.phone,
+      additional_phone: validationSchema.additional_phone,
+      state: validationSchema.state,
+      city: validationSchema.city,
+      address: validationSchema.address,
+    };
+  else
+    schema = {
+      email: validationSchema.email,
+      password: validationSchema.password,
+      confirm_password: validationSchema.confirm_password,
+    };
 
-const signup2_VS = Yup.object().shape({
-  phone: validationSchema.phone,
-  additional_phone: validationSchema.additional_phone,
-  state: validationSchema.state,
-  city: validationSchema.city,
-  address: validationSchema.address,
-  // zipcode: validationSchema.zipcode,
-});
+  return Yup.object().shape(schema);
+};
 
-const signup3_VS = Yup.object().shape({
-  email: validationSchema.email,
-  password: validationSchema.password,
-  confirm_password: validationSchema.confirm_password,
-});
+const handleTouched = step => {
+  let touched;
+  if (step === 1) {
+    touched = {
+      firstname: true,
+      lastname: true,
+      username: true,
+    };
+  } else if (step === 2) {
+    touched = {
+      phone: true,
+      additional_phone: true,
+      state: true,
+      city: true,
+      address: true,
+    };
+  } else {
+    touched = {
+      email: true,
+      password: true,
+      confirm_password: true,
+    };
+  }
+  return touched;
+};
 
 const SignupScreen = ({navigation}) => {
   const [step, setStep] = useState(1);
+  const {error, loading, request} = useApi(signup);
 
   const nextStep = () => {
     setStep(step + 1);
   };
 
-  // console.log(user);
-
   const prevStep = () => {
     setStep(step - 1);
   };
 
-  const handleValidation = step => {
-    if (step === 1) return signup1_VS;
-    else if (step === 2) return signup2_VS;
-    else return signup3_VS;
-  };
-
-  // const {data, error, loading, request} = useApi(signup);
-
-  // console.log('data:', data, 'Error:', `${error}`);
-
-  // const [user, setUser] = useState();
-  // const onAuthStateChanged = user => {
-  //   setUser(user);
-  //   // console.log(user);
-  // };
-
-  // useEffect(()=> {
-  //   const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
-  //   return subscriber;
-  // }, [])
-
-  const [error, setError] = useState();
-
-  const handleSubmit = userInfo => {
+  const handleSubmit = (userInfo, {resetForm, setTouched}) => {
+    setTouched(handleTouched(step));
     if (step !== 3) return nextStep();
-    signup(userInfo)
-      .then(() => {
+
+    request(userInfo)
+      .then(data => {
         logoutUser()
           .then(() => {
+            resetForm();
             console.log('logOut succussful');
+            alert('ACCOUNT CREATED SUCCESSFULLY');
             navigation.replace(routes.LOGIN);
           })
           .catch(error => {
@@ -80,54 +92,40 @@ const SignupScreen = ({navigation}) => {
           });
       })
       .catch(error => {
-        setError(error.message);
+        console.log(error);
       });
-    // request(userInfo);
   };
 
-  // const handleSubmit = userInfo => {
-  //   if (step !== 3) return nextStep();
-  //   request(userInfo);
-  //   if (data) navigation.navigate(routes.LOGIN);
-
-  //   // // console.log(validatedValues, 'Success');
-  //   // signup(userInfo)
-  //   //   .then(user => {
-  //   //     setUser(user);
-  //   //   })
-  //   //   .catch(error => {
-  //   //     // alert(`error`);
-  //   //     setError(`${error}`.replace('Error: [auth/email-already-in-use]', ''));
-  //   //   });
-  // };
-
   return (
-    <AuthForm
-      welcomeMessage="Welcome to eShop"
-      authTypeLabel="Sign Up"
-      initialValues={{
-        firstname: 'frank',
-        lastname: 'okeke',
-        username: 'frankelly',
-        state: 'imo',
-        city: 'owerri',
-        address: 'alandinma',
-        phone: '08176507344',
-        addtional_phone: '',
-        email: 'frankelly344@gmail.com',
-        password: '123456',
-        confirm_password: '123456',
-      }}
-      error={error}
-      validationSchema={handleValidation(step)}
-      onSubmit={handleSubmit}
-      navigation={navigation}>
-      <MultiStepSignUpWizard
-        step={step}
-        prevStep={prevStep}
-        // setValidatedValues={setValidatedValues}
-      />
-    </AuthForm>
+    <>
+      <ActivityIndicator visible={loading} />
+      <AuthForm
+        welcomeMessage="Welcome to eShop"
+        authTypeLabel="Sign Up"
+        initialValues={{
+          firstname: '',
+          lastname: '',
+          username: '',
+          state: '',
+          city: '',
+          address: '',
+          phone: '',
+          addtional_phone: '',
+          email: '',
+          password: '',
+          confirm_password: '',
+        }}
+        error={error}
+        validationSchema={handleValidation(step)}
+        onSubmit={handleSubmit}
+        navigation={navigation}>
+        <MultiStepSignUpWizard
+          step={step}
+          prevStep={prevStep}
+          // setValidatedValues={setValidatedValues}
+        />
+      </AuthForm>
+    </>
   );
 
   // initialValues={{
