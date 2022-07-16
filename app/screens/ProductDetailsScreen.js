@@ -220,7 +220,7 @@ const ProductDetailsScreen = ({route}) => {
 
 const styles = StyleSheet.create({
   circleContainer: {
-    backgroundColor: '#9491912d',
+    backgroundColor: colors.grey_dark_2_tranparent,
     position: 'absolute',
     height: 0.05 * height,
     bottom: 0,

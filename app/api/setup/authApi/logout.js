@@ -9,14 +9,16 @@ export const logoutUser = () => {
         removeUserData()
           .then(() => {
             console.log('data deleted');
+            resolve('User Succesfully sign Out');
           })
           .catch(error => {
-            console.log(error.message, 'am from remove data');
+            reject(error.message);
+            console.log('ASYNC_STORAGE REMOVE_USER_DATA ERROR', error.message);
           });
-        resolve('User Succesfully sign Out', data);
       })
       .catch(error => {
-        reject(error);
+        reject(error.message);
+        console.log('SIGN OUT ERROR:', error.message);
       });
   });
 };

@@ -20,6 +20,7 @@ const HomeScreen = ({navigation}) => {
   // console.log(newProducts[0], 'new Products............');
 
   const numOfCols = 2;
+  // console.log(newProducts, 'new..................');
   if (newProducts.length < 1) return null;
   // if (1) return null;
 

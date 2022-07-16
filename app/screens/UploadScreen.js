@@ -119,7 +119,7 @@ const UploadScreen = () => {
         resetForm();
       })
       .catch(error => {
-        console.log('product add failed:', error);
+        console.log('product add failed:', error.message);
       });
     setLoading(false);
   };

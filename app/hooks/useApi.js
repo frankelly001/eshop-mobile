@@ -14,15 +14,17 @@ export const useApi = apiFunc => {
           // setData(data);
           // alert('Sign in Successful');
           setError(false);
+          setLoading(false);
           resolve(data);
         })
         .catch(error => {
-          setError(error.message);
-          // setData(undefined);
-          // console.log(error.message);
-          reject(error.message);
+          setError(error);
+          setLoading(false);
+          reject(error);
         });
-      setLoading(false);
+      // .finally(() => {
+      //   setLoading(false);
+      // });
     });
   };
 

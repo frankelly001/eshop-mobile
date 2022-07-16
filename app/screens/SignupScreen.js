@@ -79,7 +79,7 @@ const SignupScreen = ({navigation}) => {
     if (step !== 3) return nextStep();
 
     request(userInfo)
-      .then(data => {
+      .then(() => {
         logoutUser()
           .then(() => {
             resetForm();
@@ -88,7 +88,7 @@ const SignupScreen = ({navigation}) => {
             navigation.replace(routes.LOGIN);
           })
           .catch(error => {
-            alert(error);
+            console.log(error);
           });
       })
       .catch(error => {
@@ -103,17 +103,17 @@ const SignupScreen = ({navigation}) => {
         welcomeMessage="Welcome to eShop"
         authTypeLabel="Sign Up"
         initialValues={{
-          firstname: '',
-          lastname: '',
-          username: '',
-          state: '',
-          city: '',
-          address: '',
-          phone: '',
-          addtional_phone: '',
-          email: '',
-          password: '',
-          confirm_password: '',
+          firstname: 'Franklyn',
+          lastname: 'Okeke',
+          username: 'Frankelly',
+          state: 'Imo',
+          city: 'Orsu',
+          address: '56 sowemimo Street',
+          phone: '08176507344',
+          addtional_phone: '09089778367',
+          email: 'Frankelly344@gmail.com',
+          password: '123456',
+          confirm_password: '123456',
         }}
         error={error}
         validationSchema={handleValidation(step)}

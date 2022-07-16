@@ -16,7 +16,7 @@ import {navigationRef} from './app/navigation/rootNavigation';
 import {gestureHandlerRootHOC} from 'react-native-gesture-handler';
 import {Host} from 'react-native-portalize';
 import SplashScreen from 'react-native-splash-screen';
-import {auth} from './app/api/setup/config';
+import {auth, firestore} from './app/api/setup/config';
 import {getUser} from './app/api/setup/getApi/getUser';
 import {getUserData, storeUserData} from './app/api/storage/authStorage';
 import {useNetInfo} from '@react-native-community/netinfo';
@@ -39,26 +39,22 @@ const App = () => {
   const [user, setUser] = useState();
   const [initializing, setInitializing] = useState(false);
 
-  console.log(user, 'App State Login');
+  // console.log(user, 'App State Login');
 
   const netinfo = useNetInfo();
   // console.log(netinfo);
 
   const onAuthStateChanged = account => {
-    getUser(account?.uid)
-      .then(data => {
-        const newUser = {...data._data, verified: account.emailVerified};
-        if (data._data) {
-          setUser(newUser);
-          storeUserData(newUser);
-          console.log('heyy  firebase is updating user');
-        } else {
-          setUser(null);
-        }
-      })
-      .catch(() => {
-        setUser(null);
-      });
+    if (user && !user.verified) {
+      if (account && account.emailVerified) {
+        const updatedUserData = {...user, verified: account.emailVerified};
+        setUser(updatedUserData);
+        storeUserData(updatedUserData);
+      } else {
+        console.log('User is not Verified');
+      }
+    }
+
     setInitializing(false);
   };
 
@@ -66,22 +62,43 @@ const App = () => {
     getUserData()
       .then(data => {
         setUser(data);
-        console.log('heyy am setting user');
+        // console.log(data.id, 'heyy am setting user');
       })
       .catch(err => {
-        console.log(err);
+        setUser(null);
+        console.log('error');
       });
   };
 
+  const onUserStateChanged = () => {
+    // console.log(user.id, 'id......................');
+    const subscriber = firestore()
+      .collection('users')
+      .doc(user.id)
+      .onSnapshot(documentSnapshot => {
+        console.log('user data:......', documentSnapshot);
+      });
+
+    return () => subscriber();
+  };
+
   useEffect(() => {
-    const {isConnected, isInternetReachable} = netinfo;
-    if (isConnected && isInternetReachable) {
-      const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
-      return subscriber;
-    } else {
-      getUserFromAsynStorage();
-    }
-  }, [netinfo]);
+    getUserFromAsynStorage();
+    const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
+    return subscriber;
+  }, []);
+
+  useEffect(() => {
+    if (user) onUserStateChanged();
+  }, [user]);
+
+  // useEffect(() => {
+  //   const {isConnected, isInternetReachable} = netinfo;
+  //   if (isConnected && isInternetReachable) {
+  //   } else {
+  //     getUserFromAsynStorage();
+  //   }
+  // }, [netinfo]);
 
   const allProducts = async () => {
     const {data, ok, problem} = await getProducts();
@@ -233,3 +250,18 @@ const App = () => {
 };
 
 export default gestureHandlerRootHOC(App);
+
+// getUser(account?.uid)
+//   .then(data => {
+//     const newUser = {...data._data, verified: account.emailVerified};
+//     if (data._data) {
+//       setUser(newUser);
+//       storeUserData(newUser);
+//       console.log('heyy  firebase is updating user');
+//     } else {
+//       setUser(null);
+//     }
+//   })
+//   .catch(() => {
+//     setUser(null);
+//   });

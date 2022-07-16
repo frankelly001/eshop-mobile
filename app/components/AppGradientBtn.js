@@ -14,12 +14,16 @@ const AppGradientBtn = ({
   onPress,
   width = '100%',
   inActive,
+  disable,
 }) => {
   const color = !inActive
     ? ['#5d05b5', '#9E1E7C', '#dc3545']
     : ['#5d05b5a2', '#dc3545a2'];
   return (
-    <TouchableOpacity style={[{width}, containerStyle]} onPress={onPress}>
+    <TouchableOpacity
+      style={[{width}, containerStyle]}
+      disabled={disable}
+      onPress={onPress}>
       <LinearGradient
         colors={['#5d05b5', '#9E1E7C', '#dc3545']}
         style={[styles.gradientContainer, style, inActive && {opacity: 0.5}]}

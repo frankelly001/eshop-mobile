@@ -1,7 +1,7 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {StyleSheet, View, Dimensions, TouchableOpacity} from 'react-native';
 import {AccountDetails, AccountSettings} from '../api/account';
-import {auth} from '../api/setup/config';
+import {auth, firestore} from '../api/setup/config';
 import {logoutUser} from '../api/setup/authApi/logout';
 import AuthContext from '../auth/AuthContext';
 import AppButton from '../components/AppButton';
@@ -15,84 +15,94 @@ import fonts from '../config/fonts';
 import {fontSz, wp} from '../config/responsiveSize';
 import routes from '../navigation/routes';
 import UploadScreen from './UploadScreen';
+import {formatToCurrency} from '../utilities/formatToCurr';
+import ActivityIndicator from '../components/ActivityIndicator';
+import {useApi} from '../hooks/useApi';
 
 const dimensions = Dimensions.get('screen');
 
 const AccountScreen = ({navigation}) => {
-  // const [user, setUser] = useState(false);
-  const {user} = useContext(AuthContext);
+  const {user, setUser} = useContext(AuthContext);
 
-  // console.log(user, 'Account Screen');
+  const {loading, request} = useApi(logoutUser);
+
+  console.log(user, 'kkkkkkkkkkkkkkkkk');
 
   const handleLogout = () => {
-    logoutUser()
+    request()
       .then(snapshot => {
         alert(snapshot);
+        setUser(null);
       })
       .catch(error => {
         alert(error);
       });
   };
 
-  // console.log(user);
-
-  // const onAuthStateChanged = user => {
-  //   setUser(user);
-  //   // console.log(user);
-  // };
-
-  // useEffect(() => {
-  //   const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
-  //   return subscriber;
-  // }, []);
-
-  // if (1) return <UploadScreen />;
+  const press = () => {
+    firestore()
+      .collection('users')
+      .doc(user.id)
+      .update({
+        name: {
+          ...user.name,
+          firstname: 'love',
+        },
+      });
+    // return userSubscriber();
+  };
 
   return (
-    <Screen>
-      <View style={styles.welcomeContainer}>
-        <View style={styles.subWelcomeContainer}>
-          <AppGradientText
-            style={[styles.welcome, {textTransform: 'capitalize'}]}>
-            <AppGradientText style={[styles.welcome, styles.welcomeColor]}>
-              Welcome{user ? ' ' : '!'}
+    <>
+      <ActivityIndicator visible={loading} portal />
+      <Screen>
+        <View style={styles.welcomeContainer}>
+          <View style={styles.subWelcomeContainer}>
+            <AppGradientText
+              style={[styles.welcome, {textTransform: 'capitalize'}]}>
+              <AppGradientText style={[styles.welcome, styles.welcomeColor]}>
+                Welcome{user ? ' ' : '!'}
+              </AppGradientText>
+              {user && user.name.firstname}
             </AppGradientText>
-            {user && user.name.firstname}
-          </AppGradientText>
-          <AppText style={styles.welcome}>
-            {user ? user.email : `Enter your account`}
-          </AppText>
-        </View>
-        {!user && (
-          <View style={[styles.subWelcomeContainer, {flex: 0.5}]}>
-            <AppButton
-              label="Login"
-              bgStyle={{borderRadius: 5}}
-              onPress={() => navigation.navigate(routes.LOGIN)}
-            />
+            <AppText style={styles.welcome}>
+              {user ? user.email : `Enter your account`}
+            </AppText>
           </View>
-        )}
-      </View>
-      <View style={styles.actBalContainer}>
-        {user ? (
-          <>
-            <AppText style={styles.actBalLabel}>Account Balance</AppText>
-            <AppText style={[styles.actBalLabel, styles.bal]}>₦150,870</AppText>
-          </>
-        ) : (
-          <AppText style={styles.actBalLabel}>Login to see Balance</AppText>
-        )}
-      </View>
-      <ListCard data={AccountDetails} />
-      <ListCard data={AccountSettings} />
+          {!user && (
+            <View style={[styles.subWelcomeContainer, {flex: 0.5}]}>
+              <AppButton
+                label="Login"
+                bgStyle={{borderRadius: 5}}
+                onPress={() => navigation.navigate(routes.LOGIN)}
+              />
+            </View>
+          )}
+        </View>
+        <View style={styles.actBalContainer}>
+          {user ? (
+            <>
+              <AppText style={styles.actBalLabel}>Account Balance</AppText>
+              <AppText style={[styles.actBalLabel, styles.bal]}>
+                {formatToCurrency(user.account_bal)}
+              </AppText>
+            </>
+          ) : (
+            <AppText style={styles.actBalLabel}>Login to see Balance</AppText>
+          )}
+        </View>
+        <ListCard data={AccountDetails} />
+        <ListCard data={AccountSettings} />
 
-      <TouchableOpacity
-        onPress={user ? handleLogout : () => navigation.navigate(routes.LOGIN)}>
-        <AppGradientText style={styles.logout}>
-          {user ? 'Log out' : 'Log in'}
-        </AppGradientText>
-      </TouchableOpacity>
-      {/* {ifUser ? (
+        <TouchableOpacity
+          onPress={
+            user ? handleLogout : () => navigation.navigate(routes.LOGIN)
+          }>
+          <AppGradientText style={styles.logout}>
+            {user ? 'Log out' : 'Log in'}
+          </AppGradientText>
+        </TouchableOpacity>
+        {/* {ifUser ? (
         <TouchableOpacity on>
           <AppGradientText style={styles.logout}>Log out</AppGradientText>
         </TouchableOpacity>
@@ -101,7 +111,8 @@ const AccountScreen = ({navigation}) => {
           <AppGradientText style={styles.logout}>Log in</AppGradientText>
         </TouchableOpacity>
       )} */}
-    </Screen>
+      </Screen>
+    </>
   );
 };
 

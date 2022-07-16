@@ -19,6 +19,8 @@ import {useApi} from '../hooks/useApi';
 import routes from '../navigation/routes';
 import AuthContext from '../auth/AuthContext';
 import ActivityIndicator from '../components/ActivityIndicator';
+import {getUser} from '../api/setup/getApi/getUser';
+import {storeUserData} from '../api/storage/authStorage';
 
 // GoogleSignin.configure({
 //   scopes: ['https://www.googleapis.com/auth/userinfo.profile'],
@@ -50,6 +52,7 @@ const login_VS = Yup.object().shape({
 const LoginScreen = ({navigation}) => {
   // const [user, setUser] = useState();
   const productCollectionRef = firestore().collection('products');
+  const {setUser} = useContext(AuthContext);
   // console.log(usersCollection);
 
   // const onFetchData = () => {
@@ -105,26 +108,18 @@ const LoginScreen = ({navigation}) => {
   // const [error, setError] = useState();
 
   const handleSubmit = (userInfo, {resetForm}) => {
-    // loginWithEmailAndPassword(userInfo)
-    //   .then(() => {
-    //     alert('Sign in Successful');
-    //     navigation.replace(routes.ACCOUNT);
-    //   })
-    //   .catch(error => {
-    //     setError(error.message);
-    //   });
-
     request(userInfo)
-      .then(data => {
+      .then(userData => {
         resetForm();
-        console.log(data);
-        alert('Sign In Successfull');
+        setUser(userData);
+        storeUserData(userData);
         navigation.replace(routes.ACCOUNT);
       })
       .catch(error => {
         console.log(error);
       });
   };
+  console.log(loading, 'Loading state');
   // const handleSubmit = userInfo => {
   //   loginWithEmailAndPassword(userInfo)
   //     .then(() => {
@@ -142,13 +137,13 @@ const LoginScreen = ({navigation}) => {
 
   return (
     <>
-      <ActivityIndicator visible={loading} />
+      <ActivityIndicator visible={loading} portal />
       <AuthForm
         welcomeMessage="Welcome to Back!"
         authTypeLabel="Login"
         initialValues={{
-          email: '',
-          password: '',
+          email: 'frankelly344@gmail.com',
+          password: '123456',
         }}
         validationSchema={login_VS}
         navigation={navigation}
@@ -173,6 +168,7 @@ const LoginScreen = ({navigation}) => {
           <SubmitButton
             labelStyle={styles.btnLabel}
             label="Login"
+            disable={loading}
             containerStyle={styles.btnContainerStyle}
           />
         </View>

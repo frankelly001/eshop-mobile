@@ -3,23 +3,28 @@ import {StyleSheet, View} from 'react-native';
 import AnimatedLottieView from 'lottie-react-native';
 import AppText from './AppText';
 import colors from '../config/colors';
+import {Portal} from 'react-native-portalize';
 
 const ActivityIndicator = ({
   animatedIconSource = require('../assets/icons/animatedIcons/cart_loader_80x80.json'),
   containerStyles,
   animatedIconStyles,
   visible,
+  portal,
 }) => {
   if (!visible) return null;
+  const Container = portal ? Portal : React.Fragment;
   return (
-    <View style={[styles.overlay, containerStyles]}>
-      <AnimatedLottieView
-        style={[styles.animatedIcon, animatedIconStyles]}
-        autoPlay
-        loop
-        source={animatedIconSource}
-      />
-    </View>
+    <Container>
+      <View style={[styles.overlay, containerStyles]}>
+        <AnimatedLottieView
+          style={[styles.animatedIcon, animatedIconStyles]}
+          autoPlay
+          loop
+          source={animatedIconSource}
+        />
+      </View>
+    </Container>
   );
 };
 
@@ -30,7 +35,7 @@ const styles = StyleSheet.create({
     // flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: colors.grey_light_3,
+    backgroundColor: colors.grey_dark_3_tranparent,
     position: 'absolute',
     zIndex: 1,
 
@@ -38,7 +43,7 @@ const styles = StyleSheet.create({
     // bottom: 0,
     // left: 0,
     // right: 0,
-    opacity: 0.5,
+    // opacity: 0.8,
   },
   animatedIcon: {
     // marginBottom: 80,
