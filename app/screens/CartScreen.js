@@ -43,6 +43,7 @@ const CartScreen = ({navigation}) => {
 
   // console.log(keyboardStatus);
 
+  // if (!ordered.length) return null;
   return (
     <View style={styles.container} onPress={() => setId(null)}>
       <View style={styles.feeSummaryContainer}>

@@ -1,4 +1,4 @@
-import React, {useContext, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {
   StyleSheet,
   View,
@@ -17,8 +17,39 @@ import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import navigation from '../navigation/rootNavigation';
 import routes from '../navigation/routes';
 import fonts from '../config/fonts';
+import AuthContext from '../auth/AuthContext';
 
-const CartItemCard = ({product, renderRightActions, id, setId}) => {
+const CartItemCard = ({product, renderRightActions}) => {
+  const [value, setValue] = useState(product.quantity);
+  const {addToCart, subFromCart, mutateCart} = useContext(AuthContext);
+
+  const updateInput = () => {
+    let payload;
+    const newVal = parseInt(value);
+    if (newVal < 1) payload = 1;
+    else if (!newVal) {
+      payload = product.quantity;
+      setValue(product.quantity);
+    } else payload = newVal;
+    mutateCart(product.id, payload);
+  };
+
+  const add = () => {
+    addToCart(product.id);
+  };
+
+  const sub = () => {
+    subFromCart(product.id);
+  };
+
+  const handleChange = value => {
+    setValue(value);
+  };
+
+  useEffect(() => {
+    setValue(product.quantity);
+  }, [product.quantity]);
+
   return (
     <GestureHandlerRootView>
       <Swipeable renderRightActions={renderRightActions}>
@@ -33,7 +64,7 @@ const CartItemCard = ({product, renderRightActions, id, setId}) => {
                 style={styles.image}
                 resizeMode="stretch"
                 source={{
-                  uri: product.image,
+                  uri: product.images[0],
                 }}
               />
             </TouchableOpacity>
@@ -50,10 +81,14 @@ const CartItemCard = ({product, renderRightActions, id, setId}) => {
               <View style={styles.input}>
                 <PlusMinusInputBtn
                   small
-                  value={product.quantity}
-                  dispatchAdd={{type: 'addToCart', id: product.id}}
-                  dispatchSub={{type: 'subFromCart', id: product.id}}
-                  dispatchInput={{type: 'mutateCart', id: product.id}}
+                  value={value}
+                  onBlur={updateInput}
+                  onChangeText={text => handleChange(text)}
+                  add={add}
+                  sub={sub}
+                  // dispatchAdd={{type: 'addToCart', id: product.id}}
+                  // dispatchSub={{type: 'subFromCart', id: product.id}}
+                  // dispatchInput={{type: 'mutateCart', id: product.id}}
                 />
               </View>
             </View>

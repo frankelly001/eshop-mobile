@@ -1,7 +1,6 @@
 import {firestore} from '../config';
-
-const categoryCollectionRef = firestore().collection('categories');
+import collectionRefs from '../collectionRefs';
 
 export const getCategories = () => {
-  return categoryCollectionRef.get();
+  return collectionRefs.categoryCollectionRef.get();
 };

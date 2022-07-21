@@ -22,17 +22,16 @@ import {useApi} from '../hooks/useApi';
 const dimensions = Dimensions.get('screen');
 
 const AccountScreen = ({navigation}) => {
-  const {user, setUser} = useContext(AuthContext);
+  const {user, setUser, clearCartState} = useContext(AuthContext);
 
   const {loading, request} = useApi(logoutUser);
-
-  console.log(user, 'kkkkkkkkkkkkkkkkk');
 
   const handleLogout = () => {
     request()
       .then(snapshot => {
         alert(snapshot);
         setUser(null);
+        // clearCartState();
       })
       .catch(error => {
         alert(error);
@@ -44,10 +43,13 @@ const AccountScreen = ({navigation}) => {
       .collection('users')
       .doc(user.id)
       .update({
-        name: {
-          ...user.name,
-          firstname: 'love',
-        },
+        ['name.lastname']: 'okeke',
+      })
+      .then(data => {
+        console.log('success', data);
+      })
+      .then(error => {
+        console.log('error', error.message);
       });
     // return userSubscriber();
   };

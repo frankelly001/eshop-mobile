@@ -29,7 +29,8 @@ const {width, height} = Dimensions.get('screen');
 const ProductDetailsScreen = ({route}) => {
   const [loading, setLoading] = useState(false);
   const [productId, setProductId] = useState(route.params);
-  const {products, newProducts, dispatch, ordered} = useContext(AuthContext);
+  const {products, newProducts, dispatch, ordered, addToCart} =
+    useContext(AuthContext);
 
   const [product, setProduct] = useState({});
   const [productCategogies, setProductCategogies] = useState([]);
@@ -112,11 +113,11 @@ const ProductDetailsScreen = ({route}) => {
                 />
               ))}
             </ScrollView>
-            <View style={styles.circleContainer}>
+            <View style={styles.selectionContainer}>
               {product.images.map((img, i) => (
                 <Pressable
                   style={[
-                    styles.whiteCircle,
+                    styles.selectImage,
                     {opacity: i !== selectedIndex ? 0.3 : 1},
                   ]}
                   key={img}
@@ -152,7 +153,7 @@ const ProductDetailsScreen = ({route}) => {
               </AppText>
             </View>
             <View style={styles.actionContainer}>
-              <LikeBtn product={product} />
+              <LikeBtn productId={product.id} />
               <AppText style={styles.label}>Save for later</AppText>
             </View>
             <View style={styles.quantityContainer}>
@@ -174,11 +175,7 @@ const ProductDetailsScreen = ({route}) => {
                 labelStyle={styles.btnLabel}
                 style={styles.addToCartBtn}
                 onPress={() => {
-                  dispatch({
-                    type: 'addToCart',
-                    id: product.id,
-                    payload: value < 1 ? 1 : value,
-                  });
+                  addToCart(product.id, value < 1 ? 1 : value);
                   setResetVal(true);
                 }}
               />
@@ -219,7 +216,7 @@ const ProductDetailsScreen = ({route}) => {
 };
 
 const styles = StyleSheet.create({
-  circleContainer: {
+  selectionContainer: {
     backgroundColor: colors.grey_dark_2_tranparent,
     position: 'absolute',
     height: 0.05 * height,
@@ -232,7 +229,7 @@ const styles = StyleSheet.create({
     paddingVertical: 2,
     // opacity: 0.5,
   },
-  whiteCircle: {
+  selectImage: {
     width: wp(40),
     height: '100%',
     // borderRadius: 3,

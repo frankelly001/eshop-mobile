@@ -3,7 +3,7 @@ import {StyleSheet, TouchableOpacity, Text} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import colors from '../config/colors';
 import fonts from '../config/fonts';
-import {fontSz} from '../config/responsiveSize';
+import {fontSz, hp} from '../config/responsiveSize';
 import AppText from './AppText';
 
 const AppGradientBtn = ({
@@ -21,7 +21,7 @@ const AppGradientBtn = ({
     : ['#5d05b5a2', '#dc3545a2'];
   return (
     <TouchableOpacity
-      style={[{width}, containerStyle]}
+      style={[styles.container, {width}, containerStyle]}
       disabled={disable}
       onPress={onPress}>
       <LinearGradient
@@ -41,11 +41,15 @@ const AppGradientBtn = ({
 };
 
 const styles = StyleSheet.create({
+  container: {
+    height: hp(40),
+  },
   gradientContainer: {
     justifyContent: 'center',
     alignItems: 'center',
-    padding: 10,
+    // padding: 10,
     borderRadius: 20,
+    height: '100%',
   },
   text: {
     // fontSize: fontSz(15),

@@ -6,9 +6,9 @@ import colors from '../config/colors';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 import {wp} from '../config/responsiveSize';
 
-const LikeBtn = ({product, size = 25}) => {
-  const {onLike} = useContext(AuthContext);
-  const heartType = product.like ? 'heart' : 'heart-o';
+const LikeBtn = ({productId, size = 25}) => {
+  const {onLike, savedItems} = useContext(AuthContext);
+  const heartType = savedItems.includes(productId) ? 'heart' : 'heart-o';
   // console.log('LikeBtn rendering', 'check---', product.like);
   return (
     <TouchableOpacity
@@ -16,7 +16,7 @@ const LikeBtn = ({product, size = 25}) => {
         styles.container,
         {width: wp(size + size * 0.6), height: wp(size + size * 0.6)},
       ]}
-      onPress={() => onLike(product)}>
+      onPress={() => onLike(productId)}>
       <FontAwesomeIcon size={wp(size)} name={heartType} color={colors.purple} />
     </TouchableOpacity>
   );

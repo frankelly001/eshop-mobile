@@ -9,7 +9,7 @@ import {
 import AuthContext from '../auth/AuthContext';
 import colors from '../config/colors';
 import fonts from '../config/fonts';
-import {fontSz, wp} from '../config/responsiveSize';
+import {fontSz, hp, wp} from '../config/responsiveSize';
 import {formatToCurrency} from '../utilities/formatToCurr';
 import AppButton from './AppButton';
 import AppGradientBtn from './AppGradientBtn';
@@ -19,7 +19,7 @@ import LikeBtn from './LikeBtn';
 const dimenson = Dimensions.get('screen');
 
 const ProductCard = ({product, onPress, small, medium}) => {
-  const {dispatch} = useContext(AuthContext);
+  const {dispatch, addToCart} = useContext(AuthContext);
   // console.log(height);
   // const styles = small ? mediumCardstyles : bigCardstyles;
   const styles = (() => {
@@ -51,12 +51,14 @@ const ProductCard = ({product, onPress, small, medium}) => {
         <AppGradientBtn
           label="add to cart"
           labelStyle={styles.btnLabel}
-          onPress={() => dispatch({type: 'addToCart', id: product.id})}
+          containerStyle={{height: hp(35)}}
+          // onPress={() => dispatch({type: 'addToCart', id: product.id})}
+          onPress={() => addToCart(product.id)}
         />
       </View>
       {!small && !medium && (
         <View style={{position: 'absolute', right: 5, top: 5}}>
-          <LikeBtn product={product} size={20} />
+          <LikeBtn productId={product.id} size={20} />
         </View>
       )}
     </TouchableOpacity>

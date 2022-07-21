@@ -31,13 +31,14 @@ export const wp = val => {
   return widthPercentageToDP(num);
 };
 
-export const fontSz = val => {
-  // get scaled height equivalent of design width
-  const num = val / 3.88;
-  return widthPercentageToDP(num);
-};
+// export const fontSz = val => {
+//   // get scaled height equivalent of design width
+//   const num = val / 3.88;
+//   return widthPercentageToDP(num);
+// };
 
 // export const fontSz = val => RFPercentage(val / 7.6);
+export const fontSz = val => RFPercentage(val / 9.0);
 
 export const fontsizes = {
   xsmini: {

@@ -24,22 +24,73 @@ import {getCategories} from './app/api/setup/getApi/getCategories';
 import AppButton from './app/components/AppButton';
 import {getProducts} from './app/api/products';
 import {getProducts as getNewProducts} from './app/api/setup/getApi/getProducts';
+import collectionRefs from './app/api/setup/collectionRefs';
+import {
+  updateUserData,
+  userDataTypes,
+} from './app/api/setup/patchApi/updateUserData';
+import {useCartState} from './app/hooks/useCartState';
 
 const initialState = {
   cartsCount: [],
 };
 
+const cartInitialState = {
+  orderedItems: [],
+  savedItems: [],
+};
+
 const App = () => {
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);
-  const [allCounters, dispatch] = useReducer(reducerFunction, initialState);
+  // const [allCounters, dispatch] = useReducer(reducerFunction, initialState);
+  const [cartState, dispatch] = useReducer(reducerFunction, cartInitialState);
   // const [allAddToCart, setAllAddToCart] = useState([]);
   const [ordered, setOrdered] = useState([]);
   const [recentQueries, setRecentQueries] = useState([]);
   const [user, setUser] = useState();
   const [initializing, setInitializing] = useState(false);
+  // const [orderedItems, setOrderedItems] = useState([]);
+  // const [savedItems, setSavedItems] = useState([]);
 
-  // console.log(user, 'App State Login');
+  const {orderedItems, savedItems, actionTypes, dispatchAction} =
+    useCartState(user);
+
+  // console.log(orderedItems);
+
+  const initializeCartState = data => {
+    dispatchAction({
+      type: actionTypes.INITIALIZE_ORDER,
+      data: data.odered_items,
+    });
+    dispatchAction({
+      type: actionTypes.INITIALIZE_SAVE,
+      data: data.saved_items,
+    });
+  };
+
+  const clearCartState = () => {
+    dispatchAction({type: actionTypes.CLEAR_ORDER});
+    dispatchAction({type: actionTypes.CLEAR_SAVE});
+  };
+
+  const handleSave = id => {
+    dispatchAction({type: actionTypes.ONSAVE, id});
+  };
+
+  const addToCart = (id, payload) => {
+    dispatchAction({type: actionTypes.ADD_TO_CART, id, payload});
+  };
+
+  const subFromCart = id => {
+    dispatchAction({type: actionTypes.SUB_FROM_CART, id});
+  };
+
+  const mutateCart = (id, payload) => {
+    dispatchAction({type: actionTypes.MUTATE_CART, id, payload});
+  };
+
+  // console.log(orderedItems, savedItems, 'kkkkkkkkkkllopp');
 
   const netinfo = useNetInfo();
   // console.log(netinfo);
@@ -47,9 +98,14 @@ const App = () => {
   const onAuthStateChanged = account => {
     if (user && !user.verified) {
       if (account && account.emailVerified) {
-        const updatedUserData = {...user, verified: account.emailVerified};
-        setUser(updatedUserData);
-        storeUserData(updatedUserData);
+        // const updatedUsersData = {...user, verified: account.emailVerified};
+        // setUser(updatedUserData);
+        // storeUserData(updatedUserData);
+        updateUserData(
+          account.uid,
+          userDataTypes.VERIFIED,
+          account.emailVerified,
+        );
       } else {
         console.log('User is not Verified');
       }
@@ -58,11 +114,28 @@ const App = () => {
     setInitializing(false);
   };
 
+  const onUserSubscriber = () => {
+    const subscriber = collectionRefs.usersCollectionRef
+      .doc(user?.id)
+      .onSnapshot(documentSnapshot => {
+        if (documentSnapshot._data) {
+          const newUserData = {
+            id: user.id,
+            ...documentSnapshot._data,
+          };
+          setUser(newUserData);
+          storeUserData(newUserData);
+        }
+      });
+    return () => subscriber();
+  };
+
   const getUserFromAsynStorage = () => {
     getUserData()
       .then(data => {
         setUser(data);
-        // console.log(data.id, 'heyy am setting user');
+        // initializeCartState(data);
+        // console.log(data, 'DATA................');
       })
       .catch(err => {
         setUser(null);
@@ -70,27 +143,22 @@ const App = () => {
       });
   };
 
-  const onUserStateChanged = () => {
-    // console.log(user.id, 'id......................');
-    const subscriber = firestore()
-      .collection('users')
-      .doc(user.id)
-      .onSnapshot(documentSnapshot => {
-        console.log('user data:......', documentSnapshot);
-      });
-
-    return () => subscriber();
-  };
-
   useEffect(() => {
+    const authSubscriber = auth().onAuthStateChanged(onAuthStateChanged);
     getUserFromAsynStorage();
-    const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
-    return subscriber;
+    return authSubscriber;
   }, []);
 
   useEffect(() => {
-    if (user) onUserStateChanged();
-  }, [user]);
+    if (user) {
+      initializeCartState(user);
+      console.log('heyyyy, am initializing cart data');
+    } else {
+      clearCartState(user);
+      console.log('heyyyy, am clearing cart data');
+    }
+    onUserSubscriber();
+  }, [user?.id]);
 
   // useEffect(() => {
   //   const {isConnected, isInternetReachable} = netinfo;
@@ -109,7 +177,7 @@ const App = () => {
       const allCartObj = data.map(pId => {
         return {productId: pId.id, quantity: 0};
       });
-      dispatch({type: 'INITIALIZE', data: allCartObj});
+      // dispatch({type: 'INITIALIZE', data: allCartObj});
       setProducts(shuffle(data.map(el => ({...el, price: el.price * 430}))));
     }
     // getProducts()
@@ -174,39 +242,42 @@ const App = () => {
     return function cleanUp() {};
   }, []);
 
-  const handleLike = useCallback(
-    product => {
-      const newState = [...products];
-      const index = newState.indexOf(product);
-      newState[index].like = !newState[index].like;
-      setProducts(newState);
-    },
-    [products],
-  );
+  // const handleLike = useCallback(
+  //   product => {
+  //     const newState = [...newProducts];
+  //     const index = newState.indexOf(product);
+  //     newState[index].like = !newState[index].like;
+  //     setProducts(newState);
+  //   },
+  //   [newProducts],
+  // );
 
   useEffect(() => {
-    const allAddToCart = allCounters.cartsCount.filter(
-      counters => counters.quantity > 0,
-    );
-    const orderedID = allAddToCart.map(el => el.productId);
-    const orderdItems = products.filter(el => {
-      return orderedID.includes(el.id);
+    const orderedID = orderedItems.map(el => el.productId);
+
+    const filteredProduts = newProducts.filter(el => orderedID.includes(el.id));
+    const orderedOroducts = filteredProduts.map(el => {
+      return {
+        ...el,
+        quantity: orderedItems.find(ordered => ordered.productId === el.id)
+          .quantity,
+      };
     });
 
-    orderdItems.map(el => {
-      return allAddToCart.forEach(cart => {
-        if (el.id === cart.productId) {
-          el.quantity = cart.quantity;
-        }
-        return el;
-      });
-    });
-    orderdItems.map(el => el.quantity).reduce((prev, cur) => prev + cur, 0);
-    // console.log('useffect rennding');
-    setOrdered(orderdItems);
-
-    // return function cleanUp() {};
-  }, [allCounters.cartsCount]);
+    // rememeber unshift
+    // let orderedOroducts = [];
+    // newProducts.forEach(el => {
+    //   if (orderedID.includes(el.id))
+    //     orderedOroducts.push({
+    //       ...el,
+    //       quantity: orderedItems.find(ordered => ordered.productId === el.id)
+    //         .quantity,
+    //     });
+    // });
+    // console.log(orderedOroducts, 'kkkkllloppppp');
+    setOrdered(orderedOroducts);
+    // collectionRefs.productsCollectionRef.doc().get
+  }, [orderedItems, newProducts]);
 
   const orderedNum = ordered
     .map(el => el.quantity)
@@ -229,7 +300,7 @@ const App = () => {
         categories,
         newProducts,
         ordered,
-        onLike: handleLike,
+        onLike: handleSave,
         dispatch,
         orderedNum,
         subTotal,
@@ -239,6 +310,12 @@ const App = () => {
         recentQueries,
         user,
         setUser,
+        addToCart,
+        savedItems,
+        subFromCart,
+        mutateCart,
+        // initializeCartState,
+        // clearCartState,
       }}>
       <NavigationContainer ref={navigationRef} theme={navigationTheme}>
         <Host>
@@ -265,3 +342,86 @@ export default gestureHandlerRootHOC(App);
 //   .catch(() => {
 //     setUser(null);
 //   });
+
+// const addToCart = id => {
+//   if (user) {
+//     const previousOrderedItems = orderedItems;
+//     let nextOrderedItems = [...orderedItems];
+//     if (!nextOrderedItems.some(elOrdered => elOrdered.productId === id)) {
+//       nextOrderedItems.push({productId: id, quantity: 1});
+//     } else {
+//       nextOrderedItems = nextOrderedItems.map(elOrdered =>
+//         elOrdered.productId === id
+//           ? {productId: id, quantity: elOrdered.quantity + 1}
+//           : el,
+//       );
+//     }
+
+//     setOrderedItems(nextOrderedItems);
+//     updateUserData(
+//       user.id,
+//       userDataTypes.ORDERED_ITEMS,
+//       nextOrderedItems,
+//     ).catch(() => {
+//       setOrderedItems(previousOrderedItems);
+//     });
+//   }
+// };
+
+// const subFromCart = id => {
+//   if (user) {
+//     const previousOrderedItems = orderedItems;
+//     const nextOrderedItems = [...orderedItems].map(elOrdered =>
+//       elOrdered.productId === id
+//         ? {
+//             ...elOrdered,
+//             quantity:
+//               elOrdered.quantity > 1
+//                 ? elOrdered.quantity - 1
+//                 : elOrdered.quantity,
+//           }
+//         : elOrdered,
+//     );
+//     setOrderedItems(nextOrderedItems);
+//     updateUserData(
+//       user.id,
+//       userDataTypes.ORDERED_ITEMS,
+//       nextOrderedItems,
+//     ).catch(() => {
+//       setOrderedItems(previousOrderedItems);
+//     });
+//   }
+// };
+
+// const handleLike = id => {
+//   const previousLikeProducts = savedItems;
+//   if (user) {
+//     let likedProducts = [...savedItems];
+//     if (likedProducts.includes(id)) {
+//       likedProducts = likedProducts.filter(productId => productId !== id);
+//     } else {
+//       likedProducts.push(id);
+//     }
+//     setSavedItems(likedProducts);
+
+//     updateUserData(user.id, userDataTypes.SAVED_ITEMS, likedProducts)
+//       .then(response => {})
+//       .catch(error => {
+//         setSavedItems(previousLikeProducts);
+//         console.log(error, 'heyyyyyyyyy');
+//       });
+//   }
+// };
+
+// const handleLike = id => {
+//   if (user) {
+//     dispatch({type: actionTypes.ONSAVE, id});
+
+//     updateUserData(user.id, userDataTypes.SAVED_ITEMS, cartState.saved_items)
+//       .then(response => {})
+//       .catch(error => {
+//         setSavedItems(previousLikeProducts);
+//         console.log(error, 'heyyyyyyyyy');
+//       });
+//   }
+// };

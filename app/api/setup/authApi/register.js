@@ -9,7 +9,7 @@ export const signup = userInfo => {
       .createUserWithEmailAndPassword(email, password)
       .then(snapshot => {
         // console.log(snapshot, 'User created successful');
-        addUser(snapshot.user.uid, userInfo)
+        addUser(snapshot.user.uid, userInfo, snapshot.user.emailVerified)
           .then(snapshot => {
             resolve(snapshot);
           })

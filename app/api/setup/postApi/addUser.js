@@ -1,9 +1,8 @@
-const {firestore} = require('../config');
+import collectionRefs from '../collectionRefs';
+import {firestore} from '../config';
 
-const usersCollectionRef = firestore().collection('users');
-
-export const addUser = (userId, userInfo) => {
-  return usersCollectionRef.doc(userId).set({
+export const addUser = (userId, userInfo, verified) => {
+  return collectionRefs.usersCollectionRef.doc(userId).set({
     date: firestore.FieldValue.serverTimestamp(),
     name: {
       firstname: userInfo.firstname,
@@ -24,5 +23,6 @@ export const addUser = (userId, userInfo) => {
     odered_items: [],
     saved_items: [],
     account_bal: 0,
+    verified,
   });
 };

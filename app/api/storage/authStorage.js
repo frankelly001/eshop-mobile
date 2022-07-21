@@ -24,7 +24,7 @@ const removeUserData = async () => {
   try {
     await AsyncStorage.removeItem(key);
   } catch (error) {
-    // error reading value
+    console.log('REMOVE DATA FROM ASYNC STORAGE', error);
   }
 };
 

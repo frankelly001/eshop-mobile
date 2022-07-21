@@ -12,50 +12,58 @@ const dimensions = Dimensions.get('screen');
 
 const PlusMinusInputBtn = ({
   value = 1,
-  dispatchAdd,
-  dispatchSub,
-  dispatchInput,
-  resetVal,
-  onSetResetVal,
-  getValue,
+  add,
+  sub,
+  onChangeText,
+  onBlur,
+  // customAdd,
+  // customSub,
+  // dispatchInput,
+  // resetVal,
+  // onSetResetVal,
+  // getValue,
   small,
 }) => {
-  const [val, setVal] = useState(value);
-  const {dispatch} = useContext(AuthContext);
+  // const [val, setVal] = useState(value);
+  // const {dispatch} = useContext(AuthContext);
 
-  const handleChange = newVal => {
-    setVal(newVal ? parseInt(newVal) : newVal);
-    if (dispatchInput) dispatch({...dispatchInput, payload: newVal});
-  };
-  // console.log(val);
+  // const handleChange = newVal => {
+  //   setVal(newVal ? parseInt(newVal) : newVal);
+  //   // if (dispatchInput) dispatch({...dispatchInput, payload: newVal});
+  // };
+  // // console.log(val);
 
-  const add = () => {
-    setVal(parseInt(val + 1));
-    if (dispatchAdd) dispatch(dispatchAdd);
-  };
+  // const add = () => {
+  //   setVal(parseInt(val + 1));
+  //   // if (dispatchAdd) dispatch(dispatchAdd);
+  // };
 
-  const sub = () => {
-    setVal(val > 1 ? val - 1 : val);
-    if (dispatchSub) dispatch(dispatchSub);
-  };
+  // const sub = () => {
+  //   setVal(val > 1 ? val - 1 : val);
+  //   // if (dispatchSub) dispatch(dispatchSub);
+  // };
 
-  useEffect(() => {
-    if (resetVal) {
-      setVal(1);
-      onSetResetVal(false);
-    }
-    return function cleanUp() {};
-  }, [resetVal]);
+  // useEffect(() => {
+  //   if (resetVal) {
+  //     setVal(1);
+  //     onSetResetVal(false);
+  //   }
+  //   return function cleanUp() {};
+  // }, [resetVal]);
 
-  useEffect(() => {
-    if (getValue) getValue(val);
-    return function cleanUp() {};
-  }, [val]);
+  // useEffect(() => {
+  //   if (getValue) getValue(val);
+  //   return function cleanUp() {};
+  // }, [val]);
 
-  useEffect(() => {
-    if (value > 1) setVal(value);
-    return function cleanUp() {};
-  }, [value]);
+  // useEffect(() => {
+  //   if (value > 1) setVal(value);
+  //   return function cleanUp() {};
+  // }, [value]);
+
+  // const updateInput = () => {
+  //   if (value < 1) setVal(1);
+  // };
 
   const styles = small ? smallStyles : bigStyles;
 
@@ -64,32 +72,118 @@ const PlusMinusInputBtn = ({
       <AppGradientBtn
         label="－" // －	Fullwidth Hyphen-minus	&#65293;	&#xFF0D;
         style={[styles.btn, styles.leftBtn]}
+        containerStyle={styles.btnContainer}
         labelStyle={styles.btnLabel}
         onPress={sub}
         width={small ? '20%' : '15%'}
       />
       <TextInput
-        value={`${val}`}
+        value={`${value}`}
         keyboardType="numeric"
         style={styles.input}
-        onChangeText={text => handleChange(text)}
+        onChangeText={onChangeText}
+        onBlur={onBlur}
         // defaultValue={'1'}
       />
       <AppGradientBtn
         label="＋" // ＋	Fullwidth Plus Sign	&#65291;	&#xFF0B;
         style={[styles.btn, styles.rightBtn]}
         labelStyle={styles.btnLabel}
+        containerStyle={styles.btnContainer}
         onPress={add}
         width={small ? '20%' : '15%'}
       />
     </View>
   );
 };
+// const PlusMinusInputBtn = ({
+//   value = 1,
+//   customAdd,
+//   customSub,
+//   dispatchInput,
+//   resetVal,
+//   onSetResetVal,
+//   getValue,
+//   small,
+// }) => {
+//   const [val, setVal] = useState(value);
+//   const {dispatch} = useContext(AuthContext);
+
+//   const handleChange = newVal => {
+//     setVal(newVal ? parseInt(newVal) : newVal);
+//     // if (dispatchInput) dispatch({...dispatchInput, payload: newVal});
+//   };
+//   // console.log(val);
+
+//   const add = () => {
+//     setVal(parseInt(val + 1));
+//     // if (dispatchAdd) dispatch(dispatchAdd);
+//   };
+
+//   const sub = () => {
+//     setVal(val > 1 ? val - 1 : val);
+//     // if (dispatchSub) dispatch(dispatchSub);
+//   };
+
+//   useEffect(() => {
+//     if (resetVal) {
+//       setVal(1);
+//       onSetResetVal(false);
+//     }
+//     return function cleanUp() {};
+//   }, [resetVal]);
+
+//   useEffect(() => {
+//     if (getValue) getValue(val);
+//     return function cleanUp() {};
+//   }, [val]);
+
+//   useEffect(() => {
+//     if (value > 1) setVal(value);
+//     return function cleanUp() {};
+//   }, [value]);
+
+//   const updateInput = () => {
+//     if (val < 1) setVal(1);
+//   };
+
+//   const styles = small ? smallStyles : bigStyles;
+
+//   return (
+//     <View style={styles.container}>
+//       <AppGradientBtn
+//         label="－" // －	Fullwidth Hyphen-minus	&#65293;	&#xFF0D;
+//         style={[styles.btn, styles.leftBtn]}
+//         containerStyle={styles.btnContainer}
+//         labelStyle={styles.btnLabel}
+//         onPress={sub}
+//         width={small ? '20%' : '15%'}
+//       />
+//       <TextInput
+//         value={`${val}`}
+//         keyboardType="numeric"
+//         style={styles.input}
+//         onChangeText={text => handleChange(text)}
+//         onBlur={updateInput}
+//         // defaultValue={'1'}
+//       />
+//       <AppGradientBtn
+//         label="＋" // ＋	Fullwidth Plus Sign	&#65291;	&#xFF0B;
+//         style={[styles.btn, styles.rightBtn]}
+//         labelStyle={styles.btnLabel}
+//         containerStyle={styles.btnContainer}
+//         onPress={add}
+//         width={small ? '20%' : '15%'}
+//       />
+//     </View>
+//   );
+// };
 
 const bigStyles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     width: '100%',
+    height: hp(40),
   },
   input: {
     backgroundColor: colors.grey_light_2,
@@ -98,14 +192,19 @@ const bigStyles = StyleSheet.create({
     fontSize: fontSz(18),
     fontFamily: fonts.bold,
     color: colors.black,
-    // paddingVertical: fontSz(8),
-    paddingVertical: hp(7.5),
+    padding: 0,
+    paddingHorizontal: 10,
+    height: '100%',
   },
   btn: {
     backgroundColor: colors.purple,
     // width: '15%',
     flex: 1,
     padding: 0,
+    // height: '100%',
+  },
+  btnContainer: {
+    height: '100%',
   },
   leftBtn: {
     borderTopRightRadius: 0,
@@ -126,6 +225,7 @@ const smallStyles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     width: '100%',
+    height: hp(28),
   },
   input: {
     backgroundColor: colors.grey_light_2,
@@ -135,12 +235,17 @@ const smallStyles = StyleSheet.create({
     fontFamily: fonts.bold,
     color: colors.black,
     padding: 0,
+    paddingHorizontal: 5,
+    height: '100%',
   },
   btn: {
     backgroundColor: colors.purple,
     // width: '%',
     flex: 5,
     padding: 0,
+  },
+  btnContainer: {
+    height: '100%',
   },
   leftBtn: {
     borderTopRightRadius: 0,

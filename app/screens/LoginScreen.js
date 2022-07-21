@@ -52,7 +52,7 @@ const login_VS = Yup.object().shape({
 const LoginScreen = ({navigation}) => {
   // const [user, setUser] = useState();
   const productCollectionRef = firestore().collection('products');
-  const {setUser} = useContext(AuthContext);
+  const {setUser, initializeCartState} = useContext(AuthContext);
   // console.log(usersCollection);
 
   // const onFetchData = () => {
@@ -112,6 +112,7 @@ const LoginScreen = ({navigation}) => {
       .then(userData => {
         resetForm();
         setUser(userData);
+        // initializeCartState(userData);
         storeUserData(userData);
         navigation.replace(routes.ACCOUNT);
       })
