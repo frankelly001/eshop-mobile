@@ -98,7 +98,7 @@ const SignupScreen = ({navigation}) => {
 
   return (
     <>
-      <ActivityIndicator visible={loading} />
+      <ActivityIndicator visible={loading} portal />
       <AuthForm
         welcomeMessage="Welcome to eShop"
         authTypeLabel="Sign Up"

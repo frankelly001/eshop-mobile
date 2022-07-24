@@ -11,17 +11,11 @@ import routes from '../navigation/routes';
 import {formatData} from '../utilities/formatData';
 
 const HomeScreen = ({navigation}) => {
-  const {products, newProducts} = useContext(AuthContext);
-
-  // const navigate = useCallback(id => {
-  //   navigation.navigate(routes.PRODUCTDETAILS, id);
-  // }, []);
-
-  // console.log(newProducts[0], 'new Products............');
+  const {products} = useContext(AuthContext);
 
   const numOfCols = 2;
   // console.log(newProducts, 'new..................');
-  if (newProducts.length < 1) return null;
+  if (!products.length) return null;
   // if (1) return null;
 
   return (
@@ -40,7 +34,7 @@ const HomeScreen = ({navigation}) => {
           <AppText>New Arrivals</AppText>
         </View>
       )}
-      sections={[{data: formatData(newProducts, numOfCols)}]}
+      sections={[{data: formatData(products, numOfCols)}]}
       stickySectionHeadersEnabled
       renderItem={({...props}) => (
         <SectionListRenderItem

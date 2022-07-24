@@ -57,27 +57,6 @@ const SignupScreen2 = ({onPrev}) => {
 
     return data;
   };
-  // const lga = values['state']
-  //   ? stateRegion[values['state']].map(key => {
-  //       return {label: key, value: key};
-  //     })
-  //   : [{label: 'State not Selected'}];
-
-  // console.log(values.city, 'heyyyy');
-  // const lga = stateRegion[values['state']]
-  //   ? stateRegion[values['state']].map(key => {
-  //       return {label: key, value: key};
-  //     })
-  //   : [{label: 'State not Selected', value: ''}];
-
-  // const lga = {...stateRegion, 'no-data': [null]}[
-  //   values.state ? values.state : 'no-data'
-  // ].map(key => {
-  //   return {label: key ? key : 'State not Selected', value: key ? key : ''};
-  // });
-
-  // console.log(values['state'], 'heyyyy zucci');
-  // console.log(lga);
 
   return (
     <View style={styles.container}>

@@ -1,9 +1,9 @@
-import {removeUserData} from '../../storage/authStorage';
+import {authStorageKeys, removeUserData} from '../../storage/authStorage';
 import {auth} from '../config';
 
 export const logoutUser = () => {
   return new Promise(function (resolve, reject) {
-    removeUserData()
+    removeUserData(authStorageKeys.USER_DATA)
       .then(() => {
         auth()
           .signOut()

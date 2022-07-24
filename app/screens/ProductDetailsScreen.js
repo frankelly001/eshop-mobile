@@ -29,29 +29,26 @@ const {width, height} = Dimensions.get('screen');
 const ProductDetailsScreen = ({route}) => {
   const [loading, setLoading] = useState(false);
   const [productId, setProductId] = useState(route.params);
-  const {products, newProducts, dispatch, ordered, addToCart} =
-    useContext(AuthContext);
+  const {products, ordered, addToCart} = useContext(AuthContext);
 
   const [product, setProduct] = useState({});
   const [productCategogies, setProductCategogies] = useState([]);
   const [quantityOrdered, setQuantityOrdered] = useState();
+  const [selectedIndex, setSelectedIndex] = useState(0);
 
   const scrollView = useRef();
   const [value, setValue] = useState(1);
-  const [resetVal, setResetVal] = useState(false);
-
-  // const product = products.find(product => product.id === productId);
+  const scrollRef = useRef(null);
 
   useEffect(() => {
-    const productObj = newProducts.find(product => product.id === productId);
+    const productObj = products.find(product => product.id === productId);
     const productObjCategogies = products.filter(
-      el => el.category === productObj.category && el.id !== productObj.id,
+      el =>
+        el.category?.group?.type === productObj.category?.group?.type &&
+        el.id !== productObj.id,
     );
-    const qtyOrdered = ordered.filter(el =>
-      el.id === productObj.id ? el.quantity : null,
-    )[0]?.quantity;
+    const qtyOrdered = ordered.find(el => el.id === productObj.id)?.quantity;
 
-    // if (!productObj) navigate("*");
     setProduct(productObj);
     setProductCategogies(productObjCategogies);
     setQuantityOrdered(qtyOrdered);
@@ -64,13 +61,25 @@ const ProductDetailsScreen = ({route}) => {
     scrollView.current.scrollTo({x: 0, y: 0, animated: true});
   };
 
-  const getValue = val => {
-    setValue(val);
+  const add = () => {
+    setValue(value + 1);
   };
 
-  const [selectedIndex, setSelectedIndex] = useState(0);
+  const sub = () => {
+    if (value > 1) setValue(value - 1);
+  };
 
-  const scrollRef = useRef(null);
+  const handleChange = value => {
+    setValue(value);
+  };
+
+  const updateInput = () => {
+    let val;
+    const newVal = parseInt(value);
+    if (!newVal || newVal < 1) val = 1;
+    else val = newVal;
+    setValue(val);
+  };
 
   useEffect(() => {
     scrollRef?.current?.scrollTo({
@@ -90,7 +99,7 @@ const ProductDetailsScreen = ({route}) => {
   };
 
   // console.log('Product Details Screen rendering ');
-  if (Object.entries(product).length < 1) return null;
+  if (!Object.entries(product).length) return null;
   return (
     <Screen scrollView={scrollView}>
       {!loading && (
@@ -166,9 +175,11 @@ const ProductDetailsScreen = ({route}) => {
                 )}
               </AppText>
               <PlusMinusInputBtn
-                resetVal={resetVal}
-                onSetResetVal={setResetVal}
-                getValue={getValue}
+                add={add}
+                sub={sub}
+                onBlur={updateInput}
+                onChangeText={handleChange}
+                value={value}
               />
               <AppGradientBtn
                 label="add to Cart"
@@ -176,7 +187,7 @@ const ProductDetailsScreen = ({route}) => {
                 style={styles.addToCartBtn}
                 onPress={() => {
                   addToCart(product.id, value < 1 ? 1 : value);
-                  setResetVal(true);
+                  setValue(1);
                 }}
               />
             </View>

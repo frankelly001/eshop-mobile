@@ -1,24 +1,14 @@
 import React, {useContext, useState, useEffect} from 'react';
-import {
-  StyleSheet,
-  View,
-  FlatList,
-  Keyboard,
-  Pressable,
-  TouchableHighlight,
-} from 'react-native';
+import {StyleSheet, View, FlatList, Keyboard} from 'react-native';
 import AuthContext from '../auth/AuthContext';
 import ActionRemoveBtn from '../components/ActionRemoveBtn';
 import AppButton from '../components/AppButton';
-import AppGradientBtn from '../components/AppGradientBtn';
-import AppGradientText from '../components/AppGradientText';
 import AppText from '../components/AppText';
 import CartItemCard from '../components/CartItemCard';
 import GradientBackground from '../components/GradientBackground';
 import Seperator from '../components/Seperator';
 import colors from '../config/colors';
 import fonts from '../config/fonts';
-import {fontSz, wp} from '../config/responsiveSize';
 import routes from '../navigation/routes';
 import {formatToCurrency} from '../utilities/formatToCurr';
 

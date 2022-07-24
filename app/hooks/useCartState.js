@@ -12,22 +12,25 @@ export const useCartState = user => {
 
   //   console.log(orderedItems, 'zucciiiiiiiiiiiiiiiiiiiiiiiii');
 
-  const navigate = () => navigation.navigate(routes.LOGIN);
+  // const navigate = () => navigation.navigate(routes.ACCOUNT);
+  const navigate = () => console.log('i will work on this later');
 
-  const addToCart = (id, payload) => {
+  const addToCart = (productId, payload) => {
     if (user) {
       const previousOrderedItems = orderedItems;
-      let nextOrderedItems = [...orderedItems];
-      if (!nextOrderedItems.some(elOrdered => elOrdered.productId === id)) {
+      let nextOrderedItems = [...previousOrderedItems];
+      if (
+        !nextOrderedItems.some(elOrdered => elOrdered.productId === productId)
+      ) {
         nextOrderedItems.push({
-          productId: id,
+          productId,
           quantity: payload ? parseInt(payload) : 1,
         });
       } else {
         nextOrderedItems = nextOrderedItems.map(elOrdered =>
-          elOrdered.productId === id
+          elOrdered.productId === productId
             ? {
-                productId: id,
+                ...elOrdered,
                 quantity:
                   elOrdered.quantity + (payload ? parseInt(payload) : 1),
               }
@@ -46,11 +49,11 @@ export const useCartState = user => {
     }
   };
 
-  const subFromCart = id => {
+  const subFromCart = productId => {
     if (user) {
       const previousOrderedItems = orderedItems;
-      const nextOrderedItems = [...orderedItems].map(elOrdered =>
-        elOrdered.productId === id
+      const nextOrderedItems = [...previousOrderedItems].map(elOrdered =>
+        elOrdered.productId === productId
           ? {
               ...elOrdered,
               quantity:
@@ -73,11 +76,11 @@ export const useCartState = user => {
     }
   };
 
-  const mutateCart = (id, payload) => {
+  const mutateCart = (productId, payload) => {
     if (user) {
       const previousOrderedItems = orderedItems;
-      const nextOrderedItems = [...orderedItems].map(elOrdered =>
-        elOrdered.productId === id
+      const nextOrderedItems = [...previousOrderedItems].map(elOrdered =>
+        elOrdered.productId === productId
           ? {
               ...elOrdered,
               quantity: parseInt(payload),
@@ -97,23 +100,44 @@ export const useCartState = user => {
     }
   };
 
-  const handleLike = id => {
+  const handleLike = productId => {
     const previousLikeProducts = savedItems;
     if (user) {
-      let likedProducts = [...savedItems];
-      if (likedProducts.includes(id)) {
-        likedProducts = likedProducts.filter(productId => productId !== id);
+      let nextLikedProducts = [...previousLikeProducts];
+      if (nextLikedProducts.includes(productId)) {
+        nextLikedProducts = nextLikedProducts.filter(
+          productIdLiked => productIdLiked !== productId,
+        );
       } else {
-        likedProducts.push(id);
+        nextLikedProducts.push(productId);
       }
-      setSavedItems(likedProducts);
+      setSavedItems(nextLikedProducts);
 
-      updateUserData(user.id, userDataTypes.SAVED_ITEMS, likedProducts)
+      updateUserData(user.id, userDataTypes.SAVED_ITEMS, nextLikedProducts)
         .then(response => {})
         .catch(error => {
           setSavedItems(previousLikeProducts);
           //   console.log(error, 'heyyyyyyyyy');
         });
+    } else {
+      navigate();
+    }
+  };
+
+  const removeFromCart = productId => {
+    if (user) {
+      const previousOrderedItems = orderedItems;
+      const nextOrderedItems = previousOrderedItems.filter(
+        elOrdered => elOrdered.productId !== productId,
+      );
+      setOrderedItems(nextOrderedItems);
+      updateUserData(
+        user.id,
+        userDataTypes.ORDERED_ITEMS,
+        nextOrderedItems,
+      ).catch(() => {
+        setOrderedItems(previousOrderedItems);
+      });
     } else {
       navigate();
     }
@@ -132,7 +156,7 @@ export const useCartState = user => {
   };
 
   const dispatchAction = action => {
-    const {type, id, payload, data} = action;
+    const {type, id: productId, payload, data} = action;
     switch (type) {
       case actionTypes.INITIALIZE_ORDER:
         return setOrderedItems(data);
@@ -141,16 +165,19 @@ export const useCartState = user => {
         return setSavedItems(data);
 
       case actionTypes.ADD_TO_CART:
-        return addToCart(id, payload, payload);
+        return addToCart(productId, payload, payload);
 
       case actionTypes.SUB_FROM_CART:
-        return subFromCart(id);
+        return subFromCart(productId);
 
       case actionTypes.MUTATE_CART:
-        return mutateCart(id, payload);
+        return mutateCart(productId, payload);
+
+      case actionTypes.REMOVE_FROM_CART:
+        return removeFromCart(productId);
 
       case actionTypes.ONSAVE:
-        return handleLike(id);
+        return handleLike(productId);
 
       case actionTypes.CLEAR_ORDER:
         return setOrderedItems([]);

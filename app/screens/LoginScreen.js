@@ -20,7 +20,7 @@ import routes from '../navigation/routes';
 import AuthContext from '../auth/AuthContext';
 import ActivityIndicator from '../components/ActivityIndicator';
 import {getUser} from '../api/setup/getApi/getUser';
-import {storeUserData} from '../api/storage/authStorage';
+import {authStorageKeys, storeUserData} from '../api/storage/authStorage';
 
 // GoogleSignin.configure({
 //   scopes: ['https://www.googleapis.com/auth/userinfo.profile'],
@@ -113,7 +113,7 @@ const LoginScreen = ({navigation}) => {
         resetForm();
         setUser(userData);
         // initializeCartState(userData);
-        storeUserData(userData);
+        storeUserData(authStorageKeys.USER_DATA, userData);
         navigation.replace(routes.ACCOUNT);
       })
       .catch(error => {

@@ -48,13 +48,15 @@ const ProductCard = ({product, onPress, small, medium}) => {
           {formatToCurrency(product.price)}
           {/* {product.price} */}
         </AppText>
-        <AppGradientBtn
-          label="add to cart"
-          labelStyle={styles.btnLabel}
-          containerStyle={{height: hp(35)}}
-          // onPress={() => dispatch({type: 'addToCart', id: product.id})}
-          onPress={() => addToCart(product.id)}
-        />
+        {!small && !medium && (
+          <AppGradientBtn
+            label="add to cart"
+            labelStyle={styles.btnLabel}
+            containerStyle={{height: hp(35)}}
+            // onPress={() => dispatch({type: 'addToCart', id: product.id})}
+            onPress={() => addToCart(product.id)}
+          />
+        )}
       </View>
       {!small && !medium && (
         <View style={{position: 'absolute', right: 5, top: 5}}>
@@ -102,12 +104,12 @@ const bigCardstyles = StyleSheet.create({
   title: {
     fontSize: fontSz(13),
     // fontWeight: '700',
-    fontFamily: fonts.bold,
+    fontFamily: fonts.semi_bold,
   },
 
   price: {
     fontSize: fontSz(18),
-    fontFamily: fonts.extra_bold,
+    fontFamily: fonts.bold,
     marginVertical: 3,
     color: colors.grey_dark_2,
   },
@@ -158,11 +160,11 @@ const smallCardstyles = StyleSheet.create({
 
   title: {
     fontSize: fontSz(10),
-    fontFamily: fonts.bold,
+    fontFamily: fonts.semi_bold,
   },
 
   price: {
-    fontFamily: fonts.extra_bold,
+    fontFamily: fonts.bold,
     marginVertical: 3,
     color: colors.grey_dark_2,
   },
@@ -211,12 +213,12 @@ const mediumCardstyles = StyleSheet.create({
   title: {
     // fontSize: fontSz(12),
     fontSize: fontSz(10),
-    fontFamily: fonts.bold,
+    fontFamily: fonts.semi_bold,
   },
 
   price: {
     fontSize: fontSz(15),
-    fontFamily: fonts.extra_bold,
+    fontFamily: fonts.bold,
     marginVertical: 3,
     color: colors.grey_dark_2,
   },

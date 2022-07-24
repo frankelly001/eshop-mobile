@@ -21,10 +21,10 @@ import Animated from 'react-native-reanimated';
 import AppTextInput from './AppTextInput';
 import useAnimatedHeaderStyles from '../hooks/useAnimatedHeaderStyles';
 import fonts from '../config/fonts';
+import {authStorageKeys, storeUserData} from '../api/storage/authStorage';
 
 const Header = ({navigation, options, route}) => {
   const {orderedNum, recentQueries, setRecentQueries} = useContext(AuthContext);
-  const size = wp(20);
   const [disableBackBtn, setDisableBackBtn] = useState(false);
   const [disableSearchBtn, setDisableSearchBtn] = useState(false);
   const [disableNotifyBtn, setDisableNotifyBtn] = useState(false);
@@ -35,6 +35,7 @@ const Header = ({navigation, options, route}) => {
   const [query, setQuery] = useState('');
 
   const inputRef = useRef();
+  const size = wp(20);
 
   const {
     headerLeftAnimatedStyle,
@@ -77,12 +78,15 @@ const Header = ({navigation, options, route}) => {
   const handleSearch = recentQuery => {
     setSearchToggle(!searchToggle);
     const newQuery = recentQuery ? recentQuery : query;
+    let results;
     if (searchToggle && newQuery) {
       if (!recentQuery)
-        setRecentQueries([
+        results = [
           newQuery,
           ...recentQueries.filter(el => el !== newQuery),
-        ]);
+        ].slice(0, 10);
+      storeUserData(authStorageKeys.RECENT_QUERIES, results);
+      setRecentQueries(results);
       navigation.navigate(routes.SEARCHED, newQuery);
       setQuery('');
     }
@@ -91,7 +95,16 @@ const Header = ({navigation, options, route}) => {
   return (
     <>
       <View style={styles.container}>
-        <View style={styles.headerLeft}>
+        <View
+          style={[
+            styles.headerLeft,
+            {
+              flex: 1,
+              // overflow: 'hidden',
+              // backgroundColor: 'red',
+              paddingRight: 20,
+            },
+          ]}>
           {(!disableBackBtn || searchToggle) && (
             <TouchableHighlight
               // hitSlop={{top: 20, bottom: 20, right: 20, left: 20}}
@@ -110,7 +123,12 @@ const Header = ({navigation, options, route}) => {
             </TouchableHighlight>
           )}
           <Animated.View style={headerLeftAnimatedStyle}>
-            <AppText style={styles.title}>
+            <AppText
+              numberOfLines={1}
+              style={[
+                styles.title,
+                options.title !== 'eShop' && {textTransform: 'capitalize'},
+              ]}>
               {options.title ? options.title : route.name}
             </AppText>
           </Animated.View>
@@ -181,7 +199,9 @@ const Header = ({navigation, options, route}) => {
               style={{
                 flexDirection: 'row',
                 alignItems: 'center',
+                // backgroundColor: 'red',
                 padding: 5,
+                marginVertical: 2,
                 paddingHorizontal: 15,
               }}>
               <Octicons
@@ -189,7 +209,10 @@ const Header = ({navigation, options, route}) => {
                 name="search"
                 style={{marginRight: 5}}
               />
-              <AppText style={{fontSize: fontSz(12)}}>{el}</AppText>
+              <AppText
+                style={{fontSize: fontSz(13), fontFamily: fonts.semi_bold}}>
+                {el}
+              </AppText>
             </TouchableOpacity>
           ))}
         </ScrollView>
@@ -231,7 +254,6 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: fontSz(20),
-    // fontWeight: '700',
     fontFamily: fonts.bold,
   },
   headerLeft: {

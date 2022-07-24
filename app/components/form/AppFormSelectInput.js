@@ -25,7 +25,7 @@ const AppFormSelectInput = ({
         onBlur={() => setFieldTouched(name)}
         disable={!data.length}
         onChange={item => {
-          // setFieldTouched(name);
+          setFieldTouched(name);
           if (item.value) setFieldValue(name, item.value);
           if (valueResetNames && item.value !== values[name]) {
             valueResetNames.map(resetName => {

@@ -12,7 +12,7 @@ export const addUser = (userId, userInfo, verified) => {
     email: userInfo.email,
     phone: {
       phone: userInfo.phone,
-      addtional_phone: userInfo?.addtional_phone,
+      additional_phone: userInfo?.additional_phone,
     },
     location: {
       state: userInfo.state,

@@ -3,21 +3,29 @@ import {StyleSheet, View, Text} from 'react-native';
 import {Dropdown} from 'react-native-element-dropdown';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import colors from '../config/colors';
-import {fontSz} from '../config/responsiveSize';
+import {fontSz, hp} from '../config/responsiveSize';
 import stateRegion from '../utilities/stateRegion';
 
 const stateList = Object.keys(stateRegion).map((key, index) => {
   return {label: key, value: key};
 });
 
-const AppSelectInput = ({dropdownStyle, value, ...otherProps}) => {
+const AppSelectInput = ({
+  dropdownStyle,
+  disableSearchInput,
+  value,
+  ...otherProps
+}) => {
   // const [value, setValue] = useState(null);
   return (
     <Dropdown
       style={[styles.dropdown, dropdownStyle]}
       placeholderStyle={styles.placeholderStyle}
       selectedTextStyle={styles.selectedTextStyle}
-      inputSearchStyle={styles.inputSearchStyle}
+      inputSearchStyle={[
+        styles.inputSearchStyle,
+        disableSearchInput && {display: 'none'},
+      ]}
       iconStyle={styles.iconStyle}
       search
       maxHeight={300}
@@ -67,13 +75,13 @@ const AppSelectInput = ({dropdownStyle, value, ...otherProps}) => {
 const styles = StyleSheet.create({
   dropdown: {
     // margin: 16,
-    // height: 50,
+    height: hp(36),
     width: '100%',
     // backgroundColor: 'white',
     borderRadius: 20,
     // padding: 0,
-    paddingHorizontal: 12,
-    paddingVertical: 2,
+    paddingHorizontal: 15,
+    // paddingVertical: 2,
     backgroundColor: colors.grey_light_2,
     // shadowColor: '#000',
     // shadowOffset: {

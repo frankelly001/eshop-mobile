@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import AuthContext from '../auth/AuthContext';
 import AppText from '../components/AppText';
+import CategoryGroupCard from '../components/CategoryCard';
 import ProductCard from '../components/ProductCard';
 import Seperator from '../components/Seperator';
 import colors from '../config/colors';
@@ -21,40 +22,23 @@ import {formatData} from '../utilities/formatData';
 const dimenson = Dimensions.get('screen');
 
 const CategoriesScreen = ({navigation}) => {
-  const [allCategories, setAllCategories] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState('Select Category');
-  const {categories, products} = useContext(AuthContext);
+  const {categories} = useContext(AuthContext);
 
-  const productCategory = products.filter(
-    product => product.category == selectedCategory.toLowerCase(),
-  );
+  console.log(selectedCategory, 'group...........');
 
-  // console.log(productCategory);
+  const handlePress = category => {
+    setSelectedCategory(categories.find(cat => cat.title === category));
+  };
 
-  useEffect(() => {
-    setAllCategories([
-      ...categories.map(el => el.title),
-      // 'Phones & Tablets',
-      // 'Computing',
-      // 'Fashion',
-      // 'Automobiles',
-      // 'Home & office',
-      // 'Supermarket',
-      // 'Baby Products',
-      // 'Health & Beauty',
-      // 'Sporting goods',
-      // 'Other Cateories',
-    ]);
-  }, []);
-  // console.log(allCategories);
   return (
     <View style={styles.container}>
       <View style={styles.listofCatContainer}>
         <View style={[styles.titleContainer, styles.cats]}>
-          <AppText style={styles.listofCatHeader}>Categories</AppText>
+          <AppText style={styles.listofCatHeader}>Category</AppText>
         </View>
         <FlatList
-          data={allCategories}
+          data={[...categories.map(el => el.title)]}
           showsVerticalScrollIndicator={false}
           key={category => category}
           ItemSeparatorComponent={() => <Seperator />}
@@ -66,10 +50,12 @@ const CategoriesScreen = ({navigation}) => {
                   styles.catNameContainer,
                   {
                     backgroundColor:
-                      item === selectedCategory ? colors.white : 'transparent',
+                      item === selectedCategory.title
+                        ? colors.white
+                        : 'transparent',
                   },
                 ]}
-                onPress={() => setSelectedCategory(item)}>
+                onPress={() => handlePress(item)}>
                 <AppText style={styles.catName}>{item}</AppText>
               </TouchableOpacity>
             );
@@ -78,32 +64,18 @@ const CategoriesScreen = ({navigation}) => {
       </View>
       <View style={styles.catTypeContainer}>
         <View style={[styles.titleContainer, styles.catType]}>
-          <AppText style={styles.titleOfCat}>{selectedCategory}</AppText>
+          <AppText style={styles.titleOfCat}>{selectedCategory.title}</AppText>
         </View>
-        {productCategory.length > 0 && (
+        {selectedCategory !== 'Select Category' &&
+        Object.entries(selectedCategory).length ? (
           <FlatList
-            numColumns={2}
+            data={selectedCategory.groups}
+            style={{flex: 1}}
             showsVerticalScrollIndicator={false}
-            data={formatData(productCategory, 2)}
-            // style={{flex: 1}}
-            contentContainerStyle={{padding: 2}}
-            key={product => product.id.toString()}
-            renderItem={({item}) => {
-              if (item.empty)
-                return <View style={{flex: 1, backgroundColor: 'red'}}></View>;
-              return (
-                <ProductCard
-                  product={item}
-                  onPress={() =>
-                    navigation.navigate(routes.PRODUCTDETAILS, item.id)
-                  }
-                  medium
-                />
-              );
-            }}
+            keyExtractor={(key, i) => key?.title + i}
+            renderItem={CategoryGroupCard}
           />
-        )}
-        {productCategory.length < 1 && (
+        ) : (
           <View style={styles.noProductCatView}>
             <AppText>
               {selectedCategory === 'Select Category'
@@ -125,12 +97,12 @@ const styles = StyleSheet.create({
   },
   listofCatContainer: {
     backgroundColor: colors.grey_light,
-    width: '23%',
+    width: '20%', // 23
     height: '100%',
   },
   catTypeContainer: {
     // backgroundColor: colors.purple_Transparent,
-    width: '77%',
+    width: '80%', // 77
     height: '100%',
   },
   titleContainer: {
@@ -172,12 +144,13 @@ const styles = StyleSheet.create({
     padding: 5,
   },
   catName: {
-    fontSize: fontSz(12),
+    fontSize: fontSz(11), // 12
     textAlign: 'center',
     textTransform: 'capitalize',
   },
   productCatView: {
     flex: 1,
+
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'center',
@@ -186,6 +159,7 @@ const styles = StyleSheet.create({
   noProductCatView: {
     width: '100%',
     flex: 1,
+    // backgroundColor: 'red',
     alignItems: 'center',
     justifyContent: 'center',
   },

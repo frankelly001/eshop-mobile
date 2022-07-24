@@ -17,46 +17,35 @@ import {gestureHandlerRootHOC} from 'react-native-gesture-handler';
 import {Host} from 'react-native-portalize';
 import SplashScreen from 'react-native-splash-screen';
 import {auth, firestore} from './app/api/setup/config';
-import {getUser} from './app/api/setup/getApi/getUser';
-import {getUserData, storeUserData} from './app/api/storage/authStorage';
+import {
+  authStorageKeys,
+  getUserData,
+  storeUserData,
+} from './app/api/storage/authStorage';
 import {useNetInfo} from '@react-native-community/netinfo';
 import {getCategories} from './app/api/setup/getApi/getCategories';
 import AppButton from './app/components/AppButton';
-import {getProducts} from './app/api/products';
-import {getProducts as getNewProducts} from './app/api/setup/getApi/getProducts';
+// import {getProducts} from './app/api/products';
+import {getProducts} from './app/api/setup/getApi/getProducts';
 import collectionRefs from './app/api/setup/collectionRefs';
 import {
   updateUserData,
   userDataTypes,
 } from './app/api/setup/patchApi/updateUserData';
 import {useCartState} from './app/hooks/useCartState';
-
-const initialState = {
-  cartsCount: [],
-};
-
-const cartInitialState = {
-  orderedItems: [],
-  savedItems: [],
-};
+import {StatusBar} from 'react-native';
+import colors from './app/config/colors';
 
 const App = () => {
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);
-  // const [allCounters, dispatch] = useReducer(reducerFunction, initialState);
-  const [cartState, dispatch] = useReducer(reducerFunction, cartInitialState);
-  // const [allAddToCart, setAllAddToCart] = useState([]);
   const [ordered, setOrdered] = useState([]);
   const [recentQueries, setRecentQueries] = useState([]);
   const [user, setUser] = useState();
   const [initializing, setInitializing] = useState(false);
-  // const [orderedItems, setOrderedItems] = useState([]);
-  // const [savedItems, setSavedItems] = useState([]);
 
   const {orderedItems, savedItems, actionTypes, dispatchAction} =
     useCartState(user);
-
-  // console.log(orderedItems);
 
   const initializeCartState = data => {
     dispatchAction({
@@ -88,6 +77,10 @@ const App = () => {
 
   const mutateCart = (id, payload) => {
     dispatchAction({type: actionTypes.MUTATE_CART, id, payload});
+  };
+
+  const removeFromCart = id => {
+    dispatchAction({type: actionTypes.REMOVE_FROM_CART, id});
   };
 
   // console.log(orderedItems, savedItems, 'kkkkkkkkkkllopp');
@@ -124,16 +117,16 @@ const App = () => {
             ...documentSnapshot._data,
           };
           setUser(newUserData);
-          storeUserData(newUserData);
+          storeUserData(authStorageKeys.USER_DATA, newUserData);
         }
       });
     return () => subscriber();
   };
 
-  const getUserFromAsynStorage = () => {
-    getUserData()
+  const getAllUserDataFromAsynStorage = () => {
+    getUserData(authStorageKeys.USER_DATA)
       .then(data => {
-        setUser(data);
+        if (data) setUser(data);
         // initializeCartState(data);
         // console.log(data, 'DATA................');
       })
@@ -141,13 +134,20 @@ const App = () => {
         setUser(null);
         console.log('error');
       });
+    getUserData(authStorageKeys.RECENT_QUERIES)
+      .then(data => {
+        if (data) setRecentQueries(data);
+      })
+      .catch(() => {
+        setRecentQueries([]);
+      });
   };
 
-  useEffect(() => {
-    const authSubscriber = auth().onAuthStateChanged(onAuthStateChanged);
-    getUserFromAsynStorage();
-    return authSubscriber;
-  }, []);
+  // useEffect(() => {
+  //   const authSubscriber = auth().onAuthStateChanged(onAuthStateChanged);
+  //   getAllUserDataFromAsynStorage();
+  //   return authSubscriber;
+  // }, []);
 
   useEffect(() => {
     if (user) {
@@ -168,42 +168,14 @@ const App = () => {
   //   }
   // }, [netinfo]);
 
-  const allProducts = async () => {
-    const {data, ok, problem} = await getProducts();
-    if (!ok) {
-      console.log(problem, 'from Products');
-      return;
-    } else {
-      const allCartObj = data.map(pId => {
-        return {productId: pId.id, quantity: 0};
-      });
-      // dispatch({type: 'INITIALIZE', data: allCartObj});
-      setProducts(shuffle(data.map(el => ({...el, price: el.price * 430}))));
-    }
-    // getProducts()
-    //   .then(snapshot => {
-    //     const allData = [];
-    //     snapshot.forEach(el => {
-    //       allData.push(el.data());
-    //     });
-    //     setProducts(allData);
-    //   })
-    //   .catch(error => {
-    //     console.log(error.message, 'kkkkkkkkkkk');
-    //   });
-  };
-
-  const [newProducts, setNewProducts] = useState([]);
-
   const fetchProducts = () => {
-    getNewProducts()
+    getProducts()
       .then(snapshot => {
         const allData = [];
         snapshot.forEach(el => {
-          // console.log(el.id, 'Each element');
           allData.push({id: el.id, ...el.data()});
         });
-        setNewProducts(allData);
+        setProducts(allData);
       })
       .catch(error => {
         console.log(error.message, 'kkkkkkkkkkk');
@@ -212,13 +184,7 @@ const App = () => {
 
   console.log('App.js rendering');
 
-  const allCategories = () => {
-    // const {data, ok, problem} = await getCategories();
-    // if (!ok) {
-    //   console.log(problem, 'from Categories');
-    //   return;
-    // }
-    // return setCategories(data);
+  const fetchCategories = () => {
     getCategories()
       .then(snapshot => {
         const allCat = [];
@@ -234,28 +200,19 @@ const App = () => {
   };
 
   useEffect(() => {
-    allCategories();
-    allProducts();
+    fetchCategories();
     fetchProducts();
     SplashScreen.hide();
 
-    return function cleanUp() {};
+    const authSubscriber = auth().onAuthStateChanged(onAuthStateChanged);
+    getAllUserDataFromAsynStorage();
+    return authSubscriber;
   }, []);
-
-  // const handleLike = useCallback(
-  //   product => {
-  //     const newState = [...newProducts];
-  //     const index = newState.indexOf(product);
-  //     newState[index].like = !newState[index].like;
-  //     setProducts(newState);
-  //   },
-  //   [newProducts],
-  // );
 
   useEffect(() => {
     const orderedID = orderedItems.map(el => el.productId);
 
-    const filteredProduts = newProducts.filter(el => orderedID.includes(el.id));
+    const filteredProduts = products.filter(el => orderedID.includes(el.id));
     const orderedOroducts = filteredProduts.map(el => {
       return {
         ...el,
@@ -263,21 +220,8 @@ const App = () => {
           .quantity,
       };
     });
-
-    // rememeber unshift
-    // let orderedOroducts = [];
-    // newProducts.forEach(el => {
-    //   if (orderedID.includes(el.id))
-    //     orderedOroducts.push({
-    //       ...el,
-    //       quantity: orderedItems.find(ordered => ordered.productId === el.id)
-    //         .quantity,
-    //     });
-    // });
-    // console.log(orderedOroducts, 'kkkkllloppppp');
     setOrdered(orderedOroducts);
-    // collectionRefs.productsCollectionRef.doc().get
-  }, [orderedItems, newProducts]);
+  }, [orderedItems, products]);
 
   const orderedNum = ordered
     .map(el => el.quantity)
@@ -294,54 +238,45 @@ const App = () => {
 
   if (initializing) return null;
   return (
-    <AuthContext.Provider
-      value={{
-        products,
-        categories,
-        newProducts,
-        ordered,
-        onLike: handleSave,
-        dispatch,
-        orderedNum,
-        subTotal,
-        delivery,
-        total,
-        setRecentQueries,
-        recentQueries,
-        user,
-        setUser,
-        addToCart,
-        savedItems,
-        subFromCart,
-        mutateCart,
-        // initializeCartState,
-        // clearCartState,
-      }}>
-      <NavigationContainer ref={navigationRef} theme={navigationTheme}>
-        <Host>
-          <HomeStack />
-        </Host>
-      </NavigationContainer>
-    </AuthContext.Provider>
+    <>
+      <StatusBar backgroundColor={colors.white} barStyle={'dark-content'} />
+      <AuthContext.Provider
+        value={{
+          products,
+          categories,
+          ordered,
+          onLike: handleSave,
+          orderedNum,
+          subTotal,
+          delivery,
+          total,
+          setRecentQueries,
+          recentQueries,
+          user,
+          setUser,
+          addToCart,
+          savedItems,
+          subFromCart,
+          mutateCart,
+          removeFromCart,
+        }}>
+        <NavigationContainer ref={navigationRef} theme={navigationTheme}>
+          <Host>
+            <HomeStack />
+          </Host>
+        </NavigationContainer>
+      </AuthContext.Provider>
+    </>
   );
 };
 
 export default gestureHandlerRootHOC(App);
-
-// getUser(account?.uid)
-//   .then(data => {
-//     const newUser = {...data._data, verified: account.emailVerified};
-//     if (data._data) {
-//       setUser(newUser);
-//       storeUserData(newUser);
-//       console.log('heyy  firebase is updating user');
-//     } else {
-//       setUser(null);
-//     }
-//   })
-//   .catch(() => {
-//     setUser(null);
-//   });
+// "usernames" : {
+//   "$username": {
+//   ".write": "!data.exists() && auth!= null && newData.val() == auth.uid"
+//   }
+//  },
+// }
 
 // const addToCart = id => {
 //   if (user) {

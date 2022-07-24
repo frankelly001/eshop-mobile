@@ -2,7 +2,7 @@ import React from 'react';
 import {StyleSheet, View, TextInput} from 'react-native';
 import colors from '../config/colors';
 import fonts from '../config/fonts';
-import {fontSz} from '../config/responsiveSize';
+import {fontSz, hp} from '../config/responsiveSize';
 
 const AppTextInput = ({style, inputRef, ...otherProps}) => {
   return (
@@ -24,8 +24,9 @@ const styles = StyleSheet.create({
   inputField: {
     borderRadius: 20,
     backgroundColor: colors.grey_light_2,
-    paddingVertical: 5,
+    // paddingVertical: 5,
     paddingHorizontal: 15,
+    height: hp(36),
     fontSize: fontSz(15),
     fontFamily: fonts.regular,
     textDecorationLine: 'none',

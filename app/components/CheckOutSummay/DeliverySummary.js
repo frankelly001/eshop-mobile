@@ -35,8 +35,8 @@ const DeliverySummary = ({deliveryInfo}) => {
           <AppText style={SummaryStyles.modalDetailLabel}>
             Additional Phone:
           </AppText>
-          {deliveryInfo.additionalPhone ? (
-            <AppText>{deliveryInfo.additionalPhone}</AppText>
+          {deliveryInfo.additional_phone ? (
+            <AppText>{deliveryInfo.additional_phone}</AppText>
           ) : (
             <AppText style={{color: colors.red_dark}}>Not Available</AppText>
           )}

@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 import {StyleSheet, View} from 'react-native';
 import AppText from './AppText';
 import AppForm from './form/AppForm';
@@ -11,6 +11,11 @@ import Screen from './Screen';
 import validationSchema from './form/validationSchema';
 import fonts from '../config/fonts';
 import AppFormTextArea from './form/AppFormTextArea';
+import stateRegion from '../utilities/stateRegion';
+import AppFormSelectInput from './form/AppFormSelectInput';
+import AuthContext from '../auth/AuthContext';
+import DeliveryInfoNotice from './Notice/DeliveryInfoNotice';
+import colors from '../config/colors';
 
 const checkoutInfo_VS = Yup.object().shape({
   firstname: validationSchema.firstname,
@@ -23,32 +28,68 @@ const checkoutInfo_VS = Yup.object().shape({
   address: validationSchema.address,
 });
 
-const initialValues = {
-  firstname: '',
-  lastname: '',
-  email: '',
-  phone: '',
-  additionalPhone: '',
-  state: '',
-  city: '',
-  address: '',
-};
-
 const CheckoutInfo = ({savedValues, onSubmit}) => {
   // const [savedValues, setSavedValues] = useState(null);
   // console.log(savedValues);
+  const {user} = useContext(AuthContext);
+
+  console.log(savedValues, 'heyyyyy it user');
+
+  const initialValues = {
+    firstname: user?.name.firstname ?? '',
+    lastname: user?.name.lastname ?? '',
+    email: user?.email ?? '',
+    phone: user?.phone.phone ?? '',
+    additional_phone: user?.phone.additional_phone ?? '',
+    state: user?.location.state ?? '',
+    city: user?.location.city ?? '',
+    address: user?.location.address ?? '',
+  };
+
+  const handleState_Data = () => {
+    const data = Object.keys(stateRegion).map((key, index) => {
+      return {label: key, value: key};
+    });
+
+    return data;
+  };
+
+  const handleCity_Data = values => {
+    const data = values['state']
+      ? stateRegion[values['state']].map(key => {
+          return {label: key, value: key};
+        })
+      : [{label: 'State not Selected'}];
+
+    return data;
+  };
+
+  const handleOrderingFor = () => {
+    return ['Myself', 'A Friend', 'A Relative', 'Someone else'].map(el => {
+      return {label: el, value: el};
+    });
+  };
 
   return (
     <Screen>
       <View style={styles.container}>
         <AppText style={styles.header}>Customer Delivery Information</AppText>
+
         <AppForm
-          initialValues={savedValues || initialValues}
+          initialValues={savedValues ? savedValues : initialValues}
           validationSchema={checkoutInfo_VS}
           enableReinitialize
           validateOnMount={true}
           onSubmit={onSubmit}>
           <View style={[styles.formContainer]}>
+            <AppFormSelectInput
+              name={'ordering_for'}
+              onHandleData={handleOrderingFor}
+              placeholder="Ordering for?"
+              valueResetNames={['city']}
+              searchPlaceholder="Search State..."
+              disableSearchInput
+            />
             <AppFormInput
               autoCapitalize="words"
               autoCorrect={false}
@@ -83,19 +124,18 @@ const CheckoutInfo = ({savedValues, onSubmit}) => {
               name="additional_phone"
               placeholder="Additional phone (Optional)"
             />
-            <AppFormInput
-              autoCapitalize="words"
-              autoCorrect={false}
-              name="state"
-              placeholder="State"
-              textContentType="name"
+            <AppFormSelectInput
+              name={'state'}
+              onHandleData={handleState_Data}
+              placeholder="Select State"
+              valueResetNames={['city']}
+              searchPlaceholder="Search State..."
             />
-            <AppFormInput
-              autoCapitalize="words"
-              autoCorrect={false}
-              name="city"
-              placeholder="City"
-              textContentType="name"
+            <AppFormSelectInput
+              name={'city'}
+              onHandleData={handleCity_Data}
+              placeholder="Select City"
+              searchPlaceholder="Search City..."
             />
             <AppFormTextArea
               autoCapitalize="words"
@@ -111,6 +151,7 @@ const CheckoutInfo = ({savedValues, onSubmit}) => {
             // onSaveValues={setSavedValues}
           />
         </AppForm>
+        <DeliveryInfoNotice />
       </View>
     </Screen>
   );
@@ -128,7 +169,7 @@ const styles = StyleSheet.create({
   header: {
     fontSize: fontSz(18),
     fontFamily: fonts.bold,
-    marginBottom: 15,
+    marginBottom: 10,
   },
   formContainer: {
     flexDirection: 'row',

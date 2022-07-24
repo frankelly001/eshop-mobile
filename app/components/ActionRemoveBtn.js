@@ -13,14 +13,15 @@ import AuthContext from '../auth/AuthContext';
 import fonts from '../config/fonts';
 
 const ActionRemoveBtn = ({contentContainerStyle, product}) => {
-  const {dispatch, onLike} = useContext(AuthContext);
+  const {dispatch, onLike, removeFromCart, savedItems} =
+    useContext(AuthContext);
 
   const handleDelete = () => {
-    dispatch({type: 'removeItem', id: product.id});
+    removeFromCart(product.id);
   };
 
   const handleSaveForLater = () => {
-    if (!product.like) onLike(product);
+    if (!savedItems.includes(product.id)) onLike(product.id);
     handleDelete();
   };
 

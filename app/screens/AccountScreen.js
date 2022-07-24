@@ -18,11 +18,12 @@ import UploadScreen from './UploadScreen';
 import {formatToCurrency} from '../utilities/formatToCurr';
 import ActivityIndicator from '../components/ActivityIndicator';
 import {useApi} from '../hooks/useApi';
+import {authStorageKeys, removeUserData} from '../api/storage/authStorage';
 
 const dimensions = Dimensions.get('screen');
 
 const AccountScreen = ({navigation}) => {
-  const {user, setUser, clearCartState} = useContext(AuthContext);
+  const {user, setUser, setRecentQueries} = useContext(AuthContext);
 
   const {loading, request} = useApi(logoutUser);
 
@@ -31,28 +32,17 @@ const AccountScreen = ({navigation}) => {
       .then(snapshot => {
         alert(snapshot);
         setUser(null);
+
         // clearCartState();
       })
       .catch(error => {
         alert(error);
       });
+    removeUserData(authStorageKeys.RECENT_QUERIES);
+    setRecentQueries([]);
   };
 
-  const press = () => {
-    firestore()
-      .collection('users')
-      .doc(user.id)
-      .update({
-        ['name.lastname']: 'okeke',
-      })
-      .then(data => {
-        console.log('success', data);
-      })
-      .then(error => {
-        console.log('error', error.message);
-      });
-    // return userSubscriber();
-  };
+  // if (1) return <UploadScreen />;
 
   return (
     <>

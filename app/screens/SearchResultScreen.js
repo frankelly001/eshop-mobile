@@ -9,21 +9,40 @@ import colors from '../config/colors';
 
 const SearchResultScreen = ({navigation, route}) => {
   const {products} = useContext(AuthContext);
-  const [searchedProduct, setSearchedProduct] = useState(null);
+  const [searchedProduct, setSearchedProduct] = useState([]);
+
+  function getUniqueListBy(arr, key) {
+    return [...new Map(arr.map(item => [item[key], item])).values()];
+  }
 
   useEffect(() => {
-    const searched = products.filter(
-      el =>
-        el?.title.toLowerCase().includes(route.params.toLowerCase()) ||
-        el?.category.toLowerCase().includes(route.params.toLowerCase()),
-    );
+    const filteredsearch = [
+      ...products.filter(el =>
+        el?.title?.toLowerCase().includes(route.params.toLowerCase()),
+      ),
+      ...products.filter(el =>
+        el?.category?.title?.toLowerCase().includes(route.params.toLowerCase()),
+      ),
+      ...products.filter(el =>
+        el?.category?.group?.title
+          ?.toLowerCase()
+          .includes(route.params.toLowerCase()),
+      ),
+      ...products.filter(el =>
+        el?.category?.group?.type
+          ?.toLowerCase()
+          .includes(route.params.toLowerCase()),
+      ),
+    ];
+
+    const searched = getUniqueListBy(filteredsearch, 'id');
+
     setSearchedProduct(searched);
   }, [route]);
 
-  if (!searchedProduct) return null;
   return (
     <>
-      {searchedProduct.length > 0 ? (
+      {searchedProduct.length ? (
         <FlatList
           showsVerticalScrollIndicator={false}
           numColumns={2}

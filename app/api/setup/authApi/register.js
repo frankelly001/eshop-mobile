@@ -14,8 +14,12 @@ export const signup = userInfo => {
             resolve(snapshot);
           })
           .catch(error => {
-            reject(error.message);
-            console.log('ADD_USER ERROR:', error.message);
+            auth()
+              .currentUser.delete()
+              .then(response => {
+                console.log('Account deleted', response);
+                reject(error.message);
+              });
           });
         //   handleVerification(snapshot.user.email);
       })

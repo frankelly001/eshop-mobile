@@ -1,19 +1,12 @@
 import React, {useContext, useEffect, useState} from 'react';
-import {
-  StyleSheet,
-  View,
-  Image,
-  Dimensions,
-  TouchableOpacity,
-} from 'react-native';
+import {StyleSheet, View, Image, TouchableOpacity} from 'react-native';
 import colors from '../config/colors';
 import {fontSz, hp, wp} from '../config/responsiveSize';
 import AppText from './AppText';
 import PlusMinusInputBtn from './PlusMinusInputBtn';
-import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
 import {formatToCurrency} from '../utilities/formatToCurr';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
-import {GestureHandlerRootView} from 'react-native-gesture-handler';
+// import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import navigation from '../navigation/rootNavigation';
 import routes from '../navigation/routes';
 import fonts from '../config/fonts';
@@ -51,49 +44,49 @@ const CartItemCard = ({product, renderRightActions}) => {
   }, [product.quantity]);
 
   return (
-    <GestureHandlerRootView>
-      <Swipeable renderRightActions={renderRightActions}>
-        <View style={styles.container}>
-          <View style={styles.descriptionContainer}>
-            <TouchableOpacity
-              style={styles.imageContainer}
-              onPress={() =>
-                navigation.navigate(routes.PRODUCTDETAILS, product.id)
-              }>
-              <Image
-                style={styles.image}
-                resizeMode="stretch"
-                source={{
-                  uri: product.images[0],
-                }}
+    // <GestureHandlerRootView>
+    <Swipeable renderRightActions={renderRightActions}>
+      <View style={styles.container}>
+        <View style={styles.descriptionContainer}>
+          <TouchableOpacity
+            style={styles.imageContainer}
+            onPress={() =>
+              navigation.navigate(routes.PRODUCTDETAILS, product.id)
+            }>
+            <Image
+              style={styles.image}
+              resizeMode="stretch"
+              source={{
+                uri: product.images[0],
+              }}
+            />
+          </TouchableOpacity>
+          <View style={styles.details}>
+            <AppText style={styles.title}>{product.title}</AppText>
+            <View style={styles.priceContainer}>
+              <AppText style={styles.totalPrice}>
+                {formatToCurrency(product.price)}
+              </AppText>
+              <AppText style={styles.totalPriceSum}>
+                ({formatToCurrency(product.price)} by {product.quantity} item)
+              </AppText>
+            </View>
+            <View style={styles.input}>
+              <PlusMinusInputBtn
+                small
+                value={value}
+                onBlur={updateInput}
+                onChangeText={text => handleChange(text)}
+                add={add}
+                sub={sub}
+                // dispatchAdd={{type: 'addToCart', id: product.id}}
+                // dispatchSub={{type: 'subFromCart', id: product.id}}
+                // dispatchInput={{type: 'mutateCart', id: product.id}}
               />
-            </TouchableOpacity>
-            <View style={styles.details}>
-              <AppText style={styles.title}>{product.title}</AppText>
-              <View style={styles.priceContainer}>
-                <AppText style={styles.totalPrice}>
-                  {formatToCurrency(product.price)}
-                </AppText>
-                <AppText style={styles.totalPriceSum}>
-                  ({formatToCurrency(product.price)} by {product.quantity} item)
-                </AppText>
-              </View>
-              <View style={styles.input}>
-                <PlusMinusInputBtn
-                  small
-                  value={value}
-                  onBlur={updateInput}
-                  onChangeText={text => handleChange(text)}
-                  add={add}
-                  sub={sub}
-                  // dispatchAdd={{type: 'addToCart', id: product.id}}
-                  // dispatchSub={{type: 'subFromCart', id: product.id}}
-                  // dispatchInput={{type: 'mutateCart', id: product.id}}
-                />
-              </View>
             </View>
           </View>
-          {/* <TouchableOpacity
+        </View>
+        {/* <TouchableOpacity
             style={styles.options}
             onPress={() => setId(product.id)}>
             <SimpleLineIcons size={fontSz(15)} name="options-vertical" />
@@ -103,9 +96,9 @@ const CartItemCard = ({product, renderRightActions}) => {
               contentContainerStyle={styles.actionBtnContainer}
             />
           )} */}
-        </View>
-      </Swipeable>
-    </GestureHandlerRootView>
+      </View>
+    </Swipeable>
+    // </GestureHandlerRootView>
   );
 };
 

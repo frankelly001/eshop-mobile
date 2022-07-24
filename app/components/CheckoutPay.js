@@ -5,7 +5,7 @@ import {fontSz} from '../config/responsiveSize';
 import AppGradientBtn from './AppGradientBtn';
 import AppText from './AppText';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
-import PaymentNotice from './PaymentNotice';
+import PaymentNotice from './Notice/PaymentNotice';
 import DeliverySummary from './CheckOutSummay/DeliverySummary';
 import BottomSheet from './BottomSheet';
 import OrderSummary from './CheckOutSummay/OrderSummary';
@@ -19,16 +19,9 @@ const CheckoutPay = ({deliveryInfo, onGoBack}) => {
   const orderSummaryRef = useRef();
   const {total} = useContext(AuthContext);
 
-  console.log(deliveryInfo, 'check pay');
-
   const onOpen = ref => {
     ref.current?.open();
-    // console.log(ref);
   };
-  // const onClose = ref => {
-  //   ref.current?.close();
-  // };
-  // if (1) return null;
   return (
     <View style={styles.paymentContainer}>
       <View style={styles.detailsContainer}>
@@ -51,8 +44,8 @@ const CheckoutPay = ({deliveryInfo, onGoBack}) => {
           </AppText>
           <AppText>
             {deliveryInfo.phone}{' '}
-            {deliveryInfo.additionalPhone &&
-              `/ ${deliveryInfo.additionalPhone}`}
+            {deliveryInfo.additional_phone &&
+              `/ ${deliveryInfo.additional_phone}`}
           </AppText>
           <TouchableOpacity onPress={onGoBack}>
             <AppText style={styles.changeBtn}>Change</AppText>

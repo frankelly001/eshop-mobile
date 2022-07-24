@@ -7,14 +7,15 @@ import {
   withTiming,
 } from 'react-native-reanimated';
 import colors from '../config/colors';
-import {wp} from '../config/responsiveSize';
+import {hp, wp} from '../config/responsiveSize';
 
 const {height} = Dimensions.get('screen');
-
+const seh = hp(36);
 const useAnimatedHeaderStyles = (animationSwitch, inputRef) => {
   const headerLeftTranlateX = useSharedValue(0);
   const headerRightTranlateX = useSharedValue(0);
   const searchBtnStyleVal = useSharedValue(0);
+  const searchBtnHeight = useSharedValue(undefined);
   const searchBtnColor = useSharedValue(0);
   const inputWidth = useSharedValue(0);
   const inputFieldpaddingX = useSharedValue(15);
@@ -24,6 +25,7 @@ const useAnimatedHeaderStyles = (animationSwitch, inputRef) => {
   const headerLeftAnimatedStyle = useAnimatedStyle(() => {
     return {
       transform: [{translateX: withSpring(headerLeftTranlateX.value)}],
+      flex: 1,
     };
   }, []);
 
@@ -39,6 +41,7 @@ const useAnimatedHeaderStyles = (animationSwitch, inputRef) => {
       backgroundColor: searchBtnColor.value,
       borderTopRightRadius: searchBtnStyleVal.value * 5,
       borderBottomRightRadius: searchBtnStyleVal.value * 5,
+      height: searchBtnHeight.value,
     };
   }, []);
 
@@ -75,9 +78,10 @@ const useAnimatedHeaderStyles = (animationSwitch, inputRef) => {
 
   useEffect(() => {
     if (animationSwitch) {
-      headerLeftTranlateX.value = -wp(200);
+      headerLeftTranlateX.value = -wp(500);
       headerRightTranlateX.value = wp(85);
       searchBtnStyleVal.value = 10;
+      searchBtnHeight.value = hp(36);
       searchBtnColor.value = colors.purple;
       inputWidth.value = '85%';
       inputDisplay.value = 'flex';
@@ -89,6 +93,7 @@ const useAnimatedHeaderStyles = (animationSwitch, inputRef) => {
       headerLeftTranlateX.value = 0;
       headerRightTranlateX.value = 0;
       searchBtnStyleVal.value = 0;
+      searchBtnHeight.value = undefined;
       searchBtnColor.value = 'transparent';
       inputWidth.value = 0;
       inputDisplay.value = 'none';
