@@ -15,8 +15,6 @@ import FacebookIcon from '../assets/icons/facebook.svg';
 import InstagramIcon from '../assets/icons/instagram.svg';
 import TwitterIcon from '../assets/icons/twitter.svg';
 import YoutubeIcon from '../assets/icons/youtube.svg';
-import LinearGradient from 'react-native-linear-gradient';
-import {LinearTextGradient} from 'react-native-text-gradient';
 import AppGradientBtn from '../components/AppGradientBtn';
 import AppGradientText from '../components/AppGradientText';
 import {fontSz, wp} from '../config/responsiveSize';

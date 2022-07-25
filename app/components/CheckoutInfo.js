@@ -4,7 +4,6 @@ import AppText from './AppText';
 import AppForm from './form/AppForm';
 import AppFormInput from './form/AppFormInput';
 import * as Yup from 'yup';
-import AppGradientBtn from './AppGradientBtn';
 import {fontSz} from '../config/responsiveSize';
 import SubmitButton from './form/SubmitButton';
 import Screen from './Screen';
@@ -15,7 +14,6 @@ import stateRegion from '../utilities/stateRegion';
 import AppFormSelectInput from './form/AppFormSelectInput';
 import AuthContext from '../auth/AuthContext';
 import DeliveryInfoNotice from './Notice/DeliveryInfoNotice';
-import colors from '../config/colors';
 
 const checkoutInfo_VS = Yup.object().shape({
   firstname: validationSchema.firstname,
@@ -175,7 +173,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'space-between',
-    // backgroundColor: 'yellow',
   },
   btnContainerStyle: {
     width: '70%',

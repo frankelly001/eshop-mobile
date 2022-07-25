@@ -3,8 +3,10 @@ import {
   updateUserData,
   userDataTypes,
 } from '../api/setup/patchApi/updateUserData';
+import {showToast} from '../components/AppToast/showToast';
 import navigation from '../navigation/rootNavigation';
 import routes from '../navigation/routes';
+import Toast from 'react-native-toast-message';
 
 export const useCartState = user => {
   const [orderedItems, setOrderedItems] = useState([]);
@@ -13,6 +15,7 @@ export const useCartState = user => {
   //   console.log(orderedItems, 'zucciiiiiiiiiiiiiiiiiiiiiiiii');
 
   // const navigate = () => navigation.navigate(routes.ACCOUNT);
+
   const navigate = () => console.log('i will work on this later');
 
   const addToCart = (productId, payload) => {
@@ -46,6 +49,7 @@ export const useCartState = user => {
         });
     } else {
       navigate();
+      showToast();
     }
   };
 
