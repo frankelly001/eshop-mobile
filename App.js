@@ -35,6 +35,9 @@ import {
 import {useCartState} from './app/hooks/useCartState';
 import {StatusBar} from 'react-native';
 import colors from './app/config/colors';
+import AppToast from './app/components/AppToast/AppToast';
+import Toast from 'react-native-toast-message';
+import {showToast} from './app/components/AppToast/showToast';
 
 const App = () => {
   const [products, setProducts] = useState([]);
@@ -236,6 +239,13 @@ const App = () => {
     ordered.map(el => el.quantity).reduce((prev, cur) => prev + cur, 0) * 1000;
   const total = subTotal + delivery;
 
+  const toastConfig = {
+    appToast: obj => {
+      const {text2, props} = obj;
+      return <AppToast message={text2} type={props.toastType} />;
+    },
+  };
+
   if (initializing) return null;
   return (
     <>
@@ -266,6 +276,7 @@ const App = () => {
           </Host>
         </NavigationContainer>
       </AuthContext.Provider>
+      <Toast config={toastConfig} topOffset={5} />
     </>
   );
 };
