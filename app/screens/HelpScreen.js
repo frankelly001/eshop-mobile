@@ -37,16 +37,16 @@ const HelpScreen = props => {
         <AppGradientText style={styles.join}>JOIN US ON</AppGradientText>
         <View style={styles.handlesContainer}>
           <TouchableOpacity>
-            <FacebookIcon width={wp(40)} height={wp(40)} margin={5} />
+            <FacebookIcon width={wp(35)} height={wp(35)} margin={5} />
           </TouchableOpacity>
           <TouchableOpacity>
-            <InstagramIcon width={wp(40)} height={wp(40)} margin={5} />
+            <InstagramIcon width={wp(35)} height={wp(35)} margin={5} />
           </TouchableOpacity>
           <TouchableOpacity>
-            <TwitterIcon width={wp(40)} height={wp(40)} margin={5} />
+            <TwitterIcon width={wp(35)} height={wp(35)} margin={5} />
           </TouchableOpacity>
           <TouchableOpacity>
-            <YoutubeIcon width={wp(40)} height={wp(40)} margin={5} />
+            <YoutubeIcon width={wp(35)} height={wp(35)} margin={5} />
           </TouchableOpacity>
         </View>
       </View>

@@ -1,4 +1,4 @@
-import React, {useContext, useState, useEffect} from 'react';
+import React, {useContext, useState} from 'react';
 import {
   StyleSheet,
   View,
@@ -27,6 +27,9 @@ const CategoriesScreen = ({navigation}) => {
 
   console.log(selectedCategory, 'group...........');
 
+  // const handlePress = useCallback(category => {
+  //   setSelectedCategory(categories.find(cat => cat.title === category));
+  // }, []);
   const handlePress = category => {
     setSelectedCategory(categories.find(cat => cat.title === category));
   };
@@ -64,7 +67,9 @@ const CategoriesScreen = ({navigation}) => {
       </View>
       <View style={styles.catTypeContainer}>
         <View style={[styles.titleContainer, styles.catType]}>
-          <AppText style={styles.titleOfCat}>{selectedCategory.title}</AppText>
+          <AppText style={styles.titleOfCat}>
+            {selectedCategory?.title ?? selectedCategory}
+          </AppText>
         </View>
         {selectedCategory !== 'Select Category' &&
         Object.entries(selectedCategory).length ? (
@@ -94,16 +99,19 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     width: '100%',
     height: '100%',
+    // paddingBottom: 60,
   },
   listofCatContainer: {
     backgroundColor: colors.grey_light,
     width: '20%', // 23
     height: '100%',
+    paddingBottom: 60,
   },
   catTypeContainer: {
     // backgroundColor: colors.purple_Transparent,
     width: '80%', // 77
     height: '100%',
+    paddingBottom: 60,
   },
   titleContainer: {
     alignItems: 'center',
@@ -128,6 +136,8 @@ const styles = StyleSheet.create({
     fontSize: fontSz(13),
     fontFamily: fonts.bold,
     textAlign: 'center',
+    // height: '100%',
+    // paddingBottom: 100,
   },
   titleOfCat: {
     textAlign: 'center',

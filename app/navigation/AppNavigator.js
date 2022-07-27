@@ -18,6 +18,8 @@ import HelpInActiveIcon from '../assets/icons/help_inactive.svg';
 import HelpActiveIcon from '../assets/icons/help_active.svg';
 import BottomTabIcon from './BottomTabIcon';
 import BottonTabLabel from './BottomTabLabel';
+import colors from '../config/colors';
+import TabButton from './TabButton';
 
 const Tab = createBottomTabNavigator();
 
@@ -28,24 +30,38 @@ const AppNavigator = props => {
         headerShown: false,
         lazy: true,
         tabBarHideOnKeyboard: true,
-        // tabBarShowLabel: false,
-        // tabBarLabelStyle,
-        // tabBarLabel
+        tabBarStyle: {
+          height: 50,
+          backgroundColor: colors.grey_light,
+          position: 'absolute',
+          bottom: 8,
+          right: 8,
+          left: 8,
+          borderRadius: 30,
+
+          // shadowColor: '#000',
+          // shadowOffset: {
+          //   width: 0,
+          //   height: 4,
+          // },
+          // shadowOpacity: 0.32,
+          // shadowRadius: 5.46,
+
+          // elevation: 9,
+        },
+        // tabBarButton: props => <TabButton {...props} />,
       }}>
       <Tab.Screen
         name={routes.HOMETAB}
         component={HomeNavigator}
         options={{
-          tabBarIcon: ({size, focused}) => (
-            <BottomTabIcon
-              size={size}
-              focused={focused}
+          tabBarButton: props => (
+            <TabButton
+              label="Home"
               ActiveIcon={HomeActiveIcon}
               InActiveIcon={HomeInActiveIcon}
+              {...props}
             />
-          ),
-          tabBarLabel: ({focused}) => (
-            <BottonTabLabel focused={focused}>Home</BottonTabLabel>
           ),
         }}
       />
@@ -53,16 +69,13 @@ const AppNavigator = props => {
         name={routes.CATEGORIESTAB}
         component={CategoriesNavigator}
         options={{
-          tabBarIcon: ({size, focused}) => (
-            <BottomTabIcon
-              size={size}
-              focused={focused}
+          tabBarButton: props => (
+            <TabButton
+              label="Categories"
               ActiveIcon={CategoriesActiveIcon}
               InActiveIcon={CategoriesInActiveIcon}
+              {...props}
             />
-          ),
-          tabBarLabel: ({focused}) => (
-            <BottonTabLabel focused={focused}>Categories</BottonTabLabel>
           ),
         }}
       />
@@ -70,16 +83,13 @@ const AppNavigator = props => {
         name={routes.FEEDTAB}
         component={FeedNavigator}
         options={{
-          tabBarIcon: ({size, focused}) => (
-            <BottomTabIcon
-              size={size}
-              focused={focused}
+          tabBarButton: props => (
+            <TabButton
+              label="Feed"
               ActiveIcon={FeedActiveIcon}
               InActiveIcon={FeedInActiveIcon}
+              {...props}
             />
-          ),
-          tabBarLabel: ({focused}) => (
-            <BottonTabLabel focused={focused}>Feed</BottonTabLabel>
           ),
         }}
       />
@@ -87,16 +97,13 @@ const AppNavigator = props => {
         name={routes.ACCOUNTTAB}
         component={AccountNavigator}
         options={{
-          tabBarIcon: ({size, focused}) => (
-            <BottomTabIcon
-              size={size}
-              focused={focused}
+          tabBarButton: props => (
+            <TabButton
+              label="Account"
               ActiveIcon={AccountActiveIcon}
               InActiveIcon={AccountInActiveIcon}
+              {...props}
             />
-          ),
-          tabBarLabel: ({focused}) => (
-            <BottonTabLabel focused={focused}>Account</BottonTabLabel>
           ),
         }}
       />
@@ -104,16 +111,13 @@ const AppNavigator = props => {
         name={routes.HELPTAB}
         component={HelpNavigator}
         options={{
-          tabBarIcon: ({size, focused}) => (
-            <BottomTabIcon
-              size={size}
-              focused={focused}
+          tabBarButton: props => (
+            <TabButton
+              label="Help"
               ActiveIcon={HelpActiveIcon}
               InActiveIcon={HelpInActiveIcon}
+              {...props}
             />
-          ),
-          tabBarLabel: ({focused}) => (
-            <BottonTabLabel focused={focused}>Help</BottonTabLabel>
           ),
         }}
       />

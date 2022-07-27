@@ -18,7 +18,7 @@ const ActivityIndicator = ({
     <Container>
       <View style={[styles.overlay, containerStyles]}>
         <AnimatedLottieView
-          style={[styles.animatedIcon, animatedIconStyles]}
+          style={animatedIconStyles}
           autoPlay
           loop
           source={animatedIconSource}
@@ -38,15 +38,6 @@ const styles = StyleSheet.create({
     backgroundColor: colors.grey_dark_3_tranparent,
     position: 'absolute',
     zIndex: 1,
-
-    // top: 0,
-    // bottom: 0,
-    // left: 0,
-    // right: 0,
-    // opacity: 0.8,
-  },
-  animatedIcon: {
-    // marginBottom: 80,
   },
 });
 

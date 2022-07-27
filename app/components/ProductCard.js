@@ -19,7 +19,7 @@ import LikeBtn from './LikeBtn';
 const dimenson = Dimensions.get('screen');
 
 const ProductCard = ({product, onPress, small, medium}) => {
-  const {dispatch, addToCart} = useContext(AuthContext);
+  const {addToCart} = useContext(AuthContext);
   // console.log(height);
   // const styles = small ? mediumCardstyles : bigCardstyles;
   const styles = (() => {

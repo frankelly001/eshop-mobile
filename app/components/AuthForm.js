@@ -52,13 +52,13 @@ const AuthForm = ({
         </AppText>
         <View style={styles.handlesContainer}>
           <TouchableOpacity>
-            <FacebookIcon width={wp(40)} height={wp(40)} margin={10} />
+            <FacebookIcon width={wp(35)} height={wp(35)} margin={10} />
           </TouchableOpacity>
           <TouchableOpacity>
-            <GoogleIcon width={wp(40)} height={wp(40)} margin={10} />
+            <GoogleIcon width={wp(35)} height={wp(35)} margin={10} />
           </TouchableOpacity>
           <TouchableOpacity>
-            <TwitterIcon width={wp(40)} height={wp(40)} margin={10} />
+            <TwitterIcon width={wp(35)} height={wp(40)} margin={10} />
           </TouchableOpacity>
         </View>
       </View>

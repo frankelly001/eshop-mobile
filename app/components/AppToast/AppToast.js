@@ -1,25 +1,58 @@
 import React from 'react';
-import {Text, View} from 'react-native';
-// import { colors } from "../../config/config";
-// import { Google } from "../../constants/images";
-// import { appToastTypes } from "../../helpers/toastTypes";
+import {StyleSheet, Text, View} from 'react-native';
+import colors from '../../config/colors';
+import fonts from '../../config/fonts';
+import {fontSz} from '../../config/responsiveSize';
+import AppText from '../AppText';
+import AnimatedLottieView from 'lottie-react-native';
 
-// import {styles} from './styles';
-
-const AppToast = ({message, type, ...props}) => {
-  //   let formattedType = type?.toLowerCase();
-  console.log('apptoast is logging');
-
+const AppToast = ({message, type}) => {
+  console.log(type, 'check');
   return (
-    <View
-      // {...props}
-      style={{height: 50, width: '100%', backgroundColor: 'red'}}>
+    <View style={styles.container}>
       {/* {displayIconBasedOnType()} */}
-      <View>
-        <Text>{message}</Text>
+      <View style={styles.toast}>
+        <AnimatedLottieView
+          style={{
+            height: 50,
+            width: 50,
+            // backgroundColor: 'red',
+            marginLeft: -10,
+            marginTop: -7,
+            marginRight: 10,
+          }}
+          autoPlay
+          loop
+          source={require('../../assets/icons/animatedIcons/success.json')}
+        />
+        <AppText style={styles.msgText}>{message}</AppText>
       </View>
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    height: 50,
+    width: '100%',
+    // margin: 10,
+    backgroundColor: 'transparent',
+    paddingHorizontal: 20,
+  },
+  toast: {
+    height: '100%',
+    backgroundColor: colors.green,
+    borderRadius: 15,
+    // paddingHorizontal: 20,
+    paddingVertical: 5,
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  msgText: {
+    color: colors.white,
+    fontFamily: fonts.semi_bold,
+    fontSize: fontSz(15),
+  },
+});
 
 export default AppToast;

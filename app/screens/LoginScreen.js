@@ -19,8 +19,9 @@ import {useApi} from '../hooks/useApi';
 import routes from '../navigation/routes';
 import AuthContext from '../auth/AuthContext';
 import ActivityIndicator from '../components/ActivityIndicator';
-import {getUser} from '../api/setup/getApi/getUser';
 import {authStorageKeys, storeUserData} from '../api/storage/authStorage';
+import {showToast} from '../components/AppToast/showToast';
+// import navigation from '../navigation/rootNavigation';
 
 // GoogleSignin.configure({
 //   scopes: ['https://www.googleapis.com/auth/userinfo.profile'],
@@ -51,8 +52,8 @@ const login_VS = Yup.object().shape({
 
 const LoginScreen = ({navigation}) => {
   // const [user, setUser] = useState();
-  const productCollectionRef = firestore().collection('products');
-  const {setUser, initializeCartState} = useContext(AuthContext);
+  // const productCollectionRef = firestore().collection('products');
+  const {setUser} = useContext(AuthContext);
   // console.log(usersCollection);
 
   // const onFetchData = () => {
@@ -112,9 +113,8 @@ const LoginScreen = ({navigation}) => {
       .then(userData => {
         resetForm();
         setUser(userData);
-        // initializeCartState(userData);
         storeUserData(authStorageKeys.USER_DATA, userData);
-        navigation.replace(routes.ACCOUNT);
+        showToast('success', `Welcome ${userData.name.firstname}`);
       })
       .catch(error => {
         console.log(error);

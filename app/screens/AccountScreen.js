@@ -50,13 +50,15 @@ const AccountScreen = ({navigation}) => {
       <Screen>
         <View style={styles.welcomeContainer}>
           <View style={styles.subWelcomeContainer}>
-            <AppGradientText
-              style={[styles.welcome, {textTransform: 'capitalize'}]}>
+            <View style={styles.span}>
               <AppGradientText style={[styles.welcome, styles.welcomeColor]}>
                 Welcome{user ? ' ' : '!'}
               </AppGradientText>
-              {user && user.name.firstname}
-            </AppGradientText>
+              <AppGradientText
+                style={[styles.welcome, {textTransform: 'capitalize'}]}>
+                {user && user.name.firstname}
+              </AppGradientText>
+            </View>
             <AppText style={styles.welcome}>
               {user ? user.email : `Enter your account`}
             </AppText>
@@ -116,7 +118,7 @@ const styles = StyleSheet.create({
   welcomeContainer: {
     width: '100%',
     height: 0.13 * dimensions.height,
-    backgroundColor: colors.grey_light_2,
+    backgroundColor: colors.white,
     padding: 10,
     justifyContent: 'space-between',
     flexDirection: 'row',
@@ -140,6 +142,7 @@ const styles = StyleSheet.create({
   },
   actBalLabel: {
     color: colors.white,
+    fontFamily: fonts.semi_bold,
   },
   bal: {
     fontFamily: fonts.bold,
@@ -149,6 +152,10 @@ const styles = StyleSheet.create({
     fontSize: fontSz(15),
     fontFamily: fonts.bold,
     margin: 30,
+  },
+  span: {
+    flexDirection: 'row',
+    alignItems: 'center',
   },
 });
 

@@ -8,11 +8,13 @@ import CheckoutScreen from '../screens/CheckoutScreen';
 import Header from '../components/Header';
 import AuthContext from '../auth/AuthContext';
 import SearchResultScreen from '../screens/SearchResultScreen';
+import SignupScreen from '../screens/SignupScreen';
+import LoginScreen from '../screens/LoginScreen';
 
 const Stack = createNativeStackNavigator();
 
 const HomeStack = props => {
-  const {orderedNum} = useContext(AuthContext);
+  const {orderedNum, user} = useContext(AuthContext);
   return (
     <Stack.Navigator
       screenOptions={{
@@ -58,6 +60,9 @@ const HomeStack = props => {
           title: route.params,
         })}
       />
+
+      {!user && <Stack.Screen name={routes.SIGNUP} component={SignupScreen} />}
+      {!user && <Stack.Screen name={routes.LOGIN} component={LoginScreen} />}
     </Stack.Navigator>
   );
 };

@@ -110,7 +110,7 @@ const SignupScreen = ({navigation}) => {
           city: 'Orsu',
           address: '56 sowemimo Street',
           phone: '08176507344',
-          addtional_phone: '09089778367',
+          additional_phone: '',
           email: 'Frankelly344@gmail.com',
           password: '123456',
           confirm_password: '123456',

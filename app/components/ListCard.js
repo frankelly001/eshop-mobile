@@ -4,6 +4,7 @@ import colors from '../config/colors';
 import AppText from './AppText';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 import GradientBackground from './GradientBackground';
+import fonts from '../config/fonts';
 
 const ListCard = ({data}) => {
   return (
@@ -40,6 +41,7 @@ const styles = StyleSheet.create({
   },
   ListTitle: {
     color: colors.white,
+    fontFamily: fonts.semi_bold,
   },
   ListItemContainer: {
     // backgroundColor: colors.purple_Transparent,
