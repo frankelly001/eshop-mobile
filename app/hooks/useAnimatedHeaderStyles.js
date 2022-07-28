@@ -10,7 +10,6 @@ import colors from '../config/colors';
 import {hp, wp} from '../config/responsiveSize';
 
 const {height} = Dimensions.get('screen');
-const seh = hp(36);
 const useAnimatedHeaderStyles = (animationSwitch, inputRef) => {
   const headerLeftTranlateX = useSharedValue(0);
   const headerRightTranlateX = useSharedValue(0);

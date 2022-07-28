@@ -9,6 +9,8 @@ import {useApi} from '../hooks/useApi';
 import routes from '../navigation/routes';
 import {logoutUser} from '../api/setup/authApi/logout';
 import ActivityIndicator from '../components/ActivityIndicator';
+import {showToast} from '../components/AppToast/showToast';
+import toast from '../components/AppToast/toast';
 
 const handleValidation = step => {
   let schema;
@@ -83,8 +85,7 @@ const SignupScreen = ({navigation}) => {
         logoutUser()
           .then(() => {
             resetForm();
-            console.log('logOut succussful');
-            alert('ACCOUNT CREATED SUCCESSFULLY');
+            showToast(toast.types.SUCCESS, 'Account Successfully Created');
             navigation.replace(routes.LOGIN);
           })
           .catch(error => {
@@ -111,7 +112,7 @@ const SignupScreen = ({navigation}) => {
           address: '56 sowemimo Street',
           phone: '08176507344',
           additional_phone: '',
-          email: 'Frankelly344@gmail.com',
+          email: 'Frankelly3344@gmail.com',
           password: '123456',
           confirm_password: '123456',
         }}

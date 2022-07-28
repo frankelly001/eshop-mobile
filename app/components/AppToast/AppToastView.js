@@ -5,27 +5,30 @@ import fonts from '../../config/fonts';
 import {fontSz} from '../../config/responsiveSize';
 import AppText from '../AppText';
 import AnimatedLottieView from 'lottie-react-native';
+import toast from './toast';
 
-const AppToast = ({message, type}) => {
+const AppToastView = ({message, type}) => {
   console.log(type, 'check');
+
   return (
     <View style={styles.container}>
       {/* {displayIconBasedOnType()} */}
-      <View style={styles.toast}>
+      <View style={[styles.toast, {backgroundColor: toast.toastColors[type]}]}>
         <AnimatedLottieView
-          style={{
-            height: 50,
-            width: 50,
-            // backgroundColor: 'red',
-            marginLeft: -10,
-            marginTop: -7,
-            marginRight: 10,
-          }}
+          style={[
+            styles.lottieIcon,
+            type !== toast.types.INFO && styles.iconFit,
+          ]}
           autoPlay
           loop
-          source={require('../../assets/icons/animatedIcons/success.json')}
+          source={toast.IconSources[type]}
         />
-        <AppText style={styles.msgText}>{message}</AppText>
+
+        <View style={{flex: 1, paddingRight: 15}}>
+          <AppText numberOfLines={2} style={styles.msgText}>
+            {message}
+          </AppText>
+        </View>
       </View>
     </View>
   );
@@ -41,9 +44,8 @@ const styles = StyleSheet.create({
   },
   toast: {
     height: '100%',
-    backgroundColor: colors.green,
+    backgroundColor: colors.white,
     borderRadius: 15,
-    // paddingHorizontal: 20,
     paddingVertical: 5,
     flexDirection: 'row',
     alignItems: 'center',
@@ -51,8 +53,18 @@ const styles = StyleSheet.create({
   msgText: {
     color: colors.white,
     fontFamily: fonts.semi_bold,
-    fontSize: fontSz(15),
+    fontSize: fontSz(13),
+    // backgroundColor: 'red',
+  },
+  lottieIcon: {
+    height: 50,
+    width: 50,
+  },
+  iconFit: {
+    marginLeft: -10,
+    marginTop: -7,
+    marginRight: 10,
   },
 });
 
-export default AppToast;
+export default AppToastView;

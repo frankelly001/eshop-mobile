@@ -17,13 +17,7 @@ const ListCard = ({data}) => {
       {data.list.map(list => (
         <TouchableOpacity key={list._id} style={styles.ListItemContainer}>
           <View style={styles.listItem}>
-            {list.icon && (
-              <list.IconTag
-                size={20}
-                name={list.icon}
-                style={{marginRight: 5}}
-              />
-            )}
+            {list.icon && <list.icon size={20} style={{marginRight: 5}} />}
             <AppText>{list.name}</AppText>
           </View>
           <FontAwesomeIcon size={20} name="angle-right" />

@@ -19,11 +19,18 @@ import {formatToCurrency} from '../utilities/formatToCurr';
 import ActivityIndicator from '../components/ActivityIndicator';
 import {useApi} from '../hooks/useApi';
 import {authStorageKeys, removeUserData} from '../api/storage/authStorage';
+import Icon, {Icons} from '../components/Icons';
+import ModalOverlay from '../components/ModalOverlay';
+import AnimatedLottieView from 'lottie-react-native';
+import MailSentNoticeModal from '../components/MailSentNoticeModal';
+import {showToast} from '../components/AppToast/showToast';
+import toast from '../components/AppToast/toast';
 
-const dimensions = Dimensions.get('screen');
+const {height, width} = Dimensions.get('screen');
 
 const AccountScreen = ({navigation}) => {
   const {user, setUser, setRecentQueries} = useContext(AuthContext);
+  const [mailNotice, setMailNotice] = useState(false);
 
   const {loading, request} = useApi(logoutUser);
 
@@ -42,11 +49,37 @@ const AccountScreen = ({navigation}) => {
     setRecentQueries([]);
   };
 
+  const handleVerification = () => {
+    if (user) {
+      if (!mailNotice) setMailNotice(true);
+      auth()
+        .currentUser.sendEmailVerification()
+        .then(() => {
+          showToast(
+            toast.types.INFO,
+            'An email has been sent to you for Verification',
+          );
+        });
+    }
+  };
+
   // if (1) return <UploadScreen />;
+
+  console.log(user, 'make i check user');
 
   return (
     <>
       <ActivityIndicator visible={loading} portal />
+
+      {user && (
+        <MailSentNoticeModal
+          email={user.email}
+          visible={mailNotice}
+          onClose={() => setMailNotice(false)}
+          onHandleResendMail={() => handleVerification()}
+        />
+      )}
+
       <Screen>
         <View style={styles.welcomeContainer}>
           <View style={styles.subWelcomeContainer}>
@@ -58,6 +91,15 @@ const AccountScreen = ({navigation}) => {
                 style={[styles.welcome, {textTransform: 'capitalize'}]}>
                 {user && user.name.firstname}
               </AppGradientText>
+              {user && (
+                <Icon
+                  type={Icons.MaterialIcons}
+                  name="verified-user"
+                  size={13}
+                  color={user.verified ? colors.green : colors.grey_dark}
+                  style={{marginLeft: 2}}
+                />
+              )}
             </View>
             <AppText style={styles.welcome}>
               {user ? user.email : `Enter your account`}
@@ -69,6 +111,15 @@ const AccountScreen = ({navigation}) => {
                 label="Login"
                 bgStyle={{borderRadius: 5}}
                 onPress={() => navigation.navigate(routes.LOGIN)}
+              />
+            </View>
+          )}
+          {user && !user.verified && (
+            <View style={[styles.subWelcomeContainer, {flex: 0.5}]}>
+              <AppButton
+                label="Verify Account"
+                bgStyle={{borderRadius: 5}}
+                onPress={() => handleVerification()}
               />
             </View>
           )}
@@ -96,15 +147,6 @@ const AccountScreen = ({navigation}) => {
             {user ? 'Log out' : 'Log in'}
           </AppGradientText>
         </TouchableOpacity>
-        {/* {ifUser ? (
-        <TouchableOpacity on>
-          <AppGradientText style={styles.logout}>Log out</AppGradientText>
-        </TouchableOpacity>
-      ) : (
-        <TouchableOpacity>
-          <AppGradientText style={styles.logout}>Log in</AppGradientText>
-        </TouchableOpacity>
-      )} */}
       </Screen>
     </>
   );
@@ -117,7 +159,7 @@ const styles = StyleSheet.create({
   },
   welcomeContainer: {
     width: '100%',
-    height: 0.13 * dimensions.height,
+    height: 0.13 * height,
     backgroundColor: colors.white,
     padding: 10,
     justifyContent: 'space-between',

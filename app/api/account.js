@@ -1,6 +1,5 @@
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import Entypo from 'react-native-vector-icons/Entypo';
+import React from 'react';
+import Icon, {Icons} from '../components/Icons';
 
 const AccountDetails = {
   title: 'Account Details',
@@ -8,38 +7,74 @@ const AccountDetails = {
     {
       _id: '1',
       name: 'Orders',
-      icon: 'shopping-outline',
-      IconTag: MaterialCommunityIcons,
+      icon: ({size, style}) => (
+        <Icon
+          type={Icons.MaterialCommunityIcons}
+          name="shopping-outline"
+          size={size}
+          style={style}
+        />
+      ),
     },
     {
       _id: '2',
       name: 'Saved',
-      icon: 'heart-outline',
-      IconTag: MaterialCommunityIcons,
+      icon: ({size, style}) => (
+        <Icon
+          type={Icons.MaterialCommunityIcons}
+          name="heart-outline"
+          size={size}
+          style={style}
+        />
+      ),
     },
     {
       _id: '3',
       name: 'Vouchers',
-      icon: 'wallet-giftcard',
-      IconTag: MaterialCommunityIcons,
+      icon: ({size, style}) => (
+        <Icon
+          type={Icons.MaterialCommunityIcons}
+          name="wallet-giftcard"
+          size={size}
+          style={style}
+        />
+      ),
     },
     {
       _id: '4',
       name: 'Pending Reviews',
-      icon: 'pending-actions',
-      IconTag: MaterialIcons,
+      icon: ({size, style}) => (
+        <Icon
+          type={Icons.MaterialIcons}
+          name="pending-actions"
+          size={size}
+          style={style}
+        />
+      ),
     },
     {
       _id: '5',
       name: 'Recently Viewed',
-      icon: 'back-in-time',
-      IconTag: Entypo,
+      icon: ({size, style}) => (
+        <Icon
+          type={Icons.Entypo}
+          name="back-in-time"
+          size={size}
+          style={style}
+        />
+      ),
     },
     {
       _id: '6',
       name: 'Recently Searched',
-      icon: 'youtube-searched-for',
-      IconTag: MaterialIcons,
+      icon: ({size, style}) => (
+        <Icon
+          type={Icons.MaterialIcons}
+          name="youtube-searched-for"
+          size={size}
+          style={style}
+        />
+      ),
     },
   ],
 };

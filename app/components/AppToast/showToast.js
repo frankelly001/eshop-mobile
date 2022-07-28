@@ -5,7 +5,7 @@ export const showToast = (toastType, message) => {
   console.log('am logging.....');
   return Toast.show({
     type: 'appToast',
-    text1: 'Hello',
+    // text1: 'Hello',
     text2: message,
     props: {toastType},
   });

@@ -35,9 +35,10 @@ import {
 import {useCartState} from './app/hooks/useCartState';
 import {StatusBar} from 'react-native';
 import colors from './app/config/colors';
-import AppToast from './app/components/AppToast/AppToast';
+import AppToastView from './app/components/AppToast/AppToastView';
 import Toast from 'react-native-toast-message';
 import {showToast} from './app/components/AppToast/showToast';
+import toast from './app/components/AppToast/toast';
 
 const App = () => {
   const [products, setProducts] = useState([]);
@@ -92,6 +93,7 @@ const App = () => {
   // console.log(netinfo);
 
   const onAuthStateChanged = account => {
+    console.log(account, 'checking verification');
     if (user && !user.verified) {
       if (account && account.emailVerified) {
         // const updatedUsersData = {...user, verified: account.emailVerified};
@@ -101,9 +103,11 @@ const App = () => {
           account.uid,
           userDataTypes.VERIFIED,
           account.emailVerified,
-        );
+        ).then(() => {
+          showToast(toast.types.SUCCESS, 'Your account is now verified');
+        });
       } else {
-        console.log('User is not Verified');
+        console.log('Your account is not verified');
       }
     }
 
@@ -128,8 +132,16 @@ const App = () => {
 
   const getAllUserDataFromAsynStorage = () => {
     getUserData(authStorageKeys.USER_DATA)
-      .then(data => {
-        if (data) setUser(data);
+      .then(user => {
+        if (user) setUser(user);
+
+        if (user && !user.verified)
+          setTimeout(() => {
+            showToast(
+              toast.types.INFO,
+              `Hello ${user.name.firstname}, Please go to Account and Verify your Account`,
+            );
+          }, 1000);
         // initializeCartState(data);
         // console.log(data, 'DATA................');
       })
@@ -242,7 +254,7 @@ const App = () => {
   const toastConfig = {
     appToast: obj => {
       const {text2, props} = obj;
-      return <AppToast message={text2} type={props.toastType} />;
+      return <AppToastView message={text2} type={props.toastType} />;
     },
   };
 

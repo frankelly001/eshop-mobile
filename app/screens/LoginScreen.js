@@ -21,6 +21,7 @@ import AuthContext from '../auth/AuthContext';
 import ActivityIndicator from '../components/ActivityIndicator';
 import {authStorageKeys, storeUserData} from '../api/storage/authStorage';
 import {showToast} from '../components/AppToast/showToast';
+import toast from '../components/AppToast/toast';
 // import navigation from '../navigation/rootNavigation';
 
 // GoogleSignin.configure({
@@ -114,7 +115,12 @@ const LoginScreen = ({navigation}) => {
         resetForm();
         setUser(userData);
         storeUserData(authStorageKeys.USER_DATA, userData);
-        showToast('success', `Welcome ${userData.name.firstname}`);
+        showToast(
+          'success',
+          `Welcome ${userData.name.firstname}${
+            !userData.verified ? ', Please Verify your Account' : ''
+          }`,
+        );
       })
       .catch(error => {
         console.log(error);

@@ -4,6 +4,7 @@ import {
   userDataTypes,
 } from '../api/setup/patchApi/updateUserData';
 import {showToast} from '../components/AppToast/showToast';
+import toast from '../components/AppToast/toast';
 import navigation from '../navigation/rootNavigation';
 import routes from '../navigation/routes';
 
@@ -11,7 +12,7 @@ export const useCartState = user => {
   const [orderedItems, setOrderedItems] = useState([]);
   const [savedItems, setSavedItems] = useState([]);
 
-  const navigate = () => console.log('i will work on this later');
+  const alert = () => showToast(toast.types.INFO, 'You are not Logged in');
 
   const addToCart = (productId, payload) => {
     if (user) {
@@ -43,8 +44,7 @@ export const useCartState = user => {
           setOrderedItems(previousOrderedItems);
         });
     } else {
-      navigate();
-      showToast('success', 'You are not Logged in');
+      alert();
     }
   };
 
@@ -71,7 +71,7 @@ export const useCartState = user => {
         setOrderedItems(previousOrderedItems);
       });
     } else {
-      navigate();
+      alert();
     }
   };
 
@@ -95,7 +95,7 @@ export const useCartState = user => {
         setOrderedItems(previousOrderedItems);
       });
     } else {
-      navigate();
+      alert();
     }
   };
 
@@ -119,7 +119,7 @@ export const useCartState = user => {
           //   console.log(error, 'heyyyyyyyyy');
         });
     } else {
-      navigate();
+      alert();
     }
   };
 
@@ -138,7 +138,7 @@ export const useCartState = user => {
         setOrderedItems(previousOrderedItems);
       });
     } else {
-      navigate();
+      alert();
     }
   };
 
