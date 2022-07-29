@@ -36,8 +36,8 @@ const AccountScreen = ({navigation}) => {
   const {user, setUser, setRecentQueries} = useContext(AuthContext);
   const [mailNotice, setMailNotice] = useState(false);
 
-  const [intervalId, setIntervalId] = useState(null);
   const {loading, request} = useApi(logoutUser);
+  const [intervalId, setIntervalId] = useState(null);
 
   const handleLogout = () => {
     request()
@@ -53,6 +53,8 @@ const AccountScreen = ({navigation}) => {
     removeUserData(authStorageKeys.RECENT_QUERIES);
     setRecentQueries([]);
   };
+
+  const userVerified = auth()?.currentUser?.emailVerified;
 
   const updateUserData_verified = verification => {
     if (verification)
@@ -78,9 +80,7 @@ const AccountScreen = ({navigation}) => {
             updateUserData_verified(checkVerified);
             // stopCurrentUserReload();
             setMailNotice(false);
-            console.log('i am now  Verified!!!!!!!!!');
-          } else {
-            console.log('i am not  Verified');
+            console.log('i am now  Verified');
           }
         });
     }, 2000);
@@ -88,13 +88,8 @@ const AccountScreen = ({navigation}) => {
   };
 
   useEffect(() => {
-    // if (user?.verified) stopCurrentUserReload();
-    if (mailNotice) {
-      startCurrentUserReload();
-    } else {
-      stopCurrentUserReload();
-    }
-  }, [mailNotice]);
+    if (user?.verified) stopCurrentUserReload();
+  }, [user?.verified]);
 
   // useEffect(() => {
   //   if (user && !user.verified && userVerified) {
@@ -104,7 +99,6 @@ const AccountScreen = ({navigation}) => {
   // }, [userVerified, mailNotice]);
 
   const handleVerification = () => {
-    const userVerified = auth()?.currentUser?.emailVerified;
     if (user && !userVerified) {
       if (!mailNotice) setMailNotice(true);
       auth()
@@ -114,14 +108,17 @@ const AccountScreen = ({navigation}) => {
             toast.types.INFO,
             'An email has been sent to you for Verification',
           );
+          startCurrentUserReload();
         });
     } else if (user && userVerified) {
-      updateUserData_verified(userVerified);
+      updateUserData_verified();
     }
   };
 
   const handleClose = () => {
     setMailNotice(false);
+    stopCurrentUserReload();
+    // auth().currentUser.reload();
   };
 
   // if (1) return <UploadScreen />;

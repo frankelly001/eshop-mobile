@@ -149,7 +149,7 @@ const LoginScreen = ({navigation}) => {
         welcomeMessage="Welcome to Back!"
         authTypeLabel="Login"
         initialValues={{
-          email: 'frankelly344@gmail.com',
+          email: 'frankelly3344@gmail.com',
           password: '123456',
         }}
         validationSchema={login_VS}

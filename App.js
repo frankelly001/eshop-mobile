@@ -93,23 +93,21 @@ const App = () => {
   // console.log(netinfo);
 
   const onAuthStateChanged = account => {
-    console.log(account, 'checking verification');
-    if (user && !user.verified) {
-      if (account && account.emailVerified) {
-        // const updatedUsersData = {...user, verified: account.emailVerified};
-        // setUser(updatedUserData);
-        // storeUserData(updatedUserData);
-        updateUserData(
-          account.uid,
-          userDataTypes.VERIFIED,
-          account.emailVerified,
-        ).then(() => {
-          showToast(toast.types.SUCCESS, 'Your account is now verified');
-        });
-      } else {
-        console.log('Your account is not verified');
-      }
-    }
+    // console.log(account, 'checking verification outside condition');
+    // if (account && account.emailVerified) {
+    //   // if (user && !user.verified) {
+    //   console.log(account, 'checking verification inside condition');
+    //   updateUserData(
+    //     account.uid,
+    //     userDataTypes.VERIFIED,
+    //     account.emailVerified,
+    //   ).then(() => {
+    //     showToast(toast.types.SUCCESS, 'Your account is now verified');
+    //   });
+    //   // }
+    // } else {
+    //   console.log('Your account is not verified');
+    // }
 
     setInitializing(false);
   };
@@ -224,6 +222,10 @@ const App = () => {
     return authSubscriber;
   }, []);
 
+  // useEffect(()=> {
+
+  // })
+
   useEffect(() => {
     const orderedID = orderedItems.map(el => el.productId);
 
@@ -281,6 +283,7 @@ const App = () => {
           subFromCart,
           mutateCart,
           removeFromCart,
+          onAuthStateChanged,
         }}>
         <NavigationContainer ref={navigationRef} theme={navigationTheme}>
           <Host>

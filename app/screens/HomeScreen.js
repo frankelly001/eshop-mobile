@@ -2,6 +2,7 @@ import React, {useContext, useCallback, memo} from 'react';
 import {StyleSheet, View, Text, FlatList, SectionList} from 'react-native';
 import AuthContext from '../auth/AuthContext';
 import AppText from '../components/AppText';
+import HomeLoader from '../components/HomeLoader';
 import ImageCarousel from '../components/ImageCarousel';
 import NewSection from '../components/NewSection';
 import ProductCard from '../components/ProductCard';
@@ -15,8 +16,7 @@ const HomeScreen = ({navigation}) => {
 
   const numOfCols = 2;
   // console.log(newProducts, 'new..................');
-  if (!products.length) return null;
-  // if (1) return null;
+  if (!products.length) return <HomeLoader />;
 
   return (
     <SectionList

@@ -1,6 +1,7 @@
 import AnimatedLottieView from 'lottie-react-native';
-import React from 'react';
+import React, {useEffect, useLayoutEffect, useState} from 'react';
 import {Dimensions, StyleSheet, TouchableOpacity, View} from 'react-native';
+import {auth} from '../api/setup/config';
 import colors from '../config/colors';
 import fonts from '../config/fonts';
 import {fontSz} from '../config/responsiveSize';
@@ -12,6 +13,7 @@ import ModalOverlay from './ModalOverlay';
 const {width} = Dimensions.get('screen');
 const MailSentNoticeModal = ({visible, onClose, onHandleResendMail, email}) => {
   if (!visible) return null;
+
   return (
     <ModalOverlay>
       <TouchableOpacity

@@ -80,13 +80,14 @@ const Header = ({navigation, options, route}) => {
     const newQuery = recentQuery ? recentQuery : query;
     let results;
     if (searchToggle && newQuery) {
-      if (!recentQuery)
-        results = [
-          newQuery,
-          ...recentQueries.filter(el => el !== newQuery),
-        ].slice(0, 10);
+      // if (!recentQuery)
+      results = [
+        newQuery,
+        ...recentQueries.filter(el => el !== newQuery),
+      ].slice(0, 10);
       storeUserData(authStorageKeys.RECENT_QUERIES, results);
       setRecentQueries(results);
+      // console.log(results, 'kkkkkklop');
       navigation.navigate(routes.SEARCHED, newQuery);
       setQuery('');
     }
