@@ -22,7 +22,13 @@ const groupCard = ({item}) => (
   <TouchableOpacity
     key={item}
     style={styles.groupTypeContainer}
-    onPress={() => navigation.navigate(routes.SEARCHED, item)}>
+    onPress={() =>
+      navigation.navigate(routes.SEARCHED, {
+        query: item,
+        searchType: 'categoryFieldSearch',
+        searchField: 'CATEGORY_GROUP_TYPE',
+      })
+    }>
     <View style={styles.imageContainer}>
       <Image style={styles.image} resizeMode="stretch" source={{uri: img}} />
     </View>
@@ -39,7 +45,13 @@ const CategoryGroupCard = ({item}) => {
       <View style={styles.titleContainer}>
         <AppText style={styles.title}>{item.title}</AppText>
         <Pressable
-          onPress={() => navigation.navigate(routes.SEARCHED, item.title)}>
+          onPress={() =>
+            navigation.navigate(routes.SEARCHED, {
+              query: item.title,
+              searchType: 'categoryFieldSearch',
+              searchField: 'CATEGORY_GROUP',
+            })
+          }>
           <AppText style={styles.clickable}>See all</AppText>
         </Pressable>
       </View>
@@ -74,6 +86,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: fontSz(12),
+    textTransform: 'uppercase',
   },
   clickable: {
     fontSize: fontSz(13),
@@ -89,6 +102,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     padding: 2,
     fontFamily: fonts.semi_bold,
+    textTransform: 'capitalize',
     // backgroundColor: 'red',
   },
   groupTypeContainer: {

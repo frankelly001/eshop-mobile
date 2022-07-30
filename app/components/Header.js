@@ -22,6 +22,7 @@ import AppTextInput from './AppTextInput';
 import useAnimatedHeaderStyles from '../hooks/useAnimatedHeaderStyles';
 import fonts from '../config/fonts';
 import {authStorageKeys, storeUserData} from '../api/storage/authStorage';
+import queryApi from '../api/setup/queryApi/queryApi';
 
 const Header = ({navigation, options, route}) => {
   const {orderedNum, recentQueries, setRecentQueries} = useContext(AuthContext);
@@ -88,7 +89,10 @@ const Header = ({navigation, options, route}) => {
       storeUserData(authStorageKeys.RECENT_QUERIES, results);
       setRecentQueries(results);
       // console.log(results, 'kkkkkklop');
-      navigation.navigate(routes.SEARCHED, newQuery);
+      navigation.navigate(routes.SEARCHED, {
+        query: newQuery,
+        searchType: 'AllFieldsSearch',
+      });
       setQuery('');
     }
   };

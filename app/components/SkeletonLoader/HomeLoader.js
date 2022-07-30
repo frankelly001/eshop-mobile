@@ -2,7 +2,9 @@ import React from 'react';
 import {Dimensions, StyleSheet, View} from 'react-native';
 import {ScrollView} from 'react-native-gesture-handler';
 import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
-import ProductsLoader from './ProductsLoader';
+import Eshop_LoaderIcon from '../../assets/icons/eshop_loaderIcon.svg';
+import {hp} from '../../config/responsiveSize';
+import ProductCardSampleLoader from './ProductCardSampleLoader';
 
 const {width, height} = Dimensions.get('screen');
 const productsSample = [
@@ -13,12 +15,28 @@ const productsSample = [
   {product: 'sample5'},
   {product: 'sample6'},
 ];
+
 const HomeLoader = props => {
   const carouselHeight = height / 3.5;
+
   return (
-    <ScrollView contentContainerStyle={{paddingBottom: 60}}>
+    <ScrollView
+      showsVerticalScrollIndicator={false}
+      contentContainerStyle={{paddingBottom: 60}}>
+      <View>
+        <SkeletonPlaceholder>
+          <View
+            style={{
+              width: width,
+              height: carouselHeight,
+            }}
+          />
+        </SkeletonPlaceholder>
+        <View style={styles.iconContainer}>
+          <Eshop_LoaderIcon width={100} height={100} opacity={0.5} />
+        </View>
+      </View>
       <SkeletonPlaceholder>
-        <View style={{width: width, height: carouselHeight}} />
         <View
           style={{
             width: width,
@@ -26,20 +44,12 @@ const HomeLoader = props => {
             marginTop: 3,
           }}
         />
-        <View style={styles.container}>
-          {productsSample.map(sample => (
-            <View
-              key={sample.product}
-              style={{
-                width: width / 2.17,
-                height: 280,
-                margin: 3,
-                borderRadius: 10,
-              }}
-            />
-          ))}
-        </View>
       </SkeletonPlaceholder>
+      <View style={styles.container}>
+        {productsSample.map(sample => (
+          <ProductCardSampleLoader key={sample.product} />
+        ))}
+      </View>
     </ScrollView>
   );
 };
@@ -52,6 +62,15 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     // paddingVertical: 3,
     justifyContent: 'space-between',
+  },
+  iconContainer: {
+    position: 'absolute',
+    justifyContent: 'center',
+    alignItems: 'center',
+    top: 0,
+    bottom: 0,
+    left: 0,
+    right: 0,
   },
 });
 

@@ -6,39 +6,53 @@ import routes from '../navigation/routes';
 import {formatData} from '../utilities/formatData';
 import ActivityIndicator from '../components/ActivityIndicator';
 import colors from '../config/colors';
+import ProductsLoader from '../components/SkeletonLoader/ProductsLoader';
+import collectionRefs from '../api/setup/collectionRefs';
+import queryApi from '../api/setup/queryApi/queryApi';
+import {useApi} from '../hooks/useApi';
+
+function getUniqueListBy(arr, key) {
+  return [...new Map(arr.map(item => [item[key], item])).values()];
+}
 
 const SearchResultScreen = ({navigation, route}) => {
   const {products} = useContext(AuthContext);
   const [searchedProduct, setSearchedProduct] = useState([]);
 
-  function getUniqueListBy(arr, key) {
-    return [...new Map(arr.map(item => [item[key], item])).values()];
-  }
+  const {loading, request, error} = useApi(queryApi[route.params.searchType]);
 
   useEffect(() => {
-    const filteredsearch = [
-      ...products.filter(el =>
-        el?.title?.toLowerCase().includes(route.params.toLowerCase()),
-      ),
-      ...products.filter(el =>
-        el?.category?.title?.toLowerCase().includes(route.params.toLowerCase()),
-      ),
-      ...products.filter(el =>
-        el?.category?.group?.title
-          ?.toLowerCase()
-          .includes(route.params.toLowerCase()),
-      ),
-      ...products.filter(el =>
-        el?.category?.group?.type
-          ?.toLowerCase()
-          .includes(route.params.toLowerCase()),
-      ),
-    ];
+    request(
+      route.params.query,
+      queryApi.searchFields[route.params?.searchField],
+    ).then(data => {
+      setSearchedProduct(data);
+    });
+    // const filteredsearch = [
+    //   ...products.filter(el =>
+    //     el?.title?.toLowerCase().includes(route.params.query.toLowerCase()),
+    //   ),
+    //   ...products.filter(el =>
+    //     el?.category?.title
+    //       ?.toLowerCase()
+    //       .includes(route.params.query.toLowerCase()),
+    //   ),
+    //   ...products.filter(el =>
+    //     el?.category?.group?.title
+    //       ?.toLowerCase()
+    //       .includes(route.params.query.toLowerCase()),
+    //   ),
+    //   ...products.filter(el =>
+    //     el?.category?.group?.type
+    //       ?.toLowerCase()
+    //       .includes(route.params.query.toLowerCase()),
+    //   ),
+    // ];
+    // const searched = getUniqueListBy(filteredsearch, 'id');
+    // setSearchedProduct(searched);
+  }, [route.params]);
 
-    const searched = getUniqueListBy(filteredsearch, 'id');
-
-    setSearchedProduct(searched);
-  }, [route]);
+  if (loading) return <ProductsLoader />;
 
   return (
     <>

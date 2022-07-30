@@ -2,7 +2,6 @@ import React, {useContext, useState} from 'react';
 import {
   StyleSheet,
   View,
-  ScrollView,
   TouchableOpacity,
   Dimensions,
   FlatList,
@@ -10,14 +9,10 @@ import {
 import AuthContext from '../auth/AuthContext';
 import AppText from '../components/AppText';
 import CategoryGroupCard from '../components/CategoryCard';
-import ProductCard from '../components/ProductCard';
 import Seperator from '../components/Seperator';
 import colors from '../config/colors';
 import fonts from '../config/fonts';
 import {fontSz, hp} from '../config/responsiveSize';
-// import navigation from '../navigation/rootNavigation';
-import routes from '../navigation/routes';
-import {formatData} from '../utilities/formatData';
 
 const dimenson = Dimensions.get('screen');
 

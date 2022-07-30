@@ -95,14 +95,14 @@ const UploadScreen = () => {
 
     const newValues = {
       date: firestore.FieldValue.serverTimestamp(),
-      title: values['title'],
+      title: values['title'].toLowerCase(),
       price: +values['price'],
       images: imageUrls,
       category: {
-        title: values['category'],
+        title: values['category'].toLowerCase(),
         group: {
-          title: values['categoryGroupTitle'],
-          type: values['categoryGroupType'],
+          title: values['categoryGroupTitle'].toLowerCase(),
+          type: values['categoryGroupType'].toLowerCase(),
         },
       },
       description: values['description'],

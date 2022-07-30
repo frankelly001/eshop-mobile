@@ -10,136 +10,136 @@ import stateRegion from '../../utilities/stateRegion';
 
 const flyoutMenu = [
   {
-      title: "Phones & Tablets",
+      title: "Phones & Tablets".toLowerCase(),
       groups: [
-          {title: "MOBILE PHONES", types: ["SmartPhones", "Basic Phones", "Refurbished Phones"] }, 
-          {title: "TABLETS", types: ["iPads", "Andriod Tablets", "Educational Tablets", "Tablet Accessories"] },
-          {title: "MOBILE ACCESSORIES", types: ["Accessory Kits","Adapters","Batteries","Battery Chargers","Bluetooth Headsets","Cables","Car Accessories","Chargers","Earphones & Headsets","MicroSD Cards","Screen Protectors","Selfie Sticks & Tripods","Smart Watches"] },
-          {title: "TOP SMARTPHONES", types: ["iphone 13 pro max","iphone 13 pro","iphone 12 pro max","iphone 12 pro","iPhone 11 Pro Max","Samsung Galaxy S10","iPhone 11","Nokia 7.2","Huawei Y9 S","iPhone XS Max","Infinix S5","Vivo Y6","Oppo A8"] },
-          {title: "MOBILE PHONES", types: ["Samsung","Apple","Huawei","Nokia","Xiaomi","Tecno","Hawuei","Vivo","Oppo"] },
+          {title: "MOBILE PHONES".toLowerCase(), types: ["SmartPhones".toLowerCase(), "Basic Phones".toLowerCase(), "Refurbished Phones".toLowerCase(),] }, 
+          {title: "TABLETS".toLowerCase(), types: ["iPads".toLowerCase(), "Andriod Tablets".toLowerCase(), "Educational Tablets".toLowerCase(), "Tablet Accessories".toLowerCase(),] },
+          {title: "MOBILE ACCESSORIES".toLowerCase(), types: ["Accessory Kits".toLowerCase(),"Adapters".toLowerCase(),"Batteries".toLowerCase(),"Battery Chargers".toLowerCase(),"Bluetooth Headsets".toLowerCase(),"Cables".toLowerCase(),"Car Accessories".toLowerCase(),"Chargers".toLowerCase(),"Earphones & Headsets".toLowerCase(),"MicroSD Cards".toLowerCase(),"Screen Protectors".toLowerCase(),"Selfie Sticks & Tripods".toLowerCase(),"Smart Watches".toLowerCase(),] },
+          {title: "TOP SMARTPHONES".toLowerCase(), types: ["iphone 13 pro max".toLowerCase(),"iphone 13 pro".toLowerCase(),"iphone 12 pro max".toLowerCase(),"iphone 12 pro".toLowerCase(),"iPhone 11 Pro Max".toLowerCase(),"Samsung Galaxy S10".toLowerCase(),"iPhone 11".toLowerCase(),"Nokia 7.2".toLowerCase(),"Huawei Y9 S".toLowerCase(),"iPhone XS Max".toLowerCase(),"Infinix S5".toLowerCase(),"Vivo Y6".toLowerCase(),"Oppo A8".toLowerCase(),] },
+          {title: "MOBILE PHONES".toLowerCase(), types: ["Samsung".toLowerCase(),"Apple".toLowerCase(),"Huawei".toLowerCase(),"Nokia".toLowerCase(),"Xiaomi".toLowerCase(),"Tecno".toLowerCase(),"Hawuei".toLowerCase(),"Vivo".toLowerCase(),"Oppo".toLowerCase(),] },
       ],
   },
 
   {
-      title: "Computing",
+      title: "Computing".toLowerCase(),
       groups: [
-          {title: "COMPUTERS", types: ["Desktops", "Laptops"] },
-          {title: "DATA STORAGE", types: ["External Hard Drives", "USB Flash Drives", "External Solid State"] },
-          {title: "ANTIVIRUS & SECURITY",  types: ["Antivirus",  "Internet Security"] },
-          {title: "PRINTERS",  types: ["Inkjet Printers", "Laser Printers", "Printer Ink & Toner"] },
-          {title: "COMPUTER ACCESSORIES",  types: ["Keyboards & Mice", "Uninterrupted Power Supply", "Memory Cards", "Batteries", "Scanners", "Video Projectors"] },
-          {title: "TOP BRANDS", types: ["HP","Logitech", "Dell", "Lenovo", "Apple", "ASUS", "Huawei", "Microsoft", "Kingston", "Seagate", "Samsung", "Sandisk", "Toshiba", ] },
+          {title: "COMPUTERS".toLowerCase(), types: ["Desktops".toLowerCase(), "Laptops".toLowerCase(),] },
+          {title: "DATA STORAGE".toLowerCase(), types: ["External Hard Drives".toLowerCase(), "USB Flash Drives".toLowerCase(), "External Solid State".toLowerCase(),] },
+          {title: "ANTIVIRUS & SECURITY".toLowerCase(),  types: ["Antivirus".toLowerCase(),  "Internet Security".toLowerCase(),] },
+          {title: "PRINTERS".toLowerCase(),  types: ["Inkjet Printers".toLowerCase(), "Laser Printers".toLowerCase(), "Printer Ink & Toner".toLowerCase(),] },
+          {title: "COMPUTER ACCESSORIES".toLowerCase(),  types: ["Keyboards & Mice".toLowerCase(), "Uninterrupted Power Supply".toLowerCase(), "Memory Cards".toLowerCase(), "Batteries".toLowerCase(), "Scanners".toLowerCase(), "Video Projectors".toLowerCase(),] },
+          {title: "TOP BRANDS".toLowerCase(), types: ["HP".toLowerCase(),"Logitech".toLowerCase(), "Dell".toLowerCase(), "Lenovo".toLowerCase(), "Apple".toLowerCase(), "ASUS".toLowerCase(), "Huawei".toLowerCase(), "Microsoft".toLowerCase(), "Kingston".toLowerCase(), "Seagate".toLowerCase(), "Samsung".toLowerCase(), "Sandisk".toLowerCase(), "Toshiba".toLowerCase(),] },
       ],
   },
 
   {
-      title: "Electronics",
+      title: "Electronics".toLowerCase(),
       groups: [
-          {title: "TELEVISION & VIDEO", types: ["Televisions", "Smart TVs", "LED & LCD TVs", "QLED & OLED TVs", "DVD Players & Recorders"] },
-          {title: "HOME AUDIO", types: ["Home Theatre Systems", "Receivers & Amplifiers", "Sound Bars"] },
-          {title: "CAMERAS & PHOTOS", types: ["Digital", "Cameras", "Projectors", "Video Surveillance", "Camcorders"] },
-          {title: "GENERATORS & PORTABLE POWER", types: ["Generators", "Power Inverters", "Solar & Wind Power", "Stablizers"] },
-          {title: "TOP ELECTRONICS BRANDS", types: ["LG", "Samsung", "Sony", "TCL", "Hisense", "Canon", "DStv"] }
+          {title: "TELEVISION & VIDEO".toLowerCase(), types: ["Televisions".toLowerCase(), "Smart TVs".toLowerCase(), "LED & LCD TVs".toLowerCase(), "QLED & OLED TVs".toLowerCase(), "DVD Players & Recorders".toLowerCase(),] },
+          {title: "HOME AUDIO".toLowerCase(), types: ["Home Theatre Systems".toLowerCase(), "Receivers & Amplifiers".toLowerCase(), "Sound Bars".toLowerCase(),] },
+          {title: "CAMERAS & PHOTOS".toLowerCase(), types: ["Digital".toLowerCase(), "Cameras".toLowerCase(), "Projectors".toLowerCase(), "Video Surveillance".toLowerCase(), "Camcorders".toLowerCase(),] },
+          {title: "GENERATORS & PORTABLE POWER".toLowerCase(), types: ["Generators".toLowerCase(), "Power Inverters".toLowerCase(), "Solar & Wind Power".toLowerCase(), "Stablizers".toLowerCase(),] },
+          {title: "TOP ELECTRONICS BRANDS".toLowerCase(), types: ["LG".toLowerCase(), "Samsung".toLowerCase(), "Sony".toLowerCase(), "TCL".toLowerCase(), "Hisense".toLowerCase(), "Canon".toLowerCase(), "DStv".toLowerCase(),] }
       ],
   },
 
   {
-      title: "Fashion",
+      title: "Fashion".toLowerCase(),
       groups: [
-          {title: "WOMEN'S FASHION", types: ["Clothing", "Shoes", "Accessories", "Jewelry", "Handbags & Wallets", "Underwear & Sleepwear", "Maternity", "Dresses", "Traditional", "Beach & Swimwear", "Flats"] },
-          {title: "KID'S FASHION", types: ["Boy's Fashion", "Girl's Fashion"] },
-          {title: "MEN'S FASHION", types: ["Clothing", "Shoes", "Accessories", "Underwear & Sleepwear", "Traditional & Cultural Wear", "T-Shirts", "Polo Shirts", "Trousers & Chinos", "Sneakers", "Jewelry", "Jerseys"] },
-          {title: "ALL FASHION", types: [] },
-          {title: "WATCHES", types: ["Men's Watches", "Women's Watches"] },
-          {title: "SUNGLASSES", types: ["Men's Sunglasses", "Women's Sunglasses"] },
-          {title: "TOP BRANDS", types: ["Adidas", "Zara", "Nike", "Casio", "Puma", "Defacto", "Citizen"] }
+          {title: "WOMEN'S FASHION".toLowerCase(), types: ["Clothing".toLowerCase(), "Shoes".toLowerCase(), "Accessories".toLowerCase(), "Jewelry".toLowerCase(), "Handbags & Wallets".toLowerCase(), "Underwear & Sleepwear".toLowerCase(), "Maternity".toLowerCase(), "Dresses".toLowerCase(), "Traditional".toLowerCase(), "Beach & Swimwear".toLowerCase(), "Flats".toLowerCase(),] },
+          {title: "KID'S FASHION".toLowerCase(), types: ["Boy's Fashion".toLowerCase(), "Girl's Fashion".toLowerCase(),] },
+          {title: "MEN'S FASHION".toLowerCase(), types: ["Clothing".toLowerCase(), "Shoes".toLowerCase(), "Accessories".toLowerCase(), "Underwear & Sleepwear".toLowerCase(), "Traditional & Cultural Wear".toLowerCase(), "T-Shirts".toLowerCase(), "Polo Shirts".toLowerCase(), "Trousers & Chinos".toLowerCase(), "Sneakers".toLowerCase(), "Jewelry".toLowerCase(), "Jerseys".toLowerCase(),] },
+          {title: "ALL FASHION".toLowerCase(), types: [] },
+          {title: "WATCHES".toLowerCase(), types: ["Men's Watches".toLowerCase(), "Women's Watches".toLowerCase(),] },
+          {title: "SUNGLASSES".toLowerCase(), types: ["Men's Sunglasses".toLowerCase(), "Women's Sunglasses".toLowerCase(),] },
+          {title: "TOP BRANDS".toLowerCase(), types: ["Adidas".toLowerCase(), "Zara".toLowerCase(), "Nike".toLowerCase(), "Casio".toLowerCase(), "Puma".toLowerCase(), "Defacto".toLowerCase(), "Citizen".toLowerCase(),] }
       ],
   },
 
   {
-      title: "Automobiles",
+      title: "Automobiles".toLowerCase(),
       groups: [
-          {title: "CAR CARE", types: ["Cleaning Kits", "Exterior Care", "Interior Care"] },
-          {title: "CAR ELECTRONICS & ACCESSORIES", types: ["Car Electronics", "Car Accessories", "Power & Battery"] },
-          {title: "CAR CARE", types: ["Bulbs", "Accent & Off Road Lighting"] },
-          {title: "EXTERIOR ACCESSORIES", types: ["Covers", "Mirrors", "Bumper Stickers, Decals & Magnets"] },
-          {title: "OILS & FLUIDS", types: ["Brake Fluids", "Greases & Lubricants", "Oils"] },
-          {title: "INTERIOR ACCESSORIES", types: ["Air Freshners", "Consoles & Organizers", "Key Chains", "Floor Mats & Cargo Liners", "Sun Protection", "Seat Covers & Accessories"] },
-          {title: "TYRE & RIMS", types: ["Tyre", "Inflator & Guages"] }
+          {title: "CAR CARE".toLowerCase(), types: ["Cleaning Kits".toLowerCase(), "Exterior Care".toLowerCase(), "Interior Care".toLowerCase(),] },
+          {title: "CAR ELECTRONICS & ACCESSORIES".toLowerCase(), types: ["Car Electronics".toLowerCase(), "Car Accessories".toLowerCase(), "Power & Battery".toLowerCase(),] },
+          {title: "CAR CARE".toLowerCase(), types: ["Bulbs".toLowerCase(), "Accent & Off Road Lighting".toLowerCase(),] },
+          {title: "EXTERIOR ACCESSORIES".toLowerCase(), types: ["Covers".toLowerCase(), "Mirrors".toLowerCase(), "Bumper Stickers, Decals & Magnets".toLowerCase(),] },
+          {title: "OILS & FLUIDS".toLowerCase(), types: ["Brake Fluids".toLowerCase(), "Greases & Lubricants".toLowerCase(), "Oils".toLowerCase(),] },
+          {title: "INTERIOR ACCESSORIES".toLowerCase(), types: ["Air Freshners".toLowerCase(), "Consoles & Organizers".toLowerCase(), "Key Chains".toLowerCase(), "Floor Mats & Cargo Liners".toLowerCase(), "Sun Protection".toLowerCase(), "Seat Covers & Accessories".toLowerCase(),] },
+          {title: "TYRE & RIMS".toLowerCase(), types: ["Tyre".toLowerCase(), "Inflator & Guages".toLowerCase(),] }
       ], 
   },
 
   {
-      title: "Home & office",
+      title: "Home & office".toLowerCase(),
       groups: [
-          {title: "HOME & KITCHEN", types: ["Bath", "Bedding", "Home Decor", "Home Furniture", "Vacuums & Floor Care", "Wall Art", "Cookware", "Bakeware", "Small Appliances", "Cutlery & Knife Accessories"] },
-          {title: "HOME & OFFICE FURNITURE", types: ["Kitchen & Dining", "Lighting", "Stationery", " Storage & Organization"] },
-          {title: "OFFICE PRODUCTS", types: ["Office & School Supplies", "Office Furniture & Lighting", "Packaging Materials"] },
-          {title: "SMALL APPLIANCES", types: ["Ironing & Laundry", "Kettles", "Mixing & Blending", "Microwave Ovens", "Vacuum Cleaners", "Kitchen Bundles"] },
-          {title: "LARGE APPLIANCES", types: ["Air Conditioners", "Cookers", "Washers & Dryers", "Fans", "Freezers", "Refrigerators", "Dishwashers"] }
+          {title: "HOME & KITCHEN".toLowerCase(), types: ["Bath".toLowerCase(), "Bedding".toLowerCase(), "Home Decor".toLowerCase(), "Home Furniture".toLowerCase(), "Vacuums & Floor Care".toLowerCase(), "Wall Art".toLowerCase(), "Cookware".toLowerCase(), "Bakeware".toLowerCase(), "Small Appliances".toLowerCase(), "Cutlery & Knife Accessories".toLowerCase(),] },
+          {title: "HOME & OFFICE FURNITURE".toLowerCase(), types: ["Kitchen & Dining".toLowerCase(), "Lighting".toLowerCase(), "Stationery".toLowerCase(), " Storage & Organization".toLowerCase(),] },
+          {title: "OFFICE PRODUCTS".toLowerCase(), types: ["Office & School Supplies".toLowerCase(), "Office Furniture & Lighting".toLowerCase(), "Packaging Materials".toLowerCase(),] },
+          {title: "SMALL APPLIANCES".toLowerCase(), types: ["Ironing & Laundry".toLowerCase(), "Kettles".toLowerCase(), "Mixing & Blending".toLowerCase(), "Microwave Ovens".toLowerCase(), "Vacuum Cleaners".toLowerCase(), "Kitchen Bundles".toLowerCase(),] },
+          {title: "LARGE APPLIANCES".toLowerCase(), types: ["Air Conditioners".toLowerCase(), "Cookers".toLowerCase(), "Washers & Dryers".toLowerCase(), "Fans".toLowerCase(), "Freezers".toLowerCase(), "Refrigerators".toLowerCase(), "Dishwashers".toLowerCase(),] }
       ],
   },
 
   {
-      title: "Supermarket",
+      title: "Supermarket".toLowerCase(),
       groups: [
-          {title: "CAR CARE", types: ["Grains & Rice", "Pasta", "Noodles", "Breakfast Foods", "Herbs, Spices & Seasoning", "Flours & Meals", "Malt Drinks", "Coffee", "Water", "Cooking Oil", "Juices", "Soft Drinks", "Canned & Packaged Foods", "Candy & Chocolate", "Syrups, Sugars & Sweeteners"] },
-          {title: "BABY PRODUCTS", types: [] },
-          {title: "HOUSEHOLD CLEANING", types: ["Laundry", "Air Fresheners", "Toilet Paper & Wipes", "Bathroom Cleaners", "Dishwashing", "Disinfectant Wipes"] },
-          {title: "BEER, WINE & SPIRITS", types: ["Beers", "Vodka", "Red Wine", "Champagne & Sparkling Wine", "White Wine", "Whiskey", "Liquors"] }
+          {title: "CAR CARE".toLowerCase(), types: ["Grains & Rice".toLowerCase(), "Pasta".toLowerCase(), "Noodles".toLowerCase(), "Breakfast Foods".toLowerCase(), "Herbs, Spices & Seasoning".toLowerCase(), "Flours & Meals".toLowerCase(), "Malt Drinks".toLowerCase(), "Coffee".toLowerCase(), "Water".toLowerCase(), "Cooking Oil".toLowerCase(), "Juices".toLowerCase(), "Soft Drinks".toLowerCase(), "Canned & Packaged Foods".toLowerCase(), "Candy & Chocolate".toLowerCase(), "Syrups, Sugars & Sweeteners".toLowerCase(),] },
+          {title: "BABY PRODUCTS".toLowerCase(), types: [] },
+          {title: "HOUSEHOLD CLEANING".toLowerCase(), types: ["Laundry".toLowerCase(), "Air Fresheners".toLowerCase(), "Toilet Paper & Wipes".toLowerCase(), "Bathroom Cleaners".toLowerCase(), "Dishwashing".toLowerCase(), "Disinfectant Wipes".toLowerCase(),] },
+          {title: "BEER, WINE & SPIRITS".toLowerCase(), types: ["Beers".toLowerCase(), "Vodka".toLowerCase(), "Red Wine".toLowerCase(), "Champagne & Sparkling Wine".toLowerCase(), "White Wine".toLowerCase(), "Whiskey".toLowerCase(), "Liquors".toLowerCase(),] }
       ],
   },
 
   {
-      title: "Baby Products",
+      title: "Baby Products".toLowerCase(),
       groups: [
-          {title: "APPAREL & ACCESSORIES", types: ["Baby Boys", "Baby Girls"] },
-          {title: "DIAPERING", types: ["Disposable Diapers", "Diaper Bags", "Wipes & Holders"] },
-          {title: "BABY & TODDLER TOYS", types: ["Activity Play Centers", "Music & Sound", "Bath Toys"] },
-          {title: "BATHING & SKIN CARE", types: ["Washcloths & Towels", "Grooming & Healthcare Kits", "Skin Care", "Bathing Tubs & Seats", "Bathroom Safety"] },
-          {title: "FEEDING", types: ["Bibs & Burp Cloths", "Breastfeeding", "Bottle-Feeding", "Pacifiers & Accessories", "Food Storage", "Highchairs & Booster Seats", "Solid Feeding"] },
-          {title: "GEAR", types: ["Backpacks & Carriers", "Swings, Jumpers & Bouncers", "Walkers"] }
+          {title: "APPAREL & ACCESSORIES".toLowerCase(), types: ["Baby Boys".toLowerCase(), "Baby Girls".toLowerCase(),] },
+          {title: "DIAPERING".toLowerCase(), types: ["Disposable Diapers".toLowerCase(), "Diaper Bags".toLowerCase(), "Wipes & Holders".toLowerCase(),] },
+          {title: "BABY & TODDLER TOYS".toLowerCase(), types: ["Activity Play Centers".toLowerCase(), "Music & Sound".toLowerCase(), "Bath Toys".toLowerCase(),] },
+          {title: "BATHING & SKIN CARE".toLowerCase(), types: ["Washcloths & Towels".toLowerCase(), "Grooming & Healthcare Kits".toLowerCase(), "Skin Care".toLowerCase(), "Bathing Tubs & Seats".toLowerCase(), "Bathroom Safety".toLowerCase(),] },
+          {title: "FEEDING".toLowerCase(), types: ["Bibs & Burp Cloths".toLowerCase(), "Breastfeeding".toLowerCase(), "Bottle-Feeding".toLowerCase(), "Pacifiers & Accessories".toLowerCase(), "Food Storage".toLowerCase(), "Highchairs & Booster Seats".toLowerCase(), "Solid Feeding".toLowerCase(),] },
+          {title: "GEAR".toLowerCase(), types: ["Backpacks & Carriers".toLowerCase(), "Swings, Jumpers & Bouncers".toLowerCase(), "Walkers".toLowerCase(),] }
       ],
   },
 
   {
-      title: "Health & Beauty",
+      title: "Health & Beauty".toLowerCase(),
       groups: [
-          {title: "MAKE UP", types: ["Concealers & Color Correctors", "Foundation", "Powder", "Lip Gloss", "Lip Liner", "Lipstick", "Eyeliner & Kajal", "Eyeshadow", "Mascara"] },
-          {title: "FRAGRANCES", types: ["Women's", "Men's"] },
-          {title: "HAIR CARE", types: ["Hair & Scalp Care", "Hair Accessories", "Hair Cutting Tools", "Shampoo & Conditioner", "Wigs & Accessories"] },
-          {title: "PERSONAL CARE", types: ["Feminine Care", "Contraceptives & Lubricants", "Body"] },
-          {title: "ORAL CARE", types: ["Dental Care kits", "Dental Floss & Picks", "Teeth Whitening", "Toothbrushes"] },
-          {title: "HEALTH CARE", types: ["Face Protection", "Thermometers", "Hand Sanitizers", "Lab, Safety & Work Gloves"] }
+          {title: "MAKE UP".toLowerCase(), types: ["Concealers & Color Correctors".toLowerCase(), "Foundation".toLowerCase(), "Powder".toLowerCase(), "Lip Gloss".toLowerCase(), "Lip Liner".toLowerCase(), "Lipstick".toLowerCase(), "Eyeliner & Kajal".toLowerCase(), "Eyeshadow".toLowerCase(), "Mascara".toLowerCase(),] },
+          {title: "FRAGRANCES".toLowerCase(), types: ["Women's".toLowerCase(), "Men's".toLowerCase(),] },
+          {title: "HAIR CARE".toLowerCase(), types: ["Hair & Scalp Care".toLowerCase(), "Hair Accessories".toLowerCase(), "Hair Cutting Tools".toLowerCase(), "Shampoo & Conditioner".toLowerCase(), "Wigs & Accessories".toLowerCase(),] },
+          {title: "PERSONAL CARE".toLowerCase(), types: ["Feminine Care".toLowerCase(), "Contraceptives & Lubricants".toLowerCase(), "Body".toLowerCase(),] },
+          {title: "ORAL CARE".toLowerCase(), types: ["Dental Care kits".toLowerCase(), "Dental Floss & Picks".toLowerCase(), "Teeth Whitening".toLowerCase(), "Toothbrushes".toLowerCase(),] },
+          {title: "HEALTH CARE".toLowerCase(), types: ["Face Protection".toLowerCase(), "Thermometers".toLowerCase(), "Hand Sanitizers".toLowerCase(), "Lab, Safety & Work Gloves".toLowerCase(),] }
       ],
   },
 
   {
-      title: "Sporting goods",
+      title: "Sporting goods".toLowerCase(),
       groups: [
-          {title: "CARDIO TRAINING", types: ["Exercise Bikes", "Treadmills", "Elliptical Trainers"] },
-          {title: "STRENGTH TRAINING EQUIPMENT", types: ["Core & Abdominal Trainers", "Dumbbells", "Bars"] },
-          {title: "ACCESSORIES", types: ["Exercise Bands", "Exercise Mats", "Jump Ropes", "Sports Clothing"] },
-          {title: "TEAM SPORTS", types: ["Basketball", "Team Sport Accessories", "Tennis & Racquet Sports", "Swimming"] },
-          {title: "OUTDOOR & ADVENTURE", types: ["Cycling", "Running"] }
+          {title: "CARDIO TRAINING".toLowerCase(), types: ["Exercise Bikes".toLowerCase(), "Treadmills".toLowerCase(), "Elliptical Trainers".toLowerCase(),] },
+          {title: "STRENGTH TRAINING EQUIPMENT".toLowerCase(), types: ["Core & Abdominal Trainers".toLowerCase(), "Dumbbells".toLowerCase(), "Bars".toLowerCase(),] },
+          {title: "ACCESSORIES".toLowerCase(), types: ["Exercise Bands".toLowerCase(), "Exercise Mats".toLowerCase(), "Jump Ropes".toLowerCase(), "Sports Clothing".toLowerCase(),] },
+          {title: "TEAM SPORTS".toLowerCase(), types: ["Basketball".toLowerCase(), "Team Sport Accessories".toLowerCase(), "Tennis & Racquet Sports".toLowerCase(), "Swimming".toLowerCase(),] },
+          {title: "OUTDOOR & ADVENTURE".toLowerCase(), types: ["Cycling".toLowerCase(), "Running".toLowerCase(),] }
       ],
   },
 
   {
-      title: "Other Cateories",
+      title: "Other Cateories".toLowerCase(),
       groups: [
-          {title: "TOYS & GAMES", types: ["Games", "Dress Up & Pretend Play", "Sports & Outdoor Play", "Top Toys & Games"] },
-          {title: "MISCELLANEOUS", types: [] },
-          {title: "BOOKS, MOVIES AND MUSIC", types: [] },
-          {title: "MUSICAL INSTRUMENTS", types: [] },
-          {title: "PET SUPPLIES", types: [] },
-          {title: "ESHOP GLOBAL", types: [] },
-          {title: "OFFICIAL STORES", types: ["Michelin", "Nestle", "Xiaomi", "Huawei", "L'Oreal", "MAC", "Apple", "Intel", "Reckitt Benckiser", "Binatone", "Nexus"] },
-          {title: "GROCERY", types: ["Food Cupboards", "Baby Products", "Plastic & Paper Products", "Drinks", "Hygiene", "Household Cleaning", "Beer, Wine & Spirits"] },
-          {title: "GARDEN & OUTDOORS", types: [] },
-          {title: "INDUSTRIAL & SCIENTIFIC", types: [] },
-          {title: "SERVICES", types: [] },
-          {title: "LIVESTOCK", types: [] },
+          {title: "TOYS & GAMES".toLowerCase(), types: ["Games".toLowerCase(), "Dress Up & Pretend Play".toLowerCase(), "Sports & Outdoor Play".toLowerCase(), "Top Toys & Games".toLowerCase(),] },
+          {title: "MISCELLANEOUS".toLowerCase(), types: [] },
+          {title: "BOOKS, MOVIES AND MUSIC".toLowerCase(), types: [] },
+          {title: "MUSICAL INSTRUMENTS".toLowerCase(), types: [] },
+          {title: "PET SUPPLIES".toLowerCase(), types: [] },
+          {title: "ESHOP GLOBAL".toLowerCase(), types: [] },
+          {title: "OFFICIAL STORES".toLowerCase(), types: ["Michelin".toLowerCase(), "Nestle".toLowerCase(), "Xiaomi".toLowerCase(), "Huawei".toLowerCase(), "L'Oreal".toLowerCase(), "MAC".toLowerCase(), "Apple".toLowerCase(), "Intel".toLowerCase(), "Reckitt Benckiser".toLowerCase(), "Binatone".toLowerCase(), "Nexus".toLowerCase(),] },
+          {title: "GROCERY".toLowerCase(), types: ["Food Cupboards".toLowerCase(), "Baby Products".toLowerCase(), "Plastic & Paper Products".toLowerCase(), "Drinks".toLowerCase(), "Hygiene".toLowerCase(), "Household Cleaning".toLowerCase(), "Beer, Wine & Spirits".toLowerCase(),] },
+          {title: "GARDEN & OUTDOORS".toLowerCase(), types: [] },
+          {title: "INDUSTRIAL & SCIENTIFIC".toLowerCase(), types: [] },
+          {title: "SERVICES".toLowerCase(), types: [] },
+          {title: "LIVESTOCK".toLowerCase(), types: [] },
       ],
   },
 ]
@@ -175,19 +175,17 @@ const ImageUploadTest = props => {
 
   const categoriesRef = firestore().collection('categories');
 
-  // const handleSubmit = async () => {
-  //   for (let i = 0; i < flyoutMenu.length; i++) {
-  //     await categoriesRef.doc(`${Date.now()+i}`).set(flyoutMenu[i])
-  //     .then(()=>{
-  //       console.log(flyoutMenu[i].title, 'category added')
-  //     })
-  //     .catch((error)=> {
-  //       console.log(error);
-  //     })
-  //   }
-  //   // const path = require('../../assets/images/hoodie/2.jpg');
-  //   // console.log(NewPath);
-  // };
+  const handleSubmit = async () => {
+    // for (let i = 0; i < flyoutMenu.length; i++) {
+    //   await categoriesRef.doc(`${Date.now()+i}`).set(flyoutMenu[i])
+    //   .then(()=>{
+    //     console.log(flyoutMenu[i].title, 'category added')
+    //   })
+    //   .catch((error)=> {
+    //     console.log(error);
+    //   })
+    // }
+  };
 
   // console.log(stateRegion);
 

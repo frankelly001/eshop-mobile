@@ -8,7 +8,7 @@ import AnimatedLottieView from 'lottie-react-native';
 import toast from './toast';
 
 const AppToastView = ({message, type}) => {
-  console.log(type, 'check');
+  // console.log(type, 'check');
 
   return (
     <View style={styles.container}>

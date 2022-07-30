@@ -39,14 +39,25 @@ import AppToastView from './app/components/AppToast/AppToastView';
 import Toast from 'react-native-toast-message';
 import {showToast} from './app/components/AppToast/showToast';
 import toast from './app/components/AppToast/toast';
+import {useCheckNetworkStatus} from './app/hooks/useCheckNetworkStatus';
 
 const App = () => {
-  const [products, setProducts] = useState([]);
-  const [categories, setCategories] = useState([]);
+  const [products, setProducts] = useState({
+    loading: true,
+    data: [],
+    error: null,
+  });
+  const [categories, setCategories] = useState({
+    loading: true,
+    data: [],
+    error: null,
+  });
   const [ordered, setOrdered] = useState([]);
   const [recentQueries, setRecentQueries] = useState([]);
   const [user, setUser] = useState();
   const [initializing, setInitializing] = useState(false);
+
+  useCheckNetworkStatus();
 
   const {orderedItems, savedItems, actionTypes, dispatchAction} =
     useCartState(user);
@@ -89,7 +100,6 @@ const App = () => {
 
   // console.log(orderedItems, savedItems, 'kkkkkkkkkkllopp');
 
-  const netinfo = useNetInfo();
   // console.log(netinfo);
 
   const onAuthStateChanged = account => {
@@ -176,39 +186,56 @@ const App = () => {
   // useEffect(() => {
   //   const {isConnected, isInternetReachable} = netinfo;
   //   if (isConnected && isInternetReachable) {
+  //     showToast(toast.types.SUCCESS, 'Connected');
   //   } else {
-  //     getUserFromAsynStorage();
+  //     showToast(toast.types.ERROR, "There's no Internet Connection");
   //   }
   // }, [netinfo]);
 
   const fetchProducts = () => {
+    setProducts({...products, loading: true});
+
     getProducts()
       .then(snapshot => {
-        const allData = [];
+        const data = [];
         snapshot.forEach(el => {
-          allData.push({id: el.id, ...el.data()});
+          data.push({id: el.id, ...el.data()});
         });
-        setProducts(allData);
+        setTimeout(() => {
+          setProducts({...products, data, loading: false});
+        }, 2000);
       })
       .catch(error => {
-        console.log(error.message, 'kkkkkkkkkkk');
+        console.log(error, 'fetchProducts Error');
+        setProducts({...products, error: error.message, loading: false});
+        showToast(toast.types.ERROR, error.message);
       });
+  };
+
+  const retryFetch = () => {
+    if (!products.data.length) fetchProducts();
+    if (!categories.data.length) fetchCategories();
   };
 
   console.log('App.js rendering');
 
   const fetchCategories = () => {
+    setCategories({...categories, loading: true});
     getCategories()
       .then(snapshot => {
-        const allCat = [];
+        const data = [];
         snapshot.forEach(el => {
           // console.log(el.data());
-          allCat.push(el.data());
+          data.push(el.data());
         });
-        setCategories(allCat);
+        setTimeout(() => {
+          setCategories({...categories, data, loading: false});
+        }, 2000);
       })
       .catch(error => {
-        console.log(error);
+        console.log(error, 'fetchCategories Error');
+        setCategories({...categories, error: error.message, loading: false});
+        showToast(toast.types.ERROR, error.message);
       });
   };
 
@@ -229,7 +256,9 @@ const App = () => {
   useEffect(() => {
     const orderedID = orderedItems.map(el => el.productId);
 
-    const filteredProduts = products.filter(el => orderedID.includes(el.id));
+    const filteredProduts = products.data.filter(el =>
+      orderedID.includes(el.id),
+    );
     const orderedOroducts = filteredProduts.map(el => {
       return {
         ...el,
@@ -238,7 +267,7 @@ const App = () => {
       };
     });
     setOrdered(orderedOroducts);
-  }, [orderedItems, products]);
+  }, [orderedItems, products?.data]);
 
   const orderedNum = ordered
     .map(el => el.quantity)
@@ -266,8 +295,10 @@ const App = () => {
       <StatusBar backgroundColor={colors.white} barStyle={'dark-content'} />
       <AuthContext.Provider
         value={{
-          products,
-          categories,
+          products: products.data,
+          categories: categories.data,
+          loading: {products: products.loading, categories: categories.loading},
+          errors: {products: products.error, categories: categories.error},
           ordered,
           onLike: handleSave,
           orderedNum,
@@ -284,6 +315,7 @@ const App = () => {
           mutateCart,
           removeFromCart,
           onAuthStateChanged,
+          retryFetch,
         }}>
         <NavigationContainer ref={navigationRef} theme={navigationTheme}>
           <Host>

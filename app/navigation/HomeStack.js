@@ -57,7 +57,7 @@ const HomeStack = props => {
         name={routes.SEARCHED}
         component={SearchResultScreen}
         options={({route}) => ({
-          title: route.params,
+          title: route.params.query,
         })}
       />
 
