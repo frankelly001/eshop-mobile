@@ -73,6 +73,7 @@ const bigCardstyles = StyleSheet.create({
     borderRadius: 20,
     margin: 2,
     backgroundColor: colors.white,
+    overflow: 'hidden',
 
     shadowColor: '#000',
     shadowOffset: {
@@ -104,6 +105,7 @@ const bigCardstyles = StyleSheet.create({
   title: {
     fontSize: fontSz(13),
     // fontWeight: '700',
+    textTransform: 'capitalize',
     fontFamily: fonts.semi_bold,
   },
 

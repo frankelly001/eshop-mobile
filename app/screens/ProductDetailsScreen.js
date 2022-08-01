@@ -200,28 +200,30 @@ const ProductDetailsScreen = ({route}) => {
           </View>
         </View>
       )}
-      <View>
-        <AppText style={[styles.headerLabel, styles.relatedHeader]}>
-          Related Product
-        </AppText>
-        <FlatList
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          data={productCategogies}
-          style={{marginBottom: 20}}
-          contentContainerStyle={{padding: 5, paddingTop: 0}}
-          key={product => product.id.toString()}
-          renderItem={({item}) => {
-            return (
-              <ProductCard
-                product={item}
-                onPress={() => checkRelatedItem(item)}
-                small
-              />
-            );
-          }}
-        />
-      </View>
+      {productCategogies.length > 0 && (
+        <View>
+          <AppText style={[styles.headerLabel, styles.relatedHeader]}>
+            Related Product
+          </AppText>
+          <FlatList
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            data={productCategogies}
+            style={{marginBottom: 20}}
+            contentContainerStyle={{padding: 5, paddingTop: 0}}
+            key={product => product.id.toString()}
+            renderItem={({item}) => {
+              return (
+                <ProductCard
+                  product={item}
+                  onPress={() => checkRelatedItem(item)}
+                  small
+                />
+              );
+            }}
+          />
+        </View>
+      )}
     </Screen>
   );
 };
@@ -230,7 +232,7 @@ const styles = StyleSheet.create({
   selectionContainer: {
     backgroundColor: colors.grey_dark_2_tranparent,
     position: 'absolute',
-    height: 0.05 * height,
+    height: hp(0.05 * height),
     bottom: 0,
     flexDirection: 'row',
     justifyContent: 'center',
@@ -242,8 +244,9 @@ const styles = StyleSheet.create({
   },
   selectImage: {
     width: wp(40),
-    height: '100%',
-    // borderRadius: 3,
+    height: wp(40),
+    borderRadius: 5,
+    overflow: 'hidden',
     margin: 5,
     backgroundColor: '#fff',
   },
@@ -271,6 +274,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: fontSz(20),
     fontFamily: fonts.bold,
+    textTransform: 'capitalize',
     // fontWeight: '700',
     // backgroundColor: 'yellow',
   },

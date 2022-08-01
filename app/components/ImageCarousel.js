@@ -1,5 +1,18 @@
 import React, {useState, useRef, useEffect} from 'react';
-import {StyleSheet, View, ScrollView, Dimensions, Image} from 'react-native';
+import {
+  StyleSheet,
+  View,
+  ScrollView,
+  Dimensions,
+  Image,
+  TouchableOpacity,
+} from 'react-native';
+import colors from '../config/colors';
+import fonts from '../config/fonts';
+import {fontSz, wp} from '../config/responsiveSize';
+import AppText from './AppText';
+import navigation from '../navigation/rootNavigation';
+import routes from '../navigation/routes';
 // import BackgroundCarousel from './BackgroundCarousel';
 
 // const images = [
@@ -23,7 +36,7 @@ const images = [
 
 const {width, height} = Dimensions.get('screen');
 
-const ImageCarousel = () => {
+const ImageCarousel = ({categories}) => {
   const [selectedIndex, setSelectedIndex] = useState(0);
 
   const scrollRef = useRef(null);
@@ -52,35 +65,88 @@ const ImageCarousel = () => {
   };
 
   return (
-    <View style={styles.container}>
+    <>
+      <View style={styles.container}>
+        <ScrollView
+          horizontal
+          pagingEnabled
+          onMomentumScrollEnd={uptSelectedIndex}
+          // onScroll={uptSelectedIndex}
+          ref={scrollRef}>
+          {images.map(img => (
+            // <Image key={img} source={{uri: img}} style={styles.carouselImage} />
+            <Image
+              resizeMode="stretch"
+              key={img}
+              source={img}
+              style={styles.carouselImage}
+            />
+          ))}
+        </ScrollView>
+        <View style={styles.circleContainer}>
+          {images.map((img, i) => (
+            <View
+              key={img}
+              style={[
+                styles.whiteCircle,
+                {opacity: i === selectedIndex ? 0.5 : 1},
+              ]}
+            />
+          ))}
+        </View>
+      </View>
       <ScrollView
         horizontal
-        pagingEnabled
-        onMomentumScrollEnd={uptSelectedIndex}
-        // onScroll={uptSelectedIndex}
-        ref={scrollRef}>
-        {images.map(img => (
-          // <Image key={img} source={{uri: img}} style={styles.carouselImage} />
-          <Image
-            resizeMode="stretch"
-            key={img}
-            source={img}
-            style={styles.carouselImage}
-          />
+        showsHorizontalScrollIndicator={false}
+        contentContainerStyle={{
+          backgroundColor: colors.grey_light,
+          paddingHorizontal: 5,
+        }}>
+        {categories.map(category => (
+          <TouchableOpacity
+            onPress={() =>
+              navigation.navigate(routes.SEARCHED, {
+                query: category,
+                searchType: 'categoryFieldSearch',
+                searchField: 'CATEGORY',
+              })
+            }
+            key={category}
+            style={{
+              width: wp(60),
+              height: wp(60),
+              borderRadius: 5,
+              margin: 5,
+              overflow: 'hidden',
+            }}>
+            <Image style={{width: '100%', height: '100%'}} source={images[2]} />
+            <View
+              style={{
+                position: 'absolute',
+                top: 0,
+                bottom: 0,
+                left: 0,
+                right: 0,
+                alignItems: 'center',
+                justifyContent: 'center',
+                backgroundColor: '#35323477',
+                paddingHorizontal: 1.5,
+              }}>
+              <AppText
+                style={{
+                  fontSize: fontSz(8),
+                  color: colors.white,
+                  fontFamily: fonts.extra_bold,
+                  textAlign: 'center',
+                  textTransform: 'capitalize',
+                }}>
+                {category}
+              </AppText>
+            </View>
+          </TouchableOpacity>
         ))}
       </ScrollView>
-      <View style={styles.circleContainer}>
-        {images.map((img, i) => (
-          <View
-            key={img}
-            style={[
-              styles.whiteCircle,
-              {opacity: i === selectedIndex ? 0.5 : 1},
-            ]}
-          />
-        ))}
-      </View>
-    </View>
+    </>
   );
 };
 

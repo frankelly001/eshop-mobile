@@ -5,7 +5,7 @@ import HomeScreen from '../screens/HomeScreen';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import ProductDetailsScreen from '../screens/ProductDetailsScreen';
 import {fontSz} from '../config/responsiveSize';
-import Header from '../components/Header';
+import Header from './Header';
 
 const Stack = createNativeStackNavigator();
 

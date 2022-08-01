@@ -1,7 +1,7 @@
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import React from 'react';
 import {StyleSheet, View} from 'react-native';
-import Header from '../components/Header';
+import Header from './Header';
 import HelpScreen from '../screens/HelpScreen';
 import routes from './routes';
 

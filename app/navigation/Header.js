@@ -12,13 +12,13 @@ import NoficationActiveIcon from '../assets/icons/notification_active.svg';
 import CartIcon from '../assets/icons/eShopCart.svg';
 import AuthContext from '../auth/AuthContext';
 import colors from '../config/colors';
-import routes from '../navigation/routes';
+import routes from './routes';
 import {wp, fontSz, hp} from '../config/responsiveSize';
-import AppText from './AppText';
+import AppText from '../components/AppText';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Octicons from 'react-native-vector-icons/Octicons';
 import Animated from 'react-native-reanimated';
-import AppTextInput from './AppTextInput';
+import AppTextInput from '../components/AppTextInput';
 import useAnimatedHeaderStyles from '../hooks/useAnimatedHeaderStyles';
 import fonts from '../config/fonts';
 import {authStorageKeys, storeUserData} from '../api/storage/authStorage';
@@ -26,12 +26,9 @@ import queryApi from '../api/setup/queryApi/queryApi';
 
 const Header = ({navigation, options, route}) => {
   const {orderedNum, recentQueries, setRecentQueries} = useContext(AuthContext);
-  const [disableBackBtn, setDisableBackBtn] = useState(false);
-  const [disableSearchBtn, setDisableSearchBtn] = useState(false);
-  const [disableNotifyBtn, setDisableNotifyBtn] = useState(false);
-  const [disableCartBtn, setDisableCartBtn] = useState(false);
-  const [disableHeaderRight, setDisableHeaderRight] = useState(false);
-  const [backIcon, setBackIcon] = useState('arrow-left');
+  // const [disableBackBtn, setDisableBackBtn] = useState(true);
+  // const [disableHeaderRight, setDisableHeaderRight] = useState(true);
+  // const [backIcon, setBackIcon] = useState('arrow-left');
   const [searchToggle, setSearchToggle] = useState(false);
   const [query, setQuery] = useState('');
 
@@ -46,33 +43,21 @@ const Header = ({navigation, options, route}) => {
     seachBtnContainerAnimatedStyle,
   } = useAnimatedHeaderStyles(searchToggle, inputRef);
 
-  useEffect(() => {
-    const backBtnConditions = [
-      routes.HOME,
-      routes.CATEGORIES,
-      routes.FEED,
-      routes.ACCOUNT,
-      routes.HELP,
-    ];
-
-    const headerRightConditions = [
-      routes.ACCOUNT,
-      routes.SIGNUP,
-      routes.LOGIN,
-      routes.HELP,
-      routes.CART,
-      routes.CHECKOUT,
-    ];
-
-    if (backBtnConditions.includes(route.name)) setDisableBackBtn(true);
-    if (headerRightConditions.includes(route.name)) {
-      setDisableHeaderRight(true);
-    }
-
-    if (route.name === routes.CART) {
-      setBackIcon('close');
-    }
-  }, [route.name]);
+  const headerRightConditions = [
+    routes.ACCOUNT,
+    routes.SIGNUP,
+    routes.LOGIN,
+    routes.HELP,
+    routes.CART,
+    routes.CHECKOUT,
+  ];
+  const backBtnConditions = [
+    routes.HOME,
+    routes.CATEGORIES,
+    routes.FEED,
+    routes.ACCOUNT,
+    routes.HELP,
+  ];
 
   // console.log(recentQueries, 'recent');
 
@@ -110,7 +95,7 @@ const Header = ({navigation, options, route}) => {
               paddingRight: 20,
             },
           ]}>
-          {(!disableBackBtn || searchToggle) && (
+          {(!backBtnConditions.includes(route.name) || searchToggle) && (
             <TouchableHighlight
               // hitSlop={{top: 20, bottom: 20, right: 20, left: 20}}
               onPress={() =>
@@ -123,7 +108,11 @@ const Header = ({navigation, options, route}) => {
               <MaterialCommunityIcons
                 size={size}
                 color={colors.black}
-                name={backIcon}
+                name={
+                  [routes.CART, routes.CHECKOUT].includes(route.name)
+                    ? 'close'
+                    : 'arrow-left'
+                }
               />
             </TouchableHighlight>
           )}
@@ -150,39 +139,35 @@ const Header = ({navigation, options, route}) => {
           />
         </Animated.View>
 
-        <Animated.View style={[headerRightAnimatedStyle]}>
-          {!disableHeaderRight && (
+        {!headerRightConditions.includes(route.name) && (
+          <Animated.View style={[headerRightAnimatedStyle]}>
             <View style={styles.headerRight}>
-              {!disableSearchBtn && (
-                <TouchableOpacity onPress={() => handleSearch()}>
-                  <Animated.View style={seachBtnContainerAnimatedStyle}>
-                    <SearchIcon
-                      width={size}
-                      stroke={searchToggle ? colors.white : colors.black}
-                    />
-                  </Animated.View>
-                </TouchableOpacity>
-              )}
-              {!disableNotifyBtn && (
-                <TouchableOpacity>
-                  <NoficationActiveIcon marginHorizontal={size} width={size} />
-                </TouchableOpacity>
-              )}
-              {!disableCartBtn && (
-                <TouchableOpacity
-                  // style={{backgroundColor: 'yellow'}}
-                  onPress={() => navigation.navigate(routes.CART)}>
-                  <CartIcon width={size}></CartIcon>
-                  {orderedNum > 0 && (
-                    <Text numberOfLines={1} style={styles.cartCount}>
-                      {orderedNum}
-                    </Text>
-                  )}
-                </TouchableOpacity>
-              )}
+              <TouchableOpacity onPress={() => handleSearch()}>
+                <Animated.View style={seachBtnContainerAnimatedStyle}>
+                  <SearchIcon
+                    width={size}
+                    stroke={searchToggle ? colors.white : colors.black}
+                  />
+                </Animated.View>
+              </TouchableOpacity>
+
+              <TouchableOpacity>
+                <NoficationActiveIcon marginHorizontal={size} width={size} />
+              </TouchableOpacity>
+
+              <TouchableOpacity
+                // style={{backgroundColor: 'yellow'}}
+                onPress={() => navigation.navigate(routes.CART)}>
+                <CartIcon width={size}></CartIcon>
+                {orderedNum > 0 && (
+                  <Text numberOfLines={1} style={styles.cartCount}>
+                    {orderedNum}
+                  </Text>
+                )}
+              </TouchableOpacity>
             </View>
-          )}
-        </Animated.View>
+          </Animated.View>
+        )}
       </View>
       <Animated.View style={recentSearchContainerAnimatedStyle}>
         <AppText

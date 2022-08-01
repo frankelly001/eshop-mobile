@@ -13,13 +13,13 @@ import {formatData} from '../utilities/formatData';
 import RetryView from '../components/RetryView';
 
 const HomeScreen = ({navigation}) => {
-  const {products, loading, errors} = useContext(AuthContext);
+  const {products, categories, loading, errors} = useContext(AuthContext);
 
   const numOfCols = 2;
   // console.log(newProducts, 'new..................');
   // console.log(errors.products, 'products error');
 
-  if (loading.products) return <HomeLoader />;
+  if (loading.products || loading.categories) return <HomeLoader />;
 
   return (
     <>
@@ -27,7 +27,9 @@ const HomeScreen = ({navigation}) => {
         <SectionList
           contentContainerStyle={{paddingBottom: 60}}
           showsVerticalScrollIndicator={false}
-          ListHeaderComponent={() => <ImageCarousel />}
+          ListHeaderComponent={() => (
+            <ImageCarousel categories={[...categories.map(el => el.title)]} />
+          )}
           renderSectionHeader={() => (
             <View
               style={{

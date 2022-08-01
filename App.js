@@ -131,8 +131,8 @@ const App = () => {
             id: user.id,
             ...documentSnapshot._data,
           };
-          setUser(newUserData);
           storeUserData(authStorageKeys.USER_DATA, newUserData);
+          if (!user.verified && newUserData.verified) setUser(newUserData);
         }
       });
     return () => subscriber();

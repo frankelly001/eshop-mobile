@@ -5,7 +5,7 @@ import AppNavigator from './AppNavigator';
 import routes from './routes';
 import CartScreen from '../screens/CartScreen';
 import CheckoutScreen from '../screens/CheckoutScreen';
-import Header from '../components/Header';
+import Header from './Header';
 import AuthContext from '../auth/AuthContext';
 import SearchResultScreen from '../screens/SearchResultScreen';
 import SignupScreen from '../screens/SignupScreen';
@@ -51,6 +51,7 @@ const HomeStack = props => {
         component={CheckoutScreen}
         options={{
           title: 'Checkout',
+          animation: 'slide_from_bottom',
         }}
       />
       <Stack.Screen

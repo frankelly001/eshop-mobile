@@ -1,8 +1,8 @@
 import React from 'react';
 import {Dimensions, ScrollView, StyleSheet} from 'react-native';
+import ColumnList from '../ColumnList';
 import ProductCardSampleLoader from './ProductCardSampleLoader';
 
-const {width, height} = Dimensions.get('screen');
 const productsSample = [
   {product: 'sample1'},
   {product: 'sample2'},
@@ -19,24 +19,16 @@ const productsSample = [
 ];
 const ProductsLoader = () => {
   return (
-    <ScrollView
-      showsVerticalScrollIndicator={false}
-      contentContainerStyle={styles.container}>
-      {productsSample.map(sample => (
-        <ProductCardSampleLoader key={sample.product} />
-      ))}
+    <ScrollView showsVerticalScrollIndicator={false}>
+      <ColumnList
+        data={productsSample}
+        contentContainerStyle={{paddingHorizontal: 3}}
+        keyExtractor={item => item.product}
+        numOfColumns={2}
+        renderItem={item => <ProductCardSampleLoader key={item.product} />}
+      />
     </ScrollView>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    paddingHorizontal: 10,
-    paddingVertical: 3,
-    justifyContent: 'space-between',
-  },
-});
 
 export default ProductsLoader;

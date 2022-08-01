@@ -16,8 +16,6 @@ import AccountInActiveIcon from '../assets/icons/account_inactive.svg';
 import AccountActiveIcon from '../assets/icons/account_active.svg';
 import HelpInActiveIcon from '../assets/icons/help_inactive.svg';
 import HelpActiveIcon from '../assets/icons/help_active.svg';
-import BottomTabIcon from './BottomTabIcon';
-import BottonTabLabel from './BottomTabLabel';
 import colors from '../config/colors';
 import TabButton from './TabButton';
 
@@ -38,16 +36,6 @@ const AppNavigator = props => {
           right: 8,
           left: 8,
           borderRadius: 30,
-
-          shadowColor: colors.white,
-          shadowOffset: {
-            width: 0,
-            height: 6,
-          },
-          shadowOpacity: 0.37,
-          shadowRadius: 7.49,
-
-          elevation: 12,
         },
         // tabBarButton: props => <TabButton {...props} />,
       }}>

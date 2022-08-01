@@ -1,4 +1,4 @@
-import {StyleSheet, StatusBar} from 'react-native';
+import {StyleSheet} from 'react-native';
 import colors from '../../config/colors';
 import fonts from '../../config/fonts';
 import {fontSz} from '../../config/responsiveSize';
@@ -51,6 +51,7 @@ const SummaryStyles = StyleSheet.create({
   title: {
     fontSize: fontSz(12.5),
     fontFamily: fonts.bold,
+    textTransform: 'capitalize',
   },
   subTitle: {
     fontSize: fontSz(11),

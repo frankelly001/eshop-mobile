@@ -10,16 +10,16 @@ import ProductsLoader from '../components/SkeletonLoader/ProductsLoader';
 import collectionRefs from '../api/setup/collectionRefs';
 import queryApi from '../api/setup/queryApi/queryApi';
 import {useApi} from '../hooks/useApi';
+import {showToast} from '../components/AppToast/showToast';
 
 function getUniqueListBy(arr, key) {
   return [...new Map(arr.map(item => [item[key], item])).values()];
 }
 
 const SearchResultScreen = ({navigation, route}) => {
-  const {products} = useContext(AuthContext);
   const [searchedProduct, setSearchedProduct] = useState([]);
 
-  const {loading, request, error} = useApi(queryApi[route.params.searchType]);
+  const {loading, request} = useApi(queryApi[route.params.searchType]);
 
   useEffect(() => {
     request(
@@ -28,6 +28,9 @@ const SearchResultScreen = ({navigation, route}) => {
     ).then(data => {
       setSearchedProduct(data);
     });
+
+    return () => {};
+
     // const filteredsearch = [
     //   ...products.filter(el =>
     //     el?.title?.toLowerCase().includes(route.params.query.toLowerCase()),
@@ -50,9 +53,9 @@ const SearchResultScreen = ({navigation, route}) => {
     // ];
     // const searched = getUniqueListBy(filteredsearch, 'id');
     // setSearchedProduct(searched);
-  }, [route.params]);
+  }, [route.params?.query]);
 
-  if (loading) return <ProductsLoader />;
+  if (loading === null || loading) return <ProductsLoader />;
 
   return (
     <>

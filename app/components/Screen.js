@@ -2,7 +2,7 @@ import React, {useRef} from 'react';
 import {SafeAreaView, ScrollView, children, useColorScheme} from 'react-native';
 import AppButton from './AppButton';
 
-const Screen = ({children, scrollView}) => {
+const Screen = ({children, scrollView, contentContainerStyle}) => {
   //   const isDarkMode = useColorScheme() === 'dark';
 
   //   const backgroundStyle = {
@@ -37,6 +37,7 @@ const Screen = ({children, scrollView}) => {
       <ScrollView
         ref={scrollView}
         showsVerticalScrollIndicator={false}
+        contentContainerStyle={contentContainerStyle}
         // onContentSizeChange={() =>
         //   scrollView.current.scrollTo({x: 0, y: 0, animated: true})
         // }

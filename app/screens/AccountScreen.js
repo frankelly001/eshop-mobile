@@ -61,21 +61,21 @@ const AccountScreen = ({navigation}) => {
       });
   };
 
-  const stopCurrentUserReload = () => {
+  const stopAutoVerification = () => {
     if (intervalId) {
       clearInterval(intervalId);
       setIntervalId(null);
     }
   };
 
-  const startCurrentUserReload = () => {
+  const startAutoVerification = () => {
     const newIntervalId = setInterval(() => {
       auth()
         ?.currentUser?.reload()
         .then(() => {
-          const checkVerified = auth()?.currentUser?.emailVerified;
-          if (checkVerified) {
-            updateUserData_verified(checkVerified);
+          const userVerified = auth()?.currentUser?.emailVerified;
+          if (userVerified) {
+            updateUserData_verified(userVerified);
             // stopCurrentUserReload();
             setMailNotice(false);
             console.log('i am now  Verified!!!!!!!!!');
@@ -90,9 +90,9 @@ const AccountScreen = ({navigation}) => {
   useEffect(() => {
     // if (user?.verified) stopCurrentUserReload();
     if (mailNotice) {
-      startCurrentUserReload();
+      startAutoVerification();
     } else {
-      stopCurrentUserReload();
+      stopAutoVerification();
     }
   }, [mailNotice]);
 
@@ -124,7 +124,7 @@ const AccountScreen = ({navigation}) => {
     setMailNotice(false);
   };
 
-  // if (1) return <UploadScreen />;
+  if (1) return <UploadScreen />;
 
   // console.log(user, 'make i check user');
 
@@ -134,14 +134,14 @@ const AccountScreen = ({navigation}) => {
 
       {user && (
         <MailSentNoticeModal
-          email={user.email}
+          email={user?.email}
           visible={mailNotice}
           onClose={handleClose}
-          onHandleResendMail={() => handleVerification()}
+          onHandleResendMail={handleVerification}
         />
       )}
 
-      <Screen>
+      <Screen contentContainerStyle={{paddingBottom: 60}}>
         <View style={styles.welcomeContainer}>
           <View style={styles.subWelcomeContainer}>
             <View style={styles.span}>
@@ -180,7 +180,7 @@ const AccountScreen = ({navigation}) => {
               <AppButton
                 label="Verify Account"
                 bgStyle={{borderRadius: 5}}
-                onPress={() => handleVerification()}
+                onPress={handleVerification}
               />
             </View>
           )}

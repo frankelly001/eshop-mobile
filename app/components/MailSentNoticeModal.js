@@ -59,8 +59,8 @@ const MailSentNoticeModal = ({visible, onClose, onHandleResendMail, email}) => {
           <AppText style={[styles.text, {marginBottom: 10}]}>
             We've sent an email to{' '}
             <AppText style={styles.noticableText}>{email}</AppText> to verify
-            your email address and activate your account. The link in the email
-            will expire in 24hours.
+            your email address, Check Inbox or Spam and activate your account.
+            The link in the email will expire in 24hours.
           </AppText>
           <View
             style={{

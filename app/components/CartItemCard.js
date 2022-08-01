@@ -65,7 +65,7 @@ const CartItemCard = ({product, renderRightActions}) => {
             <AppText style={styles.title}>{product.title}</AppText>
             <View style={styles.priceContainer}>
               <AppText style={styles.totalPrice}>
-                {formatToCurrency(product.price)}
+                {formatToCurrency(product.price * product.quantity)}
               </AppText>
               <AppText style={styles.totalPriceSum}>
                 ({formatToCurrency(product.price)} by {product.quantity} item)
@@ -132,11 +132,13 @@ const styles = StyleSheet.create({
   title: {
     fontSize: fontSz(13),
     fontFamily: fonts.bold,
+    textTransform: 'capitalize',
   },
   totalPrice: {
     fontSize: fontSz(15),
     fontFamily: fonts.bold,
     color: colors.grey_dark_2,
+    marginRight: 2,
   },
   totalPriceSum: {
     fontSize: fontSz(12),

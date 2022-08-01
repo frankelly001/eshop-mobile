@@ -1,4 +1,5 @@
 import collectionRefs from '../collectionRefs';
+import {firestore} from '../config';
 
 const searchFields = {
   TITLE: 'title',
@@ -27,7 +28,7 @@ const categoryFieldSearch = (categoryName, catSearchField) => {
 };
 
 // This is only for query
-const singleFieldSearch = (searchField, query) => {
+const singleFieldSearch = (query, searchField) => {
   return new Promise((resolve, reject) => {
     collectionRefs.productsCollectionRef
       .orderBy(searchField)
@@ -51,16 +52,16 @@ function getUniqueListBy(arr, key) {
 
 const AllFieldsSearch = query => {
   return new Promise((resolve, reject) => {
-    singleFieldSearch(searchFields.TITLE, query)
+    singleFieldSearch(query, searchFields.TITLE)
       .then(querySnapShot1 => {
         const data1 = [...querySnapShot1];
-        singleFieldSearch(searchFields.CATEGORY, query)
+        singleFieldSearch(query, searchFields.CATEGORY)
           .then(querySnapShot2 => {
             const data2 = [...data1, ...querySnapShot2];
-            singleFieldSearch(searchFields.CATEGORY_GROUP, query)
+            singleFieldSearch(query, searchFields.CATEGORY_GROUP)
               .then(querySnapShot3 => {
                 const data3 = [...data2, ...querySnapShot3];
-                singleFieldSearch(searchFields.CATEGORY_GROUP_TYPE, query)
+                singleFieldSearch(query, searchFields.CATEGORY_GROUP_TYPE)
                   .then(finalQuerySnapShot => {
                     const data4 = [...data3, ...finalQuerySnapShot];
                     const finalData = getUniqueListBy(data4, 'id');
@@ -83,6 +84,23 @@ const AllFieldsSearch = query => {
       });
   });
 };
+
+// const samplesRef = firestore()
+//   .collectionGroup('examples')
+//   .where('title', '==', 'fashion')
+//   .where('category', '==', 'fashion')
+//   .where('group', '==', 'fashion')
+//   .where('type', '==', 'fashion');
+
+// const handleQuery = () => {
+//   samplesRef.get().then(querySnapShot => {
+//     const data = [];
+//     querySnapShot.forEach(el => {
+//       data.push({id: el.id, ...el.data()});
+//     });
+//     console.log(data, 'This is the Query Snapshot');
+//   });
+// };
 
 export default {
   searchFields,

@@ -7,9 +7,9 @@ import {hp} from '../../config/responsiveSize';
 const {width} = Dimensions.get('screen');
 const ProductCardSampleLoader = () => {
   return (
-    <View>
+    <View style={styles.bgLoaderContainer}>
       <SkeletonPlaceholder>
-        <View style={styles.bgLoaderContainer} />
+        <View style={{width: '100%', height: '100%'}} />
       </SkeletonPlaceholder>
       <View style={styles.iconContainer}>
         <Eshop_LoaderIcon width={50} height={50} opacity={0.5} />
@@ -20,10 +20,13 @@ const ProductCardSampleLoader = () => {
 
 const styles = StyleSheet.create({
   bgLoaderContainer: {
-    width: width / 2.17,
+    // width: width / 2 - 2,
+    flex: 1,
     height: hp(280),
-    margin: 3,
+    margin: 2,
     borderRadius: 10,
+    overflow: 'hidden',
+    // backgroundColor: 'red',
   },
   iconContainer: {
     position: 'absolute',

@@ -19,11 +19,12 @@ import AppGradientBtn from '../components/AppGradientBtn';
 import AppGradientText from '../components/AppGradientText';
 import {fontSz, wp} from '../config/responsiveSize';
 import fonts from '../config/fonts';
+import Screen from '../components/Screen';
 
 const dimensions = Dimensions.get('screen');
 const HelpScreen = props => {
   return (
-    <View style={styles.container}>
+    <Screen contentContainerStyle={styles.container}>
       <View style={styles.careContainer}>
         <AppButton
           bgStyle={styles.careBtn}
@@ -50,12 +51,14 @@ const HelpScreen = props => {
           </TouchableOpacity>
         </View>
       </View>
-    </View>
+    </Screen>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {},
+  container: {
+    paddingBottom: 60,
+  },
   careContainer: {
     width: '100%',
     height: 0.13 * dimensions.height,

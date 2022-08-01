@@ -8,11 +8,12 @@ import toast from '../components/AppToast/toast';
 import navigation from '../navigation/rootNavigation';
 import routes from '../navigation/routes';
 
+const infoAlert = () => showToast(toast.types.INFO, 'You are not Logged in');
+const successAlert = message => showToast(toast.types.SUCCESS, message);
+const errorAlert = error => showToast(toast.types.SUCCESS, error);
 export const useCartState = user => {
   const [orderedItems, setOrderedItems] = useState([]);
   const [savedItems, setSavedItems] = useState([]);
-
-  const alert = () => showToast(toast.types.INFO, 'You are not Logged in');
 
   const addToCart = (productId, payload) => {
     if (user) {
@@ -38,13 +39,15 @@ export const useCartState = user => {
       }
 
       setOrderedItems(nextOrderedItems);
+      successAlert('Product added successfully');
       updateUserData(user.id, userDataTypes.ORDERED_ITEMS, nextOrderedItems)
         .then(response => {})
         .catch(() => {
           setOrderedItems(previousOrderedItems);
+          errorAlert('Product failed to be added to cart');
         });
     } else {
-      alert();
+      infoAlert();
     }
   };
 
@@ -63,15 +66,17 @@ export const useCartState = user => {
           : elOrdered,
       );
       setOrderedItems(nextOrderedItems);
+      successAlert(`Product quantity has been updated successfully`);
       updateUserData(
         user.id,
         userDataTypes.ORDERED_ITEMS,
         nextOrderedItems,
       ).catch(() => {
         setOrderedItems(previousOrderedItems);
+        errorAlert('Product quantity failed to be updated in cart');
       });
     } else {
-      alert();
+      infoAlert();
     }
   };
 
@@ -87,15 +92,17 @@ export const useCartState = user => {
           : elOrdered,
       );
       setOrderedItems(nextOrderedItems);
+      successAlert(`Product quantity has been updated successfully`);
       updateUserData(
         user.id,
         userDataTypes.ORDERED_ITEMS,
         nextOrderedItems,
       ).catch(() => {
         setOrderedItems(previousOrderedItems);
+        errorAlert('Product quantity failed to be updated in cart');
       });
     } else {
-      alert();
+      infoAlert();
     }
   };
 
@@ -107,19 +114,21 @@ export const useCartState = user => {
         nextLikedProducts = nextLikedProducts.filter(
           productIdLiked => productIdLiked !== productId,
         );
+        successAlert(`Product successfully removed from your wishlist`);
       } else {
         nextLikedProducts.push(productId);
+        successAlert(`Product successfully added to your wishlist`);
       }
       setSavedItems(nextLikedProducts);
-
       updateUserData(user.id, userDataTypes.SAVED_ITEMS, nextLikedProducts)
         .then(response => {})
         .catch(error => {
           setSavedItems(previousLikeProducts);
+          errorAlert('wishlist failed to be updated');
           //   console.log(error, 'heyyyyyyyyy');
         });
     } else {
-      alert();
+      infoAlert();
     }
   };
 
@@ -130,15 +139,17 @@ export const useCartState = user => {
         elOrdered => elOrdered.productId !== productId,
       );
       setOrderedItems(nextOrderedItems);
+      successAlert('Product was removed from cart successfully');
       updateUserData(
         user.id,
         userDataTypes.ORDERED_ITEMS,
         nextOrderedItems,
       ).catch(() => {
         setOrderedItems(previousOrderedItems);
+        errorAlert('Product failed to be removed from cart');
       });
     } else {
-      alert();
+      infoAlert();
     }
   };
 

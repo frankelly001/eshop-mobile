@@ -1,10 +1,8 @@
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import React from 'react';
 import {StyleSheet, View} from 'react-native';
-import Header from '../components/Header';
-import HeaderActions from '../components/HeaderActions';
+import Header from './Header';
 import CategoriesScreen from '../screens/CategoriesScreen';
-import ProductDetailsScreen from '../screens/ProductDetailsScreen';
 import routes from './routes';
 
 const Stack = createNativeStackNavigator();
@@ -17,9 +15,5 @@ const CategoriesNavigator = props => {
     </Stack.Navigator>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {},
-});
 
 export default CategoriesNavigator;

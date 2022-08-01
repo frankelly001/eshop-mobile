@@ -105,6 +105,7 @@ const styles = StyleSheet.create({
   textItem: {
     flex: 1,
     fontSize: fontSz(15),
+    textTransform: 'capitalize',
   },
   placeholderStyle: {
     fontSize: fontSz(15),
@@ -112,6 +113,7 @@ const styles = StyleSheet.create({
   },
   selectedTextStyle: {
     fontSize: fontSz(15),
+    textTransform: 'capitalize',
   },
   iconStyle: {
     width: 20,

@@ -1,14 +1,16 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {StyleSheet, View, TextInput} from 'react-native';
 import colors from '../config/colors';
 import fonts from '../config/fonts';
 import {fontSz, hp} from '../config/responsiveSize';
 
 const AppTextInput = ({style, inputRef, ...otherProps}) => {
+  const [focused, setFocused] = useState(false);
   return (
     // <View style={styles.container}>
     <TextInput
       ref={inputRef}
+      onFocus={() => setFocused(!focused)}
       style={[styles.inputField, style]}
       placeholderTextColor={colors.grey_dark}
       {...otherProps}
