@@ -9,7 +9,7 @@ export const logoutUser = () => {
           .signOut()
           .then(() => {
             console.log('data deleted');
-            resolve('User Succesfully sign Out');
+            resolve('User Succesfully Logged out');
           })
           .catch(error => {
             reject(error.message);

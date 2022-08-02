@@ -29,12 +29,14 @@ import {
   updateUserData,
   userDataTypes,
 } from '../api/setup/patchApi/updateUserData';
+import LogoutNotice from '../components/LogoutNotice';
 
 const {height, width} = Dimensions.get('screen');
 
 const AccountScreen = ({navigation}) => {
   const {user, setUser, setRecentQueries} = useContext(AuthContext);
   const [mailNotice, setMailNotice] = useState(false);
+  const [logoutNotice, setLogoutNotice] = useState(false);
 
   const [intervalId, setIntervalId] = useState(null);
   const {loading, request} = useApi(logoutUser);
@@ -42,7 +44,8 @@ const AccountScreen = ({navigation}) => {
   const handleLogout = () => {
     request()
       .then(snapshot => {
-        alert(snapshot);
+        setLogoutNotice(false);
+        showToast(toast.types.INFO, snapshot);
         setUser(null);
 
         // clearCartState();
@@ -124,7 +127,7 @@ const AccountScreen = ({navigation}) => {
     setMailNotice(false);
   };
 
-  if (1) return <UploadScreen />;
+  // if (1) return <UploadScreen />;
 
   // console.log(user, 'make i check user');
 
@@ -141,6 +144,11 @@ const AccountScreen = ({navigation}) => {
         />
       )}
 
+      <LogoutNotice
+        visible={logoutNotice}
+        onHandleLogout={handleLogout}
+        onCancel={() => setLogoutNotice(false)}
+      />
       <Screen contentContainerStyle={{paddingBottom: 60}}>
         <View style={styles.welcomeContainer}>
           <View style={styles.subWelcomeContainer}>
@@ -201,8 +209,8 @@ const AccountScreen = ({navigation}) => {
         <ListCard data={AccountSettings} />
 
         <TouchableOpacity
-          onPress={
-            user ? handleLogout : () => navigation.navigate(routes.LOGIN)
+          onPress={() =>
+            user ? setLogoutNotice(true) : navigation.navigate(routes.LOGIN)
           }>
           <AppGradientText style={styles.logout}>
             {user ? 'Log out' : 'Log in'}

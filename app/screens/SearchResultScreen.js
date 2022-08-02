@@ -11,6 +11,10 @@ import collectionRefs from '../api/setup/collectionRefs';
 import queryApi from '../api/setup/queryApi/queryApi';
 import {useApi} from '../hooks/useApi';
 import {showToast} from '../components/AppToast/showToast';
+import AppText from '../components/AppText';
+import DisplayMesssage from '../components/DisplayMesssage';
+import {fontSz, wp} from '../config/responsiveSize';
+import fonts from '../config/fonts';
 
 function getUniqueListBy(arr, key) {
   return [...new Map(arr.map(item => [item[key], item])).values()];
@@ -82,12 +86,17 @@ const SearchResultScreen = ({navigation, route}) => {
           }}
         />
       ) : (
-        <ActivityIndicator
-          animatedIconSource={require('../assets/icons/animatedIcons/ladypagenotfound.json')}
-          visible
+        <DisplayMesssage
+          animatedIconSource={require('../assets/icons/animatedIcons/carton-empty.json')}
           animatedIconStyles={styles.animatedIcon}
-          containerStyles={styles.activityContainer}
-        />
+          containerStyles={styles.activityContainer}>
+          <AppText style={[styles.text, {color: colors.red_dark}]}>
+            No Product found
+          </AppText>
+          <AppText style={styles.subText}>
+            Try searching with short and simple keywords
+          </AppText>
+        </DisplayMesssage>
       )}
     </>
   );
@@ -96,11 +105,17 @@ const SearchResultScreen = ({navigation, route}) => {
 const styles = StyleSheet.create({
   container: {},
   animatedIcon: {
-    marginBottom: 80,
+    width: wp(380),
+    height: wp(380),
   },
   activityContainer: {
     backgroundColor: colors.white,
-    opacity: 1,
+  },
+  text: {
+    fontFamily: fonts.semi_bold,
+  },
+  subText: {
+    marginBottom: 100,
   },
 });
 

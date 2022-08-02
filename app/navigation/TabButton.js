@@ -15,6 +15,7 @@ const TabButton = ({
   const focused = accessibilityState.selected;
   const viewRef = useRef(null);
   const textViewRef = useRef(null);
+  const Icon = focused ? ActiveIcon : InActiveIcon;
 
   useEffect(() => {
     if (focused) {
@@ -26,8 +27,6 @@ const TabButton = ({
       textViewRef.current.animate({0: {scale: 1}, 1: {scale: 0}});
     }
   }, [focused]);
-
-  const Icon = focused ? ActiveIcon : InActiveIcon;
 
   return (
     <TouchableOpacity

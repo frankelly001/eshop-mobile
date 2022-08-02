@@ -151,7 +151,8 @@ const Header = ({navigation, options, route}) => {
                 </Animated.View>
               </TouchableOpacity>
 
-              <TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => navigation.navigate(routes.NOTIFICATION)}>
                 <NoficationActiveIcon marginHorizontal={size} width={size} />
               </TouchableOpacity>
 

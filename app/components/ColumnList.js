@@ -3,7 +3,6 @@ import {StyleSheet, View} from 'react-native';
 
 const ColumnList = ({
   data,
-  //   index,
   keyExtractor,
   numOfColumns = 1,
   renderItem,

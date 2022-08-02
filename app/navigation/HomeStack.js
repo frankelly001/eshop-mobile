@@ -10,6 +10,7 @@ import AuthContext from '../auth/AuthContext';
 import SearchResultScreen from '../screens/SearchResultScreen';
 import SignupScreen from '../screens/SignupScreen';
 import LoginScreen from '../screens/LoginScreen';
+import NotificationScreen from '../screens/NotificationScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -47,6 +48,14 @@ const HomeStack = props => {
         }}
       />
       <Stack.Screen
+        name={routes.NOTIFICATION}
+        component={NotificationScreen}
+        options={{
+          animation: 'slide_from_right',
+          // headerStyle: {backgroundColor: 'red'},
+        }}
+      />
+      <Stack.Screen
         name={routes.CHECKOUT}
         component={CheckoutScreen}
         options={{
@@ -59,6 +68,7 @@ const HomeStack = props => {
         component={SearchResultScreen}
         options={({route}) => ({
           title: route.params.query,
+          animation: 'slide_from_bottom',
         })}
       />
 

@@ -11,6 +11,7 @@ export default Object.freeze({
   HELP: 'Help',
   PRODUCTDETAILS: 'ProductDetails',
   CART: 'Cart',
+  NOTIFICATION: 'Notification',
   CHECKOUT: 'Checkout',
   LOGIN: 'Login',
   SIGNUP: 'Signup',
