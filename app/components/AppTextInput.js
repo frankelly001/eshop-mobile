@@ -26,9 +26,9 @@ const styles = StyleSheet.create({
   inputField: {
     borderRadius: 20,
     backgroundColor: colors.grey_light_2,
-    // paddingVertical: 5,
+    paddingVertical: 5,
     paddingHorizontal: 15,
-    height: hp(36),
+    // height: hp(36),
     fontSize: fontSz(15),
     fontFamily: fonts.regular,
     textDecorationLine: 'none',

@@ -15,7 +15,7 @@ const MailSentNoticeModal = ({visible, onClose, onHandleResendMail, email}) => {
   if (!visible) return null;
 
   return (
-    <ModalOverlay>
+    <ModalOverlay portal>
       <TouchableOpacity
         onPress={onClose}
         style={{

@@ -1,37 +1,21 @@
-import React, {
-  useState,
-  useEffect,
-  useReducer,
-  useMemo,
-  useCallback,
-} from 'react';
+import React, {useState, useEffect} from 'react';
 import AuthContext from './app/auth/AuthContext';
 import {NavigationContainer} from '@react-navigation/native';
 import navigationTheme from './app/navigation/navigationTheme';
 import HomeStack from './app/navigation/HomeStack';
-import reducerFunction from './app/hooks/useRuducer';
-import {shuffle} from './app/utilities/randomArr';
-// import {getCategories} from './app/api/categories';
 import {navigationRef} from './app/navigation/rootNavigation';
 import {gestureHandlerRootHOC} from 'react-native-gesture-handler';
 import {Host} from 'react-native-portalize';
 import SplashScreen from 'react-native-splash-screen';
-import {auth, firestore} from './app/api/setup/config';
+import {auth} from './app/api/setup/config';
 import {
   authStorageKeys,
   getUserData,
   storeUserData,
 } from './app/api/storage/authStorage';
-import {useNetInfo} from '@react-native-community/netinfo';
 import {getCategories} from './app/api/setup/getApi/getCategories';
-import AppButton from './app/components/AppButton';
-// import {getProducts} from './app/api/products';
 import {getProducts} from './app/api/setup/getApi/getProducts';
 import collectionRefs from './app/api/setup/collectionRefs';
-import {
-  updateUserData,
-  userDataTypes,
-} from './app/api/setup/patchApi/updateUserData';
 import {useCartState} from './app/hooks/useCartState';
 import {StatusBar} from 'react-native';
 import colors from './app/config/colors';

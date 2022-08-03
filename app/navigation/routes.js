@@ -16,4 +16,8 @@ export default Object.freeze({
   LOGIN: 'Login',
   SIGNUP: 'Signup',
   SEARCHED: 'Searched',
+  SAVED: 'Saved',
+  USERDETAILS: 'My Profile',
+  CHANGEPASSWORD: 'Change Password',
+  ADDRESSBOOK: 'Address Book',
 });

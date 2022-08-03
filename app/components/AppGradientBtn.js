@@ -41,15 +41,12 @@ const AppGradientBtn = ({
 };
 
 const styles = StyleSheet.create({
-  container: {
-    height: hp(40),
-  },
   gradientContainer: {
     justifyContent: 'center',
     alignItems: 'center',
-    // padding: 10,
+    padding: 10,
     borderRadius: 20,
-    height: '100%',
+    // height: '100%',
   },
   text: {
     // fontSize: fontSz(15),

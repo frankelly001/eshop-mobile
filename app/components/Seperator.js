@@ -10,7 +10,7 @@ const Seperator = props => {
 const styles = StyleSheet.create({
   seperator: {
     width: '100%',
-    minHeight: hp(0.35),
+    minHeight: hp(0.5),
     backgroundColor: colors.grey_dark_3,
   },
 });

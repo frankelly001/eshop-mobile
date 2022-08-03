@@ -2,7 +2,6 @@ import React, {useEffect, useState} from 'react';
 import * as Yup from 'yup';
 import MultiStepSignUpWizard from '../components/MultiStepSignUpWizard';
 import AuthForm from '../components/AuthForm';
-import AppTextarea from '../components/AppTextarea';
 import validationSchema from '../components/form/validationSchema';
 import {signup} from '../api/setup/authApi/register';
 import {useApi} from '../hooks/useApi';
@@ -18,7 +17,7 @@ const handleValidation = step => {
     schema = {
       firstname: validationSchema.firstname,
       lastname: validationSchema.lastname,
-      username: validationSchema.username,
+      gender: validationSchema.gender,
     };
   else if (step === 2)
     schema = {
@@ -44,7 +43,7 @@ const handleTouched = step => {
     touched = {
       firstname: true,
       lastname: true,
-      username: true,
+      gender: true,
     };
   } else if (step === 2) {
     touched = {
@@ -106,7 +105,7 @@ const SignupScreen = ({navigation}) => {
         initialValues={{
           firstname: 'Franklyn',
           lastname: 'Okeke',
-          username: 'Frankelly',
+          gender: '',
           state: 'Imo',
           city: 'Orsu',
           address: '56 sowemimo Street',

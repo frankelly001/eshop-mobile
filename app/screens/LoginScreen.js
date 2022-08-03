@@ -76,7 +76,7 @@ const LoginScreen = ({navigation}) => {
   //       });
   //   });
   // };
-  // const signup = ({username: email, password}) => {
+  // const signup = ({email, password}) => {
   //   auth()
   //     .createUserWithEmailAndPassword(email, password)
   //     .then(snapshot => {
@@ -193,7 +193,6 @@ const styles = StyleSheet.create({
   },
   btnContainerStyle: {
     width: '49.5%',
-    marginVertical: 10,
   },
   btnLabel: {
     fontSize: fontSz(15),

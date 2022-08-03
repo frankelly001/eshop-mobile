@@ -11,6 +11,10 @@ import SearchResultScreen from '../screens/SearchResultScreen';
 import SignupScreen from '../screens/SignupScreen';
 import LoginScreen from '../screens/LoginScreen';
 import NotificationScreen from '../screens/NotificationScreen';
+import SavedScreen from '../screens/SavedScreen';
+import UserDetailsScreen from '../screens/UserDetailsScreen';
+import ChangePasswordScreen from '../screens/ChangePasswordScreen';
+import AddressBookScreen from '../screens/AddressBookScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -70,6 +74,14 @@ const HomeStack = props => {
           title: route.params.query,
           animation: 'slide_from_bottom',
         })}
+      />
+
+      <Stack.Screen name={routes.SAVED} component={SavedScreen} />
+      <Stack.Screen name={routes.ADDRESSBOOK} component={AddressBookScreen} />
+      <Stack.Screen name={routes.USERDETAILS} component={UserDetailsScreen} />
+      <Stack.Screen
+        name={routes.CHANGEPASSWORD}
+        component={ChangePasswordScreen}
       />
 
       {!user && <Stack.Screen name={routes.SIGNUP} component={SignupScreen} />}

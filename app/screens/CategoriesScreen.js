@@ -100,13 +100,13 @@ const styles = StyleSheet.create({
     backgroundColor: colors.grey_light,
     width: '20%', // 23
     height: '100%',
-    paddingBottom: 60,
+    // paddingBottom: 60,
   },
   catTypeContainer: {
     // backgroundColor: colors.purple_Transparent,
     width: '80%', // 77
     height: '100%',
-    paddingBottom: 60,
+    // paddingBottom: 60,
   },
   titleContainer: {
     alignItems: 'center',

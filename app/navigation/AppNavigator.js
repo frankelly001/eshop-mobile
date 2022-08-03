@@ -31,11 +31,11 @@ const AppNavigator = props => {
         tabBarStyle: {
           height: 50,
           backgroundColor: colors.grey_light,
-          position: 'absolute',
-          bottom: 8,
-          right: 8,
-          left: 8,
-          borderRadius: 30,
+          // position: 'absolute',
+          // bottom: 8,
+          // right: 8,
+          // left: 8,
+          // borderRadius: 30,
         },
         // tabBarButton: props => <TabButton {...props} />,
       }}>

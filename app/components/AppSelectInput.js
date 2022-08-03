@@ -75,13 +75,13 @@ const AppSelectInput = ({
 const styles = StyleSheet.create({
   dropdown: {
     // margin: 16,
-    height: hp(36),
+    // height: hp(36),
     width: '100%',
     // backgroundColor: 'white',
     borderRadius: 20,
     // padding: 0,
     paddingHorizontal: 15,
-    // paddingVertical: 2,
+    paddingVertical: 2,
     backgroundColor: colors.grey_light_2,
     // shadowColor: '#000',
     // shadowOffset: {

@@ -11,7 +11,7 @@ const LogoutNotice = ({visible, onHandleLogout, onCancel}) => {
   if (!visible) return null;
 
   return (
-    <ModalOverlay>
+    <ModalOverlay portal>
       <View
         style={{
           width: width * 0.85,
@@ -19,7 +19,7 @@ const LogoutNotice = ({visible, onHandleLogout, onCancel}) => {
           backgroundColor: colors.grey_light,
           borderRadius: 20,
           padding: 10,
-          marginTop: -50,
+          // marginTop: -50,
           // margin: 20,
         }}>
         <View style={{flex: 1, marginBottom: 20}}>

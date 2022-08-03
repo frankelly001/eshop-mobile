@@ -27,12 +27,16 @@ const SignupScreen1 = () => {
         placeholder="Lastname"
         textContentType="name"
       />
-      <AppFormInput
-        autoCapitalize="none"
-        autoCorrect={false}
-        name="username"
-        placeholder="Username"
-        textContentType="name"
+      <AppFormSelectInput
+        name={'gender'}
+        // data={stateList}
+        onHandleData={() => {
+          return ['Male', 'Female'].map(key => {
+            return {label: key, value: key};
+          });
+        }}
+        placeholder="Gender"
+        disableSearchInput
       />
       <SubmitButton label="Next" containerStyle={styles.btnContainerStyle} />
     </View>
@@ -145,7 +149,6 @@ const styles = StyleSheet.create({
   },
   btnContainerStyle: {
     width: '49.5%',
-    marginVertical: 10,
   },
 });
 

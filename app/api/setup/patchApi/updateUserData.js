@@ -1,7 +1,7 @@
 import collectionRefs from '../collectionRefs';
 
 export const userDataTypes = {
-  USERNAME: 'username',
+  GENDER: 'gender',
   FIRSTNAME: 'name.firstname',
   LASTNAME: 'name.lastname',
   VERIFIED: 'verified',

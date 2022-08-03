@@ -8,7 +8,7 @@ export const addUser = (userId, userInfo, verified) => {
       firstname: userInfo.firstname,
       lastname: userInfo.lastname,
     },
-    username: userInfo.username,
+    gender: userInfo.gender,
     email: userInfo.email,
     phone: {
       phone: userInfo.phone,

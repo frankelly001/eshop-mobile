@@ -1,10 +1,9 @@
 import React, {useContext, useCallback, memo} from 'react';
-import {StyleSheet, View, Text, FlatList, SectionList} from 'react-native';
+import {View, SectionList} from 'react-native';
 import AuthContext from '../auth/AuthContext';
 import AppText from '../components/AppText';
 import HomeLoader from '../components/SkeletonLoader/HomeLoader';
 import ImageCarousel from '../components/ImageCarousel';
-import NewSection from '../components/NewSection';
 import ProductCard from '../components/ProductCard';
 import SectionListRenderItem from '../components/SectionListRenderItem';
 import colors from '../config/colors';

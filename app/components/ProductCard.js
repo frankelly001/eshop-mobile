@@ -18,7 +18,14 @@ import LikeBtn from './LikeBtn';
 
 const dimenson = Dimensions.get('screen');
 
-const ProductCard = ({product, onPress, small, medium}) => {
+const ProductCard = ({
+  product,
+  onPress,
+  small,
+  medium,
+  btnLabel,
+  btnOnPress,
+}) => {
   const {addToCart} = useContext(AuthContext);
   // console.log(height);
   // const styles = small ? mediumCardstyles : bigCardstyles;
@@ -50,11 +57,11 @@ const ProductCard = ({product, onPress, small, medium}) => {
         </AppText>
         {!small && !medium && (
           <AppGradientBtn
-            label="add to cart"
+            label={btnLabel ? btnLabel : 'add to cart'}
             labelStyle={styles.btnLabel}
-            containerStyle={{height: hp(35)}}
+            // containerStyle={{height: hp(35)}}
             // onPress={() => dispatch({type: 'addToCart', id: product.id})}
-            onPress={() => addToCart(product.id)}
+            onPress={btnOnPress ? btnOnPress : () => addToCart(product.id)}
           />
         )}
       </View>

@@ -2,10 +2,16 @@ import {useFormikContext} from 'formik';
 import React from 'react';
 import AppGradientBtn from '../AppGradientBtn';
 
-const SubmitButton = ({onSaveValues, ...otherProps}) => {
+const SubmitButton = ({containerStyle, ...otherProps}) => {
   const {handleSubmit} = useFormikContext();
 
-  return <AppGradientBtn {...otherProps} onPress={handleSubmit} />;
+  return (
+    <AppGradientBtn
+      containerStyle={[{marginVertical: 10}, containerStyle]}
+      {...otherProps}
+      onPress={handleSubmit}
+    />
+  );
 };
 
 export default SubmitButton;

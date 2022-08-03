@@ -1,5 +1,6 @@
 import React from 'react';
 import Icon, {Icons} from '../components/Icons';
+import routes from '../navigation/routes';
 
 const AccountDetails = {
   title: 'Account Details',
@@ -27,6 +28,7 @@ const AccountDetails = {
           style={style}
         />
       ),
+      routeName: routes.SAVED,
     },
     {
       _id: '3',
@@ -82,9 +84,9 @@ const AccountDetails = {
 const AccountSettings = {
   title: 'Account Settings',
   list: [
-    {_id: '1', name: 'Details'},
-    {_id: '2', name: 'Address Book'},
-    {_id: '3', name: 'Change Password'},
+    {_id: '1', name: 'Details', routeName: routes.USERDETAILS},
+    {_id: '2', name: 'Address Book', routeName: routes.ADDRESSBOOK},
+    {_id: '3', name: 'Change Password', routeName: routes.CHANGEPASSWORD},
   ],
 };
 

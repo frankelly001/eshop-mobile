@@ -123,10 +123,6 @@ const AccountScreen = ({navigation}) => {
     }
   };
 
-  const handleClose = () => {
-    setMailNotice(false);
-  };
-
   // if (1) return <UploadScreen />;
 
   // console.log(user, 'make i check user');
@@ -139,7 +135,7 @@ const AccountScreen = ({navigation}) => {
         <MailSentNoticeModal
           email={user?.email}
           visible={mailNotice}
-          onClose={handleClose}
+          onClose={() => setMailNotice(false)}
           onHandleResendMail={handleVerification}
         />
       )}
@@ -149,7 +145,12 @@ const AccountScreen = ({navigation}) => {
         onHandleLogout={handleLogout}
         onCancel={() => setLogoutNotice(false)}
       />
-      <Screen contentContainerStyle={{paddingBottom: 60}}>
+      <Screen
+        contentContainerStyle={
+          {
+            // paddingBottom: 60
+          }
+        }>
         <View style={styles.welcomeContainer}>
           <View style={styles.subWelcomeContainer}>
             <View style={styles.span}>

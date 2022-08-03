@@ -5,6 +5,7 @@ import AppText from './AppText';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 import GradientBackground from './GradientBackground';
 import fonts from '../config/fonts';
+import navigation from '../navigation/rootNavigation';
 
 const ListCard = ({data}) => {
   return (
@@ -15,7 +16,10 @@ const ListCard = ({data}) => {
       {/* <View style={styles.ListTitleContainer}>
       </View> */}
       {data.list.map(list => (
-        <TouchableOpacity key={list._id} style={styles.ListItemContainer}>
+        <TouchableOpacity
+          key={list._id}
+          style={styles.ListItemContainer}
+          onPress={() => list.routeName && navigation.navigate(list.routeName)}>
           <View style={styles.listItem}>
             {list.icon && <list.icon size={20} style={{marginRight: 5}} />}
             <AppText>{list.name}</AppText>

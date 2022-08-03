@@ -5,21 +5,26 @@ import {
   Dimensions,
   TouchableOpacity,
   Text,
+  Linking,
 } from 'react-native';
 import {About, Settings} from '../api/help';
 import AppButton from '../components/AppButton';
 import AppText from '../components/AppText';
 import ListCard from '../components/ListCard';
 import colors from '../config/colors';
-import FacebookIcon from '../assets/icons/facebook.svg';
-import InstagramIcon from '../assets/icons/instagram.svg';
-import TwitterIcon from '../assets/icons/twitter.svg';
-import YoutubeIcon from '../assets/icons/youtube.svg';
 import AppGradientBtn from '../components/AppGradientBtn';
 import AppGradientText from '../components/AppGradientText';
 import {fontSz, wp} from '../config/responsiveSize';
 import fonts from '../config/fonts';
 import Screen from '../components/Screen';
+import {appNames, openSocialLink} from '../utilities/appLink';
+import {
+  FacebookIcon,
+  InstagramIcon,
+  TwitterIcon,
+  WhatsappIcon,
+  YoutubeIcon,
+} from '../utilities/icons';
 
 const dimensions = Dimensions.get('screen');
 const HelpScreen = props => {
@@ -30,6 +35,7 @@ const HelpScreen = props => {
           bgStyle={styles.careBtn}
           label="Customer Care"
           icon="phone"
+          onPress={() => Linking.openURL('tel: +2348176507344')}
         />
       </View>
       <ListCard data={Settings} />
@@ -37,17 +43,20 @@ const HelpScreen = props => {
       <View style={styles.socialContainer}>
         <AppGradientText style={styles.join}>JOIN US ON</AppGradientText>
         <View style={styles.handlesContainer}>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => openSocialLink(appNames.FACEBOOK)}>
             <FacebookIcon width={wp(35)} height={wp(35)} margin={5} />
           </TouchableOpacity>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => openSocialLink(appNames.INSTAGRAM)}>
             <InstagramIcon width={wp(35)} height={wp(35)} margin={5} />
           </TouchableOpacity>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => openSocialLink(appNames.TWITTER)}>
             <TwitterIcon width={wp(35)} height={wp(35)} margin={5} />
           </TouchableOpacity>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => openSocialLink(appNames.YOUTUBE)}>
             <YoutubeIcon width={wp(35)} height={wp(35)} margin={5} />
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => openSocialLink(appNames.WHATSAPP)}>
+            <WhatsappIcon width={wp(35)} height={wp(35)} margin={5} />
           </TouchableOpacity>
         </View>
       </View>
@@ -57,7 +66,7 @@ const HelpScreen = props => {
 
 const styles = StyleSheet.create({
   container: {
-    paddingBottom: 60,
+    // paddingBottom: 60,
   },
   careContainer: {
     width: '100%',
