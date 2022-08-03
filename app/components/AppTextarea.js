@@ -8,7 +8,7 @@ const AppTextarea = ({style, ...otherProps}) => {
   return (
     // <View style={styles.textAreaContainer}>
     <TextInput
-      style={styles.textArea}
+      style={[styles.textArea, style]}
       underlineColorAndroid="transparent"
       placeholderTextColor={colors.grey_dark}
       numberOfLines={10}

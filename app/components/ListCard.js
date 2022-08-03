@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {StyleSheet, View, TouchableOpacity} from 'react-native';
 import colors from '../config/colors';
 import AppText from './AppText';
@@ -6,8 +6,12 @@ import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 import GradientBackground from './GradientBackground';
 import fonts from '../config/fonts';
 import navigation from '../navigation/rootNavigation';
+import AuthContext from '../auth/AuthContext';
+import routes from '../navigation/routes';
 
 const ListCard = ({data}) => {
+  const {user} = useContext(AuthContext);
+
   return (
     <View style={styles.container}>
       <GradientBackground style={styles.ListTitleContainer}>
@@ -19,7 +23,10 @@ const ListCard = ({data}) => {
         <TouchableOpacity
           key={list._id}
           style={styles.ListItemContainer}
-          onPress={() => list.routeName && navigation.navigate(list.routeName)}>
+          onPress={() =>
+            list.routeName &&
+            navigation.navigate(user ? list.routeName : routes.LOGIN)
+          }>
           <View style={styles.listItem}>
             {list.icon && <list.icon size={20} style={{marginRight: 5}} />}
             <AppText>{list.name}</AppText>

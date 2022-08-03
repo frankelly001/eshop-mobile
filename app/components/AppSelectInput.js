@@ -53,7 +53,7 @@ const AppSelectInput = ({
             <Text
               style={[
                 styles.textItem,
-                !item.value && {color: colors.red_dark},
+                !item.value && {color: colors.red_dark, textTransform: 'none'},
               ]}>
               {item.label}
             </Text>

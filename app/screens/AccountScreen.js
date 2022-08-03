@@ -31,7 +31,7 @@ import {
 } from '../api/setup/patchApi/updateUserData';
 import LogoutNotice from '../components/LogoutNotice';
 
-const {height, width} = Dimensions.get('screen');
+const {height} = Dimensions.get('screen');
 
 const AccountScreen = ({navigation}) => {
   const {user, setUser, setRecentQueries} = useContext(AuthContext);
@@ -59,9 +59,11 @@ const AccountScreen = ({navigation}) => {
 
   const updateUserData_verified = verification => {
     if (verification)
-      updateUserData(user.id, userDataTypes.VERIFIED, verification).then(() => {
-        showToast(toast.types.SUCCESS, 'Your account is now verified');
-      });
+      updateUserData(user.id, {[userDataTypes.VERIFIED]: verification}).then(
+        () => {
+          showToast(toast.types.SUCCESS, 'Your account is now verified');
+        },
+      );
   };
 
   const stopAutoVerification = () => {
@@ -97,6 +99,7 @@ const AccountScreen = ({navigation}) => {
     } else {
       stopAutoVerification();
     }
+    return () => {};
   }, [mailNotice]);
 
   // useEffect(() => {

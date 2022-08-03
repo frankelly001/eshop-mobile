@@ -1,6 +1,7 @@
 import {useFormikContext} from 'formik';
-import React from 'react';
+import React, {useState} from 'react';
 import {StyleSheet, View} from 'react-native';
+import colors from '../../config/colors';
 import AppSelectInput from '../AppSelectInput';
 import ErrorMessage from './ErrorMessage';
 
@@ -13,6 +14,7 @@ const AppFormSelectInput = ({
 }) => {
   const {setFieldTouched, setFieldValue, values, errors, touched} =
     useFormikContext();
+  const [isFocus, setIsFocus] = useState(false);
 
   const data = onHandleData(values);
   // if (!data.length) return null;
@@ -20,9 +22,16 @@ const AppFormSelectInput = ({
   return (
     <View style={[styles.container, {width}]}>
       <AppSelectInput
-        dropdownStyle={!data.length && styles.dropdown}
+        dropdownStyle={[
+          !data.length && styles.dropdown,
+          isFocus && {borderColor: colors.purple, borderWidth: 0.5},
+        ]}
         data={data}
-        onBlur={() => setFieldTouched(name)}
+        onFocus={() => setIsFocus(true)}
+        onBlur={() => {
+          setFieldTouched(name);
+          setIsFocus(false);
+        }}
         disable={!data.length}
         onChange={item => {
           setFieldTouched(name);

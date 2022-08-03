@@ -21,7 +21,6 @@ import AppFormSelectInput from '../components/form/AppFormSelectInput';
 import ActivityIndicator from '../components/ActivityIndicator';
 
 const upload_VS = Yup.object().shape({
-  // title:
   images: validationSchema.images,
   title: validationSchema.title,
   price: validationSchema.price,
@@ -45,34 +44,36 @@ const UploadScreen = () => {
   const {categories} = useContext(AuthContext);
   const [loading, setLoading] = useState(false);
 
-  const getData = (type, values) => {
+  const handleCategoryData = () => {
+    return categories.map(el => {
+      return {label: el.title, value: el.title};
+    });
+  };
+
+  const handleCategoryGroupData = values => {
     const category = values['category'];
-    const categoryGroupTitle = values['categoryGroupTitle'];
-    const catGroups = categories.find(cat => cat.title === category);
-
-    let data;
-
-    if (type === 'category') {
-      data = categories.map(el => {
-        return {label: el.title, value: el.title};
-      });
-    } else if (type === 'categoryGroupTitle') {
-      data = category
-        ? catGroups?.groups.map(group => {
+    return category
+      ? categories
+          .find(cat => cat.title === category)
+          ?.groups.map(group => {
             return {label: group.title, value: group.title};
           })
-        : [{label: 'Category not Selected'}];
-    } else if (type === 'categoryGroupType') {
-      data = categoryGroupTitle
-        ? catGroups?.groups
-            .find(group => group.title === categoryGroupTitle)
-            ?.types.map(groupType => {
-              return {label: groupType, value: groupType};
-            })
-        : [{label: 'Category Group not Selected'}];
-    }
+      : [{label: 'Category not selected'}];
+  };
 
-    return data;
+  const handleCategoryGroupTypeData = values => {
+    const category = values['category'];
+    const categoryGroup = values['categoryGroupTitle'];
+
+    return category
+      ? categoryGroup
+        ? categories
+            .find(cat => cat.title === category)
+            ?.groups.map(group => {
+              return {label: group.title, value: group.title};
+            })
+        : [{label: 'Category group not selected'}]
+      : [{label: 'Category not selected'}];
   };
 
   const handleSubmit = async (values, {resetForm}) => {
@@ -156,21 +157,21 @@ const UploadScreen = () => {
               />
               <AppFormSelectInput
                 name={'category'}
-                onHandleData={values => getData('category', values)}
+                onHandleData={handleCategoryData}
                 placeholder="Select Category"
                 searchPlaceholder="Search Category..."
                 valueResetNames={['categoryGroupTitle', 'categoryGroupType']}
               />
               <AppFormSelectInput
                 name={'categoryGroupTitle'}
-                onHandleData={values => getData('categoryGroupTitle', values)}
+                onHandleData={values => handleCategoryGroupData(values)}
                 placeholder="Select Category Group"
                 searchPlaceholder="Search Category Group..."
                 valueResetNames={['categoryGroupType']}
               />
               <AppFormSelectInput
                 name={'categoryGroupType'}
-                onHandleData={values => getData('categoryGroupType', values)}
+                onHandleData={values => handleCategoryGroupTypeData(values)}
                 placeholder="Select Category Group Type"
                 searchPlaceholder="Search Category Group Type..."
               />

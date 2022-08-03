@@ -149,6 +149,7 @@ const styles = StyleSheet.create({
   },
   btnContainerStyle: {
     width: '49.5%',
+    marginVertical: 10,
   },
 });
 

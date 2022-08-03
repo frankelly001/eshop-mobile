@@ -14,16 +14,20 @@ import Screen from '../components/Screen';
 import ActivityIndicator from '../components/ActivityIndicator';
 import toast from '../components/AppToast/toast';
 import routes from '../navigation/routes';
+import AppText from '../components/AppText';
+import fonts from '../config/fonts';
+import {fontSz} from '../config/responsiveSize';
+import colors from '../config/colors';
 
 const validation = Yup.object().shape({
-  currentPassword: validationSchema.currentPassword,
+  currentPassword: validationSchema.deafaultPassword.required(
+    'Please your current password',
+  ),
   newPassword: validationSchema.newPassword,
   confirm_newPassword: validationSchema.confirm_newPassword,
 });
 
 const ChangePasswordScreen = ({navigation}) => {
-  const {user} = useContext(AuthContext);
-
   const {loading, request} = useApi(changePassword);
 
   const handleSubmit = (passwordData, {resetForm}) => {
@@ -43,6 +47,9 @@ const ChangePasswordScreen = ({navigation}) => {
     <Screen>
       <ActivityIndicator portal visible={loading} />
       <View style={styles.container}>
+        <AppText style={styles.subHeader}>
+          Make sure you remember your password
+        </AppText>
         <AppForm
           initialValues={{
             currentPassword: '',
@@ -76,7 +83,7 @@ const ChangePasswordScreen = ({navigation}) => {
               textContentType="name"
             />
             <SubmitButton
-              containerStyle={{width: '49.5%', alignSelf: 'center'}}
+              containerStyle={{width: '60%', alignSelf: 'center'}}
               label="Change Password"
             />
           </View>
@@ -87,13 +94,22 @@ const ChangePasswordScreen = ({navigation}) => {
 };
 
 const styles = StyleSheet.create({
-  // container: {
-  //   // flexDirection: 'row',
-  //   justifyContent: 'center',
-  //   // alignItems: 'center',
-  // },
-  formContainer: {
+  container: {
+    alignItems: 'center',
     padding: 20,
+  },
+  formContainer: {
+    width: '100%',
+  },
+  header: {
+    fontSize: fontSz(18),
+    fontFamily: fonts.bold,
+    marginBottom: 10,
+  },
+  subHeader: {
+    fontSize: fontSz(12),
+    color: colors.grey_dark_4,
+    fontFamily: fonts.bold,
   },
 });
 

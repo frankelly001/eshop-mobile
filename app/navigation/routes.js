@@ -20,4 +20,6 @@ export default Object.freeze({
   USERDETAILS: 'My Profile',
   CHANGEPASSWORD: 'Change Password',
   ADDRESSBOOK: 'Address Book',
+  FORGOTPASSWORD: 'Forgot Password',
+  ONBOARDINGSCREEN: 'OnBoardingScreen',
 });

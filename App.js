@@ -116,7 +116,7 @@ const App = () => {
             ...documentSnapshot._data,
           };
           storeUserData(authStorageKeys.USER_DATA, newUserData);
-          if (!user.verified && newUserData.verified) setUser(newUserData);
+          setUser(newUserData);
         }
       });
     return () => subscriber();

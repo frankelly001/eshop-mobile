@@ -15,8 +15,6 @@ export const userDataTypes = {
   ORDERED_ITEMS: 'odered_items',
 };
 
-export const updateUserData = (userId, dataType, dataValue) => {
-  return collectionRefs.usersCollectionRef.doc(userId).update({
-    [dataType]: dataValue,
-  });
+export const updateUserData = (userId, data) => {
+  return collectionRefs.usersCollectionRef.doc(userId).update(data);
 };

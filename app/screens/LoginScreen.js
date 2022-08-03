@@ -16,6 +16,7 @@ import ActivityIndicator from '../components/ActivityIndicator';
 import {authStorageKeys, storeUserData} from '../api/storage/authStorage';
 import {showToast} from '../components/AppToast/showToast';
 import toast from '../components/AppToast/toast';
+import routes from '../navigation/routes';
 // import navigation from '../navigation/rootNavigation';
 
 // GoogleSignin.configure({
@@ -42,7 +43,9 @@ import toast from '../components/AppToast/toast';
 //   });
 const login_VS = Yup.object().shape({
   email: validationSchema.email,
-  password: validationSchema.password,
+  password: validationSchema.deafaultPassword.required(
+    'Please Enter your password',
+  ),
 });
 
 const LoginScreen = ({navigation}) => {
@@ -110,7 +113,7 @@ const LoginScreen = ({navigation}) => {
         setUser(userData);
         storeUserData(authStorageKeys.USER_DATA, userData);
         showToast(
-          'success',
+          toast.types.SUCCESS,
           `Welcome ${userData.name.firstname}${
             !userData.verified ? ', Please Verify your Account' : ''
           }`,
@@ -176,7 +179,9 @@ const LoginScreen = ({navigation}) => {
         {/* <AppGradientBtn label="Sign in with Google" onPress={signInwithGoogle} />
       <AppGradientBtn label="Sign in with Facebook" onPress={facebookSignin} />
       <AppGradientBtn label="logout" onPress={logout} /> */}
-        <TouchableOpacity style={{marginVertical: 10}}>
+        <TouchableOpacity
+          style={{marginVertical: 10}}
+          onPress={() => navigation.navigate(routes.FORGOTPASSWORD)}>
           <AppText style={styles.link}>Forgot Password?</AppText>
         </TouchableOpacity>
       </AuthForm>

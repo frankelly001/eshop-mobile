@@ -40,7 +40,7 @@ export const useCartState = user => {
 
       setOrderedItems(nextOrderedItems);
       successAlert('Product added successfully');
-      updateUserData(user.id, userDataTypes.ORDERED_ITEMS, nextOrderedItems)
+      updateUserData(user.id, {[userDataTypes.ORDERED_ITEMS]: nextOrderedItems})
         .then(response => {})
         .catch(() => {
           setOrderedItems(previousOrderedItems);
@@ -67,11 +67,9 @@ export const useCartState = user => {
       );
       setOrderedItems(nextOrderedItems);
       successAlert(`Product quantity has been updated successfully`);
-      updateUserData(
-        user.id,
-        userDataTypes.ORDERED_ITEMS,
-        nextOrderedItems,
-      ).catch(() => {
+      updateUserData(user.id, {
+        [userDataTypes.ORDERED_ITEMS]: nextOrderedItems,
+      }).catch(() => {
         setOrderedItems(previousOrderedItems);
         errorAlert('Product quantity failed to be updated in cart');
       });
@@ -93,11 +91,9 @@ export const useCartState = user => {
       );
       setOrderedItems(nextOrderedItems);
       successAlert(`Product quantity has been updated successfully`);
-      updateUserData(
-        user.id,
-        userDataTypes.ORDERED_ITEMS,
-        nextOrderedItems,
-      ).catch(() => {
+      updateUserData(user.id, {
+        [userDataTypes.ORDERED_ITEMS]: nextOrderedItems,
+      }).catch(() => {
         setOrderedItems(previousOrderedItems);
         errorAlert('Product quantity failed to be updated in cart');
       });
@@ -120,7 +116,7 @@ export const useCartState = user => {
         successAlert(`Product successfully added to your wishlist`);
       }
       setSavedItems(nextLikedProducts);
-      updateUserData(user.id, userDataTypes.SAVED_ITEMS, nextLikedProducts)
+      updateUserData(user.id, {[userDataTypes.SAVED_ITEMS]: nextLikedProducts})
         .then(response => {})
         .catch(error => {
           setSavedItems(previousLikeProducts);
@@ -140,11 +136,9 @@ export const useCartState = user => {
       );
       setOrderedItems(nextOrderedItems);
       successAlert('Product was removed from cart successfully');
-      updateUserData(
-        user.id,
-        userDataTypes.ORDERED_ITEMS,
-        nextOrderedItems,
-      ).catch(() => {
+      updateUserData(user.id, {
+        [userDataTypes.ORDERED_ITEMS]: nextOrderedItems,
+      }).catch(() => {
         setOrderedItems(previousOrderedItems);
         errorAlert('Product failed to be removed from cart');
       });

@@ -72,7 +72,6 @@ const CheckoutInfo = ({savedValues, onSubmit}) => {
     <Screen>
       <View style={styles.container}>
         <AppText style={styles.header}>Customer Delivery Information</AppText>
-
         <AppForm
           initialValues={savedValues ? savedValues : initialValues}
           validationSchema={checkoutInfo_VS}

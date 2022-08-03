@@ -15,6 +15,8 @@ import SavedScreen from '../screens/SavedScreen';
 import UserDetailsScreen from '../screens/UserDetailsScreen';
 import ChangePasswordScreen from '../screens/ChangePasswordScreen';
 import AddressBookScreen from '../screens/AddressBookScreen';
+import ForgottenPasswordScreen from '../screens/ForgottenPasswordScreen';
+import OnBoardingScreen from '../screens/OnBoardingScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -25,6 +27,13 @@ const HomeStack = props => {
       screenOptions={{
         header: ({...allProps}) => <Header {...allProps} />,
       }}>
+      <Stack.Screen
+        name={routes.ONBOARDINGSCREEN}
+        component={OnBoardingScreen}
+        options={{
+          headerShown: false,
+        }}
+      />
       <Stack.Screen
         name={'eShop'}
         component={AppNavigator}
@@ -82,6 +91,10 @@ const HomeStack = props => {
       <Stack.Screen
         name={routes.CHANGEPASSWORD}
         component={ChangePasswordScreen}
+      />
+      <Stack.Screen
+        name={routes.FORGOTPASSWORD}
+        component={ForgottenPasswordScreen}
       />
 
       {!user && <Stack.Screen name={routes.SIGNUP} component={SignupScreen} />}
