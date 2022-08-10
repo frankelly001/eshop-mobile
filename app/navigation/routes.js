@@ -1,6 +1,7 @@
 export default Object.freeze({
   HOMETAB: 'HomeTab',
   HOME: 'Home',
+  ESHOP: 'eShop',
   CATEGORIESTAB: 'CategoriesTab',
   CATEGORIES: 'Categories',
   FEEDTAB: 'FeedTab',
@@ -19,6 +20,10 @@ export default Object.freeze({
   SAVED: 'Saved',
   USERDETAILS: 'My Profile',
   CHANGEPASSWORD: 'Change Password',
+  RECENTLY_VIEWED: 'Recently Viewed',
+  RECENTLY_SEARCHED: 'Recently Searched',
+  PENDING_REVIEWS: 'Pending Reviews',
+  VOUCHERS: 'Vouchers',
   ADDRESSBOOK: 'Address Book',
   FORGOTPASSWORD: 'Forgot Password',
   ONBOARDINGSCREEN: 'OnBoardingScreen',

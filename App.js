@@ -11,6 +11,7 @@ import {auth} from './app/api/setup/config';
 import {
   authStorageKeys,
   getUserData,
+  removeUserData,
   storeUserData,
 } from './app/api/storage/authStorage';
 import {getCategories} from './app/api/setup/getApi/getCategories';
@@ -38,6 +39,7 @@ const App = () => {
   });
   const [ordered, setOrdered] = useState([]);
   const [recentQueries, setRecentQueries] = useState([]);
+  const [idRecentlyViewed, setIdRecentlyViewed] = useState([]);
   const [user, setUser] = useState();
   const [initializing, setInitializing] = useState(false);
 
@@ -82,9 +84,24 @@ const App = () => {
     dispatchAction({type: actionTypes.REMOVE_FROM_CART, id});
   };
 
-  // console.log(orderedItems, savedItems, 'kkkkkkkkkkllopp');
+  const addToRecentView = productId => {
+    // onPress();
+    const results = [
+      productId,
+      ...idRecentlyViewed.filter(el => el !== productId),
+    ].slice(0, 10);
+    storeUserData(authStorageKeys.RECENT_VIEWS, results);
+    setIdRecentlyViewed(results);
+  };
 
-  // console.log(netinfo);
+  const addToRecentQuery = newQuery => {
+    const results = [
+      newQuery,
+      ...recentQueries.filter(el => el !== newQuery),
+    ].slice(0, 10);
+    setRecentQueries(results);
+    storeUserData(authStorageKeys.RECENT_QUERIES, results);
+  };
 
   const onAuthStateChanged = account => {
     // console.log(account, 'checking verification outside condition');
@@ -133,13 +150,12 @@ const App = () => {
               toast.types.INFO,
               `Hello ${user.name.firstname}, Please go to Account and Verify your Account`,
             );
-          }, 1000);
+          }, 1500);
         // initializeCartState(data);
         // console.log(data, 'DATA................');
       })
       .catch(err => {
         setUser(null);
-        console.log('error');
       });
     getUserData(authStorageKeys.RECENT_QUERIES)
       .then(data => {
@@ -148,6 +164,23 @@ const App = () => {
       .catch(() => {
         setRecentQueries([]);
       });
+    getUserData(authStorageKeys.RECENT_VIEWS)
+      .then(recentView => {
+        if (recentView) setIdRecentlyViewed(recentView);
+      })
+      .catch(() => {
+        setIdRecentlyViewed([]);
+      });
+  };
+
+  const clearRecentQuery = () => {
+    removeUserData(authStorageKeys.RECENT_QUERIES);
+    setRecentQueries([]);
+  };
+
+  const clearRecentView = () => {
+    removeUserData(authStorageKeys.RECENT_VIEWS);
+    setIdRecentlyViewed([]);
   };
 
   // useEffect(() => {
@@ -273,6 +306,8 @@ const App = () => {
     },
   };
 
+  // console.log(idRecentlyViewed, 'loppp');
+
   if (initializing) return null;
   return (
     <>
@@ -289,10 +324,15 @@ const App = () => {
           subTotal,
           delivery,
           total,
-          setRecentQueries,
-          recentQueries,
+          // setRecentQueries,
           user,
           setUser,
+          addToRecentQuery,
+          addToRecentView,
+          recentQueries,
+          idRecentlyViewed,
+          clearRecentQuery,
+          clearRecentView,
           addToCart,
           savedItems,
           subFromCart,

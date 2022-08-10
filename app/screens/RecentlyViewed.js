@@ -2,28 +2,28 @@ import React, {useContext, useEffect, useState} from 'react';
 import {FlatList, StyleSheet, View} from 'react-native';
 import AuthContext from '../auth/AuthContext';
 import AppText from '../components/AppText';
-import DisplayMesssage from '../components/DisplayMesssage';
 import ProductCard from '../components/ProductCard';
 import ProductsLoader from '../components/SkeletonLoader/ProductsLoader';
 import colors from '../config/colors';
 import fonts from '../config/fonts';
-import {wp} from '../config/responsiveSize';
 import routes from '../navigation/routes';
 import {formatData} from '../utilities/formatData';
 
-const SavedScreen = ({navigation}) => {
-  const {savedItems, products, loading} = useContext(AuthContext);
+const RecentlyViewed = ({navigation}) => {
+  const {idRecentlyViewed, products, loading} = useContext(AuthContext);
 
   if (loading.products) return <ProductsLoader />;
-  let savedProducts = products.filter(el => savedItems.includes(el.id));
+  const recentlyViewed = products.filter(el =>
+    idRecentlyViewed.includes(el.id),
+  );
 
   return (
     <>
-      {savedProducts.length ? (
+      {recentlyViewed.length ? (
         <FlatList
           showsVerticalScrollIndicator={false}
           numColumns={2}
-          data={formatData(savedProducts, 2)}
+          data={formatData(recentlyViewed, 2)}
           // style={{flex: 1}}
           // contentContainerStyle={styles.container}
           key={product => product.id.toString()}
@@ -44,9 +44,9 @@ const SavedScreen = ({navigation}) => {
         />
       ) : (
         <View style={styles.container}>
-          <AppText style={styles.text}>No Save</AppText>
+          <AppText style={styles.text}>No item recently viewed</AppText>
           <AppText style={styles.subText}>
-            You don't have any Saved Items.
+            You haven't viewed any item since you logged in.
           </AppText>
         </View>
       )}
@@ -61,13 +61,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  animatedIcon: {
-    width: wp(380),
-    height: wp(380),
-  },
-  activityContainer: {
-    backgroundColor: colors.white,
-  },
   text: {
     fontFamily: fonts.semi_bold,
   },
@@ -76,4 +69,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default SavedScreen;
+export default RecentlyViewed;

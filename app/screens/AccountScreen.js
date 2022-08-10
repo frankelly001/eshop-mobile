@@ -34,7 +34,8 @@ import LogoutNotice from '../components/LogoutNotice';
 const {height} = Dimensions.get('screen');
 
 const AccountScreen = ({navigation}) => {
-  const {user, setUser, setRecentQueries} = useContext(AuthContext);
+  const {user, setUser, clearRecentQuery, clearRecentView} =
+    useContext(AuthContext);
   const [mailNotice, setMailNotice] = useState(false);
   const [logoutNotice, setLogoutNotice] = useState(false);
 
@@ -47,14 +48,12 @@ const AccountScreen = ({navigation}) => {
         setLogoutNotice(false);
         showToast(toast.types.INFO, snapshot);
         setUser(null);
-
-        // clearCartState();
+        clearRecentQuery();
+        clearRecentView();
       })
       .catch(error => {
         alert(error);
       });
-    removeUserData(authStorageKeys.RECENT_QUERIES);
-    setRecentQueries([]);
   };
 
   const updateUserData_verified = verification => {

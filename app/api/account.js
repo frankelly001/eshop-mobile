@@ -41,6 +41,7 @@ const AccountDetails = {
           style={style}
         />
       ),
+      routeName: routes.VOUCHERS,
     },
     {
       _id: '4',
@@ -53,6 +54,7 @@ const AccountDetails = {
           style={style}
         />
       ),
+      routeName: routes.PENDING_REVIEWS,
     },
     {
       _id: '5',
@@ -65,6 +67,7 @@ const AccountDetails = {
           style={style}
         />
       ),
+      routeName: routes.RECENTLY_VIEWED,
     },
     {
       _id: '6',
@@ -77,6 +80,7 @@ const AccountDetails = {
           style={style}
         />
       ),
+      routeName: routes.RECENTLY_SEARCHED,
     },
   ],
 };

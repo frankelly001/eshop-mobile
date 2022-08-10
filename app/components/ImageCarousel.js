@@ -42,15 +42,16 @@ const ImageCarousel = ({categories}) => {
   const scrollRef = useRef(null);
 
   useEffect(() => {
-    scrollRef?.current?.scrollTo({
-      animated: true,
-      y: 0,
-      x: width * selectedIndex,
-    });
+    const currentIndex =
+      selectedIndex === images.length - 1 ? 0 : selectedIndex + 1;
     const interval = setInterval(() => {
-      setSelectedIndex(
-        selectedIndex === images.length - 1 ? 0 : selectedIndex + 1,
-      );
+      scrollRef?.current?.scrollTo({
+        animated: true,
+        y: 0,
+        x: width * currentIndex,
+      });
+
+      setSelectedIndex(currentIndex);
     }, 3000);
     return () => clearInterval(interval);
   });
@@ -99,7 +100,7 @@ const ImageCarousel = ({categories}) => {
         horizontal
         showsHorizontalScrollIndicator={false}
         contentContainerStyle={{
-          backgroundColor: colors.grey_light,
+          backgroundColor: colors.white,
           paddingHorizontal: 5,
         }}>
         {categories.map(category => (

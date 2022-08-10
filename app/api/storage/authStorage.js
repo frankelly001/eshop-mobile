@@ -5,6 +5,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 const authStorageKeys = {
   USER_DATA: 'USER_DATA',
   RECENT_QUERIES: 'RECENT_QUERIES',
+  RECENT_VIEWS: 'RECENT_VIEWS',
+  APP_USE_READY: 'APP_USE_READY',
 };
 
 const storeUserData = async (key, value) => {

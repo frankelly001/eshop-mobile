@@ -50,7 +50,8 @@ const HomeLoader = props => {
   return (
     <ScrollView
       showsVerticalScrollIndicator={false}
-      contentContainerStyle={{paddingBottom: 60}}>
+      // contentContainerStyle={{paddingBottom: 60}}
+    >
       <View>
         <SkeletonPlaceholder>
           <View

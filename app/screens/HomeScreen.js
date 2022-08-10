@@ -24,7 +24,7 @@ const HomeScreen = ({navigation}) => {
     <>
       {products.length && !errors.products ? (
         <SectionList
-          contentContainerStyle={{paddingBottom: 60}}
+          // contentContainerStyle={{paddingBottom: 60}}
           showsVerticalScrollIndicator={false}
           ListHeaderComponent={() => (
             <ImageCarousel categories={[...categories.map(el => el.title)]} />

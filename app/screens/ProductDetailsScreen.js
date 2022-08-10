@@ -23,18 +23,32 @@ import AppGradientBtn from '../components/AppGradientBtn';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 import {fontSz, hp, wp} from '../config/responsiveSize';
 import fonts from '../config/fonts';
+import ProductDetailsLoader from '../components/SkeletonLoader/ProductDetailsLoader';
 
 const {width, height} = Dimensions.get('screen');
 
 const ProductDetailsScreen = ({route}) => {
-  const [loading, setLoading] = useState(false);
   const [productId, setProductId] = useState(route.params);
-  const {products, ordered, addToCart} = useContext(AuthContext);
+  const {products, ordered, addToCart, addToRecentView} =
+    useContext(AuthContext);
 
   const [product, setProduct] = useState({});
   const [productCategogies, setProductCategogies] = useState([]);
   const [quantityOrdered, setQuantityOrdered] = useState();
   const [selectedIndex, setSelectedIndex] = useState(0);
+
+  // const product = products.find(prod => prod.id === productId);
+  // const productCategogies = products.filter(
+  //   el =>
+  //     el.category?.group?.type === product.category?.group?.type &&
+  //     el.id !== product.id,
+  // );
+  // const quantityOrdered = ordered.find(el => el.id === product.id)?.quantity;
+  // useEffect(() => {
+  //   addToRecentView(productId);
+  // }, [productId]);
+
+  // console.log('lollllli');
 
   const scrollView = useRef();
   const [value, setValue] = useState(1);
@@ -52,6 +66,7 @@ const ProductDetailsScreen = ({route}) => {
     setProduct(productObj);
     setProductCategogies(productObjCategogies);
     setQuantityOrdered(qtyOrdered);
+    addToRecentView(productId);
 
     return function cleanUp() {};
   }, [productId, ordered]);
@@ -99,107 +114,107 @@ const ProductDetailsScreen = ({route}) => {
   };
 
   // console.log('Product Details Screen rendering ');
-  if (!Object.entries(product).length) return null;
+  if (!Object.entries(product).length) return <ProductDetailsLoader />;
+  // if (1) return <ProductDetailsLoader />;
   return (
     <Screen scrollView={scrollView}>
-      {!loading && (
-        <View style={styles.container}>
-          <View style={[styles.imageContainer, {backgroundColor: 'red'}]}>
-            <ScrollView
-              horizontal
-              pagingEnabled
-              onMomentumScrollEnd={uptSelectedIndex}
-              // onScroll={uptSelectedIndex}
-              showsHorizontalScrollIndicator={false}
-              ref={scrollRef}>
-              {product.images.map(img => (
-                // <Image key={img} source={{uri: img}} style={styles.carouselImage} />
+      <View style={styles.container}>
+        <View style={[styles.imageContainer, {backgroundColor: 'red'}]}>
+          <ScrollView
+            horizontal
+            pagingEnabled
+            onMomentumScrollEnd={uptSelectedIndex}
+            // onScroll={uptSelectedIndex}
+            showsHorizontalScrollIndicator={false}
+            ref={scrollRef}>
+            {product.images.map(img => (
+              // <Image key={img} source={{uri: img}} style={styles.carouselImage} />
+              <Image
+                resizeMode="stretch"
+                key={img}
+                source={{uri: img}}
+                style={styles.image}
+              />
+            ))}
+          </ScrollView>
+          <View style={styles.selectionContainer}>
+            {product.images.map((img, i) => (
+              <Pressable
+                style={[
+                  styles.selectImage,
+                  {opacity: i !== selectedIndex ? 0.3 : 1},
+                ]}
+                key={img}
+                onPress={() => setSelectedIndex(i)}>
                 <Image
                   resizeMode="stretch"
                   key={img}
                   source={{uri: img}}
-                  style={styles.image}
+                  style={{width: '100%', height: '100%'}}
                 />
-              ))}
-            </ScrollView>
-            <View style={styles.selectionContainer}>
-              {product.images.map((img, i) => (
-                <Pressable
-                  style={[
-                    styles.selectImage,
-                    {opacity: i !== selectedIndex ? 0.3 : 1},
-                  ]}
-                  key={img}
-                  onPress={() => setSelectedIndex(i)}>
-                  <Image
-                    resizeMode="stretch"
-                    key={img}
-                    source={{uri: img}}
-                    style={{width: '100%', height: '100%'}}
-                  />
-                </Pressable>
-              ))}
-            </View>
-          </View>
-          <View style={{padding: 12}}>
-            <AppText style={styles.title}>{product.title}</AppText>
-            <AppText style={styles.price}>
-              {formatToCurrency(product.price)}
-            </AppText>
-            <View style={styles.actionContainer}>
-              <View style={styles.iconRatings}>
-                {starRating(product.rating.rate).map(starType => (
-                  <FontAwesomeIcon
-                    color={colors.yellow}
-                    size={fontSz(20)}
-                    key={starType.id}
-                    name={starType.star}
-                  />
-                ))}
-              </View>
-              <AppText style={styles.label}>
-                ({product.rating.count} verified rating)
-              </AppText>
-            </View>
-            <View style={styles.actionContainer}>
-              <LikeBtn productId={product.id} />
-              <AppText style={styles.label}>Save for later</AppText>
-            </View>
-            <View style={styles.quantityContainer}>
-              <AppText style={styles.headerLabel}>
-                Quantity{' '}
-                {quantityOrdered && (
-                  <AppText style={styles.orderedQty}>
-                    (ordered: {quantityOrdered})
-                  </AppText>
-                )}
-              </AppText>
-              <PlusMinusInputBtn
-                add={add}
-                sub={sub}
-                onBlur={updateInput}
-                onChangeText={handleChange}
-                value={value}
-              />
-              <AppGradientBtn
-                label="add to Cart"
-                labelStyle={styles.btnLabel}
-                style={styles.addToCartBtn}
-                onPress={() => {
-                  addToCart(product.id, value < 1 ? 1 : value);
-                  setValue(1);
-                }}
-              />
-            </View>
-            <View>
-              <AppText style={styles.headerLabel}>Product Description</AppText>
-              <AppText style={styles.description} numberOfLines={20}>
-                {product.description}
-              </AppText>
-            </View>
+              </Pressable>
+            ))}
           </View>
         </View>
-      )}
+        <View style={{padding: 12}}>
+          <AppText style={styles.title}>{product.title}</AppText>
+          <AppText style={styles.price}>
+            {formatToCurrency(product.price)}
+          </AppText>
+          <View style={styles.actionContainer}>
+            <View style={styles.iconRatings}>
+              {starRating(product.rating.rate).map(starType => (
+                <FontAwesomeIcon
+                  color={colors.yellow}
+                  size={fontSz(20)}
+                  key={starType.id}
+                  name={starType.star}
+                />
+              ))}
+            </View>
+            <AppText style={styles.label}>
+              ({product.rating.count} verified rating)
+            </AppText>
+          </View>
+          <View style={styles.actionContainer}>
+            <LikeBtn productId={product.id} />
+            <AppText style={styles.label}>Save for later</AppText>
+          </View>
+          <View style={styles.quantityContainer}>
+            <AppText style={styles.headerLabel}>
+              Quantity{' '}
+              {quantityOrdered && (
+                <AppText style={styles.orderedQty}>
+                  (ordered: {quantityOrdered})
+                </AppText>
+              )}
+            </AppText>
+            <PlusMinusInputBtn
+              add={add}
+              sub={sub}
+              onBlur={updateInput}
+              onChangeText={handleChange}
+              value={value}
+            />
+            <AppGradientBtn
+              label="add to Cart"
+              labelStyle={styles.btnLabel}
+              style={styles.addToCartBtn}
+              onPress={() => {
+                addToCart(product.id, value < 1 ? 1 : value);
+                setValue(1);
+              }}
+            />
+          </View>
+          <View>
+            <AppText style={styles.headerLabel}>Product Description</AppText>
+            <AppText style={styles.description} numberOfLines={20}>
+              {product.description}
+            </AppText>
+          </View>
+        </View>
+      </View>
+
       {productCategogies.length > 0 && (
         <View>
           <AppText style={[styles.headerLabel, styles.relatedHeader]}>

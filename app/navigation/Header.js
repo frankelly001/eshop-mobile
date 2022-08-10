@@ -25,7 +25,7 @@ import {authStorageKeys, storeUserData} from '../api/storage/authStorage';
 import queryApi from '../api/setup/queryApi/queryApi';
 
 const Header = ({navigation, options, route}) => {
-  const {orderedNum, recentQueries, setRecentQueries} = useContext(AuthContext);
+  const {orderedNum, recentQueries, addToRecentQuery} = useContext(AuthContext);
   // const [disableBackBtn, setDisableBackBtn] = useState(true);
   // const [disableHeaderRight, setDisableHeaderRight] = useState(true);
   // const [backIcon, setBackIcon] = useState('arrow-left');
@@ -43,15 +43,14 @@ const Header = ({navigation, options, route}) => {
     seachBtnContainerAnimatedStyle,
   } = useAnimatedHeaderStyles(searchToggle, inputRef);
 
-  const headerRightConditions = [
-    routes.ACCOUNT,
-    routes.SIGNUP,
-    routes.LOGIN,
-    routes.HELP,
-    routes.CART,
-    routes.CHECKOUT,
+  const allowHeaderRightConditions = [
+    routes.HOME,
+    routes.CATEGORIES,
+    routes.PRODUCTDETAILS,
+    routes.FEED,
+    routes.SEARCHED,
   ];
-  const backBtnConditions = [
+  const removeBackBtnConditions = [
     routes.HOME,
     routes.CATEGORIES,
     routes.FEED,
@@ -67,12 +66,13 @@ const Header = ({navigation, options, route}) => {
     let results;
     if (searchToggle && newQuery) {
       // if (!recentQuery)
-      results = [
-        newQuery,
-        ...recentQueries.filter(el => el !== newQuery),
-      ].slice(0, 10);
-      storeUserData(authStorageKeys.RECENT_QUERIES, results);
-      setRecentQueries(results);
+      // results = [
+      //   newQuery,
+      //   ...recentQueries.filter(el => el !== newQuery),
+      // ].slice(0, 10);
+      // storeUserData(authStorageKeys.RECENT_QUERIES, results);
+      // setRecentQueries(results);
+      addToRecentQuery(newQuery);
       // console.log(results, 'kkkkkklop');
       navigation.navigate(routes.SEARCHED, {
         query: newQuery,
@@ -95,7 +95,7 @@ const Header = ({navigation, options, route}) => {
               paddingRight: 20,
             },
           ]}>
-          {(!backBtnConditions.includes(route.name) || searchToggle) && (
+          {(!removeBackBtnConditions.includes(route.name) || searchToggle) && (
             <TouchableHighlight
               // hitSlop={{top: 20, bottom: 20, right: 20, left: 20}}
               onPress={() =>
@@ -139,7 +139,7 @@ const Header = ({navigation, options, route}) => {
           />
         </Animated.View>
 
-        {!headerRightConditions.includes(route.name) && (
+        {allowHeaderRightConditions.includes(route.name) && (
           <Animated.View style={[headerRightAnimatedStyle]}>
             <View style={styles.headerRight}>
               <TouchableOpacity onPress={() => handleSearch()}>

@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import ProductDetailsScreen from '../screens/ProductDetailsScreen';
 import AppNavigator from './AppNavigator';
@@ -17,25 +17,44 @@ import ChangePasswordScreen from '../screens/ChangePasswordScreen';
 import AddressBookScreen from '../screens/AddressBookScreen';
 import ForgottenPasswordScreen from '../screens/ForgottenPasswordScreen';
 import OnBoardingScreen from '../screens/OnBoardingScreen';
+import RecentlyViewed from '../screens/RecentlyViewed';
+import RecentlySearched from '../screens/RecentlySearched';
+import VouchersScreen from '../screens/VouchersScreen';
+import PendingReviewsScreen from '../screens/PendingReviewsScreen';
+import {authStorageKeys, getUserData} from '../api/storage/authStorage';
 
 const Stack = createNativeStackNavigator();
 
 const HomeStack = props => {
   const {orderedNum, user} = useContext(AuthContext);
+  const [appUseReady, setAppUseReady] = useState(null);
+
+  useEffect(() => {
+    getUserData(authStorageKeys.APP_USE_READY).then(readyForUse => {
+      console.log(readyForUse, 'appUse');
+      if (readyForUse) setAppUseReady(true);
+      else setAppUseReady(false);
+    });
+  }, []);
+
+  if (appUseReady === null) return null;
   return (
     <Stack.Navigator
       screenOptions={{
         header: ({...allProps}) => <Header {...allProps} />,
       }}>
+      {!appUseReady && (
+        <Stack.Screen
+          name={routes.ONBOARDINGSCREEN}
+          component={OnBoardingScreen}
+          options={{
+            headerShown: false,
+          }}
+        />
+      )}
+
       <Stack.Screen
-        name={routes.ONBOARDINGSCREEN}
-        component={OnBoardingScreen}
-        options={{
-          headerShown: false,
-        }}
-      />
-      <Stack.Screen
-        name={'eShop'}
+        name={routes.ESHOP}
         component={AppNavigator}
         options={{
           title: 'eShop',
@@ -88,6 +107,16 @@ const HomeStack = props => {
       <Stack.Screen name={routes.SAVED} component={SavedScreen} />
       <Stack.Screen name={routes.ADDRESSBOOK} component={AddressBookScreen} />
       <Stack.Screen name={routes.USERDETAILS} component={UserDetailsScreen} />
+      <Stack.Screen name={routes.RECENTLY_VIEWED} component={RecentlyViewed} />
+      <Stack.Screen name={routes.VOUCHERS} component={VouchersScreen} />
+      <Stack.Screen
+        name={routes.PENDING_REVIEWS}
+        component={PendingReviewsScreen}
+      />
+      <Stack.Screen
+        name={routes.RECENTLY_SEARCHED}
+        component={RecentlySearched}
+      />
       <Stack.Screen
         name={routes.CHANGEPASSWORD}
         component={ChangePasswordScreen}

@@ -9,10 +9,13 @@ import {
   Dimensions,
   FlatList,
 } from 'react-native';
+import {authStorageKeys, storeUserData} from '../api/storage/authStorage';
+import AppButton from '../components/AppButton';
 import AppText from '../components/AppText';
 import colors from '../config/colors';
 import fonts from '../config/fonts';
 import {fontSz} from '../config/responsiveSize';
+import routes from '../navigation/routes';
 // import {TouchableOpacity} from 'react-native-gesture-handler';
 const {width, height} = Dimensions.get('screen');
 
@@ -20,36 +23,39 @@ const {width, height} = Dimensions.get('screen');
 // inspiration: https://dribbble.com/shots/11164698-Onboarding-screens-animation
 // https://twitter.com/mironcatalin/status/1321180191935373312
 
-const bgs = ['#A5BBFF', '#DDBEFE', '#FF63ED', '#B98EFF'];
+// const bgs = ['#b5057a', '#dc3545', '#5d05b5', '#9E1E7C'];
+const bgs = ['#b5057a', '#dc3545', '#5d05b5', '#616161'];
+// const bgs = ['#A5BBFF', '#DDBEFE', '#FF63ED', '#B98EFF'];
 const DATA = [
   {
     key: '3571572',
-    title: 'Multi-lateral intermediate moratorium',
+    title: 'Welcome to eShop',
     description:
-      "I'll back up the multi-byte XSS matrix, that should feed the SCSI application!",
+      "eShop Nigeria is #1 Online store in Nigeria, it's an Online Store for all kinds of Products & Services",
     image: 'https://m.media-amazon.com/images/I/41ypb39SsSL._SY450_.jpg',
   },
   {
-    key: '3571747',
-    title: 'Automated radical data-warehouse',
+    key: '3571603',
+    title: 'Easy Shoping',
     description:
-      'Use the optical SAS system, then you can navigate the auxiliary alarm!',
+      'Shop Online for All Kinds of Products, Services & Enjoy Great Prices, Deals And Offers.',
+    image:
+      'https://rukminim1.flixcart.com/image/416/416/kj7gwi80-0/stuffed-toy/m/w/m/3-feet-blue-american-style-extra-large-jumbo-huggable-teddy-bear-original-imafytxshhm6fvny.jpeg?q=70',
+  },
+  {
+    key: '3571747',
+    title: 'Secure Payment',
+    description:
+      'An online shop you can trust with your payments. Order now and enjoy pay on delivery!',
     image:
       'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTcvK7EtesmM7rCG9lNqhmh8_kyQRx3zEq4QyiKicr50Mcx99Jwd_pLi5wM4dAy9i-UCWw&usqp=CAU',
   },
   {
     key: '3571680',
-    title: 'Inverse attitude-oriented system engine',
+    title: 'Quick Delivery',
     description:
-      'The ADP array is down, compress the online sensor so we can input the HTTP panel!',
+      'Get your ordered items within 24hours in Lagos and 3 days in other parts of the state in Nigeria',
     image: 'https://image.smythstoys.com/zoom/198273_5.jpg',
-  },
-  {
-    key: '3571603',
-    title: 'Monitored global data-warehouse',
-    description: 'We need to program the open-source IB interface!',
-    image:
-      'https://rukminim1.flixcart.com/image/416/416/kj7gwi80-0/stuffed-toy/m/w/m/3-feet-blue-american-style-extra-large-jumbo-huggable-teddy-bear-original-imafytxshhm6fvny.jpeg?q=70',
   },
 ];
 
@@ -119,8 +125,8 @@ const Square = ({scrollX}) => {
       style={{
         width: height,
         height: height,
-        backgroundColor: '#fff',
-        borderRadius: 86,
+        backgroundColor: colors.grey_light,
+        borderRadius: 120,
         position: 'absolute',
         top: -height * 0.6,
         left: -height * 0.3,
@@ -137,8 +143,10 @@ const Square = ({scrollX}) => {
   );
 };
 
-const OnBoardingScreen = () => {
+const OnBoardingScreen = ({navigation}) => {
   const scrollX = React.useRef(new Animated.Value(0)).current;
+
+  // console.log(scrollX, 'XXXXX');
 
   return (
     <View style={styles.container}>
@@ -157,13 +165,13 @@ const OnBoardingScreen = () => {
         showsHorizontalScrollIndicator={false}
         pagingEnabled
         keyExtractor={item => item.key}
-        renderItem={({item}) => {
+        renderItem={({item, index}) => {
           return (
             <View style={{width, alignItems: 'center', padding: 20}}>
               <View
                 style={{
                   flex: 0.7,
-                  //   backgroundColor: 'red',
+                  // backgroundColor: 'red',
                   justifyContent: 'center',
                 }}>
                 <Image
@@ -175,20 +183,40 @@ const OnBoardingScreen = () => {
                   }}
                 />
               </View>
-              <View>
+              <View style={{width: '100%'}}>
                 <AppText
                   style={{
-                    fontFamily: fonts.bold,
+                    fontFamily: fonts.extra_bold,
                     fontSize: fontSz(28),
                     marginBottom: 10,
                     color: colors.white,
                   }}>
                   {item.title}
                 </AppText>
-                <AppText style={{color: colors.white}}>
+                <AppText
+                  style={{color: colors.white, fontFamily: fonts.semi_bold}}>
                   {item.description}
                 </AppText>
               </View>
+
+              {index + 1 === DATA.length && (
+                <AppButton
+                  label="Let's Shop!"
+                  onPress={() => {
+                    navigation.navigate(routes.ESHOP);
+                    storeUserData(authStorageKeys.APP_USE_READY, true);
+                  }}
+                  bgStyle={{
+                    width: '50%',
+                    position: 'absolute',
+                    right: 20,
+                    bottom: 20,
+                    backgroundColor: 'transparent',
+                    borderWidth: 1,
+                    borderColor: colors.white,
+                  }}
+                />
+              )}
             </View>
           );
         }}
