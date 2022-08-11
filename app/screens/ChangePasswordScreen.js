@@ -101,15 +101,11 @@ const styles = StyleSheet.create({
   formContainer: {
     width: '100%',
   },
-  header: {
-    fontSize: fontSz(18),
-    fontFamily: fonts.bold,
-    marginBottom: 10,
-  },
   subHeader: {
-    fontSize: fontSz(12),
+    fontSize: fontSz(10),
     color: colors.grey_dark_4,
     fontFamily: fonts.bold,
+    marginBottom: 5,
   },
 });
 

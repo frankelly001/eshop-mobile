@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
   notice: {
     textAlign: 'center',
     marginTop: 30,
-    fontSize: fontSz(14),
+    fontSize: fontSz(10.5),
   },
   noticeLink: {
     color: colors.purple,

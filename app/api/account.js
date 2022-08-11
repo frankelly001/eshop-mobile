@@ -8,24 +8,22 @@ const AccountDetails = {
     {
       _id: '1',
       name: 'Orders',
-      icon: ({size, style}) => (
+      icon: ({...otherProps}) => (
         <Icon
           type={Icons.MaterialCommunityIcons}
           name="shopping-outline"
-          size={size}
-          style={style}
+          {...otherProps}
         />
       ),
     },
     {
       _id: '2',
       name: 'Saved',
-      icon: ({size, style}) => (
+      icon: ({...otherProps}) => (
         <Icon
           type={Icons.MaterialCommunityIcons}
           name="heart-outline"
-          size={size}
-          style={style}
+          {...otherProps}
         />
       ),
       routeName: routes.SAVED,
@@ -33,12 +31,11 @@ const AccountDetails = {
     {
       _id: '3',
       name: 'Vouchers',
-      icon: ({size, style}) => (
+      icon: ({...otherProps}) => (
         <Icon
           type={Icons.MaterialCommunityIcons}
           name="wallet-giftcard"
-          size={size}
-          style={style}
+          {...otherProps}
         />
       ),
       routeName: routes.VOUCHERS,
@@ -46,12 +43,11 @@ const AccountDetails = {
     {
       _id: '4',
       name: 'Pending Reviews',
-      icon: ({size, style}) => (
+      icon: ({...otherProps}) => (
         <Icon
           type={Icons.MaterialIcons}
           name="pending-actions"
-          size={size}
-          style={style}
+          {...otherProps}
         />
       ),
       routeName: routes.PENDING_REVIEWS,
@@ -59,25 +55,19 @@ const AccountDetails = {
     {
       _id: '5',
       name: 'Recently Viewed',
-      icon: ({size, style}) => (
-        <Icon
-          type={Icons.Entypo}
-          name="back-in-time"
-          size={size}
-          style={style}
-        />
+      icon: ({...otherProps}) => (
+        <Icon type={Icons.Entypo} name="back-in-time" {...otherProps} />
       ),
       routeName: routes.RECENTLY_VIEWED,
     },
     {
       _id: '6',
       name: 'Recently Searched',
-      icon: ({size, style}) => (
+      icon: ({...otherProps}) => (
         <Icon
           type={Icons.MaterialIcons}
           name="youtube-searched-for"
-          size={size}
-          style={style}
+          {...otherProps}
         />
       ),
       routeName: routes.RECENTLY_SEARCHED,

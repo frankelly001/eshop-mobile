@@ -199,9 +199,7 @@ const styles = StyleSheet.create({
   btnContainerStyle: {
     width: '49.5%',
   },
-  btnLabel: {
-    fontSize: fontSz(15),
-  },
+
   link: {
     // fontFamily: fonts.bold,
     // marginTop: 5,

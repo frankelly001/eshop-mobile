@@ -76,7 +76,7 @@ const useAnimatedHeaderStyles = (animationSwitch, inputRef) => {
   // useEffect(() => {
   if (animationSwitch) {
     headerLeftTranlateX.value = -wp(500);
-    headerRightTranlateX.value = wp(85);
+    headerRightTranlateX.value = wp(78);
     searchBtnStyleVal.value = 10;
 
     searchBtnColor.value = colors.purple;

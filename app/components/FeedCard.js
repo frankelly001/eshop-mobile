@@ -21,12 +21,14 @@ const FeedCard = ({feed}) => {
         <View style={styles.imageContainer}>
           <Image resizeMode="cover" style={styles.image} source={feed.image} />
         </View>
-        <AppGradientText numberOfLines={1} style={styles.title}>
-          {feed.title}
-        </AppGradientText>
-        <AppText numberOfLines={2} style={styles.description}>
-          {feed.description}
-        </AppText>
+        <View style={styles.textContainer}>
+          <AppGradientText numberOfLines={1} style={styles.title}>
+            {feed.title}
+          </AppGradientText>
+          <AppText numberOfLines={1} style={styles.description}>
+            {feed.description}
+          </AppText>
+        </View>
       </TouchableOpacity>
     </View>
   );
@@ -35,47 +37,62 @@ const FeedCard = ({feed}) => {
 const styles = StyleSheet.create({
   container: {
     // width: '100%',
-    flex: 1,
-    height: wp(180),
-    // backgroundColor: 'yellow',zz
+    // flex: 1,
+    height: hp(180),
+    // height: dimensions.height * 0.2,
+    // backgroundColor: 'yellow',
     justifyContent: 'flex-end',
     marginVertical: 10,
   },
+  textContainer: {
+    // backgroundColor: 'red',
+    flex: 1,
+    justifyContent: 'flex-end',
+    paddingBottom: 10,
+    // position: 'absolute',
+    // bottom: 10,
+  },
   feedContent: {
     alignItems: 'center',
+    // height: hp(120),
+    flex: 0.7,
     // justifyContent: 'flex-end',
     backgroundColor: colors.white,
+    // backgroundColor: colors.purple,
     // flex: 1,
     borderRadius: 20,
-    flex: 0.65,
+    // flex: 0.6,
     // position: 'absolute',
   },
   imageContainer: {
     width: wp(120),
     height: wp(120),
     overflow: 'hidden',
-    borderRadius: wp(120) / 2,
-    marginTop: -wp(120) / 2,
+    borderRadius: hp(120) / 2,
+    marginTop: -hp(120) / 2,
     borderWidth: 5,
     borderColor: colors.white,
     zIndex: 1,
+    // flex: 1,
+    backgroundColor: 'blue',
   },
   image: {
     width: '100%',
     height: '100%',
   },
   title: {
-    fontSize: fontSz(20),
+    // fontSize: fontSz(20),
+    fontSize: fontSz(13),
     fontFamily: fonts.bold,
     textAlign: 'center',
     marginBottom: 3,
   },
   description: {
-    fontSize: fontSz(13),
+    fontSize: fontSz(10),
     textAlign: 'center',
     paddingHorizontal: 15,
     // marginBottom: 15,
-    color: colors.grey_dark_2,
+    color: colors.grey_dark_3,
   },
 });
 

@@ -28,7 +28,13 @@ const ListCard = ({data}) => {
             navigation.navigate(user ? list.routeName : routes.LOGIN)
           }>
           <View style={styles.listItem}>
-            {list.icon && <list.icon size={20} style={{marginRight: 5}} />}
+            {list.icon && (
+              <list.icon
+                size={20}
+                style={{marginRight: 5}}
+                color={colors.grey_dark_3}
+              />
+            )}
             <AppText>{list.name}</AppText>
           </View>
           <FontAwesomeIcon size={20} name="angle-right" />

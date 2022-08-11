@@ -33,7 +33,7 @@ const Header = ({navigation, options, route}) => {
   const [query, setQuery] = useState('');
 
   const inputRef = useRef();
-  const size = wp(20);
+  const size = wp(18);
 
   const {
     headerLeftAnimatedStyle,
@@ -161,9 +161,11 @@ const Header = ({navigation, options, route}) => {
                 onPress={() => navigation.navigate(routes.CART)}>
                 <CartIcon width={size}></CartIcon>
                 {orderedNum > 0 && (
-                  <Text numberOfLines={1} style={styles.cartCount}>
-                    {orderedNum}
-                  </Text>
+                  <View style={styles.cartCount}>
+                    <Text style={styles.countText} numberOfLines={1}>
+                      {orderedNum}
+                    </Text>
+                  </View>
                 )}
               </TouchableOpacity>
             </View>
@@ -173,7 +175,7 @@ const Header = ({navigation, options, route}) => {
       <Animated.View style={recentSearchContainerAnimatedStyle}>
         <AppText
           style={{
-            fontSize: fontSz(12),
+            fontSize: fontSz(10.5),
             // fontWeight: '700',
             fontFamily: fonts.bold,
             backgroundColor: colors.grey_light_4,
@@ -196,12 +198,12 @@ const Header = ({navigation, options, route}) => {
                 paddingHorizontal: 15,
               }}>
               <Octicons
-                size={size - 5}
+                size={size - 8}
                 name="search"
                 style={{marginRight: 5}}
               />
               <AppText
-                style={{fontSize: fontSz(13), fontFamily: fonts.semi_bold}}>
+                style={{fontSize: fontSz(10), fontFamily: fonts.semi_bold}}>
                 {el}
               </AppText>
             </TouchableOpacity>
@@ -228,14 +230,14 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     // backgroundColor: 'red',
   },
+
   cartCount: {
     backgroundColor: colors.purple,
     textAlign: 'center',
     width: wp(16),
     height: wp(16),
-    fontSize: fontSz(12),
+    // fontSize: fontSz(12),
     // fontWeight: '700',
-    color: colors.white,
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 10,
@@ -243,8 +245,13 @@ const styles = StyleSheet.create({
     top: hp(3),
     right: -8,
   },
+  countText: {
+    fontSize: fontSz(8),
+    color: colors.white,
+    fontFamily: fonts.bold,
+  },
   title: {
-    fontSize: fontSz(20),
+    fontSize: fontSz(15),
     fontFamily: fonts.bold,
   },
   headerLeft: {

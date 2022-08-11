@@ -75,7 +75,7 @@ const styles = StyleSheet.create({
     borderRadius: 0,
   },
   tabBtnLabel: {
-    fontSize: fontSz(13),
+    fontSize: fontSz(10),
   },
   btnContainerStyle: {
     width: '49.5%',

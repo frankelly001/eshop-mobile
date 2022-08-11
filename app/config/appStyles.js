@@ -36,7 +36,8 @@ import {fontSz} from './responsiveSize';
 export const AppStyles = {
   text: {
     color: colors.black,
-    fontSize: fontSz(15),
+    // fontSize: fontSz(15),
+    fontSize: fontSz(11),
     fontFamily: fonts.regular,
   },
 };

@@ -85,11 +85,13 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
   },
   title: {
-    fontSize: fontSz(12),
+    // fontSize: fontSz(12),
+    fontSize: fontSz(8),
     textTransform: 'uppercase',
   },
   clickable: {
-    fontSize: fontSz(13),
+    // fontSize: fontSz(13),
+    fontSize: fontSz(10),
     fontFamily: fonts.bold,
   },
   contentContainer: {
@@ -98,7 +100,8 @@ const styles = StyleSheet.create({
     backgroundColor: colors.grey_light,
   },
   typeTitle: {
-    fontSize: fontSz(10),
+    // fontSize: fontSz(10),
+    fontSize: fontSz(7),
     textAlign: 'center',
     padding: 2,
     fontFamily: fonts.semi_bold,

@@ -23,6 +23,7 @@ export const wp = val => {
 };
 
 export const fontSz = size => {
+  // return sizeNum;
   if (pixelRatio >= 2 && pixelRatio < 3) {
     // iphone 5s and older Androids
     if (deviceWidth < 360) {

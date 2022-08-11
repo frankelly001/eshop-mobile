@@ -128,7 +128,8 @@ const styles = StyleSheet.create({
   },
   listofCatHeader: {
     color: colors.white,
-    fontSize: fontSz(13),
+    // fontSize: fontSz(13),
+    fontSize: fontSz(10),
     fontFamily: fonts.bold,
     textAlign: 'center',
     // height: '100%',
@@ -137,6 +138,7 @@ const styles = StyleSheet.create({
   titleOfCat: {
     textAlign: 'center',
     fontFamily: fonts.bold,
+
     color: colors.white,
     textTransform: 'capitalize',
   },
@@ -149,7 +151,7 @@ const styles = StyleSheet.create({
     padding: 5,
   },
   catName: {
-    fontSize: fontSz(11), // 12
+    fontSize: fontSz(8), // 12
     textAlign: 'center',
     textTransform: 'capitalize',
   },

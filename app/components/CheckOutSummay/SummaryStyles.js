@@ -17,12 +17,12 @@ const SummaryStyles = StyleSheet.create({
     paddingVertical: 5,
   },
   modalHeader: {
-    fontSize: fontSz(18),
+    fontSize: fontSz(13),
     fontFamily: fonts.bold,
     color: colors.white,
   },
   modalSubHeader: {
-    fontSize: fontSz(12),
+    fontSize: fontSz(10),
     fontFamily: fonts.bold,
     color: colors.grey_dark_2,
   },
@@ -49,16 +49,16 @@ const SummaryStyles = StyleSheet.create({
     alignItems: 'flex-end',
   },
   title: {
-    fontSize: fontSz(12.5),
+    fontSize: fontSz(10),
     fontFamily: fonts.bold,
     textTransform: 'capitalize',
   },
   subTitle: {
-    fontSize: fontSz(11),
+    fontSize: fontSz(9),
     color: colors.grey_dark_3,
   },
   itemTotal: {
-    fontSize: fontSz(11),
+    fontSize: fontSz(9),
     fontFamily: fonts.bold,
   },
   modalBottomHeaderContainer: {

@@ -130,19 +130,21 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   title: {
-    fontSize: fontSz(13),
+    // fontSize: fontSz(13),
+    fontSize: fontSz(10),
     fontFamily: fonts.bold,
     textTransform: 'capitalize',
   },
   totalPrice: {
-    fontSize: fontSz(15),
+    // fontSize: fontSz(15),
+    fontSize: fontSz(11),
     fontFamily: fonts.bold,
     color: colors.grey_dark_2,
     marginRight: 2,
   },
   totalPriceSum: {
-    fontSize: fontSz(12),
-    color: colors.grey_dark,
+    fontSize: fontSz(10),
+    color: colors.grey_dark_4,
   },
   options: {
     alignItems: 'center',

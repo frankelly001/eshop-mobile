@@ -162,14 +162,15 @@ const styles = StyleSheet.create({
     fontFamily: fonts.bold,
   },
   header: {
-    fontSize: fontSz(18),
+    fontSize: fontSz(15),
     fontFamily: fonts.bold,
     marginBottom: 10,
   },
   subHeader: {
-    fontSize: fontSz(12),
+    fontSize: fontSz(10),
     color: colors.grey_dark_4,
     fontFamily: fonts.bold,
+    marginBottom: 5,
   },
 });
 

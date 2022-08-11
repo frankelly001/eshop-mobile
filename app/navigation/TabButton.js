@@ -4,6 +4,7 @@ import colors from '../config/colors';
 import * as Animatable from 'react-native-animatable';
 import AppText from '../components/AppText';
 import fonts from '../config/fonts';
+import {fontSz} from '../config/responsiveSize';
 
 const TabButton = ({
   onPress,
@@ -53,7 +54,7 @@ const TabButton = ({
               <AppText
                 style={{
                   color: colors.white,
-                  fontSize: 10,
+                  fontSize: fontSz(10),
                   fontFamily: fonts.bold,
                   paddingHorizontal: 8,
                 }}>

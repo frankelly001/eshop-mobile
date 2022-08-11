@@ -131,11 +131,11 @@ const ImageCarousel = ({categories}) => {
                 alignItems: 'center',
                 justifyContent: 'center',
                 backgroundColor: '#35323477',
-                paddingHorizontal: 1.5,
+                paddingHorizontal: 1,
               }}>
               <AppText
                 style={{
-                  fontSize: fontSz(8),
+                  fontSize: fontSz(7),
                   color: colors.white,
                   fontFamily: fonts.extra_bold,
                   textAlign: 'center',

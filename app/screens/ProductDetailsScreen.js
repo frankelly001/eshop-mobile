@@ -32,21 +32,21 @@ const ProductDetailsScreen = ({route}) => {
   const {products, ordered, addToCart, addToRecentView} =
     useContext(AuthContext);
 
-  const [product, setProduct] = useState({});
-  const [productCategogies, setProductCategogies] = useState([]);
-  const [quantityOrdered, setQuantityOrdered] = useState();
+  // const [product, setProduct] = useState({});
+  // const [productCategogies, setProductCategogies] = useState([]);
+  // const [quantityOrdered, setQuantityOrdered] = useState();
   const [selectedIndex, setSelectedIndex] = useState(0);
 
-  // const product = products.find(prod => prod.id === productId);
-  // const productCategogies = products.filter(
-  //   el =>
-  //     el.category?.group?.type === product.category?.group?.type &&
-  //     el.id !== product.id,
-  // );
-  // const quantityOrdered = ordered.find(el => el.id === product.id)?.quantity;
-  // useEffect(() => {
-  //   addToRecentView(productId);
-  // }, [productId]);
+  const product = products.find(prod => prod.id === productId);
+  const productCategogies = products.filter(
+    el =>
+      el.category?.group?.type === product.category?.group?.type &&
+      el.id !== product.id,
+  );
+  const quantityOrdered = ordered.find(el => el.id === product.id)?.quantity;
+  useEffect(() => {
+    addToRecentView(productId);
+  }, [productId]);
 
   // console.log('lollllli');
 
@@ -54,22 +54,22 @@ const ProductDetailsScreen = ({route}) => {
   const [value, setValue] = useState(1);
   const scrollRef = useRef(null);
 
-  useEffect(() => {
-    const productObj = products.find(product => product.id === productId);
-    const productObjCategogies = products.filter(
-      el =>
-        el.category?.group?.type === productObj.category?.group?.type &&
-        el.id !== productObj.id,
-    );
-    const qtyOrdered = ordered.find(el => el.id === productObj.id)?.quantity;
+  // useEffect(() => {
+  //   const productObj = products.find(product => product.id === productId);
+  //   const productObjCategogies = products.filter(
+  //     el =>
+  //       el.category?.group?.type === productObj.category?.group?.type &&
+  //       el.id !== productObj.id,
+  //   );
+  //   const qtyOrdered = ordered.find(el => el.id === productObj.id)?.quantity;
 
-    setProduct(productObj);
-    setProductCategogies(productObjCategogies);
-    setQuantityOrdered(qtyOrdered);
-    addToRecentView(productId);
+  //   setProduct(productObj);
+  //   setProductCategogies(productObjCategogies);
+  //   setQuantityOrdered(qtyOrdered);
+  //   addToRecentView(productId);
 
-    return function cleanUp() {};
-  }, [productId, ordered]);
+  //   return function cleanUp() {};
+  // }, [productId, ordered]);
 
   const checkRelatedItem = ({id}) => {
     setProductId(id);
@@ -287,14 +287,16 @@ const styles = StyleSheet.create({
     height: 0.45 * height,
   },
   title: {
-    fontSize: fontSz(20),
+    // fontSize: fontSz(20),
+    fontSize: fontSz(15),
     fontFamily: fonts.bold,
     textTransform: 'capitalize',
     // fontWeight: '700',
     // backgroundColor: 'yellow',
   },
   price: {
-    fontSize: fontSz(25),
+    // fontSize: fontSz(25),
+    fontSize: fontSz(18),
     fontFamily: fonts.extra_bold,
     color: colors.grey_dark_2,
     marginVertical: 5,
@@ -314,11 +316,13 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   label: {
-    fontSize: fontSz(13),
+    // fontSize: fontSz(13),
+    fontSize: fontSz(10.5),
     marginLeft: 5,
   },
   headerLabel: {
-    fontSize: fontSz(14),
+    // fontSize: fontSz(14),
+    fontSize: fontSz(10.5),
     fontFamily: fonts.bold,
     marginVertical: 10,
   },
@@ -326,7 +330,8 @@ const styles = StyleSheet.create({
     color: colors.grey_dark_2,
   },
   description: {
-    fontSize: fontSz(13.5),
+    // fontSize: fontSz(13.5),
+    fontSize: fontSz(11),
     marginTop: -5,
   },
   quantityContainer: {
@@ -336,6 +341,7 @@ const styles = StyleSheet.create({
   },
   btnLabel: {
     textTransform: 'uppercase',
+    fontSize: fontSz(13),
   },
   addToCartBtn: {
     marginTop: 10,

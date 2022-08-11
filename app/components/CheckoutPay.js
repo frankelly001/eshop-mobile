@@ -115,7 +115,7 @@ const styles = StyleSheet.create({
     padding: 5,
   },
   header: {
-    fontSize: fontSz(13),
+    fontSize: fontSz(10),
     fontFamily: fonts.bold,
     color: colors.grey_dark_4,
   },

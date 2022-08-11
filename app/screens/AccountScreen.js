@@ -212,10 +212,19 @@ const AccountScreen = ({navigation}) => {
         <ListCard data={AccountSettings} />
 
         <TouchableOpacity
+          style={{
+            // backgroundColor: 'red',
+            // width: '30%',
+            padding: 10,
+            alignItems: 'center',
+            justifyContent: 'center',
+            alignSelf: 'center',
+            // height: 50,
+          }}
           onPress={() =>
             user ? setLogoutNotice(true) : navigation.navigate(routes.LOGIN)
           }>
-          <AppGradientText style={styles.logout}>
+          <AppGradientText style={styles.log}>
             {user ? 'Log out' : 'Log in'}
           </AppGradientText>
         </TouchableOpacity>
@@ -239,7 +248,7 @@ const styles = StyleSheet.create({
   },
   welcome: {
     // fontWeight: '700',
-    fontSize: fontSz(13.5),
+    fontSize: fontSz(10),
 
     // color: colors.grey_dark_3,
   },
@@ -261,11 +270,12 @@ const styles = StyleSheet.create({
   bal: {
     fontFamily: fonts.bold,
   },
-  logout: {
-    alignSelf: 'center',
-    fontSize: fontSz(15),
+  log: {
+    // alignSelf: 'center',
+    fontSize: fontSz(12),
     fontFamily: fonts.bold,
-    margin: 30,
+    // // margin: 30,
+    // textAlign: 'center',
   },
   span: {
     flexDirection: 'row',

@@ -95,11 +95,11 @@ const styles = StyleSheet.create({
     // margin: 20,
   },
   text: {
-    fontSize: fontSz(13),
+    fontSize: fontSz(10),
     textAlign: 'center',
   },
   noticableText: {
-    fontSize: fontSz(13),
+    fontSize: fontSz(10),
     textAlign: 'center',
     fontFamily: fonts.bold,
   },

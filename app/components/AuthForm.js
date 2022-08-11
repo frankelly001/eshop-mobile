@@ -75,12 +75,12 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   welcome: {
-    fontSize: fontSz(12),
+    fontSize: fontSz(10),
     // fontWeight: '600',
     marginBottom: 25,
   },
   authLabel: {
-    fontSize: fontSz(20),
+    fontSize: fontSz(15),
     fontFamily: fonts.bold,
     marginBottom: 10,
   },

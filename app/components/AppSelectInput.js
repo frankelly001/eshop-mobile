@@ -83,6 +83,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
     paddingVertical: 2,
     backgroundColor: colors.grey_light_2,
+    // color: colors.black,
     // shadowColor: '#000',
     // shadowOffset: {
     //   width: 0,
@@ -104,16 +105,18 @@ const styles = StyleSheet.create({
   },
   textItem: {
     flex: 1,
-    fontSize: fontSz(15),
+    fontSize: fontSz(12),
     textTransform: 'capitalize',
+    color: colors.black,
   },
   placeholderStyle: {
-    fontSize: fontSz(15),
+    fontSize: fontSz(12),
     color: colors.grey_dark,
   },
   selectedTextStyle: {
-    fontSize: fontSz(15),
+    fontSize: fontSz(12),
     textTransform: 'capitalize',
+    color: colors.black,
   },
   iconStyle: {
     width: 20,
@@ -122,7 +125,7 @@ const styles = StyleSheet.create({
   inputSearchStyle: {
     height: 40,
     // backgroundColor: 'red',
-    fontSize: fontSz(15),
+    fontSize: fontSz(11),
   },
 });
 

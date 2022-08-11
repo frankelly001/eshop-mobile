@@ -103,14 +103,16 @@ const bigCardstyles = StyleSheet.create({
   },
 
   title: {
-    fontSize: fontSz(13),
+    // fontSize: fontSz(13),
+    fontSize: fontSz(10),
     // fontWeight: '700',
     textTransform: 'capitalize',
     fontFamily: fonts.semi_bold,
   },
 
   price: {
-    fontSize: fontSz(18),
+    // fontSize: fontSz(18),
+    fontSize: fontSz(12),
     fontFamily: fonts.bold,
     marginVertical: 3,
     color: colors.grey_dark_2,
@@ -118,7 +120,8 @@ const bigCardstyles = StyleSheet.create({
 
   btnLabel: {
     textTransform: 'uppercase',
-    fontSize: fontSz(12),
+    // fontSize: fontSz(12),
+    fontSize: fontSz(8),
     fontFamily: fonts.bold,
   },
 });
@@ -161,19 +164,22 @@ const smallCardstyles = StyleSheet.create({
   },
 
   title: {
-    fontSize: fontSz(10),
+    // fontSize: fontSz(10),
+    fontSize: fontSz(9.5),
     fontFamily: fonts.semi_bold,
   },
 
   price: {
     fontFamily: fonts.bold,
     marginVertical: 3,
+    fontSize: fontSz(10.5),
     color: colors.grey_dark_2,
   },
 
   btnLabel: {
     textTransform: 'uppercase',
-    fontSize: fontSz(10),
+    // fontSize: fontSz(10),
+    fontSize: fontSz(8),
     fontFamily: fonts.bold,
   },
 });

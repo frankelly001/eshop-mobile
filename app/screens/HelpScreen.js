@@ -95,7 +95,7 @@ const styles = StyleSheet.create({
     fontFamily: fonts.bold,
     marginBottom: 5,
     color: colors.purple,
-    fontSize: fontSz(13),
+    fontSize: fontSz(10),
   },
 });
 

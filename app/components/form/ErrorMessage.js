@@ -13,7 +13,7 @@ const ErrorMessage = ({error, visible}) => {
 const styles = StyleSheet.create({
   error: {
     color: colors.red_dark,
-    fontSize: fontSz(13),
+    fontSize: fontSz(10),
     paddingHorizontal: 20,
   },
 });

@@ -204,7 +204,7 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
   },
   header: {
-    fontSize: fontSz(18),
+    fontSize: fontSz(15),
     fontFamily: fonts.bold,
     marginBottom: 15,
   },

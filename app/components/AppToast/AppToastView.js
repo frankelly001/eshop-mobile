@@ -53,7 +53,7 @@ const styles = StyleSheet.create({
   msgText: {
     color: colors.white,
     fontFamily: fonts.semi_bold,
-    fontSize: fontSz(13),
+    fontSize: fontSz(10),
     // backgroundColor: 'red',
   },
   lottieIcon: {
