@@ -8,6 +8,7 @@ import fonts from '../config/fonts';
 import navigation from '../navigation/rootNavigation';
 import AuthContext from '../auth/AuthContext';
 import routes from '../navigation/routes';
+import {fontSz} from '../config/responsiveSize';
 
 const ListCard = ({data}) => {
   const {user} = useContext(AuthContext);
@@ -30,7 +31,7 @@ const ListCard = ({data}) => {
           <View style={styles.listItem}>
             {list.icon && (
               <list.icon
-                size={20}
+                size={18}
                 style={{marginRight: 5}}
                 color={colors.grey_dark_3}
               />
@@ -52,7 +53,7 @@ const styles = StyleSheet.create({
   },
   ListTitle: {
     color: colors.white,
-    fontFamily: fonts.semi_bold,
+    fontFamily: fonts.bold,
   },
   ListItemContainer: {
     // backgroundColor: colors.purple_Transparent,
