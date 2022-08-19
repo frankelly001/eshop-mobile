@@ -1,3 +1,4 @@
+import {formatErrorMessage} from '../../../utilities/formatErrorMessage';
 import {auth} from '../config';
 
 const reauthenticateUser = currentPassword => {
@@ -21,14 +22,14 @@ export const changePassword = (currentPassword, newPassword) => {
             resolve('Password Successfully Changed');
           })
           .catch(error => {
-            reject(error.message);
+            reject(formatErrorMessage(error));
           });
       })
       .catch(error => {
         reject(
           error.code === 'auth/wrong-password'
             ? 'Current Password is Wrong'
-            : error.code,
+            : formatErrorMessage(error),
         );
       });
   });

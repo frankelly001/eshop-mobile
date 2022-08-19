@@ -24,11 +24,12 @@ const AppSelectInput = ({
       selectedTextStyle={styles.selectedTextStyle}
       inputSearchStyle={[
         styles.inputSearchStyle,
-        disableSearchInput && {display: 'none'},
+        // disableSearchInput && {display: 'none'},
       ]}
       iconStyle={styles.iconStyle}
-      search
+      search={disableSearchInput ? false : true}
       maxHeight={300}
+      containerStyle={{borderRadius: 10, overflow: 'hidden'}}
       // data={stateList}
       // labelField="label"
       // valueField="value"
@@ -83,6 +84,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
     paddingVertical: 2,
     backgroundColor: colors.grey_light_2,
+
     // color: colors.black,
     // shadowColor: '#000',
     // shadowOffset: {
@@ -126,6 +128,7 @@ const styles = StyleSheet.create({
     height: 40,
     // backgroundColor: 'red',
     fontSize: fontSz(11),
+    borderRadius: 5,
   },
 });
 

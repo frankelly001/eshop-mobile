@@ -35,14 +35,11 @@ const RecentlySearched = ({navigation}) => {
               {/* <Octicons size={size - 5} name="search" style={{marginRight: 5}} /> */}
               <Icon
                 type={Icons.Octicons}
-                size={wp(20) - 10}
+                size={10}
                 name="search"
                 style={{marginRight: 5}}
               />
-              <AppText
-                style={{fontSize: fontSz(10), fontFamily: fonts.semi_bold}}>
-                {query}
-              </AppText>
+              <AppText style={{fontFamily: fonts.semi_bold}}>{query}</AppText>
             </TouchableOpacity>
           ))}
         </Screen>

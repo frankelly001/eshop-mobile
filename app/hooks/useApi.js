@@ -1,4 +1,6 @@
 import {useState} from 'react';
+import {showToast} from '../components/AppToast/showToast';
+import toast from '../components/AppToast/toast';
 
 export const useApi = apiFunc => {
   // const [data, setData] = useState();
@@ -20,6 +22,7 @@ export const useApi = apiFunc => {
         .catch(error => {
           setError(error);
           setLoading(false);
+          showToast(toast.types.ERROR, error);
           reject(error);
         });
       // .finally(() => {

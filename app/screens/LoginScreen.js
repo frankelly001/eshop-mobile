@@ -151,7 +151,7 @@ const LoginScreen = ({navigation}) => {
         }}
         validationSchema={login_VS}
         navigation={navigation}
-        error={error}
+        // error={error}
         onSubmit={handleSubmit}>
         <View style={[styles.container, {justifyContent: 'center'}]}>
           <AppFormInput
@@ -167,7 +167,7 @@ const LoginScreen = ({navigation}) => {
             autoCorrect={false}
             name="password"
             placeholder="Password"
-            textContentType="name"
+            textContentType={'password'}
           />
           <SubmitButton
             labelStyle={styles.btnLabel}

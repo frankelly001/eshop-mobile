@@ -148,11 +148,9 @@ const AccountScreen = ({navigation}) => {
         onCancel={() => setLogoutNotice(false)}
       />
       <Screen
-        contentContainerStyle={
-          {
-            // paddingBottom: 60
-          }
-        }>
+        contentContainerStyle={{
+          paddingBottom: 50,
+        }}>
         <View style={styles.welcomeContainer}>
           <View style={styles.subWelcomeContainer}>
             <View style={styles.span}>
@@ -190,6 +188,15 @@ const AccountScreen = ({navigation}) => {
             <View style={[styles.subWelcomeContainer, {flex: 0.5}]}>
               <AppButton
                 label="Verify Account"
+                bgStyle={{borderRadius: 5}}
+                onPress={handleVerification}
+              />
+            </View>
+          )}
+          {user && user.admin && (
+            <View style={[styles.subWelcomeContainer, {flex: 0.5}]}>
+              <AppButton
+                label="Admin"
                 bgStyle={{borderRadius: 5}}
                 onPress={handleVerification}
               />

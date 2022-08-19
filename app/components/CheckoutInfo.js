@@ -14,6 +14,7 @@ import stateRegion from '../utilities/stateRegion';
 import AppFormSelectInput from './form/AppFormSelectInput';
 import AuthContext from '../auth/AuthContext';
 import DeliveryInfoNotice from './Notice/DeliveryInfoNotice';
+import colors from '../config/colors';
 
 const checkoutInfo_VS = Yup.object().shape({
   firstname: validationSchema.firstname,
@@ -26,12 +27,10 @@ const checkoutInfo_VS = Yup.object().shape({
   address: validationSchema.address,
 });
 
-const CheckoutInfo = ({savedValues, onSubmit}) => {
-  // const [savedValues, setSavedValues] = useState(null);
-  // console.log(savedValues);
-  const {user} = useContext(AuthContext);
+const orderingFor = ['Myself', 'A Friend', 'A Relative', 'Someone else'];
 
-  console.log(savedValues, 'heyyyyy it user');
+const CheckoutInfo = ({savedValues, onSubmit}) => {
+  const {user} = useContext(AuthContext);
 
   const initialValues = {
     firstname: user?.name.firstname ?? '',
@@ -62,16 +61,20 @@ const CheckoutInfo = ({savedValues, onSubmit}) => {
     return data;
   };
 
-  const handleOrderingFor = () => {
-    return ['Myself', 'A Friend', 'A Relative', 'Someone else'].map(el => {
-      return {label: el, value: el};
-    });
-  };
+  // const handleOrderingFor = () => {
+  //   return orderingFor.map(el => {
+  //     return {label: el, value: el};
+  //   });
+  // };
 
   return (
-    <Screen>
+    <Screen contentContainerStyle={{paddingBottom: 50}}>
       <View style={styles.container}>
         <AppText style={styles.header}>Customer Delivery Information</AppText>
+        <AppText style={styles.subHeader}>
+          Kindly update the current information provided, if you have relocated
+          or you are ordering for Someone
+        </AppText>
         <AppForm
           initialValues={savedValues ? savedValues : initialValues}
           validationSchema={checkoutInfo_VS}
@@ -79,14 +82,14 @@ const CheckoutInfo = ({savedValues, onSubmit}) => {
           validateOnMount={true}
           onSubmit={onSubmit}>
           <View style={[styles.formContainer]}>
-            <AppFormSelectInput
+            {/* <AppFormSelectInput
               name={'ordering_for'}
               onHandleData={handleOrderingFor}
               placeholder="Ordering for?"
               valueResetNames={['city']}
               searchPlaceholder="Search State..."
               disableSearchInput
-            />
+            /> */}
             <AppFormInput
               autoCapitalize="words"
               autoCorrect={false}
@@ -115,11 +118,13 @@ const CheckoutInfo = ({savedValues, onSubmit}) => {
               keyboardType="numeric"
               name="phone"
               placeholder="Phone"
+              textContentType={'telephoneNumber'}
             />
             <AppFormInput
               keyboardType="numeric"
               name="additional_phone"
               placeholder="Additional phone (Optional)"
+              textContentType={'telephoneNumber'}
             />
             <AppFormSelectInput
               name={'state'}
@@ -167,6 +172,13 @@ const styles = StyleSheet.create({
     fontSize: fontSz(15),
     fontFamily: fonts.bold,
     marginBottom: 10,
+  },
+  subHeader: {
+    fontSize: fontSz(10),
+    color: colors.grey_dark_4,
+    fontFamily: fonts.bold,
+    marginBottom: 5,
+    textAlign: 'center',
   },
   formContainer: {
     flexDirection: 'row',

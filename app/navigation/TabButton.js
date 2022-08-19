@@ -54,7 +54,7 @@ const TabButton = ({
               <AppText
                 style={{
                   color: colors.white,
-                  fontSize: fontSz(10),
+                  fontSize: fontSz(8),
                   fontFamily: fonts.bold,
                   paddingHorizontal: 8,
                 }}>

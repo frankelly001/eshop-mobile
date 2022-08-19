@@ -100,6 +100,7 @@ const smallStyles = StyleSheet.create({
     flexDirection: 'row',
     width: '100%',
     // height: hp(28),
+    // paddingVertical: 5,
   },
   input: {
     backgroundColor: colors.grey_light_2,

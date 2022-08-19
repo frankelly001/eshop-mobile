@@ -103,9 +103,20 @@ const SignupScreen = ({navigation}) => {
         welcomeMessage="Welcome to eShop"
         authTypeLabel="Sign Up"
         initialValues={{
+          // firstname: '',
+          // lastname: '',
+          // gender: '',
+          // state: '',
+          // city: '',
+          // address: '',
+          // phone: '',
+          // additional_phone: '',
+          // email: '',
+          // password: '',
+          // confirm_password: '',
           firstname: 'Franklyn',
           lastname: 'Okeke',
-          gender: '',
+          gender: 'Male',
           state: 'Imo',
           city: 'Orsu',
           address: '56 sowemimo Street',

@@ -38,8 +38,8 @@ const styles = StyleSheet.create({
   container: {
     // width: '100%',
     // flex: 1,
-    height: hp(180),
-    // height: dimensions.height * 0.2,
+    // height: hp(180),
+    height: dimensions.height * 0.2,
     // backgroundColor: 'yellow',
     justifyContent: 'flex-end',
     marginVertical: 10,
@@ -47,8 +47,8 @@ const styles = StyleSheet.create({
   textContainer: {
     // backgroundColor: 'red',
     flex: 1,
-    justifyContent: 'flex-end',
-    paddingBottom: 10,
+    justifyContent: 'center',
+
     // position: 'absolute',
     // bottom: 10,
   },
@@ -65,16 +65,16 @@ const styles = StyleSheet.create({
     // position: 'absolute',
   },
   imageContainer: {
-    width: wp(120),
-    height: wp(120),
+    width: dimensions.height * 0.13,
+    height: dimensions.height * 0.13,
     overflow: 'hidden',
-    borderRadius: hp(120) / 2,
-    marginTop: -hp(120) / 2,
+    borderRadius: (dimensions.height * 0.13) / 2,
+    marginTop: (-dimensions.height * 0.13) / 2,
     borderWidth: 5,
     borderColor: colors.white,
     zIndex: 1,
     // flex: 1,
-    backgroundColor: 'blue',
+    // backgroundColor: 'blue',
   },
   image: {
     width: '100%',
@@ -85,13 +85,12 @@ const styles = StyleSheet.create({
     fontSize: fontSz(13),
     fontFamily: fonts.bold,
     textAlign: 'center',
-    marginBottom: 3,
   },
   description: {
     fontSize: fontSz(10),
     textAlign: 'center',
     paddingHorizontal: 15,
-    // marginBottom: 15,
+    marginTop: 3,
     color: colors.grey_dark_3,
   },
 });

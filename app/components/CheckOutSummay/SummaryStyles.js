@@ -38,6 +38,7 @@ const SummaryStyles = StyleSheet.create({
   modalDetailLabel: {
     fontFamily: fonts.bold,
     color: colors.grey_dark_2,
+    marginRight: 50,
   },
   LeftContainer: {
     // backgroundColor: 'yellow',

@@ -1,3 +1,4 @@
+import {formatErrorMessage} from '../../../utilities/formatErrorMessage';
 import {auth} from '../config';
 import {addUser} from '../postApi/addUser';
 
@@ -18,17 +19,14 @@ export const signup = userInfo => {
               .currentUser.delete()
               .then(response => {
                 console.log('Account deleted', response);
-                reject(error.message);
+                reject(formatErrorMessage(error));
               });
           });
         //   handleVerification(snapshot.user.email);
       })
       .catch(error => {
-        reject(error.message);
-        console.log(
-          'CREATE_USER_WITH_EMAIL_AND_PASSWORD ERROR:',
-          error.message,
-        );
+        reject(formatErrorMessage(error));
+        // console.log('CREATE_USER_WITH_EMAIL_AND_PASSWORD ERROR:', error.code);
       });
     // console.log(email, password);
   });

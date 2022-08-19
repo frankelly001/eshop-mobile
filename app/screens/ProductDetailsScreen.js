@@ -166,7 +166,7 @@ const ProductDetailsScreen = ({route}) => {
               {starRating(product.rating.rate).map(starType => (
                 <FontAwesomeIcon
                   color={colors.yellow}
-                  size={fontSz(20)}
+                  size={18}
                   key={starType.id}
                   name={starType.star}
                 />
@@ -247,7 +247,7 @@ const styles = StyleSheet.create({
   selectionContainer: {
     backgroundColor: colors.grey_dark_2_tranparent,
     position: 'absolute',
-    height: hp(0.05 * height),
+    height: 0.06 * height,
     bottom: 0,
     flexDirection: 'row',
     justifyContent: 'center',
@@ -258,8 +258,8 @@ const styles = StyleSheet.create({
     // opacity: 0.5,
   },
   selectImage: {
-    width: wp(40),
-    height: wp(40),
+    width: height * 0.05,
+    height: height * 0.05,
     borderRadius: 5,
     overflow: 'hidden',
     margin: 5,
@@ -341,7 +341,7 @@ const styles = StyleSheet.create({
   },
   btnLabel: {
     textTransform: 'uppercase',
-    fontSize: fontSz(13),
+    fontSize: fontSz(12),
   },
   addToCartBtn: {
     marginTop: 10,

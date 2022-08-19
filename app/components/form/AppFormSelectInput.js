@@ -1,5 +1,5 @@
 import {useFormikContext} from 'formik';
-import React, {useState} from 'react';
+import React, {useMemo, useState} from 'react';
 import {StyleSheet, View} from 'react-native';
 import colors from '../../config/colors';
 import AppSelectInput from '../AppSelectInput';
@@ -16,14 +16,17 @@ const AppFormSelectInput = ({
     useFormikContext();
   const [isFocus, setIsFocus] = useState(false);
 
-  const data = onHandleData(values);
+  const data = useMemo(() => {
+    return onHandleData(values);
+  }, [isFocus]);
+  // const data = onHandleData(values);
   // if (!data.length) return null;
 
   return (
     <View style={[styles.container, {width}]}>
       <AppSelectInput
         dropdownStyle={[
-          !data.length && styles.dropdown,
+          !data.length && {opacity: 0.2},
           isFocus && {borderColor: colors.purple, borderWidth: 0.5},
         ]}
         data={data}

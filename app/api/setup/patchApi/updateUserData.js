@@ -16,5 +16,5 @@ export const userDataTypes = {
 };
 
 export const updateUserData = (userId, data) => {
-  return collectionRefs.usersCollectionRef.doc(userId).update(data);
+  return collectionRefs.usersCollectionRef.doc(userId + 'kkk').update(data);
 };

@@ -22,6 +22,7 @@ import ActivityIndicator from '../components/ActivityIndicator';
 import {showToast} from '../components/AppToast/showToast';
 import toast from '../components/AppToast/toast';
 import routes from '../navigation/routes';
+import {formatErrorMessage} from '../utilities/formatErrorMessage';
 
 const validation = Yup.object().shape({
   state: validationSchema.state,
@@ -69,7 +70,7 @@ const AddressBookScreen = ({navigation}) => {
         navigation.navigate(routes.ACCOUNT);
       })
       .catch(error => {
-        showToast(toast.types.ERROR, error.message);
+        showToast(toast.types.ERROR, formatErrorMessage(error));
       });
   };
 

@@ -35,7 +35,7 @@ const ActionRemoveBtn = ({contentContainerStyle, product}) => {
           <MaterialCommunityIcons
             style={{marginRight: 3}}
             color={colors.white}
-            size={wp(20)}
+            size={18}
             name="heart-outline"
           />
           <AppText style={styles.actionLabel}>Save for later</AppText>
@@ -50,7 +50,7 @@ const ActionRemoveBtn = ({contentContainerStyle, product}) => {
           <MaterialCommunityIcons
             style={{marginRight: 3}}
             color={colors.white}
-            size={wp(20)}
+            size={18}
             name="delete-outline"
           />
           <AppText style={styles.actionLabel}>Delete</AppText>
@@ -79,7 +79,7 @@ const styles = StyleSheet.create({
     // backgroundColor: 'yellow',
   },
   actionLabel: {
-    fontSize: fontSz(12),
+    fontSize: fontSz(8),
     color: colors.white,
     fontFamily: fonts.bold,
   },

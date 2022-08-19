@@ -1,3 +1,4 @@
+import {formatErrorMessage} from '../../../utilities/formatErrorMessage';
 import {auth} from '../config';
 
 export const forgotPassword = email => {
@@ -8,7 +9,7 @@ export const forgotPassword = email => {
         resolve('An email has been sent to you for Password Reset');
       })
       .catch(error => {
-        reject(error.code);
+        reject(formatErrorMessage(error));
       });
   });
 };

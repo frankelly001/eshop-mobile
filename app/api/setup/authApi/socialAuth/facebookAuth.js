@@ -28,11 +28,15 @@ async function onFacebookButtonPress() {
 }
 
 export const facebookSignin = () => {
-  onFacebookButtonPress()
-    .then(snapshot => {
-      console.log('Signed in with Facebook!', snapshot);
-    })
-    .catch(error => {
-      console.log(error);
-    });
+  return new Promise((resolve, reject) => {
+    onFacebookButtonPress()
+      .then(snapshot => {
+        resolve(snapshot);
+        console.log('Signed in with Facebook!', snapshot);
+      })
+      .catch(error => {
+        reject(error);
+        console.log(error);
+      });
+  });
 };

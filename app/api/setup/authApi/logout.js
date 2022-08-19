@@ -12,7 +12,7 @@ export const logoutUser = () => {
             resolve('User Succesfully Logged out');
           })
           .catch(error => {
-            reject(error.message);
+            reject(formatErrorMessage(error));
             console.log('SIGN OUT ERROR:', error.message);
           });
       })

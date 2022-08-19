@@ -10,6 +10,7 @@ import colors from '../config/colors';
 import routes from '../navigation/routes';
 import {formatData} from '../utilities/formatData';
 import RetryView from '../components/RetryView';
+import StickyHomeSectionHeader from '../components/StickyHomeSectionHeader';
 
 const HomeScreen = ({navigation}) => {
   const {products, categories, loading, errors} = useContext(AuthContext);
@@ -24,22 +25,25 @@ const HomeScreen = ({navigation}) => {
     <>
       {products.length && !errors.products ? (
         <SectionList
-          // contentContainerStyle={{paddingBottom: 60}}
+          contentContainerStyle={{paddingBottom: 10}}
           showsVerticalScrollIndicator={false}
           ListHeaderComponent={() => (
             <ImageCarousel categories={[...categories.map(el => el.title)]} />
           )}
           renderSectionHeader={() => (
-            <View
-              style={{
-                backgroundColor: colors.grey_light_4,
-                width: '100%',
-                height: 40,
-                justifyContent: 'center',
-                paddingHorizontal: 10,
-              }}>
-              <AppText>New Arrivals</AppText>
-            </View>
+            // <View
+            //   style={{
+            //     backgroundColor: colors.grey_light_4,
+            //     width: '100%',
+            //     height: 40,
+            //     justifyContent: 'center',
+            //     paddingHorizontal: 10,
+            //   }}>
+            //   <AppText>New Arrivals</AppText>
+            // </View>
+            <StickyHomeSectionHeader
+              categories={[...categories.map(el => el.title)]}
+            />
           )}
           sections={[{data: formatData(products, numOfCols)}]}
           stickySectionHeadersEnabled

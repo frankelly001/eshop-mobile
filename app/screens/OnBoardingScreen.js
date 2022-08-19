@@ -1,3 +1,4 @@
+import {useIsFocused} from '@react-navigation/native';
 import * as React from 'react';
 import {
   StatusBar,
@@ -146,11 +147,13 @@ const Square = ({scrollX}) => {
 const OnBoardingScreen = ({navigation}) => {
   const scrollX = React.useRef(new Animated.Value(0)).current;
 
+  const focus = useIsFocused();
+
   // console.log(scrollX, 'XXXXX');
 
   return (
     <View style={styles.container}>
-      <StatusBar hidden />
+      <StatusBar hidden={focus} />
       <Backdrop scrollX={scrollX} />
       <Square scrollX={scrollX} />
       <Animated.FlatList
@@ -187,7 +190,7 @@ const OnBoardingScreen = ({navigation}) => {
                 <AppText
                   style={{
                     fontFamily: fonts.extra_bold,
-                    fontSize: fontSz(28),
+                    fontSize: fontSz(20),
                     marginBottom: 10,
                     color: colors.white,
                   }}>

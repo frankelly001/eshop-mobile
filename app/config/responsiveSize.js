@@ -22,7 +22,8 @@ export const wp = val => {
   return widthPercentageToDP(num);
 };
 
-export const fontSz = size => {
+export const fontSz = sizeNum => {
+  const size = sizeNum + 1.5;
   // return sizeNum;
   if (pixelRatio >= 2 && pixelRatio < 3) {
     // iphone 5s and older Androids

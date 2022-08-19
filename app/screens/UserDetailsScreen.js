@@ -21,6 +21,7 @@ import {showToast} from '../components/AppToast/showToast';
 import toast from '../components/AppToast/toast';
 import ActivityIndicator from '../components/ActivityIndicator';
 import routes from '../navigation/routes';
+import {formatErrorMessage} from '../utilities/formatErrorMessage';
 
 const validation = Yup.object().shape({
   firstname: validationSchema.firstname,
@@ -59,7 +60,7 @@ const UserDetailsScreen = ({navigation}) => {
         navigation.navigate(routes.ACCOUNT);
       })
       .catch(error => {
-        showToast(toast.types.ERROR, error.message);
+        showToast(toast.types.ERROR, formatErrorMessage(error));
       });
   };
 
@@ -120,13 +121,17 @@ const UserDetailsScreen = ({navigation}) => {
               />
               <AppFormInput
                 keyboardType="numeric"
+                autoCorrect={false}
                 name="phone"
                 placeholder="Phone"
+                textContentType={'telephoneNumber'}
               />
               <AppFormInput
                 keyboardType="numeric"
+                autoCorrect={false}
                 name="additional_phone"
                 placeholder="Additional phone (Optional)"
+                textContentType={'telephoneNumber'}
               />
             </View>
             <SubmitButton

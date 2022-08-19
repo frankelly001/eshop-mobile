@@ -33,7 +33,7 @@ const Header = ({navigation, options, route}) => {
   const [query, setQuery] = useState('');
 
   const inputRef = useRef();
-  const size = wp(18);
+  const size = 20;
 
   const {
     headerLeftAnimatedStyle,
@@ -202,10 +202,7 @@ const Header = ({navigation, options, route}) => {
                 name="search"
                 style={{marginRight: 5}}
               />
-              <AppText
-                style={{fontSize: fontSz(10), fontFamily: fonts.semi_bold}}>
-                {el}
-              </AppText>
+              <AppText style={{fontFamily: fonts.semi_bold}}>{el}</AppText>
             </TouchableOpacity>
           ))}
         </ScrollView>
@@ -222,7 +219,7 @@ const styles = StyleSheet.create({
     width: '100%',
     backgroundColor: colors.grey_light,
     paddingHorizontal: 15,
-    height: 50,
+    height: 45,
     overflow: 'hidden',
     // backgroundColor: 'yellow',
   },
@@ -234,8 +231,8 @@ const styles = StyleSheet.create({
   cartCount: {
     backgroundColor: colors.purple,
     textAlign: 'center',
-    width: wp(16),
-    height: wp(16),
+    width: 16,
+    height: 16,
     // fontSize: fontSz(12),
     // fontWeight: '700',
     alignItems: 'center',

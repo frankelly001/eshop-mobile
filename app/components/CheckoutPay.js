@@ -13,6 +13,7 @@ import AuthContext from '../auth/AuthContext';
 import {formatToCurrency} from '../utilities/formatToCurr';
 import FlutterPayBtn from './FlutterPayBtn';
 import fonts from '../config/fonts';
+import Screen from './Screen';
 
 const CheckoutPay = ({deliveryInfo, onGoBack}) => {
   const deliverySummaryRef = useRef();
@@ -23,75 +24,81 @@ const CheckoutPay = ({deliveryInfo, onGoBack}) => {
     ref.current?.open();
   };
   return (
-    <View style={styles.paymentContainer}>
-      <View style={styles.detailsContainer}>
-        <View style={styles.headerContainer}>
-          <AppText style={styles.header}>CUSTOMER DELIVERY DETAILS</AppText>
-          <TouchableOpacity onPress={() => onOpen(deliverySummaryRef)}>
-            <AppText style={[styles.header, styles.headerPressable]}>
-              SEE DETAILS <FontAwesomeIcon name="angle-right" />
+    <Screen
+      style={{height: '100%', backgroundColor: colors.grey_light}}
+      contentContainerStyle={{
+        paddingBottom: 50,
+      }}>
+      <View style={styles.paymentContainer}>
+        <View style={styles.detailsContainer}>
+          <View style={styles.headerContainer}>
+            <AppText style={styles.header}>CUSTOMER DELIVERY DETAILS</AppText>
+            <TouchableOpacity onPress={() => onOpen(deliverySummaryRef)}>
+              <AppText style={[styles.header, styles.headerPressable]}>
+                SEE DETAILS <FontAwesomeIcon name="angle-right" />
+              </AppText>
+            </TouchableOpacity>
+          </View>
+          <View style={styles.deliverySummaryContainer}>
+            <AppText numberOfLines={1}>
+              {`${deliveryInfo.firstname} ${deliveryInfo.lastname}`} -{' '}
+              {deliveryInfo.email}
             </AppText>
-          </TouchableOpacity>
-        </View>
-        <View style={styles.deliverySummaryContainer}>
-          <AppText>
-            {`${deliveryInfo.firstname} ${deliveryInfo.lastname}`} -{' '}
-            {deliveryInfo.email}
-          </AppText>
-          <AppText>
-            {deliveryInfo.city},{' '}
-            {`${deliveryInfo.state} - ${deliveryInfo.address}`}
-          </AppText>
-          <AppText>
-            {deliveryInfo.phone}{' '}
-            {deliveryInfo.additional_phone &&
-              `/ ${deliveryInfo.additional_phone}`}
-          </AppText>
-          <TouchableOpacity onPress={onGoBack}>
-            <AppText style={styles.changeBtn}>Change</AppText>
-          </TouchableOpacity>
-        </View>
-        {/* <Modalize ref={deliverySummaryRef}>
+            <AppText numberOfLines={1} style={{marginVertical: 2}}>
+              {deliveryInfo.city},{' '}
+              {`${deliveryInfo.state} - ${deliveryInfo.address}`}
+            </AppText>
+            <AppText numberOfLines={1}>
+              {deliveryInfo.phone}{' '}
+              {deliveryInfo.additional_phone &&
+                `/ ${deliveryInfo.additional_phone}`}
+            </AppText>
+            <TouchableOpacity onPress={onGoBack}>
+              <AppText style={styles.changeBtn}>Change</AppText>
+            </TouchableOpacity>
+          </View>
+          {/* <Modalize ref={deliverySummaryRef}>
           <View>
             <AppText>heyyy</AppText>
           </View>
         </Modalize> */}
-      </View>
+        </View>
 
-      <View style={styles.detailsContainer}>
-        <View style={styles.headerContainer}>
-          <AppText style={styles.header}>ORDER SUMMARY</AppText>
-          <TouchableOpacity>
-            <AppText
-              style={[styles.header, styles.headerPressable]}
-              onPress={() => onOpen(orderSummaryRef)}>
-              SEE DETAILS <FontAwesomeIcon name="angle-right" />
+        <View style={styles.detailsContainer}>
+          <View style={styles.headerContainer}>
+            <AppText style={styles.header}>ORDER SUMMARY</AppText>
+            <TouchableOpacity>
+              <AppText
+                style={[styles.header, styles.headerPressable]}
+                onPress={() => onOpen(orderSummaryRef)}>
+                SEE DETAILS <FontAwesomeIcon name="angle-right" />
+              </AppText>
+            </TouchableOpacity>
+          </View>
+          <View style={styles.totalSummaryContainer}>
+            <AppText style={styles.totalLabel}>TOTAL</AppText>
+            <AppText style={[styles.totalLabel, styles.price]}>
+              {formatToCurrency(total)}
             </AppText>
-          </TouchableOpacity>
+          </View>
         </View>
-        <View style={styles.totalSummaryContainer}>
-          <AppText style={styles.totalLabel}>TOTAL</AppText>
-          <AppText style={[styles.totalLabel, styles.price]}>
-            {formatToCurrency(total)}
-          </AppText>
-        </View>
-      </View>
-      <FlutterPayBtn total={total} email={deliveryInfo.email} />
-      {/* <AppGradientBtn
+        <FlutterPayBtn total={total} email={deliveryInfo.email} />
+        {/* <AppGradientBtn
         label={`PAY NOW: ${formatToCurrency(total)}`}
         labelStyle={{fontWeight: '700'}}
       /> */}
 
-      <PaymentNotice />
+        <PaymentNotice />
 
-      <BottomSheet modalRef={deliverySummaryRef}>
-        <DeliverySummary deliveryInfo={deliveryInfo} />
-      </BottomSheet>
+        <BottomSheet modalRef={deliverySummaryRef}>
+          <DeliverySummary deliveryInfo={deliveryInfo} />
+        </BottomSheet>
 
-      <BottomSheet modalRef={orderSummaryRef}>
-        <OrderSummary />
-      </BottomSheet>
-    </View>
+        <BottomSheet modalRef={orderSummaryRef}>
+          <OrderSummary />
+        </BottomSheet>
+      </View>
+    </Screen>
   );
 };
 

@@ -64,11 +64,17 @@ const SignupScreen2 = ({onPrev}) => {
 
   return (
     <View style={styles.container}>
-      <AppFormInput keyboardType="numeric" name="phone" placeholder="Phone" />
+      <AppFormInput
+        keyboardType="numeric"
+        name="phone"
+        placeholder="Phone"
+        textContentType={'telephoneNumber'}
+      />
       <AppFormInput
         keyboardType="numeric"
         name="additional_phone"
         placeholder="Additional Phone"
+        textContentType={'telephoneNumber'}
       />
       <AppFormSelectInput
         name={'state'}
@@ -118,14 +124,14 @@ const SignupScreen3 = ({onPrev, setValidatedValues}) => {
         autoCorrect={false}
         name="password"
         placeholder="Password"
-        textContentType="name"
+        textContentType={'password'}
       />
       <AppFormInput
         autoCapitalize="none"
         autoCorrect={false}
         name="confirm_password"
         placeholder="Confirm Password"
-        textContentType="name"
+        textContentType={'password'}
       />
       <AppGradientBtn
         label="Back"

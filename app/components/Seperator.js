@@ -3,8 +3,8 @@ import {StyleSheet, View} from 'react-native';
 import colors from '../config/colors';
 import {hp} from '../config/responsiveSize';
 
-const Seperator = props => {
-  return <View style={styles.seperator} />;
+const Seperator = ({color}) => {
+  return <View style={[styles.seperator, {backgroundColor: color}]} />;
 };
 
 const styles = StyleSheet.create({

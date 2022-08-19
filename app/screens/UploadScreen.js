@@ -69,8 +69,9 @@ const UploadScreen = () => {
       ? categoryGroup
         ? categories
             .find(cat => cat.title === category)
-            ?.groups.map(group => {
-              return {label: group.title, value: group.title};
+            ?.groups.find(group => group.title === categoryGroup)
+            ?.types.map(type => {
+              return {label: type, value: type};
             })
         : [{label: 'Category group not selected'}]
       : [{label: 'Category not selected'}];

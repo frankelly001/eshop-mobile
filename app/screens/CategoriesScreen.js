@@ -20,7 +20,7 @@ const CategoriesScreen = ({navigation}) => {
   const [selectedCategory, setSelectedCategory] = useState('Select Category');
   const {categories} = useContext(AuthContext);
 
-  console.log(selectedCategory, 'group...........');
+  // console.log(selectedCategory, 'group...........');
 
   // const handlePress = useCallback(category => {
   //   setSelectedCategory(categories.find(cat => cat.title === category));
@@ -39,7 +39,9 @@ const CategoriesScreen = ({navigation}) => {
           data={[...categories.map(el => el.title)]}
           showsVerticalScrollIndicator={false}
           key={category => category}
-          ItemSeparatorComponent={() => <Seperator />}
+          ItemSeparatorComponent={() => (
+            <Seperator color={colors.grey_dark_3} />
+          )}
           renderItem={({item}) => {
             return (
               <TouchableOpacity
@@ -151,7 +153,8 @@ const styles = StyleSheet.create({
     padding: 5,
   },
   catName: {
-    fontSize: fontSz(8), // 12
+    fontSize: fontSz(7.5), // 12
+    fontFamily: fonts.bold,
     textAlign: 'center',
     textTransform: 'capitalize',
   },

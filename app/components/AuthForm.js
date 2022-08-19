@@ -9,6 +9,13 @@ import fonts from '../config/fonts';
 import ErrorMessage from './form/ErrorMessage';
 import AppGradientText from './AppGradientText';
 import {FacebookIcon, GoogleIcon, TwitterIcon} from '../utilities/icons';
+import {
+  LoginInwithGoogle,
+  SignOutwithGoogle,
+} from '../api/setup/authApi/socialAuth/googleAuth';
+import {showToast} from './AppToast/showToast';
+import toast from './AppToast/toast';
+import {facebookSignin} from '../api/setup/authApi/socialAuth/facebookAuth';
 
 const AuthForm = ({
   children,
@@ -27,11 +34,38 @@ const AuthForm = ({
   const oppositeAuthTypeLabel = authTypeLabel === 'Login' ? 'Sign up' : 'Login';
   const routeName = authTypeLabel === 'Login' ? routes.SIGNUP : routes.LOGIN;
 
+  const handleGoogleAuth = () => {
+    LoginInwithGoogle()
+      .then(snapshot => {
+        console.log('Success', snapshot);
+      })
+      .then(error => {
+        console.log('Error:', error);
+      });
+  };
+
+  const handleFacebookAuth = () => {
+    facebookSignin()
+      .then(snapshot => {
+        console.log('Success', snapshot);
+      })
+      .then(error => {
+        console.log('Error:', error);
+      });
+  };
+
+  const handleTwitterAuth = () => {
+    showToast(
+      toast.types.INFO,
+      'Sorry! Twitter authentication is not yet available',
+    );
+  };
+
   return (
     <View style={styles.container}>
       <AppText style={styles.welcome}>{welcomeMessage}</AppText>
       <AppText style={styles.authLabel}>{authTypeLabel}</AppText>
-      <ErrorMessage error={error} visible={error} />
+      {/* <ErrorMessage error={error} visible={error} /> */}
       <AppForm
         enableReinitialize
         validateOnMount
@@ -51,13 +85,13 @@ const AuthForm = ({
           Or {authTypeLabel.toLowerCase()} with
         </AppText>
         <View style={styles.handlesContainer}>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => handleFacebookAuth()}>
             <FacebookIcon width={wp(35)} height={wp(35)} margin={10} />
           </TouchableOpacity>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => handleGoogleAuth()}>
             <GoogleIcon width={wp(35)} height={wp(35)} margin={10} />
           </TouchableOpacity>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => handleTwitterAuth()}>
             <TwitterIcon width={wp(35)} height={wp(40)} margin={10} />
           </TouchableOpacity>
         </View>

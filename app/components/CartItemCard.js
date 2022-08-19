@@ -62,7 +62,9 @@ const CartItemCard = ({product, renderRightActions}) => {
             />
           </TouchableOpacity>
           <View style={styles.details}>
-            <AppText style={styles.title}>{product.title}</AppText>
+            <AppText numberOfLines={2} style={styles.title}>
+              {product.title}
+            </AppText>
             <View style={styles.priceContainer}>
               <AppText style={styles.totalPrice}>
                 {formatToCurrency(product.price * product.quantity)}
@@ -111,14 +113,16 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     margin: 10,
     backgroundColor: colors.white,
+    // backgroundColor: 'red',
   },
   descriptionContainer: {
     flexDirection: 'row',
     flex: 10,
+    alignItems: 'center',
   },
   imageContainer: {
-    width: wp(100),
-    height: wp(100),
+    width: wp(85),
+    height: wp(85),
   },
   image: {
     width: '100%',
@@ -137,7 +141,7 @@ const styles = StyleSheet.create({
   },
   totalPrice: {
     // fontSize: fontSz(15),
-    fontSize: fontSz(11),
+    fontSize: fontSz(11.5),
     fontFamily: fonts.bold,
     color: colors.grey_dark_2,
     marginRight: 2,
@@ -152,11 +156,12 @@ const styles = StyleSheet.create({
     flex: 0.8,
   },
   input: {
-    width: '60%',
+    width: '50%',
   },
   priceContainer: {
     flexDirection: 'row',
     alignItems: 'center',
+    marginVertical: 5,
   },
   actionBtnContainer: {
     backgroundColor: colors.grey_light,

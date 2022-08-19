@@ -66,21 +66,21 @@ const ChangePasswordScreen = ({navigation}) => {
               autoCorrect={false}
               name="currentPassword"
               placeholder="Current Password"
-              textContentType="name"
+              textContentType={'password'}
             />
             <AppFormInput
               autoCapitalize="none"
               autoCorrect={false}
               name="newPassword"
               placeholder="New Password"
-              textContentType="name"
+              textContentType={'password'}
             />
             <AppFormInput
               autoCapitalize="none"
               autoCorrect={false}
               name="confirm_newPassword"
               placeholder="Confirm New Password"
-              textContentType="name"
+              textContentType={'password'}
             />
             <SubmitButton
               containerStyle={{width: '60%', alignSelf: 'center'}}

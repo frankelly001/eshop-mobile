@@ -1,4 +1,5 @@
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
+import {auth} from '../../config';
 
 GoogleSignin.configure({
   scopes: ['https://www.googleapis.com/auth/userinfo.profile'],
@@ -17,12 +18,34 @@ async function onGoogleButtonPress() {
   return auth().signInWithCredential(googleCredential);
 }
 
+export const SignOutwithGoogle = () => {
+  return new Promise((resolve, reject) => {
+    GoogleSignin.signOut()
+      .then(snapshot => {
+        resolve(snapshot);
+      })
+      .catch(error => {
+        reject(error);
+      });
+  });
+};
+
 export const LoginInwithGoogle = () => {
-  onGoogleButtonPress()
-    .then(snapshot => {
-      console.log(snapshot, 'google sign in successful');
-    })
-    .catch(error => {
-      console.log(error, 'google sign in failed');
-    });
+  return new Promise((resolve, reject) => {
+    SignOutwithGoogle()
+      .then(() => {
+        onGoogleButtonPress()
+          .then(snapshot => {
+            resolve(snapshot);
+            // console.log(snapshot, 'google sign in successful');
+          })
+          .catch(error => {
+            reject(error);
+            // console.log(error, 'google sign in failed');
+          });
+      })
+      .catch(error => {
+        reject(error);
+      });
+  });
 };

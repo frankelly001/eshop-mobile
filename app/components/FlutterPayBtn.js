@@ -3,6 +3,8 @@ import AppGradientBtn from './AppGradientBtn';
 import {PayWithFlutterwave} from 'flutterwave-react-native';
 import {formatToCurrency} from '../utilities/formatToCurr';
 import AppButton from './AppButton';
+import {showToast} from './AppToast/showToast';
+import toast from './AppToast/toast';
 
 const FlutterPayBtn = ({total, email}) => {
   // length must be a num
@@ -21,6 +23,11 @@ const FlutterPayBtn = ({total, email}) => {
 
   const handleOnRedirect = data => {
     console.log(data, "incase status it's successful, cancelled or failed");
+    if (data.status === 'successful') {
+      showToast(toast.types.SUCCESS, 'Transaction Successful');
+    } else if (data.status === 'cancelled') {
+      showToast(toast.types.ERROR, 'Transaction Cancelled');
+    }
   };
 
   // if (1) return null;
@@ -29,8 +36,6 @@ const FlutterPayBtn = ({total, email}) => {
       onRedirect={handleOnRedirect}
       options={{
         tx_ref: generateTransactionRef(10),
-        // authorization: 'FLWPUBK_TEST-e1399dbd0b80e614e77eb9000e0ba5b2-X',
-        // tx_ref: Date.now(),
         authorization: 'FLWPUBK_TEST-e1399dbd0b80e614e77eb9000e0ba5b2-X',
         customer: {
           email: email,
