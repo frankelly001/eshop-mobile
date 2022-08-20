@@ -30,7 +30,7 @@ const validation = Yup.object().shape({
   address: validationSchema.address,
 });
 const AddressBookScreen = ({navigation}) => {
-  const {user} = useContext(AuthContext);
+  const {user, setUser} = useContext(AuthContext);
   const initialValues = {
     state: user.location.state,
     city: user.location.city,
@@ -68,6 +68,15 @@ const AddressBookScreen = ({navigation}) => {
         resetForm();
         showToast(toast.types.SUCCESS, 'User information successfully updated');
         navigation.navigate(routes.ACCOUNT);
+        const userNewInfo = {
+          ...user,
+          location: {
+            state,
+            city,
+            address,
+          },
+        };
+        setUser(userNewInfo);
       })
       .catch(error => {
         showToast(toast.types.ERROR, formatErrorMessage(error));

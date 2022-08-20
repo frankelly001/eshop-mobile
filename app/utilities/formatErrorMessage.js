@@ -1,9 +1,14 @@
 // only first word in a sentence
-export const formatErrorMessage = ({code}) => {
-  return code
-    .split('/')[1]
-    .replace(/[^A-Z0-9.']+/gi, ' ')
-    .replace(/^\w/, c => c.toUpperCase());
+export const formatErrorMessage = error => {
+  // const {code, message} = error;
+  return error && error?.code
+    ? error?.code
+        .split('/')[1]
+        .replace(/[^A-Z0-9.']+/gi, ' ')
+        .replace(/^\w/, c => c.toUpperCase())
+    : error && error?.message
+    ? error?.message
+    : error;
 };
 // // only first word in a sentence
 // export const formatErrorMessage = (errorType, errorMessage) => {

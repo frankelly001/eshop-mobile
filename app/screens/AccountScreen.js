@@ -30,6 +30,7 @@ import {
   userDataTypes,
 } from '../api/setup/patchApi/updateUserData';
 import LogoutNotice from '../components/LogoutNotice';
+import {useIsFocused} from '@react-navigation/native';
 
 const {height} = Dimensions.get('screen');
 
@@ -56,13 +57,12 @@ const AccountScreen = ({navigation}) => {
       });
   };
 
-  const updateUserData_verified = verification => {
-    if (verification)
-      updateUserData(user.id, {[userDataTypes.VERIFIED]: verification}).then(
-        () => {
-          showToast(toast.types.SUCCESS, 'Your account is now verified');
-        },
-      );
+  const updateUserData_verified = verified => {
+    if (verified)
+      updateUserData(user.id, {[userDataTypes.VERIFIED]: verified}).then(() => {
+        showToast(toast.types.SUCCESS, 'Your account is now verified');
+        setUser({...user, verified});
+      });
   };
 
   const stopAutoVerification = () => {
@@ -100,6 +100,15 @@ const AccountScreen = ({navigation}) => {
     }
     return () => {};
   }, [mailNotice]);
+
+  const focus = useIsFocused();
+
+  useEffect(() => {
+    if (!focus) {
+      mailNotice && setMailNotice(false);
+      logoutNotice && setLogoutNotice(false);
+    }
+  }, [focus]);
 
   // useEffect(() => {
   //   if (user && !user.verified && userVerified) {

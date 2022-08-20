@@ -128,12 +128,12 @@ const App = () => {
       .doc(user?.id)
       .onSnapshot(documentSnapshot => {
         if (documentSnapshot._data) {
-          const newUserData = {
+          const newUserInfo = {
             id: user.id,
             ...documentSnapshot._data,
           };
-          storeUserData(authStorageKeys.USER_DATA, newUserData);
-          setUser(newUserData);
+          storeUserData(authStorageKeys.USER_DATA, newUserInfo);
+          // setUser(newUserData);
         }
       });
     return () => subscriber();
@@ -150,7 +150,7 @@ const App = () => {
               toast.types.INFO,
               `Hello ${user.name.firstname}, Please go to Account and Verify your Account`,
             );
-          }, 1500);
+          }, 3000);
         // initializeCartState(data);
         // console.log(data, 'DATA................');
       })

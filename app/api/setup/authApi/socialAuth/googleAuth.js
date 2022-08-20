@@ -1,5 +1,7 @@
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
+import {formatErrorMessage} from '../../../../utilities/formatErrorMessage';
 import {auth} from '../../config';
+import {getUser} from '../../getApi/getUser';
 
 GoogleSignin.configure({
   scopes: ['https://www.googleapis.com/auth/userinfo.profile'],
@@ -36,16 +38,43 @@ export const LoginInwithGoogle = () => {
       .then(() => {
         onGoogleButtonPress()
           .then(snapshot => {
-            resolve(snapshot);
+            if (snapshot.additionalUserInfo.isNewUser) {
+              // console.log('Am a new User', snapshot);
+              resolve({
+                newUser: snapshot.additionalUserInfo?.isNewUser,
+                snapshot,
+              });
+            } else {
+              getUser(snapshot.user.uid).then(response => {
+                if (!response._data)
+                  return auth()
+                    .currentUser.delete()
+                    .then(() => {
+                      reject(
+                        "Sorry your account has been deleted, Because it's Invalid or not properly registered, Please create a new account.",
+                      );
+                    });
+                const data = {
+                  id: snapshot.user.uid,
+                  ...response._data,
+                  verified: snapshot.user.emailVerified,
+                };
+
+                resolve({
+                  newUser: snapshot.additionalUserInfo?.isNewUser,
+                  snapshot: data,
+                });
+              });
+            }
             // console.log(snapshot, 'google sign in successful');
           })
           .catch(error => {
-            reject(error);
+            if (error) reject(formatErrorMessage(error));
             // console.log(error, 'google sign in failed');
           });
       })
       .catch(error => {
-        reject(error);
+        if (error) reject(formatErrorMessage(error));
       });
   });
 };

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useContext, useState} from 'react';
 import {StyleSheet, View, TouchableOpacity} from 'react-native';
 import colors from '../config/colors';
 import {fontSz, wp} from '../config/responsiveSize';
@@ -16,6 +16,11 @@ import {
 import {showToast} from './AppToast/showToast';
 import toast from './AppToast/toast';
 import {facebookSignin} from '../api/setup/authApi/socialAuth/facebookAuth';
+import {getUser} from '../api/setup/getApi/getUser';
+import AuthContext from '../auth/AuthContext';
+import {authStorageKeys, storeUserData} from '../api/storage/authStorage';
+import ActivityIndicator from './ActivityIndicator';
+import SocialAuthentication from './SocialAuthentication';
 
 const AuthForm = ({
   children,
@@ -34,32 +39,50 @@ const AuthForm = ({
   const oppositeAuthTypeLabel = authTypeLabel === 'Login' ? 'Sign up' : 'Login';
   const routeName = authTypeLabel === 'Login' ? routes.SIGNUP : routes.LOGIN;
 
-  const handleGoogleAuth = () => {
-    LoginInwithGoogle()
-      .then(snapshot => {
-        console.log('Success', snapshot);
-      })
-      .then(error => {
-        console.log('Error:', error);
-      });
-  };
+  // const {setUser} = useContext(AuthContext);
+  // const [loading, setLoading] = useState(false);
 
-  const handleFacebookAuth = () => {
-    facebookSignin()
-      .then(snapshot => {
-        console.log('Success', snapshot);
-      })
-      .then(error => {
-        console.log('Error:', error);
-      });
-  };
+  // const handleGoogleAuth = () => {
+  //   setLoading(true);
+  //   LoginInwithGoogle()
+  //     .then(response => {
+  //       setLoading(false);
+  //       if (response.newUser) {
+  //         console.log('Am a new User', response);
+  //       } else {
+  //         setUser(response.snapshot);
+  //         storeUserData(authStorageKeys.USER_DATA, response.snapshot);
+  //         showToast(
+  //           toast.types.SUCCESS,
+  //           `Welcome ${response.snapshot?.name.firstname}${
+  //             !response.snapshot.verified ? ', Please Verify your Account' : ''
+  //           }`,
+  //         );
+  //         console.log('Am not a new User', response);
+  //       }
+  //     })
+  //     .then(error => {
+  //       setLoading(false);
+  //       console.log('Error:', error);
+  //     });
+  // };
 
-  const handleTwitterAuth = () => {
-    showToast(
-      toast.types.INFO,
-      'Sorry! Twitter authentication is not yet available',
-    );
-  };
+  // const handleFacebookAuth = () => {
+  //   facebookSignin()
+  //     .then(snapshot => {
+  //       console.log('Success', snapshot);
+  //     })
+  //     .then(error => {
+  //       console.log('Error:', error);
+  //     });
+  // };
+
+  // const handleTwitterAuth = () => {
+  //   showToast(
+  //     toast.types.INFO,
+  //     'Sorry! Twitter authentication is not yet available',
+  //   );
+  // };
 
   return (
     <View style={styles.container}>
@@ -80,22 +103,7 @@ const AuthForm = ({
         onPress={() => navigation.replace(routeName)}>
         <AppText style={styles.link}>{oppositeAuthTypeLabel}</AppText>
       </TouchableOpacity>
-      <View style={styles.socialContainer}>
-        <AppText style={styles.linkLabel}>
-          Or {authTypeLabel.toLowerCase()} with
-        </AppText>
-        <View style={styles.handlesContainer}>
-          <TouchableOpacity onPress={() => handleFacebookAuth()}>
-            <FacebookIcon width={wp(35)} height={wp(35)} margin={10} />
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => handleGoogleAuth()}>
-            <GoogleIcon width={wp(35)} height={wp(35)} margin={10} />
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => handleTwitterAuth()}>
-            <TwitterIcon width={wp(35)} height={wp(40)} margin={10} />
-          </TouchableOpacity>
-        </View>
-      </View>
+      <SocialAuthentication authLabel={authTypeLabel.toLowerCase()} />
     </View>
   );
 };

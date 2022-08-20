@@ -1,5 +1,12 @@
 import React, {useContext, useState, useEffect} from 'react';
-import {StyleSheet, View, FlatList, Keyboard} from 'react-native';
+import {
+  StyleSheet,
+  View,
+  FlatList,
+  Keyboard,
+  KeyboardAvoidingView,
+  ScrollView,
+} from 'react-native';
 import AuthContext from '../auth/AuthContext';
 import ActionRemoveBtn from '../components/ActionRemoveBtn';
 import AppButton from '../components/AppButton';
@@ -16,21 +23,21 @@ import {formatToCurrency} from '../utilities/formatToCurr';
 
 const CartScreen = ({navigation}) => {
   const {ordered, subTotal, delivery, total} = useContext(AuthContext);
-  const [keyboardStatus, setKeyboardStatus] = useState(undefined);
+  // const [keyboardStatus, setKeyboardStatus] = useState(undefined);
 
-  useEffect(() => {
-    const showSubscription = Keyboard.addListener('keyboardDidShow', () => {
-      setKeyboardStatus(true);
-    });
-    const hideSubscription = Keyboard.addListener('keyboardDidHide', () => {
-      setKeyboardStatus(false);
-    });
+  // useEffect(() => {
+  //   const showSubscription = Keyboard.addListener('keyboardDidShow', () => {
+  //     setKeyboardStatus(true);
+  //   });
+  //   const hideSubscription = Keyboard.addListener('keyboardDidHide', () => {
+  //     setKeyboardStatus(false);
+  //   });
 
-    return () => {
-      showSubscription.remove();
-      hideSubscription.remove();
-    };
-  }, [keyboardStatus]);
+  //   return () => {
+  //     showSubscription.remove();
+  //     hideSubscription.remove();
+  //   };
+  // }, [keyboardStatus]);
 
   // console.log(keyboardStatus);
 
@@ -65,24 +72,26 @@ const CartScreen = ({navigation}) => {
               </View>
             </View>
           </View>
-          <FlatList
-            data={ordered}
-            contentContainerStyle={{paddingBottom: keyboardStatus ? 120 : 70}}
-            showsVerticalScrollIndicator={false}
-            key={product => product.id.toString()}
-            renderItem={({item}) => (
-              <CartItemCard
-                product={item}
-                renderRightActions={() => (
-                  <ActionRemoveBtn
-                    contentContainerStyle={styles.renderRight}
-                    product={item}
-                  />
-                )}
-              />
-            )}
-          />
-          {!keyboardStatus && (
+          <KeyboardAvoidingView
+            behavior="height"
+            style={{flex: 1, backgroundColor: 'red'}}>
+            <ScrollView
+              showsVerticalScrollIndicator={false}
+              contentContainerStyle={{paddingBottom: 100}}>
+              {ordered.map(item => (
+                <CartItemCard
+                  key={item.id}
+                  product={item}
+                  renderRightActions={() => (
+                    <ActionRemoveBtn
+                      contentContainerStyle={styles.renderRight}
+                      product={item}
+                    />
+                  )}
+                />
+              ))}
+            </ScrollView>
+
             <View style={styles.checkout}>
               <AppButton
                 label="Checkout"
@@ -93,7 +102,7 @@ const CartScreen = ({navigation}) => {
                 }}
               />
             </View>
-          )}
+          </KeyboardAvoidingView>
         </View>
       ) : (
         <DisplayMesssage

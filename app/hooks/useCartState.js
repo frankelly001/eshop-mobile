@@ -10,7 +10,7 @@ import routes from '../navigation/routes';
 
 const infoAlert = () => showToast(toast.types.INFO, 'You are not Logged in');
 const successAlert = message => showToast(toast.types.SUCCESS, message);
-const errorAlert = error => showToast(toast.types.SUCCESS, error);
+const errorAlert = error => showToast(toast.types.ERROR, error);
 export const useCartState = user => {
   const [orderedItems, setOrderedItems] = useState([]);
   const [savedItems, setSavedItems] = useState([]);
@@ -121,7 +121,7 @@ export const useCartState = user => {
         .catch(error => {
           setSavedItems(previousLikeProducts);
           errorAlert('wishlist failed to be updated');
-          //   console.log(error, 'heyyyyyyyyy');
+          console.log(error, 'heyyyyyyyyy');
         });
     } else {
       infoAlert();

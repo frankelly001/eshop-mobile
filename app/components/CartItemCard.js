@@ -22,9 +22,12 @@ const CartItemCard = ({product, renderRightActions}) => {
     if (newVal < 1) payload = 1;
     else if (!newVal) {
       payload = product.quantity;
-      setValue(product.quantity);
-    } else payload = newVal;
-    mutateCart(product.id, payload);
+      // setValue(product.quantity);
+    } else {
+      payload = newVal;
+    }
+    setValue(payload);
+    if (product.quantity !== payload) mutateCart(product.id, payload);
   };
 
   const add = () => {

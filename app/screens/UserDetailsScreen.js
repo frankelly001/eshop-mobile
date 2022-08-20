@@ -33,7 +33,7 @@ const validation = Yup.object().shape({
 });
 
 const UserDetailsScreen = ({navigation}) => {
-  const {user} = useContext(AuthContext);
+  const {user, setUser} = useContext(AuthContext);
   const initialValues = {
     firstname: user?.name.firstname,
     lastname: user?.name.lastname,
@@ -44,6 +44,8 @@ const UserDetailsScreen = ({navigation}) => {
   };
 
   const {loading, request} = useApi(updateUserData);
+
+  console.log(user, 'user');
 
   const handleSubmit = (userNewInFo, {resetForm}) => {
     const {firstname, lastname, gender, phone, additional_phone} = userNewInFo;
@@ -58,6 +60,19 @@ const UserDetailsScreen = ({navigation}) => {
         resetForm();
         showToast(toast.types.SUCCESS, 'User information successfully updated');
         navigation.navigate(routes.ACCOUNT);
+        const userNewInfo = {
+          ...user,
+          gender,
+          name: {
+            firstname,
+            lastname,
+          },
+          phone: {
+            phone,
+            additional_phone,
+          },
+        };
+        setUser(userNewInfo);
       })
       .catch(error => {
         showToast(toast.types.ERROR, formatErrorMessage(error));
