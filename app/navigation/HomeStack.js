@@ -40,10 +40,11 @@ const HomeStack = props => {
   if (appUseReady === null) return null;
   return (
     <Stack.Navigator
+      initialRouteName={appUseReady ? routes.ESHOP : routes.ONBOARDINGSCREEN}
       screenOptions={{
         header: ({...allProps}) => <Header {...allProps} />,
       }}>
-      {!appUseReady && (
+      {/* {!appUseReady && (
         <Stack.Screen
           name={routes.ONBOARDINGSCREEN}
           component={OnBoardingScreen}
@@ -51,7 +52,15 @@ const HomeStack = props => {
             headerShown: false,
           }}
         />
-      )}
+      )} */}
+
+      <Stack.Screen
+        name={routes.ONBOARDINGSCREEN}
+        component={OnBoardingScreen}
+        options={{
+          headerShown: false,
+        }}
+      />
 
       <Stack.Screen
         name={routes.ESHOP}

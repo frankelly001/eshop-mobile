@@ -72,9 +72,7 @@ const CartScreen = ({navigation}) => {
               </View>
             </View>
           </View>
-          <KeyboardAvoidingView
-            behavior="height"
-            style={{flex: 1, backgroundColor: 'red'}}>
+          <KeyboardAvoidingView behavior="height" style={{flex: 1}}>
             <ScrollView
               showsVerticalScrollIndicator={false}
               contentContainerStyle={{paddingBottom: 100}}>

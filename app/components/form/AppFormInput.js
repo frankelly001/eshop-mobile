@@ -5,12 +5,14 @@ import AppTextInput from '../AppTextInput';
 import ErrorMessage from './ErrorMessage';
 import colors from '../../config/colors';
 import Icon, {Icons} from '../Icons';
+import AnimatedFormPlaceholder from './AnimatedFormPlaceholder';
 
 const AppFormInput = ({
   name,
   width = '100%',
   style,
   textContentType,
+  placeholder,
   ...otherProps
 }) => {
   const {setFieldTouched, setFieldValue, values, errors, touched} =
@@ -20,11 +22,19 @@ const AppFormInput = ({
   // console.log(touched);
   // console.log(errors);
   const isPasswordInput = textContentType === 'password';
+
   return (
     <View style={[styles.container, {width}]}>
+      {/* {isFocus && <AppText style={styles.placeholder}>{placeholder}</AppText>} */}
+      <AnimatedFormPlaceholder isFocus={isFocus} placeholder={placeholder} />
       <View>
         <AppTextInput
-          style={isFocus && {borderColor: colors.purple, borderWidth: 0.5}}
+          style={
+            isFocus && {
+              borderColor: colors.purple,
+              borderWidth: 0.5,
+            }
+          }
           onFocus={() => setIsFocus(true)}
           onBlur={() => {
             setFieldTouched(name);
@@ -34,6 +44,7 @@ const AppFormInput = ({
           textContentType={textContentType}
           onChangeText={text => setFieldValue(name, text)}
           value={values[name]}
+          placeholder={!isFocus ? placeholder : ''}
           // width={width}
           {...otherProps}
         />

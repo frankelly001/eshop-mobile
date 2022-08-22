@@ -171,6 +171,7 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
     justifyContent: 'space-between',
     width: '100%',
+    alignItems: 'flex-end',
   },
   headerContainer: {
     paddingVertical: 5,

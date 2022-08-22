@@ -146,6 +146,8 @@ const LoginScreen = ({navigation}) => {
         welcomeMessage="Welcome to Back!"
         authTypeLabel="Login"
         initialValues={{
+          // email: '',
+          // password: '',
           email: 'frankelly3344@gmail.com',
           password: '123456',
         }}

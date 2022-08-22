@@ -3,6 +3,7 @@ import React, {useMemo, useState} from 'react';
 import {StyleSheet, View} from 'react-native';
 import colors from '../../config/colors';
 import AppSelectInput from '../AppSelectInput';
+import AnimatedFormPlaceholder from './AnimatedFormPlaceholder';
 import ErrorMessage from './ErrorMessage';
 
 const AppFormSelectInput = ({
@@ -10,6 +11,7 @@ const AppFormSelectInput = ({
   onHandleData,
   valueResetNames, // Array
   width = '100%',
+  placeholder,
   ...otherProps
 }) => {
   const {setFieldTouched, setFieldValue, values, errors, touched} =
@@ -24,6 +26,7 @@ const AppFormSelectInput = ({
 
   return (
     <View style={[styles.container, {width}]}>
+      <AnimatedFormPlaceholder isFocus={isFocus} placeholder={placeholder} />
       <AppSelectInput
         dropdownStyle={[
           !data.length && {opacity: 0.2},
@@ -31,6 +34,7 @@ const AppFormSelectInput = ({
         ]}
         data={data}
         onFocus={() => setIsFocus(true)}
+        placeholder={!isFocus ? placeholder : ''}
         onBlur={() => {
           setFieldTouched(name);
           setIsFocus(false);

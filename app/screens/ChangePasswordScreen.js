@@ -100,6 +100,7 @@ const styles = StyleSheet.create({
   },
   formContainer: {
     width: '100%',
+    alignItems: 'flex-end',
   },
   subHeader: {
     fontSize: fontSz(10),
