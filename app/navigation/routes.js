@@ -27,4 +27,7 @@ export default Object.freeze({
   ADDRESSBOOK: 'Address Book',
   FORGOTPASSWORD: 'Forgot Password',
   ONBOARDINGSCREEN: 'OnBoardingScreen',
+  ORDERS: 'Orders',
+  ORDERDETAILS: 'Order Details',
+  AUTH: 'Auth',
 });

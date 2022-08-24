@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react';
 import AuthContext from './app/auth/AuthContext';
 import {NavigationContainer} from '@react-navigation/native';
 import navigationTheme from './app/navigation/navigationTheme';
-import HomeStack from './app/navigation/HomeStack';
+import MainStack from './app/navigation/MainStack';
 import {navigationRef} from './app/navigation/rootNavigation';
 import {gestureHandlerRootHOC} from 'react-native-gesture-handler';
 import {Host} from 'react-native-portalize';
@@ -343,7 +343,7 @@ const App = () => {
         }}>
         <NavigationContainer ref={navigationRef} theme={navigationTheme}>
           <Host>
-            <HomeStack />
+            <MainStack />
           </Host>
         </NavigationContainer>
       </AuthContext.Provider>

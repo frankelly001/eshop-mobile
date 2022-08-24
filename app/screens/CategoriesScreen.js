@@ -140,7 +140,6 @@ const styles = StyleSheet.create({
   titleOfCat: {
     textAlign: 'center',
     fontFamily: fonts.bold,
-
     color: colors.white,
     textTransform: 'capitalize',
   },
@@ -154,7 +153,7 @@ const styles = StyleSheet.create({
   },
   catName: {
     fontSize: fontSz(7.5), // 12
-    fontFamily: fonts.bold,
+    fontFamily: fonts.semi_bold,
     textAlign: 'center',
     textTransform: 'capitalize',
   },

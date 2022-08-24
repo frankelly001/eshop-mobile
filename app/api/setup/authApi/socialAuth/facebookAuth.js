@@ -1,4 +1,5 @@
 import {LoginManager, AccessToken} from 'react-native-fbsdk-next';
+import {auth} from '../../config';
 
 async function onFacebookButtonPress() {
   // Attempt login with permissions
@@ -27,8 +28,9 @@ async function onFacebookButtonPress() {
   return auth().signInWithCredential(facebookCredential);
 }
 
-export const facebookSignin = () => {
+export const facebookSignin = async () => {
   return new Promise((resolve, reject) => {
+    LoginManager.logOut();
     onFacebookButtonPress()
       .then(snapshot => {
         resolve(snapshot);

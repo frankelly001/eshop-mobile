@@ -22,10 +22,13 @@ import RecentlySearched from '../screens/RecentlySearched';
 import VouchersScreen from '../screens/VouchersScreen';
 import PendingReviewsScreen from '../screens/PendingReviewsScreen';
 import {authStorageKeys, getUserData} from '../api/storage/authStorage';
+import OrdersScreen from '../screens/OrdersScreen';
+import AuthNavigator from './AuthNavigator';
+import OrderDetailsScreen from '../screens/OrderDetailsScreen';
 
 const Stack = createNativeStackNavigator();
 
-const HomeStack = props => {
+const MainStack = props => {
   const {orderedNum, user} = useContext(AuthContext);
   const [appUseReady, setAppUseReady] = useState(null);
 
@@ -44,7 +47,7 @@ const HomeStack = props => {
       screenOptions={{
         header: ({...allProps}) => <Header {...allProps} />,
       }}>
-      {/* {!appUseReady && (
+      {!appUseReady && (
         <Stack.Screen
           name={routes.ONBOARDINGSCREEN}
           component={OnBoardingScreen}
@@ -52,16 +55,7 @@ const HomeStack = props => {
             headerShown: false,
           }}
         />
-      )} */}
-
-      <Stack.Screen
-        name={routes.ONBOARDINGSCREEN}
-        component={OnBoardingScreen}
-        options={{
-          headerShown: false,
-        }}
-      />
-
+      )}
       <Stack.Screen
         name={routes.ESHOP}
         component={AppNavigator}
@@ -114,6 +108,8 @@ const HomeStack = props => {
       />
 
       <Stack.Screen name={routes.SAVED} component={SavedScreen} />
+      <Stack.Screen name={routes.ORDERS} component={OrdersScreen} />
+      <Stack.Screen name={routes.ORDERDETAILS} component={OrderDetailsScreen} />
       <Stack.Screen name={routes.ADDRESSBOOK} component={AddressBookScreen} />
       <Stack.Screen name={routes.USERDETAILS} component={UserDetailsScreen} />
       <Stack.Screen name={routes.RECENTLY_VIEWED} component={RecentlyViewed} />
@@ -137,8 +133,9 @@ const HomeStack = props => {
 
       {!user && <Stack.Screen name={routes.SIGNUP} component={SignupScreen} />}
       {!user && <Stack.Screen name={routes.LOGIN} component={LoginScreen} />}
+      {/* {!user && <Stack.Screen name={routes.AUTH} component={AuthNavigator} />} */}
     </Stack.Navigator>
   );
 };
 
-export default HomeStack;
+export default MainStack;

@@ -15,6 +15,7 @@ const AccountDetails = {
           {...otherProps}
         />
       ),
+      routeName: routes.ORDERS,
     },
     {
       _id: '2',

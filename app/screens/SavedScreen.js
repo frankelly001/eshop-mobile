@@ -1,6 +1,7 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {FlatList, StyleSheet, View} from 'react-native';
 import AuthContext from '../auth/AuthContext';
+import AppButton from '../components/AppButton';
 import AppText from '../components/AppText';
 import DisplayMesssage from '../components/DisplayMesssage';
 import ProductCard from '../components/ProductCard';
@@ -15,7 +16,15 @@ const SavedScreen = ({navigation}) => {
   const {savedItems, products, loading} = useContext(AuthContext);
 
   if (loading.products) return <ProductsLoader />;
-  let savedProducts = products.filter(el => savedItems.includes(el.id));
+  const savedProducts = products.filter(el => savedItems.includes(el.id));
+
+  // const save = () => {
+  //   const savedProds = [];
+  //   for (let i = 0; i < savedItems.length; i++) {
+  //     products.forEach(el => savedItems[i] === el.id && savedProds.push(el));
+  //   }
+  //   return savedProds;
+  // };
 
   return (
     <>
