@@ -22,7 +22,8 @@ import AppTextInput from './AppTextInput';
 import useAnimatedHeaderStyles from '../hooks/useAnimatedHeaderStyles';
 
 const AnimatedHeader = ({navigation, options, route}) => {
-  const {orderedNum, recentQueries, setRecentQueries} = useContext(AuthContext);
+  const {numOfCartItems, recentQueries, setRecentQueries} =
+    useContext(AuthContext);
   const size = wp(20);
   const [disableBackBtn, setDisableBackBtn] = useState(false);
   const [disableSearchBtn, setDisableSearchBtn] = useState(false);
@@ -149,9 +150,9 @@ const AnimatedHeader = ({navigation, options, route}) => {
                   // style={{backgroundColor: 'yellow'}}
                   onPress={() => navigation.navigate(routes.CART)}>
                   <CartIcon width={size}></CartIcon>
-                  {orderedNum > 0 && (
+                  {numOfCartItems > 0 && (
                     <Text numberOfLines={1} style={styles.cartCount}>
-                      {orderedNum}
+                      {numOfCartItems}
                     </Text>
                   )}
                 </TouchableOpacity>

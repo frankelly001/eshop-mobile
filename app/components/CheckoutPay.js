@@ -1,5 +1,5 @@
 import React, {useRef, useContext, useState} from 'react';
-import {StyleSheet, View, TouchableOpacity} from 'react-native';
+import {StyleSheet, View, TouchableOpacity, Dimensions} from 'react-native';
 import colors from '../config/colors';
 import {fontSz, wp} from '../config/responsiveSize';
 import AppGradientBtn from './AppGradientBtn';
@@ -17,15 +17,13 @@ import Screen from './Screen';
 import ActivityIndicator from './ActivityIndicator';
 import AnimatedLottieView from 'lottie-react-native';
 import ModalOverlay from './ModalOverlay';
+import AppButton from './AppButton';
+import PaySuccessModal from './PaySuccessModal';
 
 const CheckoutPay = ({deliveryInfo, onGoBack}) => {
   const deliverySummaryRef = useRef();
   const orderSummaryRef = useRef();
   const {total} = useContext(AuthContext);
-  const [animatedIconSource, setAnimatedIconSource] = useState(
-    require('../assets/icons/animatedIcons/transacton_success.json'),
-  );
-  const [loop, setLoop] = useState(false);
 
   const onOpen = ref => {
     ref.current?.open();
@@ -34,39 +32,6 @@ const CheckoutPay = ({deliveryInfo, onGoBack}) => {
   // console.log(animatedIconSource);
   return (
     <>
-      <ModalOverlay modalStyle={{backgroundColor: colors.white}} portal>
-        <AnimatedLottieView
-          // style={{width: wp(300), height: wp(300)}}
-          style={{marginBottom: 50}}
-          onAnimationFinish={() => {
-            setAnimatedIconSource(
-              require('../assets/icons/animatedIcons/delivery_on.json'),
-            );
-            setLoop(true);
-          }}
-          autoPlay
-          loop={false}
-          source={animatedIconSource}
-        />
-        {loop && (
-          <>
-            <AnimatedLottieView
-              // style={{width: wp(300), height: wp(300)}}
-              style={{marginBottom: 50}}
-              // onAnimationFinish={() => {
-              //   setAnimatedIconSource(
-              //     require('../assets/icons/animatedIcons/delivery_on.json'),
-              //   );
-              //   setLoop(true);
-              // }}
-              autoPlay
-              loop
-              source={animatedIconSource}
-            />
-            <AppText>Transaction success</AppText>
-          </>
-        )}
-      </ModalOverlay>
       <Screen
         style={{height: '100%', backgroundColor: colors.grey_light}}
         contentContainerStyle={{
@@ -125,7 +90,7 @@ const CheckoutPay = ({deliveryInfo, onGoBack}) => {
               </AppText>
             </View>
           </View>
-          <FlutterPayBtn total={total} email={deliveryInfo.email} />
+          <FlutterPayBtn total={total} deliveryInfo={deliveryInfo} />
           {/* <AppGradientBtn
         label={`PAY NOW: ${formatToCurrency(total)}`}
         labelStyle={{fontWeight: '700'}}

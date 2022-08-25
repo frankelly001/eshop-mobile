@@ -25,7 +25,8 @@ import {authStorageKeys, storeUserData} from '../api/storage/authStorage';
 import queryApi from '../api/setup/queryApi/queryApi';
 
 const Header = ({navigation, options, route}) => {
-  const {orderedNum, recentQueries, addToRecentQuery} = useContext(AuthContext);
+  const {numOfCartItems, recentQueries, addToRecentQuery} =
+    useContext(AuthContext);
   // const [disableBackBtn, setDisableBackBtn] = useState(true);
   // const [disableHeaderRight, setDisableHeaderRight] = useState(true);
   // const [backIcon, setBackIcon] = useState('arrow-left');
@@ -160,10 +161,10 @@ const Header = ({navigation, options, route}) => {
                 // style={{backgroundColor: 'yellow'}}
                 onPress={() => navigation.navigate(routes.CART)}>
                 <CartIcon width={size}></CartIcon>
-                {orderedNum > 0 && (
+                {numOfCartItems > 0 && (
                   <View style={styles.cartCount}>
                     <Text style={styles.countText} numberOfLines={1}>
-                      {orderedNum}
+                      {numOfCartItems}
                     </Text>
                   </View>
                 )}

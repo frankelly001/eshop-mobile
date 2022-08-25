@@ -12,7 +12,8 @@ export const userDataTypes = {
   PHONE: 'phone.phone',
   ADDITIONAL_PHONE: 'phone.addtional_phone',
   SAVED_ITEMS: 'saved_items',
-  ORDERED_ITEMS: 'odered_items',
+  CART_ITEMS: 'cart_items',
+  ORDERED_ITEMS: 'ordered_items',
 };
 
 export const updateUserData = (userId, data) => {

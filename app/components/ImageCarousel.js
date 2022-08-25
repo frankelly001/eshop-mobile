@@ -67,7 +67,8 @@ const ImageCarousel = () => {
             key={img}
             style={[
               styles.whiteCircle,
-              {opacity: i === selectedIndex ? 0.5 : 1},
+              {opacity: i !== selectedIndex ? 0.5 : 1},
+              {width: i === selectedIndex ? 10 : 6},
             ]}
           />
         ))}

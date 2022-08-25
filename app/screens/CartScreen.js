@@ -22,7 +22,7 @@ import routes from '../navigation/routes';
 import {formatToCurrency} from '../utilities/formatToCurr';
 
 const CartScreen = ({navigation}) => {
-  const {ordered, subTotal, delivery, total} = useContext(AuthContext);
+  const {productsInCart, subTotal, delivery, total} = useContext(AuthContext);
   // const [keyboardStatus, setKeyboardStatus] = useState(undefined);
 
   // useEffect(() => {
@@ -41,10 +41,9 @@ const CartScreen = ({navigation}) => {
 
   // console.log(keyboardStatus);
 
-  // if (!ordered.length) return null;
   return (
     <>
-      {ordered.length ? (
+      {productsInCart.length ? (
         <View style={styles.container}>
           <View style={styles.feeSummaryContainer}>
             <GradientBackground style={styles.titleContainer}>
@@ -76,7 +75,7 @@ const CartScreen = ({navigation}) => {
             <ScrollView
               showsVerticalScrollIndicator={false}
               contentContainerStyle={{paddingBottom: 100}}>
-              {ordered.map(item => (
+              {productsInCart.map(item => (
                 <CartItemCard
                   key={item.id}
                   product={item}

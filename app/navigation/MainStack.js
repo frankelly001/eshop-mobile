@@ -29,7 +29,7 @@ import OrderDetailsScreen from '../screens/OrderDetailsScreen';
 const Stack = createNativeStackNavigator();
 
 const MainStack = props => {
-  const {orderedNum, user} = useContext(AuthContext);
+  const {numOfCartItems, user} = useContext(AuthContext);
   const [appUseReady, setAppUseReady] = useState(null);
 
   useEffect(() => {
@@ -76,7 +76,7 @@ const MainStack = props => {
         name={routes.CART}
         component={CartScreen}
         options={{
-          title: `Cart ${orderedNum > 0 ? `(${orderedNum})` : ''}`,
+          title: `Cart ${numOfCartItems > 0 ? `(${numOfCartItems})` : ''}`,
 
           animation: 'slide_from_right',
           // headerStyle: {backgroundColor: 'red'},

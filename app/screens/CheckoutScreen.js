@@ -9,7 +9,7 @@ import colors from '../config/colors';
 import CheckoutPay from '../components/CheckoutPay';
 import fonts from '../config/fonts';
 
-const CheckoutScreen = props => {
+const CheckoutScreen = ({navigation}) => {
   const [selectedTab, setSelectedTab] = useState('deliveryInfo');
   const [savedValues, setSavedValues] = useState(null);
 

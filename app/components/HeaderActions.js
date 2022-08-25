@@ -10,8 +10,8 @@ import navigation from '../navigation/rootNavigation';
 import {wp, fontSz} from '../config/responsiveSize';
 
 const HeaderActions = () => {
-  const {orderedNum} = useContext(AuthContext);
-  // console.log(orderedNum);
+  const {numOfCartItems} = useContext(AuthContext);
+
   const size = wp(20);
   return (
     <View style={styles.container}>
@@ -23,9 +23,9 @@ const HeaderActions = () => {
       />
       <TouchableOpacity onPress={() => navigation.navigate(routes.CART)}>
         <CartIcon width={size} hieght={size}></CartIcon>
-        {orderedNum > 0 && (
+        {numOfCartItems > 0 && (
           <Text numberOfLines={1} style={styles.cartCount}>
-            {orderedNum}
+            {numOfCartItems}
           </Text>
         )}
       </TouchableOpacity>

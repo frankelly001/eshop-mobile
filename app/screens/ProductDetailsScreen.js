@@ -29,7 +29,7 @@ const {width, height} = Dimensions.get('screen');
 
 const ProductDetailsScreen = ({route}) => {
   const [productId, setProductId] = useState(route.params);
-  const {products, ordered, addToCart, addToRecentView} =
+  const {products, productsInCart, addToCart, addToRecentView} =
     useContext(AuthContext);
 
   // const [product, setProduct] = useState({});
@@ -43,7 +43,9 @@ const ProductDetailsScreen = ({route}) => {
       el.category?.group?.type === product.category?.group?.type &&
       el.id !== product.id,
   );
-  const quantityOrdered = ordered.find(el => el.id === product.id)?.quantity;
+  const quantityInCart = productsInCart.find(
+    el => el.id === product.id,
+  )?.quantity;
   useEffect(() => {
     addToRecentView(productId);
   }, [productId]);
@@ -183,9 +185,9 @@ const ProductDetailsScreen = ({route}) => {
           <View style={styles.quantityContainer}>
             <AppText style={styles.headerLabel}>
               Quantity{' '}
-              {quantityOrdered && (
-                <AppText style={styles.orderedQty}>
-                  (ordered: {quantityOrdered})
+              {quantityInCart && (
+                <AppText style={styles.quantityInCart}>
+                  ({quantityInCart})
                 </AppText>
               )}
             </AppText>
@@ -326,7 +328,7 @@ const styles = StyleSheet.create({
     fontFamily: fonts.bold,
     marginVertical: 10,
   },
-  orderedQty: {
+  quantityInCart: {
     color: colors.grey_dark_2,
   },
   description: {

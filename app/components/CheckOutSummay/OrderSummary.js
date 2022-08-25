@@ -8,7 +8,7 @@ import SummaryStyles from './SummaryStyles';
 
 const {height} = Dimensions.get('screen');
 const OrderSummary = props => {
-  const {ordered, subTotal, delivery, total} = useContext(AuthContext);
+  const {productsInCart, subTotal, delivery, total} = useContext(AuthContext);
   return (
     <View
       style={{
@@ -24,7 +24,7 @@ const OrderSummary = props => {
           <AppText style={SummaryStyles.modalSubHeader}>CART ITEMS</AppText>
         </View>
         <ScrollView showsVerticalScrollIndicator={false}>
-          {ordered.map(product => (
+          {productsInCart.map(product => (
             <ProductSummaryCard key={product.id} product={product} />
           ))}
         </ScrollView>

@@ -12,38 +12,38 @@ const infoAlert = () => showToast(toast.types.INFO, 'You are not Logged in');
 const successAlert = message => showToast(toast.types.SUCCESS, message);
 const errorAlert = error => showToast(toast.types.ERROR, error);
 export const useCartState = user => {
-  const [orderedItems, setOrderedItems] = useState([]);
+  const [cartItems, setCartItems] = useState([]);
   const [savedItems, setSavedItems] = useState([]);
 
   const addToCart = (productId, payload) => {
     if (user) {
-      const previousOrderedItems = orderedItems;
-      let nextOrderedItems = [...previousOrderedItems];
+      const previousCartItems = cartItems;
+      let nextCartItems = [...previousCartItems];
       if (
-        !nextOrderedItems.some(elOrdered => elOrdered.productId === productId)
+        !nextCartItems.some(elCartItem => elCartItem.productId === productId)
       ) {
-        nextOrderedItems.unshift({
+        nextCartItems.unshift({
           productId,
           quantity: payload ? parseInt(payload) : 1,
         });
       } else {
-        nextOrderedItems = nextOrderedItems.map(elOrdered =>
-          elOrdered.productId === productId
+        nextCartItems = nextCartItems.map(elCartItem =>
+          elCartItem.productId === productId
             ? {
-                ...elOrdered,
+                ...elCartItem,
                 quantity:
-                  elOrdered.quantity + (payload ? parseInt(payload) : 1),
+                  elCartItem.quantity + (payload ? parseInt(payload) : 1),
               }
-            : elOrdered,
+            : elCartItem,
         );
       }
 
-      setOrderedItems(nextOrderedItems);
+      setCartItems(nextCartItems);
       successAlert('Product added successfully');
-      updateUserData(user.id, {[userDataTypes.ORDERED_ITEMS]: nextOrderedItems})
+      updateUserData(user.id, {[userDataTypes.CART_ITEMS]: nextCartItems})
         .then(response => {})
         .catch(() => {
-          setOrderedItems(previousOrderedItems);
+          setCartItems(previousCartItems);
           errorAlert('Product failed to be added to cart');
         });
     } else {
@@ -53,24 +53,24 @@ export const useCartState = user => {
 
   const subFromCart = productId => {
     if (user) {
-      const previousOrderedItems = orderedItems;
-      const nextOrderedItems = [...previousOrderedItems].map(elOrdered =>
-        elOrdered.productId === productId
+      const previousCartItems = cartItems;
+      const nextCartItems = [...previousCartItems].map(elCartItem =>
+        elCartItem.productId === productId
           ? {
-              ...elOrdered,
+              ...elCartItem,
               quantity:
-                elOrdered.quantity > 1
-                  ? elOrdered.quantity - 1
-                  : elOrdered.quantity,
+                elCartItem.quantity > 1
+                  ? elCartItem.quantity - 1
+                  : elCartItem.quantity,
             }
-          : elOrdered,
+          : elCartItem,
       );
-      setOrderedItems(nextOrderedItems);
+      setCartItems(nextCartItems);
       successAlert(`Product quantity has been updated successfully`);
       updateUserData(user.id, {
-        [userDataTypes.ORDERED_ITEMS]: nextOrderedItems,
+        [userDataTypes.CART_ITEMS]: nextCartItems,
       }).catch(() => {
-        setOrderedItems(previousOrderedItems);
+        setCartItems(previousCartItems);
         errorAlert('Product quantity failed to be updated in cart');
       });
     } else {
@@ -80,21 +80,21 @@ export const useCartState = user => {
 
   const mutateCart = (productId, payload) => {
     if (user) {
-      const previousOrderedItems = orderedItems;
-      const nextOrderedItems = [...previousOrderedItems].map(elOrdered =>
-        elOrdered.productId === productId
+      const previousCartItems = cartItems;
+      const nextCartItems = [...previousCartItems].map(elCartItem =>
+        elCartItem.productId === productId
           ? {
-              ...elOrdered,
+              ...elCartItem,
               quantity: parseInt(payload),
             }
-          : elOrdered,
+          : elCartItem,
       );
-      setOrderedItems(nextOrderedItems);
+      setCartItems(nextCartItems);
       successAlert(`Product quantity has been updated successfully`);
       updateUserData(user.id, {
-        [userDataTypes.ORDERED_ITEMS]: nextOrderedItems,
+        [userDataTypes.CART_ITEMS]: nextCartItems,
       }).catch(() => {
-        setOrderedItems(previousOrderedItems);
+        setCartItems(previousCartItems);
         errorAlert('Product quantity failed to be updated in cart');
       });
     } else {
@@ -130,16 +130,16 @@ export const useCartState = user => {
 
   const removeFromCart = productId => {
     if (user) {
-      const previousOrderedItems = orderedItems;
-      const nextOrderedItems = previousOrderedItems.filter(
-        elOrdered => elOrdered.productId !== productId,
+      const previousCartItems = cartItems;
+      const nextCartItems = previousCartItems.filter(
+        elCartItem => elCartItem.productId !== productId,
       );
-      setOrderedItems(nextOrderedItems);
+      setCartItems(nextCartItems);
       successAlert('Product was removed from cart successfully');
       updateUserData(user.id, {
-        [userDataTypes.ORDERED_ITEMS]: nextOrderedItems,
+        [userDataTypes.CART_ITEMS]: nextCartItems,
       }).catch(() => {
-        setOrderedItems(previousOrderedItems);
+        setCartItems(previousCartItems);
         errorAlert('Product failed to be removed from cart');
       });
     } else {
@@ -148,22 +148,22 @@ export const useCartState = user => {
   };
 
   const actionTypes = {
-    INITIALIZE_ORDER: 'INITIALIZE_ORDER',
+    INITIALIZE_CART: 'INITIALIZE_CART',
     INITIALIZE_SAVE: 'INITIALIZE_SAVE',
     ADD_TO_CART: 'ADD_TO_CART',
     SUB_FROM_CART: 'SUB_FROM_CART',
     MUTATE_CART: 'MUTATE_CART',
     REMOVE_FROM_CART: 'REMOVE_FROM_CART',
     ONSAVE: 'ONSAVE',
-    CLEAR_ORDER: 'CLEAR_ORDER',
+    CLEAR_CART: 'CLEAR_CART',
     CLEAR_SAVE: 'CLEAR_SAVE',
   };
 
   const dispatchAction = action => {
     const {type, id: productId, payload, data} = action;
     switch (type) {
-      case actionTypes.INITIALIZE_ORDER:
-        return setOrderedItems(data);
+      case actionTypes.INITIALIZE_CART:
+        return setCartItems(data);
 
       case actionTypes.INITIALIZE_SAVE:
         return setSavedItems(data);
@@ -183,8 +183,8 @@ export const useCartState = user => {
       case actionTypes.ONSAVE:
         return handleLike(productId);
 
-      case actionTypes.CLEAR_ORDER:
-        return setOrderedItems([]);
+      case actionTypes.CLEAR_CART:
+        return setCartItems([]);
 
       case actionTypes.CLEAR_SAVE:
         return setSavedItems([]);
@@ -193,5 +193,5 @@ export const useCartState = user => {
         return action;
     }
   };
-  return {orderedItems, savedItems, dispatchAction, actionTypes};
+  return {cartItems, savedItems, dispatchAction, actionTypes};
 };
