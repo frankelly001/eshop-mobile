@@ -34,17 +34,21 @@ const Store = ({children}) => {
 
   //   useCheckNetworkStatus();
 
-  const {cartItems, savedItems, actionTypes, dispatchAction} =
+  const {cartItems, orderedItems, savedItems, actionTypes, dispatchAction} =
     useCartState(user);
 
   const initializeCartState = data => {
     dispatchAction({
       type: actionTypes.INITIALIZE_CART,
-      data: data.cart_items,
+      payload: data.cart_items,
     });
     dispatchAction({
       type: actionTypes.INITIALIZE_SAVE,
-      data: data.saved_items,
+      payload: data.odered_items,
+    });
+    dispatchAction({
+      type: actionTypes.INITIALIZE_SAVE,
+      payload: data.saved_items,
     });
   };
 
@@ -55,6 +59,10 @@ const Store = ({children}) => {
 
   const handleSave = id => {
     dispatchAction({type: actionTypes.ONSAVE, id});
+  };
+
+  const addToOrders = payload => {
+    dispatchAction({payload});
   };
 
   const addToCart = (id, payload) => {
@@ -127,6 +135,49 @@ const Store = ({children}) => {
       });
     return () => subscriber();
   };
+
+  const onProductSubscriber = () => {
+    setProducts({...products, loading: true});
+    const subscriber = collectionRefs.productsCollectionRef.onSnapshot(
+      documentSnapshot => {
+        const data = [];
+        documentSnapshot.forEach(el => {
+          data.push({id: el.id, ...el.data()});
+        });
+        // setProducts({...products, data});
+        setTimeout(() => {
+          setProducts({...products, data, loading: false});
+        }, 2000);
+      },
+    );
+    return () => subscriber();
+  };
+
+  const onCategorySubscriber = () => {
+    setCategories({...categories, loading: true});
+    const subscriber = collectionRefs.categoryCollectionRef.onSnapshot(
+      documentSnapshot => {
+        // if (!categories.loading && categories.data.length) {
+        const data = [];
+        documentSnapshot.forEach(el => {
+          // console.log(el.data());
+          data.push(el.data());
+        });
+
+        // setCategories({...categories, data});
+        // console.log(data, 'snappppp');
+        setTimeout(() => {
+          setCategories({...categories, data, loading: false});
+        }, 2000);
+      },
+    );
+    return () => subscriber();
+  };
+
+  useEffect(() => {
+    onProductSubscriber();
+    onCategorySubscriber();
+  }, []);
 
   const getAllUserDataFromAsynStorage = () => {
     getUserData(authStorageKeys.USER_DATA)
@@ -246,8 +297,8 @@ const Store = ({children}) => {
   };
 
   useEffect(() => {
-    fetchCategories();
-    fetchProducts();
+    // fetchCategories();
+    // fetchProducts();
 
     const authSubscriber = auth().onAuthStateChanged(onAuthStateChanged);
     getAllUserDataFromAsynStorage();
@@ -312,7 +363,9 @@ const Store = ({children}) => {
         clearRecentQuery,
         clearRecentView,
         addToCart,
+        addToOrders,
         savedItems,
+        orderedItems,
         subFromCart,
         mutateCart,
         removeFromCart,

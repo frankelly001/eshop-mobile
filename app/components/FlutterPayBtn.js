@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 import AppGradientBtn from './AppGradientBtn';
 import {PayWithFlutterwave} from 'flutterwave-react-native';
 import {formatToCurrency} from '../utilities/formatToCurr';
@@ -6,9 +6,17 @@ import AppButton from './AppButton';
 import {showToast} from './AppToast/showToast';
 import toast from './AppToast/toast';
 import PaySuccessModal from './PaySuccessModal';
+import AuthContext from '../auth/AuthContext';
+import {firestore} from '../api/setup/config';
+import {
+  updateUserData,
+  userDataTypes,
+} from '../api/setup/patchApi/updateUserData';
 
-const FlutterPayBtn = ({total, deliveryInfo}) => {
+const FlutterPayBtn = ({deliveryInfo}) => {
   const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const {productsInCart, subTotal, delivery, total, addToOrders} =
+    useContext(AuthContext);
   // length must be a num
   const generateTransactionRef = length => {
     var result = '';
@@ -21,15 +29,46 @@ const FlutterPayBtn = ({total, deliveryInfo}) => {
     return `flw_tx_ref_${result}`;
   };
 
-  // console.log(generateTransactionRef(10));
+  const orderData = {
+    date: firestore.FieldValue.serverTimestamp(),
+    delivery_info: deliveryInfo,
+    transaction_info: {
+      status: 'successful',
+      transaction_id: '3684184',
+      tx_ref: 'flw_tx_ref_iITrLsoYvW',
+    },
+    ordered_products: productsInCart,
+    payment_summary: {
+      subTotal,
+      delivery,
+      total,
+    },
+    orderStatus: 'pending',
+  };
   // {"status": "successful", "transaction_id": "3684184", "tx_ref": "flw_tx_ref_iITrLsoYvW"}
 
-  const handleOnRedirect = data => {
-    console.log(data, "incase status it's successful, cancelled or failed");
-    if (data.status === 'successful') {
+  const handleOnRedirect = transactionInfo => {
+    console.log(
+      transactionInfo,
+      "incase status it's successful, cancelled or failed",
+    );
+    if (transactionInfo.status === 'successful') {
+      const orderData = {
+        date: firestore.FieldValue.serverTimestamp(),
+        delivery_info: deliveryInfo,
+        transaction_info: transactionInfo,
+        ordered_products: productsInCart,
+        payment_summary: {
+          subTotal,
+          delivery,
+          total,
+        },
+        orderStatus: 'pending',
+      };
+      addToOrders(orderData);
       showToast(toast.types.SUCCESS, 'Transaction Successful');
       setShowSuccessModal(true);
-    } else if (data.status === 'cancelled') {
+    } else if (transactionInfo.status === 'cancelled') {
       showToast(toast.types.ERROR, 'Transaction Cancelled');
     }
   };

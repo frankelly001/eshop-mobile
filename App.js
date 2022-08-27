@@ -36,10 +36,6 @@ const App = () => {
     SplashScreen.hide();
   }, []);
 
-  // useEffect(()=> {
-
-  // })
-
   const toastConfig = {
     appToast: obj => {
       const {text2, props} = obj;

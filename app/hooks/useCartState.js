@@ -11,8 +11,10 @@ import routes from '../navigation/routes';
 const infoAlert = () => showToast(toast.types.INFO, 'You are not Logged in');
 const successAlert = message => showToast(toast.types.SUCCESS, message);
 const errorAlert = error => showToast(toast.types.ERROR, error);
+
 export const useCartState = user => {
   const [cartItems, setCartItems] = useState([]);
+  const [orderedItems, setOrderedItems] = useState([]);
   const [savedItems, setSavedItems] = useState([]);
 
   const addToCart = (productId, payload) => {
@@ -147,9 +149,24 @@ export const useCartState = user => {
     }
   };
 
+  const addToOrders = orderData => {
+    const previousOrderedItems = orderedItems;
+    const nextOrderedItems = [orderData, ...previousOrderedItems];
+
+    setOrderedItems(nextOrderedItems);
+    updateUserData(user.id, {
+      [userDataTypes.ORDERED_ITEMS]: nextOrderedItems,
+    })
+      .then(response => {})
+      .catch(error => {
+        setOrderedItems(previousOrderedItems);
+      });
+  };
+
   const actionTypes = {
     INITIALIZE_CART: 'INITIALIZE_CART',
     INITIALIZE_SAVE: 'INITIALIZE_SAVE',
+    ADD_TO_ORDERS: 'ADD_TO_ORDERS',
     ADD_TO_CART: 'ADD_TO_CART',
     SUB_FROM_CART: 'SUB_FROM_CART',
     MUTATE_CART: 'MUTATE_CART',
@@ -160,16 +177,22 @@ export const useCartState = user => {
   };
 
   const dispatchAction = action => {
-    const {type, id: productId, payload, data} = action;
+    const {type, id: productId, payload} = action;
     switch (type) {
       case actionTypes.INITIALIZE_CART:
-        return setCartItems(data);
+        return setCartItems(payload);
+
+      case actionTypes.INITIALIZE_ORDERS:
+        return setOrderedItems(payload);
 
       case actionTypes.INITIALIZE_SAVE:
-        return setSavedItems(data);
+        return setSavedItems(payload);
+
+      case actionTypes.ADD_TO_ORDERS:
+        return addToOrders(payload);
 
       case actionTypes.ADD_TO_CART:
-        return addToCart(productId, payload, payload);
+        return addToCart(productId, payload);
 
       case actionTypes.SUB_FROM_CART:
         return subFromCart(productId);
@@ -193,5 +216,5 @@ export const useCartState = user => {
         return action;
     }
   };
-  return {cartItems, savedItems, dispatchAction, actionTypes};
+  return {cartItems, orderedItems, savedItems, dispatchAction, actionTypes};
 };
