@@ -3,6 +3,7 @@ import {
   updateUserData,
   userDataTypes,
 } from '../api/setup/patchApi/updateUserData';
+import {addOrder} from '../api/setup/postApi/addOrder';
 import {showToast} from '../components/AppToast/showToast';
 import toast from '../components/AppToast/toast';
 import navigation from '../navigation/rootNavigation';
@@ -150,22 +151,32 @@ export const useCartState = user => {
   };
 
   const addToOrders = orderData => {
-    const previousOrderedItems = orderedItems;
-    const nextOrderedItems = [orderData, ...previousOrderedItems];
+    if (user) {
+      const data = {
+        userId: user.id,
+        ...orderData,
+      };
+      const previousOrderedItems = orderedItems;
+      const nextOrderedItems = [data, ...previousOrderedItems];
 
-    setOrderedItems(nextOrderedItems);
-    updateUserData(user.id, {
-      [userDataTypes.ORDERED_ITEMS]: nextOrderedItems,
-    })
-      .then(response => {})
-      .catch(error => {
-        setOrderedItems(previousOrderedItems);
-      });
+      setOrderedItems(nextOrderedItems);
+      addOrder(orderData.transaction_info?.transaction_id ?? user.id, data)
+        .then(() => {
+          setCartItems([]);
+          updateUserData(user.id, {
+            [userDataTypes.CART_ITEMS]: [],
+          });
+        })
+        .catch(() => {
+          setOrderedItems(previousOrderedItems);
+        });
+    }
   };
 
   const actionTypes = {
     INITIALIZE_CART: 'INITIALIZE_CART',
     INITIALIZE_SAVE: 'INITIALIZE_SAVE',
+    INITIALIZE_ORDERS: 'INITIALIZE_ORDERS',
     ADD_TO_ORDERS: 'ADD_TO_ORDERS',
     ADD_TO_CART: 'ADD_TO_CART',
     SUB_FROM_CART: 'SUB_FROM_CART',

@@ -107,24 +107,72 @@ const MainStack = props => {
         })}
       />
 
-      <Stack.Screen name={routes.SAVED} component={SavedScreen} />
-      <Stack.Screen name={routes.ORDERS} component={OrdersScreen} />
+      <Stack.Screen
+        name={routes.SAVED}
+        component={SavedScreen}
+        options={{
+          animation: 'slide_from_right',
+        }}
+      />
+      <Stack.Screen
+        name={routes.ORDERS}
+        component={OrdersScreen}
+        options={({route}) => ({
+          animation:
+            route?.params === routes.HOME
+              ? 'slide_from_bottom'
+              : 'slide_from_right',
+        })}
+      />
       <Stack.Screen name={routes.ORDERDETAILS} component={OrderDetailsScreen} />
-      <Stack.Screen name={routes.ADDRESSBOOK} component={AddressBookScreen} />
-      <Stack.Screen name={routes.USERDETAILS} component={UserDetailsScreen} />
-      <Stack.Screen name={routes.RECENTLY_VIEWED} component={RecentlyViewed} />
-      <Stack.Screen name={routes.VOUCHERS} component={VouchersScreen} />
+      <Stack.Screen
+        name={routes.ADDRESSBOOK}
+        component={AddressBookScreen}
+        options={{
+          animation: 'slide_from_right',
+        }}
+      />
+      <Stack.Screen
+        name={routes.USERDETAILS}
+        component={UserDetailsScreen}
+        options={{
+          animation: 'slide_from_right',
+        }}
+      />
+      <Stack.Screen
+        name={routes.RECENTLY_VIEWED}
+        component={RecentlyViewed}
+        options={{
+          animation: 'slide_from_right',
+        }}
+      />
+      <Stack.Screen
+        name={routes.VOUCHERS}
+        component={VouchersScreen}
+        options={{
+          animation: 'slide_from_right',
+        }}
+      />
       <Stack.Screen
         name={routes.PENDING_REVIEWS}
         component={PendingReviewsScreen}
+        options={{
+          animation: 'slide_from_right',
+        }}
       />
       <Stack.Screen
         name={routes.RECENTLY_SEARCHED}
         component={RecentlySearched}
+        options={{
+          animation: 'slide_from_right',
+        }}
       />
       <Stack.Screen
         name={routes.CHANGEPASSWORD}
         component={ChangePasswordScreen}
+        options={{
+          animation: 'slide_from_right',
+        }}
       />
       <Stack.Screen
         name={routes.FORGOTPASSWORD}

@@ -21,7 +21,6 @@ export const addUser = (userId, userInfo, verified) => {
       geolocation: new firestore.GeoPoint(53.483959, -2.244644),
     },
     cart_items: [],
-    ordered_items: [],
     saved_items: [],
     account_bal: 0,
     verified,

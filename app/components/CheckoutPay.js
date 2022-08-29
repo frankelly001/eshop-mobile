@@ -1,5 +1,11 @@
-import React, {useRef, useContext, useState} from 'react';
-import {StyleSheet, View, TouchableOpacity, Dimensions} from 'react-native';
+import React, {useRef, useContext, useState, useCallback} from 'react';
+import {
+  StyleSheet,
+  View,
+  TouchableOpacity,
+  Dimensions,
+  BackHandler,
+} from 'react-native';
 import colors from '../config/colors';
 import {fontSz, wp} from '../config/responsiveSize';
 import AppGradientBtn from './AppGradientBtn';
@@ -19,19 +25,43 @@ import AnimatedLottieView from 'lottie-react-native';
 import ModalOverlay from './ModalOverlay';
 import AppButton from './AppButton';
 import PaySuccessModal from './PaySuccessModal';
+import {useFocusEffect, useNavigation} from '@react-navigation/native';
+import routes from '../navigation/routes';
 
 const CheckoutPay = ({deliveryInfo, onGoBack}) => {
   const deliverySummaryRef = useRef();
   const orderSummaryRef = useRef();
-  const {total} = useContext(AuthContext);
+  const {productsInCart, subTotal, delivery, total, addToOrders} =
+    useContext(AuthContext);
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const navigation = useNavigation();
 
   const onOpen = ref => {
     ref.current?.open();
   };
 
+  useFocusEffect(
+    useCallback(() => {
+      const onBackHandler = () => {
+        showSuccessModal
+          ? navigation.replace(routes.ORDERS, routes.HOME)
+          : navigation.goBack();
+        return true;
+      };
+      BackHandler.addEventListener('hardwareBackPress', onBackHandler);
+
+      return () =>
+        BackHandler.removeEventListener('hardwareBackPress', onBackHandler);
+    }, [showSuccessModal]),
+  );
+
   // console.log(animatedIconSource);
   return (
     <>
+      <PaySuccessModal
+        visible={showSuccessModal}
+        deliveryStateLocation={deliveryInfo.state}
+      />
       <Screen
         style={{height: '100%', backgroundColor: colors.grey_light}}
         contentContainerStyle={{
@@ -90,7 +120,17 @@ const CheckoutPay = ({deliveryInfo, onGoBack}) => {
               </AppText>
             </View>
           </View>
-          <FlutterPayBtn total={total} deliveryInfo={deliveryInfo} />
+          <FlutterPayBtn
+            deliveryInfo={deliveryInfo}
+            addToOrders={addToOrders}
+            productsInCart={productsInCart}
+            payment_summary={{
+              subTotal,
+              delivery,
+              total,
+            }}
+            onDisplaySuccessModal={setShowSuccessModal}
+          />
           {/* <AppGradientBtn
         label={`PAY NOW: ${formatToCurrency(total)}`}
         labelStyle={{fontWeight: '700'}}

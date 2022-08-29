@@ -20,12 +20,14 @@ const styles = StyleSheet.create({
     // backgroundColor: 'red',
     alignItems: 'center',
     justifyContent: 'center',
+    paddingHorizontal: 20,
   },
   text: {
     fontFamily: fonts.semi_bold,
   },
   subText: {
     marginBottom: 100,
+    textAlign: 'center',
   },
 });
 

@@ -108,7 +108,7 @@ const CartScreen = ({navigation}) => {
           containerStyles={styles.activityContainer}>
           <AppText style={styles.text}>Your Cart is empty!</AppText>
           <AppText style={styles.subText}>
-            Browse our categories and discover our best deals!
+            Checkout our categories and discover our best deals!
           </AppText>
         </DisplayMesssage>
       )}

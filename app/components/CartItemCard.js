@@ -121,7 +121,7 @@ const styles = StyleSheet.create({
   descriptionContainer: {
     flexDirection: 'row',
     flex: 10,
-    alignItems: 'center',
+    // alignItems: 'center',
   },
   imageContainer: {
     width: wp(85),
@@ -133,7 +133,8 @@ const styles = StyleSheet.create({
   },
   details: {
     flex: 1,
-    padding: 5,
+    paddingHorizontal: 5,
+    // backgroundColor: 'red',
     justifyContent: 'space-between',
   },
   title: {

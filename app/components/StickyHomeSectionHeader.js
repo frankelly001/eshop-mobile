@@ -21,7 +21,7 @@ const StickyHomeSectionHeader = ({categories}) => {
         showsHorizontalScrollIndicator={false}
         contentContainerStyle={{
           backgroundColor: colors.white,
-          paddingHorizontal: 5,
+          paddingHorizontal: 3,
         }}>
         {categories.map(category => (
           <TouchableOpacity
@@ -37,7 +37,7 @@ const StickyHomeSectionHeader = ({categories}) => {
               width: wp(60),
               height: wp(60),
               borderRadius: 5,
-              margin: 5,
+              margin: 3,
               overflow: 'hidden',
             }}>
             <Image

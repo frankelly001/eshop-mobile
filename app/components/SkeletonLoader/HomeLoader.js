@@ -34,9 +34,7 @@ const categoriesSample = [
 const CatergorySampleCard = () => (
   <View style={styles.bgLoaderContainer}>
     <SkeletonPlaceholder>
-      <View
-        style={{width: wp(60), height: wp(60), borderRadius: 5, margin: 5}}
-      />
+      <View style={{width: wp(60), height: wp(60), borderRadius: 5}} />
     </SkeletonPlaceholder>
     <View style={styles.iconContainer}>
       <Eshop_LoaderIcon width={25} height={25} opacity={0.5} />
@@ -50,8 +48,7 @@ const HomeLoader = props => {
   return (
     <ScrollView
       showsVerticalScrollIndicator={false}
-      // contentContainerStyle={{paddingBottom: 60}}
-    >
+      contentContainerStyle={{paddingBottom: 5}}>
       <View>
         <SkeletonPlaceholder>
           <View
@@ -70,7 +67,7 @@ const HomeLoader = props => {
         showsHorizontalScrollIndicator={false}
         contentContainerStyle={{
           // backgroundColor: colors.grey_light,
-          paddingHorizontal: 5,
+          paddingHorizontal: 3,
         }}>
         {categoriesSample.map(el => (
           <CatergorySampleCard key={el} />
@@ -81,7 +78,6 @@ const HomeLoader = props => {
           style={{
             width: width,
             height: 40,
-            marginTop: 2,
             marginBottom: 1.5,
           }}
         />
@@ -107,6 +103,9 @@ const styles = StyleSheet.create({
     bottom: 0,
     left: 0,
     right: 0,
+  },
+  bgLoaderContainer: {
+    margin: 3,
   },
 });
 

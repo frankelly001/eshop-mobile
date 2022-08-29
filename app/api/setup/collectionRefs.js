@@ -8,4 +8,5 @@ export default {
   usersCollectionRef: getCollectionRef('users'),
   productsCollectionRef: getCollectionRef('products'),
   categoryCollectionRef: getCollectionRef('categories'),
+  usersOrderCollectionRef: getCollectionRef('users_order'),
 };

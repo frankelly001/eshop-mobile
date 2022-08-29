@@ -57,6 +57,7 @@ const App = () => {
       <Toast config={toastConfig} topOffset={5} />
     </>
   );
+
   // return (
   //   <>
   //     <StatusBar backgroundColor={colors.white} barStyle={'dark-content'} />

@@ -102,6 +102,9 @@ const Header = ({navigation, options, route}) => {
               onPress={() =>
                 searchToggle
                   ? setSearchToggle(!searchToggle)
+                  : route.name === routes.ORDERS &&
+                    route?.params === routes.HOME
+                  ? navigation.navigate(routes.HOME)
                   : navigation.goBack()
               }
               underlayColor={colors.grey_light_4}

@@ -69,6 +69,7 @@ const styles = StyleSheet.create({
     // backgroundColor: 'red',
     alignItems: 'center',
     justifyContent: 'center',
+    paddingHorizontal: 20,
   },
   animatedIcon: {
     width: wp(380),
@@ -82,6 +83,7 @@ const styles = StyleSheet.create({
   },
   subText: {
     marginBottom: 100,
+    textAlign: 'center',
   },
 });
 

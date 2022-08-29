@@ -14,10 +14,10 @@ import AppText from './AppText';
 
 const dimensions = Dimensions.get('screen');
 
-const FeedCard = ({feed}) => {
+const FeedCard = ({feed, onPress}) => {
   return (
     <View style={styles.container}>
-      <TouchableOpacity style={styles.feedContent}>
+      <TouchableOpacity style={styles.feedContent} onPress={onPress}>
         <View style={styles.imageContainer}>
           <Image resizeMode="cover" style={styles.image} source={feed.image} />
         </View>

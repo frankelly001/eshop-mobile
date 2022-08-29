@@ -40,16 +40,13 @@ const Store = ({children}) => {
   const initializeCartState = data => {
     dispatchAction({
       type: actionTypes.INITIALIZE_CART,
-      payload: data.cart_items,
+      payload: data?.cart_items ?? [],
     });
     dispatchAction({
       type: actionTypes.INITIALIZE_SAVE,
-      payload: data.odered_items,
+      payload: data?.saved_items ?? [],
     });
-    dispatchAction({
-      type: actionTypes.INITIALIZE_SAVE,
-      payload: data.saved_items,
-    });
+    fetchOrders(user.id);
   };
 
   const clearCartState = () => {
@@ -62,7 +59,7 @@ const Store = ({children}) => {
   };
 
   const addToOrders = payload => {
-    dispatchAction({payload});
+    dispatchAction({type: actionTypes.ADD_TO_ORDERS, payload});
   };
 
   const addToCart = (id, payload) => {
@@ -153,6 +150,22 @@ const Store = ({children}) => {
     return () => subscriber();
   };
 
+  const fetchOrders = userId => {
+    collectionRefs.usersOrderCollectionRef
+      .where('userId', '==', userId)
+      .get()
+      .then(documentSnapshot => {
+        const data = [];
+        documentSnapshot.forEach(el => {
+          data.push(el.data());
+        });
+        dispatchAction({
+          type: actionTypes.INITIALIZE_ORDERS,
+          payload: data,
+        });
+      });
+  };
+
   const onCategorySubscriber = () => {
     setCategories({...categories, loading: true});
     const subscriber = collectionRefs.categoryCollectionRef.onSnapshot(
@@ -182,6 +195,7 @@ const Store = ({children}) => {
   const getAllUserDataFromAsynStorage = () => {
     getUserData(authStorageKeys.USER_DATA)
       .then(user => {
+        // console.log(user, 'user................');
         if (user) setUser(user);
 
         if (user && !user.verified)
@@ -191,8 +205,8 @@ const Store = ({children}) => {
               `Hello ${user.name.firstname}, Please go to Account and Verify your Account`,
             );
           }, 3000);
+
         // initializeCartState(data);
-        // console.log(data, 'DATA................');
       })
       .catch(err => {
         setUser(null);
@@ -232,6 +246,7 @@ const Store = ({children}) => {
   useEffect(() => {
     if (user) {
       initializeCartState(user);
+
       console.log('heyyyy, am initializing cart data');
     } else {
       clearCartState(user);

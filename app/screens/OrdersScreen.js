@@ -1,5 +1,12 @@
-import React, {useContext} from 'react';
+import React, {
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+} from 'react';
 import {
+  BackHandler,
   FlatList,
   Image,
   StyleSheet,
@@ -15,13 +22,14 @@ import {fontsizes, fontSz, hp, wp} from '../config/responsiveSize';
 import {formatToCurrency} from '../utilities/formatToCurr';
 import navigation from '../navigation/rootNavigation';
 import routes from '../navigation/routes';
+import {useFocusEffect} from '@react-navigation/native';
 
 const OrderCard = ({product}) => {
   // console.log(product.images, 'images');
   return (
     <TouchableOpacity
       style={styles.container}
-      onPress={() => navigation.navigate(routes.ORDERDETAILS, product.id)}>
+      onPress={() => navigation.navigate(routes.ORDERDETAILS, product.trxId)}>
       <View style={styles.descriptionContainer}>
         <TouchableOpacity
           style={styles.imageContainer}
@@ -31,7 +39,7 @@ const OrderCard = ({product}) => {
           <Image
             style={styles.image}
             resizeMode="stretch"
-            source={{uri: product.images[0]}}
+            source={{uri: product.image}}
           />
         </TouchableOpacity>
         <View style={styles.details}>
@@ -46,11 +54,11 @@ const OrderCard = ({product}) => {
               ({formatToCurrency(product.price)} by 5 item)
             </AppText>
           </View>
-          <View style={styles.status_and_date_Container}>
-            <AppText style={styles.dateLabel}>15/ 2/ 2022</AppText>
-            <View style={styles.statusContainer}>
-              <AppText style={styles.statusLabel}>Pending</AppText>
-            </View>
+          <AppText style={styles.orderId}>Order: #{product.trxId}</AppText>
+
+          <AppText style={styles.dateLabel}>15/ 2/ 2022</AppText>
+          <View style={styles.statusContainer}>
+            <AppText style={styles.statusLabel}>Pending</AppText>
           </View>
         </View>
       </View>
@@ -58,21 +66,62 @@ const OrderCard = ({product}) => {
   );
 };
 
-const OrdersScreen = () => {
-  const {products} = useContext(AuthContext);
+const OrdersScreen = ({navigation, route}) => {
+  const {orderedItems} = useContext(AuthContext);
+  const [ordered, setOrderd] = useState(null);
 
-  console.log(products.length, 'prod....');
+  useEffect(() => {
+    const data = [];
+    orderedItems.forEach(elOrder => {
+      elOrder.ordered_products.forEach(item => {
+        data.push({
+          ...item,
+          trxId: elOrder.transaction_info?.transaction_id,
+          key: item.id + elOrder.transaction_info?.transaction_id,
+        });
+      });
+    });
+    setOrderd(data);
+  }, []);
 
+  useFocusEffect(
+    useCallback(() => {
+      const onBackHandler = () => {
+        route?.params === routes.HOME
+          ? navigation.navigate(routes.HOME)
+          : navigation.goBack();
+        return true;
+      };
+      BackHandler.addEventListener('hardwareBackPress', onBackHandler);
+
+      return () =>
+        BackHandler.removeEventListener('hardwareBackPress', onBackHandler);
+    }, [route?.params]),
+  );
+
+  if (ordered === null) return null;
   return (
-    <FlatList
-      data={products}
-      style={{flex: 1}}
-      // contentContainerStyle={styles.container}
-      key={item => item.id}
-      renderItem={({item}) => {
-        return !item.empty && <OrderCard product={item} />;
-      }}
-    />
+    <>
+      {ordered.length ? (
+        <FlatList
+          data={ordered}
+          style={{flex: 1}}
+          // contentContainerStyle={styles.container}
+          key={item => item.id}
+          renderItem={({item}) => {
+            return !item.empty && <OrderCard product={item} />;
+          }}
+        />
+      ) : (
+        <View style={styles.container2}>
+          <AppText style={styles.text}>No item recently Ordered</AppText>
+          <AppText style={styles.subText}>
+            You haven't orderd any item. Checkout our categories and discover
+            our best deals!
+          </AppText>
+        </View>
+      )}
+    </>
   );
 };
 
@@ -101,7 +150,7 @@ const styles = StyleSheet.create({
   },
   details: {
     flex: 1,
-    padding: 5,
+    paddingHorizontal: 5,
     justifyContent: 'space-between',
   },
   title: {
@@ -127,6 +176,7 @@ const styles = StyleSheet.create({
     flex: 0.8,
   },
   status_and_date_Container: {
+    // backgroundColor: 'red',
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'flex-end',
@@ -135,6 +185,10 @@ const styles = StyleSheet.create({
     backgroundColor: colors.green,
     padding: 5,
     borderRadius: 5,
+    position: 'absolute',
+    bottom: 0,
+    right: 0,
+    zIndex: 1,
   },
   statusLabel: {
     fontSize: fontSz(8.5),
@@ -147,7 +201,7 @@ const styles = StyleSheet.create({
   priceContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginVertical: 5,
+    // marginVertical: 5,
   },
   actionBtnContainer: {
     backgroundColor: colors.grey_light,
@@ -157,6 +211,20 @@ const styles = StyleSheet.create({
     bottom: 0,
     paddingVertical: 0,
     height: hp(100),
+  },
+  container2: {
+    flex: 1,
+    // backgroundColor: 'red',
+    paddingHorizontal: 20,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  text: {
+    fontFamily: fonts.semi_bold,
+  },
+  subText: {
+    marginBottom: 100,
+    textAlign: 'center',
   },
 });
 

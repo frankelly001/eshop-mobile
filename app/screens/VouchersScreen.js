@@ -23,6 +23,13 @@ const VouchersScreen = ({navigation}) => {
 };
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    // backgroundColor: 'red',
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingHorizontal: 20,
+  },
   text: {
     // fontFamily: fonts.semi_bold,
     // fontSize: fontSz(15),
