@@ -55,7 +55,8 @@ const FlutterPayBtn = ({
   const handleOnRedirect = transactionInfo => {
     if (transactionInfo.status === 'successful') {
       const orderData = {
-        date: firestore.FieldValue.serverTimestamp(),
+        date_ordered: firestore.FieldValue.serverTimestamp(),
+        date_delivered: '',
         delivery_info: deliveryInfo,
         transaction_info: transactionInfo,
         ordered_products: productsInCart.map(el => {

@@ -25,6 +25,7 @@ import {authStorageKeys, getUserData} from '../api/storage/authStorage';
 import OrdersScreen from '../screens/OrdersScreen';
 import AuthNavigator from './AuthNavigator';
 import OrderDetailsScreen from '../screens/OrderDetailsScreen';
+import AdminNavigator from './AdminNavigator';
 
 const Stack = createNativeStackNavigator();
 
@@ -178,10 +179,21 @@ const MainStack = props => {
         name={routes.FORGOTPASSWORD}
         component={ForgottenPasswordScreen}
       />
+      <Stack.Screen
+        name={routes.ADMIN}
+        component={AdminNavigator}
+        options={{headerShown: false, animation: 'slide_from_right'}}
+      />
 
-      {!user && <Stack.Screen name={routes.SIGNUP} component={SignupScreen} />}
-      {!user && <Stack.Screen name={routes.LOGIN} component={LoginScreen} />}
-      {/* {!user && <Stack.Screen name={routes.AUTH} component={AuthNavigator} />} */}
+      {/* {!user && <Stack.Screen name={routes.SIGNUP} component={SignupScreen} />}
+      {!user && <Stack.Screen name={routes.LOGIN} component={LoginScreen} />} */}
+      {!user && (
+        <Stack.Screen
+          name={routes.AUTH}
+          component={AuthNavigator}
+          options={{headerShown: false}}
+        />
+      )}
     </Stack.Navigator>
   );
 };

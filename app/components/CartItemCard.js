@@ -35,7 +35,7 @@ const CartItemCard = ({product, renderRightActions}) => {
   };
 
   const sub = () => {
-    subFromCart(product.id);
+    if (product.quantity > 1) subFromCart(product.id);
   };
 
   const handleChange = value => {

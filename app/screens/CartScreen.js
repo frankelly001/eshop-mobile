@@ -62,7 +62,6 @@ const CartScreen = ({navigation}) => {
                   {formatToCurrency(delivery)}
                 </AppText>
               </View>
-              <Seperator />
               <View style={[styles.feeTitleContainer]}>
                 <AppText>Total</AppText>
                 <AppText style={styles.price}>

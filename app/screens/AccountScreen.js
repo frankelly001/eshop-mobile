@@ -189,7 +189,11 @@ const AccountScreen = ({navigation}) => {
               <AppButton
                 label="Login"
                 bgStyle={{borderRadius: 5}}
-                onPress={() => navigation.navigate(routes.LOGIN)}
+                onPress={() =>
+                  navigation.navigate(routes.AUTH, {
+                    screen: routes.LOGIN,
+                  })
+                }
               />
             </View>
           )}
@@ -207,7 +211,11 @@ const AccountScreen = ({navigation}) => {
               <AppButton
                 label="Admin"
                 bgStyle={{borderRadius: 5}}
-                onPress={handleVerification}
+                onPress={() =>
+                  navigation.navigate(routes.ADMIN, {
+                    screen: routes.ADMINDASHBORD,
+                  })
+                }
               />
             </View>
           )}
@@ -238,7 +246,11 @@ const AccountScreen = ({navigation}) => {
             // height: 50,
           }}
           onPress={() =>
-            user ? setLogoutNotice(true) : navigation.navigate(routes.LOGIN)
+            user
+              ? setLogoutNotice(true)
+              : navigation.navigate(routes.AUTH, {
+                  screen: routes.LOGIN,
+                })
           }>
           <AppGradientText style={styles.log}>
             {user ? 'Log out' : 'Log in'}

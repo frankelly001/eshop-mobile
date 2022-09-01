@@ -23,9 +23,17 @@ import {formatToCurrency} from '../utilities/formatToCurr';
 import navigation from '../navigation/rootNavigation';
 import routes from '../navigation/routes';
 import {useFocusEffect} from '@react-navigation/native';
+import {convertToReadableDate} from '../utilities/convertToReadableDate';
 
 const OrderCard = ({product}) => {
   // console.log(product.images, 'images');
+
+  const colorOrderStatus = {
+    pending: colors.orange,
+    delivered: colors.green,
+    failed: colors.red_dark,
+  };
+
   return (
     <TouchableOpacity
       style={styles.container}
@@ -48,17 +56,23 @@ const OrderCard = ({product}) => {
           </AppText>
           <View style={styles.priceContainer}>
             <AppText style={styles.totalPrice}>
-              {formatToCurrency(product.price * 5)}
+              {formatToCurrency(product.price * product.quantity)}
             </AppText>
             <AppText style={styles.totalPriceSum}>
-              ({formatToCurrency(product.price)} by 5 item)
+              ({formatToCurrency(product.price)} by {product.quantity} item)
             </AppText>
           </View>
-          <AppText style={styles.orderId}>Order: #{product.trxId}</AppText>
+          <AppText style={styles.orderId}>Order ID: #{product.trxId}</AppText>
 
-          <AppText style={styles.dateLabel}>15/ 2/ 2022</AppText>
-          <View style={styles.statusContainer}>
-            <AppText style={styles.statusLabel}>Pending</AppText>
+          {/* <AppText style={styles.dateLabel}>
+            {convertToReadableDate(product?.date_ordered)}
+          </AppText> */}
+          <View
+            style={[
+              styles.statusContainer,
+              {backgroundColor: colorOrderStatus[product.orderStatus]},
+            ]}>
+            <AppText style={styles.statusLabel}>{product.orderStatus}</AppText>
           </View>
         </View>
       </View>
@@ -76,13 +90,15 @@ const OrdersScreen = ({navigation, route}) => {
       elOrder.ordered_products.forEach(item => {
         data.push({
           ...item,
+          orderStatus: elOrder.orderStatus,
+          date_ordered: elOrder.date_ordered,
           trxId: elOrder.transaction_info?.transaction_id,
           key: item.id + elOrder.transaction_info?.transaction_id,
         });
       });
     });
     setOrderd(data);
-  }, []);
+  }, [orderedItems]);
 
   useFocusEffect(
     useCallback(() => {
@@ -182,18 +198,20 @@ const styles = StyleSheet.create({
     alignItems: 'flex-end',
   },
   statusContainer: {
-    backgroundColor: colors.green,
     padding: 5,
     borderRadius: 5,
     position: 'absolute',
     bottom: 0,
     right: 0,
     zIndex: 1,
+    minWidth: '20%',
+    alignItems: 'center',
   },
   statusLabel: {
     fontSize: fontSz(8.5),
     fontFamily: fonts.semi_bold,
     color: colors.white,
+    textTransform: 'capitalize',
   },
   dateLabel: {
     fontSize: fontSz(10),

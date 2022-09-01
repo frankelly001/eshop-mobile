@@ -142,9 +142,9 @@ const Store = ({children}) => {
           data.push({id: el.id, ...el.data()});
         });
         // setProducts({...products, data});
-        setTimeout(() => {
-          setProducts({...products, data, loading: false});
-        }, 2000);
+        // setTimeout(() => {
+        setProducts({...products, data, loading: false});
+        // }, 2000);
       },
     );
     return () => subscriber();
@@ -179,9 +179,9 @@ const Store = ({children}) => {
 
         // setCategories({...categories, data});
         // console.log(data, 'snappppp');
-        setTimeout(() => {
-          setCategories({...categories, data, loading: false});
-        }, 2000);
+        // setTimeout(() => {
+        setCategories({...categories, data, loading: false});
+        // }, 2000);
       },
     );
     return () => subscriber();

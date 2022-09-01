@@ -30,4 +30,11 @@ export default Object.freeze({
   ORDERS: 'Orders',
   ORDERDETAILS: 'Order Details',
   AUTH: 'Auth',
+  ADMIN: 'Admin',
+  ADMINDASHBORD: 'Admin Dashboard',
+  UPLOADPRODUCT: 'Upload Product',
+  DELETEPRODUCT: 'Delete Product',
+  UPDATEPRODUCT: 'Update Products',
+  UPDATECAROUSELIMAGES: 'Update Carousel images',
+  UPDATECATEGORYIMAGES: 'Update Category images',
 });
