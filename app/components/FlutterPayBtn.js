@@ -12,6 +12,7 @@ import {
   updateUserData,
   userDataTypes,
 } from '../api/setup/patchApi/updateUserData';
+import ActivityIndicator from './ActivityIndicator';
 
 const FlutterPayBtn = ({
   deliveryInfo,
@@ -81,10 +82,10 @@ const FlutterPayBtn = ({
     }
   };
 
-  // if (1) return null;
   return (
     <>
       {/* <PaySuccessModal visible={showSuccessModal} /> */}
+
       <PayWithFlutterwave
         onRedirect={handleOnRedirect}
         options={{
@@ -92,19 +93,29 @@ const FlutterPayBtn = ({
           authorization: 'FLWPUBK_TEST-e1399dbd0b80e614e77eb9000e0ba5b2-X',
           customer: {
             email: deliveryInfo.email,
+            name: `${deliveryInfo.firstname} ${deliveryInfo.lastname}`,
+            phonenumber: deliveryInfo.phone,
           },
           amount: payment_summary.total,
           currency: 'NGN',
           payment_options: 'card',
+          customizations: {
+            // description: '',
+            logo: 'https://eshop-ng.netlify.app/logo192.png',
+            title: 'Order Payment',
+          },
         }}
         customButton={({disabled, onPress, isInitializing}) => (
-          <AppGradientBtn
-            label={`PAY NOW: ${formatToCurrency(payment_summary?.total)}`}
-            labelStyle={{fontWeight: '700'}}
-            onPress={onPress}
-            isBusy={isInitializing}
-            disabled={disabled}
-          />
+          <>
+            <ActivityIndicator visible={disabled} portal />
+            <AppGradientBtn
+              label={`PAY NOW: ${formatToCurrency(payment_summary?.total)}`}
+              labelStyle={{fontWeight: '700'}}
+              onPress={onPress}
+              isBusy={isInitializing}
+              disabled={disabled}
+            />
+          </>
         )}
       />
     </>

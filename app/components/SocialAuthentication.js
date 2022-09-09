@@ -6,6 +6,8 @@ import {authStorageKeys, storeUserData} from '../api/storage/authStorage';
 import AuthContext from '../auth/AuthContext';
 import {wp} from '../config/responsiveSize';
 import {useApi} from '../hooks/useApi';
+import navigation from '../navigation/rootNavigation';
+import routes from '../navigation/routes';
 import {formatErrorMessage} from '../utilities/formatErrorMessage';
 import {FacebookIcon, GoogleIcon, TwitterIcon} from '../utilities/icons';
 import ActivityIndicator from './ActivityIndicator';
@@ -17,11 +19,6 @@ const SocialAuthentication = ({authLabel}) => {
   const {setUser} = useContext(AuthContext);
   //   const [loading, setLoading] = useState(false);
 
-  const socialAuth = {
-    google: LoginInwithGoogle,
-    facebook: facebookSignin,
-  };
-
   const {loading: googleLoading, request: googleRequest} =
     useApi(LoginInwithGoogle);
   const {loading: facebookLoading, request: facebookRequest} =
@@ -30,7 +27,17 @@ const SocialAuthentication = ({authLabel}) => {
   const handleGoogleAuth = () => {
     googleRequest().then(response => {
       if (response.newUser) {
-        console.log('Am a new User', response);
+        const [firstname, lastname] =
+          response.snapshot.user?.displayName.split(' ');
+        const userAuthData = {
+          firstname,
+          lastname,
+          email: response.snapshot.user?.email ?? '',
+          phone: response.snapshot.user?.phoneNumber ?? '',
+          verified: response.snapshot.user?.emailVerified,
+          uid: response.snapshot.user?.uid,
+        };
+        navigation.navigate(routes.ADDITIONALINFO, userAuthData);
       } else {
         showToast(
           toast.types.SUCCESS,
@@ -45,9 +52,21 @@ const SocialAuthentication = ({authLabel}) => {
   };
 
   const handleFacebookAuth = () => {
+    // {"displayName": "Franklyn Okeke", "email": "frankelly344@gmail.com", "emailVerified": false, "isAnonymous": false, "metadata": "[Object]", "phoneNumber": null, "photoURL": "https://graph.facebook.com/2359066214241715/picture", "providerData": [], "providerId": "firebase", "tenantId": null, "uid": "DBhJTKVzuaSV0RpDoHhovTHRGql2"}
+
     facebookRequest()
       .then(snapshot => {
         console.log('Success', snapshot);
+        // const [firstname, lastname] =
+        //   response.snapshot.user?.displayName.split(' ');
+        // const userAuthData = {
+        //   firstname,
+        //   lastname,
+        //   email: response.snapshot.user?.email ?? '',
+        //   phone: response.snapshot.user?.phoneNumber ?? '',
+        //   verified: response.snapshot.user?.emailVerified,
+        //   uid: response.snapshot.user?.uid,
+        // };
       })
       .then(error => {
         console.log('Error:', error);

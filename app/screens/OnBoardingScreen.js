@@ -206,7 +206,7 @@ const OnBoardingScreen = ({navigation}) => {
                 <AppButton
                   label="Let's Shop!"
                   onPress={() => {
-                    navigation.navigate(routes.ESHOP);
+                    navigation.replace(routes.ESHOP);
                     storeUserData(authStorageKeys.APP_USE_READY, true);
                   }}
                   bgStyle={{

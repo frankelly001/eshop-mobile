@@ -10,6 +10,7 @@ import {logoutUser} from '../api/setup/authApi/logout';
 import ActivityIndicator from '../components/ActivityIndicator';
 import {showToast} from '../components/AppToast/showToast';
 import toast from '../components/AppToast/toast';
+import AppFormValidateIndicator from '../components/form/AppFormValidateIndicator';
 
 const handleValidation = step => {
   let schema;
@@ -130,6 +131,7 @@ const SignupScreen = ({navigation}) => {
         validationSchema={handleValidation(step)}
         onSubmit={handleSubmit}
         navigation={navigation}>
+        <AppFormValidateIndicator currentStep={step} numOfFormStep={3} />
         <MultiStepSignUpWizard
           step={step}
           prevStep={prevStep}

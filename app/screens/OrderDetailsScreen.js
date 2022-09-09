@@ -12,16 +12,26 @@ import Seperator from '../components/Seperator';
 import colors from '../config/colors';
 import fonts from '../config/fonts';
 import {fontSz, hp, wp} from '../config/responsiveSize';
-import {convertToReadableDate} from '../utilities/convertToReadableDate';
+import {convertToReadableDateAndTime} from '../utilities/convertToReadableDate';
 import {formatToCurrency} from '../utilities/formatToCurr';
 import navigation from '../navigation/rootNavigation';
 import AppButton from '../components/AppButton';
 import routes from '../navigation/routes';
 import AppGradientBtn from '../components/AppGradientBtn';
 import GradientBackground from '../components/GradientBackground';
+import {firestore} from '../api/setup/config';
+import dayjs from 'dayjs';
 
 const OrderCard = ({product, onPress}) => {
   // console.log(product.images, 'images');
+  const convertToReadableTime = time => {
+    var timestamp = new Date('2022-07-26T16:53:54.921Z').getTime();
+    var formatedTime = new Date(timestamp);
+    return formatedTime.toLocaleTimeString('fr');
+  };
+  const convertToTime = date => dayjs(date).format('DD MMM YY, h:mm a');
+  // console.log(convertToTime(Date.now()), 'kkkkkk');
+
   return (
     <TouchableOpacity
       style={orderCardStyles.container}
@@ -62,13 +72,6 @@ const OrderDetailsScreen = ({route}) => {
 
   const selectedOrder = orderedItems.find(
     el => el.transaction_info.transaction_id === route.params,
-  );
-
-  console.log(
-    selectedOrder.ordered_products
-      .map(el => el.quantity)
-      .reduce((prev, cur) => prev + cur, 0),
-    'check',
   );
 
   const paymentInfoData = [
@@ -143,14 +146,14 @@ const OrderDetailsScreen = ({route}) => {
           <View style={styles.feeTitleContainer}>
             <AppText>Ordered on:</AppText>
             <AppText style={styles.labelValue}>
-              {convertToReadableDate(selectedOrder.date_ordered)}
+              {convertToReadableDateAndTime(selectedOrder.date_ordered)}
             </AppText>
           </View>
           <View style={styles.feeTitleContainer}>
             <AppText>Delivered on:</AppText>
             <AppText style={styles.labelValue}>
               {selectedOrder.date_delivered
-                ? convertToReadableDate(selectedOrder.date_delivered)
+                ? convertToReadableDateAndTime(selectedOrder.date_delivered)
                 : 'Pending'}
             </AppText>
           </View>

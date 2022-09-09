@@ -1,8 +1,10 @@
 import React, {useState} from 'react';
 import {StyleSheet} from 'react-native';
+import {showToast} from './AppToast/showToast';
+import toast from './AppToast/toast';
 import {SignupScreen1, SignupScreen2, SignupScreen3} from './SignupScreens';
 
-const MultiStepSignUpWizard = ({step, setValidatedValues, prevStep}) => {
+const MultiStepSignUpWizard = ({step, prevStep}) => {
   switch (step) {
     case 1:
       return <SignupScreen1 />;
@@ -18,7 +20,7 @@ const MultiStepSignUpWizard = ({step, setValidatedValues, prevStep}) => {
         />
       );
     default:
-      console.log('something went wrong');
+      showToast(toast.types.ERROR, 'Something went wrong');
   }
 };
 

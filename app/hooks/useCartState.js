@@ -157,7 +157,10 @@ export const useCartState = user => {
         ...orderData,
       };
       const previousOrderedItems = orderedItems;
-      const nextOrderedItems = [data, ...previousOrderedItems];
+      const nextOrderedItems = [
+        {...data, date_ordered: Date.now()},
+        ...previousOrderedItems,
+      ];
 
       setOrderedItems(nextOrderedItems);
       addOrder(orderData.transaction_info?.transaction_id ?? user.id, data)

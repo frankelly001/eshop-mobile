@@ -73,7 +73,7 @@ const SignupScreen2 = ({onPrev}) => {
       <AppFormInput
         keyboardType="numeric"
         name="additional_phone"
-        placeholder="Additional Phone"
+        placeholder="Additional Phone (Optional)"
         textContentType={'telephoneNumber'}
       />
       <AppFormSelectInput

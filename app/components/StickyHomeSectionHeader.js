@@ -34,8 +34,8 @@ const StickyHomeSectionHeader = ({categories}) => {
             }
             key={category}
             style={{
-              width: wp(60),
-              height: wp(60),
+              width: wp(63),
+              height: wp(63),
               borderRadius: 5,
               margin: 3,
               overflow: 'hidden',
@@ -58,7 +58,7 @@ const StickyHomeSectionHeader = ({categories}) => {
               }}>
               <AppText
                 style={{
-                  fontSize: fontSz(7),
+                  fontSize: fontSz(6.5),
                   color: colors.white,
                   fontFamily: fonts.extra_bold,
                   textAlign: 'center',

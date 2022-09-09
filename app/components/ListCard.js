@@ -26,7 +26,9 @@ const ListCard = ({data}) => {
           style={styles.ListItemContainer}
           onPress={() =>
             list.routeName &&
-            navigation.navigate(user ? list.routeName : routes.LOGIN)
+            navigation.navigate(user ? list.routeName : routes.AUTH, {
+              screen: routes.LOGIN,
+            })
           }>
           <View style={styles.listItem}>
             {list.icon && (

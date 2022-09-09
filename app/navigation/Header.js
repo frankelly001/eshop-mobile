@@ -23,6 +23,7 @@ import useAnimatedHeaderStyles from '../hooks/useAnimatedHeaderStyles';
 import fonts from '../config/fonts';
 import {authStorageKeys, storeUserData} from '../api/storage/authStorage';
 import queryApi from '../api/setup/queryApi/queryApi';
+import Icon, {Icons} from '../components/Icons';
 
 const Header = ({navigation, options, route}) => {
   const {numOfCartItems, recentQueries, addToRecentQuery} =
@@ -201,7 +202,13 @@ const Header = ({navigation, options, route}) => {
                 marginVertical: 2,
                 paddingHorizontal: 15,
               }}>
-              <Octicons
+              {/* <Octicons
+                size={size - 8}
+                name="search"
+                style={{marginRight: 5}}
+              /> */}
+              <Icon
+                type={Icons.Ionicons}
                 size={size - 8}
                 name="search"
                 style={{marginRight: 5}}

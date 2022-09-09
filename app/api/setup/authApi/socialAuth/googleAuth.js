@@ -32,6 +32,45 @@ export const SignOutwithGoogle = () => {
   });
 };
 
+// export const LoginInwithGoogle = () => {
+//   return new Promise((resolve, reject) => {
+//     SignOutwithGoogle()
+//       .then(() => {
+//         onGoogleButtonPress()
+//           .then(snapshot => {
+//             getUser(snapshot.user.uid).then(response => {
+//               if (!response._data) {
+//                 resolve({
+//                   newUser: false,
+//                   snapshot,
+//                 });
+//               } else {
+//                 const data = {
+//                   id: snapshot.user.uid,
+//                   ...response._data,
+//                   verified: snapshot.user.emailVerified,
+//                 };
+
+//                 resolve({
+//                   newUser: snapshot.additionalUserInfo?.isNewUser,
+//                   snapshot: data,
+//                 });
+//               }
+//             });
+
+//             // console.log(snapshot, 'google sign in successful');
+//           })
+//           .catch(error => {
+//             if (error) reject(formatErrorMessage(error));
+//             // console.log(error, 'google sign in failed');
+//           });
+//       })
+//       .catch(error => {
+//         if (error) reject(formatErrorMessage(error));
+//       });
+//   });
+// };
+
 export const LoginInwithGoogle = () => {
   return new Promise((resolve, reject) => {
     SignOutwithGoogle()
@@ -46,24 +85,23 @@ export const LoginInwithGoogle = () => {
               });
             } else {
               getUser(snapshot.user.uid).then(response => {
-                if (!response._data)
-                  return auth()
-                    .currentUser.delete()
-                    .then(() => {
-                      reject(
-                        "Sorry your account has been deleted, Because it's Invalid or not properly registered, Please create a new account.",
-                      );
-                    });
-                const data = {
-                  id: snapshot.user.uid,
-                  ...response._data,
-                  verified: snapshot.user.emailVerified,
-                };
+                if (!response._data) {
+                  resolve({
+                    newUser: true,
+                    snapshot,
+                  });
+                } else {
+                  const data = {
+                    id: snapshot.user.uid,
+                    ...response._data,
+                    verified: snapshot.user.emailVerified,
+                  };
 
-                resolve({
-                  newUser: snapshot.additionalUserInfo?.isNewUser,
-                  snapshot: data,
-                });
+                  resolve({
+                    newUser: snapshot.additionalUserInfo?.isNewUser,
+                    snapshot: data,
+                  });
+                }
               });
             }
             // console.log(snapshot, 'google sign in successful');

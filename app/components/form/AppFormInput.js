@@ -57,6 +57,7 @@ const AppFormInput = ({
               name={`eye${secureText ? '-off' : ''}`}
               size={20}
               style={styles.icon}
+              color={colors.grey_dark_2}
             />
           </TouchableOpacity>
         )}

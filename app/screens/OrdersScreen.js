@@ -24,6 +24,7 @@ import navigation from '../navigation/rootNavigation';
 import routes from '../navigation/routes';
 import {useFocusEffect} from '@react-navigation/native';
 import {convertToReadableDate} from '../utilities/convertToReadableDate';
+import OrdersLoader from '../components/SkeletonLoader/OrdersLoader';
 
 const OrderCard = ({product}) => {
   // console.log(product.images, 'images');
@@ -115,7 +116,7 @@ const OrdersScreen = ({navigation, route}) => {
     }, [route?.params]),
   );
 
-  if (ordered === null) return null;
+  if (ordered === null) return <OrdersLoader />;
   return (
     <>
       {ordered.length ? (

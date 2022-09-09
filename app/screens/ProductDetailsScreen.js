@@ -46,6 +46,7 @@ const ProductDetailsScreen = ({route}) => {
   const quantityInCart = productsInCart.find(
     el => el.id === product.id,
   )?.quantity;
+
   useEffect(() => {
     addToRecentView(productId);
   }, [productId]);

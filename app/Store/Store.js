@@ -27,6 +27,10 @@ const Store = ({children}) => {
     error: null,
   });
   const [productsInCart, setProductsInCart] = useState([]);
+  const [numOfCartItems, setNumOfCartItems] = useState();
+  const [subTotal, setSubTotal] = useState();
+  const [delivery, setDelivery] = useState();
+  const [total, setTotal] = useState();
   const [recentQueries, setRecentQueries] = useState([]);
   const [idRecentlyViewed, setIdRecentlyViewed] = useState([]);
   const [user, setUser] = useState();
@@ -153,6 +157,7 @@ const Store = ({children}) => {
   const fetchOrders = userId => {
     collectionRefs.usersOrderCollectionRef
       .where('userId', '==', userId)
+      .orderBy('date_ordered', 'desc')
       .get()
       .then(documentSnapshot => {
         const data = [];
@@ -337,21 +342,22 @@ const Store = ({children}) => {
       };
     });
     setProductsInCart(cartProducts);
+    setNumOfCartItems(
+      cartItems.map(el => el.quantity).reduce((prev, cur) => prev + cur, 0),
+    );
+    setDelivery(
+      cartProducts.map(el => el.quantity).reduce((prev, cur) => prev + cur, 0) *
+        1000,
+    );
+    setSubTotal(
+      Math.round(
+        cartProducts
+          .map(el => el.price * el.quantity)
+          .reduce((prev, cur) => prev + cur, 0) * 10,
+      ) / 10,
+    );
+    setTotal(subTotal + delivery);
   }, [cartItems, products?.data]);
-
-  const numOfCartItems = productsInCart
-    .map(el => el.quantity)
-    .reduce((prev, cur) => prev + cur, 0);
-  const subTotal =
-    Math.round(
-      productsInCart
-        .map(el => el.price * el.quantity)
-        .reduce((prev, cur) => prev + cur, 0) * 10,
-    ) / 10;
-  const delivery =
-    productsInCart.map(el => el.quantity).reduce((prev, cur) => prev + cur, 0) *
-    1000;
-  const total = subTotal + delivery;
 
   if (initializing) return null;
 

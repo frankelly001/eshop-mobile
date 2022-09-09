@@ -30,7 +30,7 @@ async function onFacebookButtonPress() {
 
 export const facebookSignin = async () => {
   return new Promise((resolve, reject) => {
-    LoginManager.logOut();
+    // LoginManager.logOut();
     onFacebookButtonPress()
       .then(snapshot => {
         resolve(snapshot);
@@ -38,7 +38,7 @@ export const facebookSignin = async () => {
       })
       .catch(error => {
         reject(error);
-        console.log(error);
+        console.log('Error:', error);
       });
   });
 };

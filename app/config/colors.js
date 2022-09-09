@@ -1,6 +1,7 @@
 export default {
   purple: '#b5057a',
   purple_Transparent: '#5d05b531',
+  purple_Transparent_2: '#b5057a77',
 
   white: '#fff',
   black: '#000',

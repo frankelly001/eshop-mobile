@@ -16,6 +16,7 @@ export default Object.freeze({
   CHECKOUT: 'Checkout',
   LOGIN: 'Login',
   SIGNUP: 'Signup',
+  ADDITIONALINFO: 'Additional Information',
   SEARCHED: 'Searched',
   SAVED: 'Saved',
   USERDETAILS: 'My Profile',

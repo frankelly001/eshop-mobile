@@ -31,3 +31,15 @@ export const signup = userInfo => {
     // console.log(email, password);
   });
 };
+
+export const addUserBySocialAuth = (userId, userInfo, emailVerified) => {
+  return new Promise(function (resolve, reject) {
+    addUser(userId, userInfo, emailVerified)
+      .then(snapshot => {
+        resolve(snapshot);
+      })
+      .catch(error => {
+        reject(formatErrorMessage(error));
+      });
+  });
+};
