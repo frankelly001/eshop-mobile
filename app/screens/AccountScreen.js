@@ -14,7 +14,7 @@ import colors from '../config/colors';
 import fonts from '../config/fonts';
 import {fontSz, wp} from '../config/responsiveSize';
 import routes from '../navigation/routes';
-import UploadScreen from './UploadScreen';
+import AddProductScreen from './AddProductScreen';
 import {formatToCurrency} from '../utilities/formatToCurr';
 import ActivityIndicator from '../components/ActivityIndicator';
 import {useApi} from '../hooks/useApi';

@@ -29,12 +29,13 @@ const AppFormInput = ({
       <AnimatedFormPlaceholder isFocus={isFocus} placeholder={placeholder} />
       <View>
         <AppTextInput
-          style={
+          style={[
+            style,
             isFocus && {
               borderColor: colors.purple,
               borderWidth: 0.5,
-            }
-          }
+            },
+          ]}
           onFocus={() => setIsFocus(true)}
           onBlur={() => {
             setFieldTouched(name);

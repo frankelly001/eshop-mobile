@@ -19,3 +19,19 @@ export const userDataTypes = {
 export const updateUserData = (userId, data) => {
   return collectionRefs.usersCollectionRef.doc(userId).update(data);
 };
+
+// phone&tab.jpg
+// computing2.jpg
+// elect.jpeg
+
+// fashion.jpg
+// automobile.jpg
+// home-office.jpg
+
+// grocery.jpg
+// baby.jpg
+
+// health & beauty.jpg
+
+// sporting.jpg
+// others.jpg

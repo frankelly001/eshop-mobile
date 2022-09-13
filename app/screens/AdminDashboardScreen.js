@@ -1,8 +1,44 @@
 import React from 'react';
-import {StyleSheet, View} from 'react-native';
+import {FlatList, StyleSheet, View} from 'react-native';
+import AppGradientBtn from '../components/AppGradientBtn';
+import routes from '../navigation/routes';
 
-const AdminDashboardScreen = props => {
-  return <View style={styles.container}></View>;
+const adminRoutes = [
+  {
+    routeName: routes.UPDATEPRODUCTSSTACK,
+    title: 'Add | Update | Delete Product',
+  },
+  {
+    routeName: routes.UPDATEFEEDS,
+  },
+  {
+    routeName: routes.UPDATECAROUSELIMAGES,
+  },
+  {
+    routeName: routes.UPDATECATEGORYIMAGES,
+  },
+];
+
+const AdminDashboardScreen = ({navigation}) => {
+  return (
+    <View
+      style={{
+        flex: 1,
+        // backgroundColor: 'red',
+        alignItems: 'center',
+        justifyContent: 'center',
+        padding: 50,
+      }}>
+      {adminRoutes.map(item => (
+        <AppGradientBtn
+          key={item.routeName}
+          label={item.routeName}
+          onPress={() => navigation.navigate(item.routeName)}
+          containerStyle={{marginVertical: 20}}
+        />
+      ))}
+    </View>
+  );
 };
 
 const styles = StyleSheet.create({

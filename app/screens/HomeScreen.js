@@ -13,7 +13,8 @@ import RetryView from '../components/RetryView';
 import StickyHomeSectionHeader from '../components/StickyHomeSectionHeader';
 
 const HomeScreen = ({navigation}) => {
-  const {products, categories, loading, errors} = useContext(AuthContext);
+  const {products, categories, loading, errors, addToCart} =
+    useContext(AuthContext);
 
   const numOfCols = 2;
   // console.log(newProducts, 'new..................');
@@ -42,7 +43,11 @@ const HomeScreen = ({navigation}) => {
             //   <AppText>New Arrivals</AppText>
             // </View>
             <StickyHomeSectionHeader
-              categories={[...categories.map(el => el.title)]}
+              categories={[
+                ...categories.map(el => {
+                  return {title: el.title, img: el.img};
+                }),
+              ]}
             />
           )}
           sections={[{data: formatData(products, numOfCols)}]}
@@ -63,6 +68,7 @@ const HomeScreen = ({navigation}) => {
                   <ProductCard
                     product={item}
                     key={item.id}
+                    btnOnPress={() => addToCart(item.id)}
                     onPress={() =>
                       navigation.navigate(routes.PRODUCTDETAILS, item.id)
                     }

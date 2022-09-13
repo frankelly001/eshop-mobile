@@ -77,6 +77,7 @@ const SearchResultScreen = ({navigation, route}) => {
             return (
               <ProductCard
                 product={item}
+                btnOnPress={() => addToCart(item.id)}
                 // onPress={() => navigate(item.id)}
                 onPress={() =>
                   navigation.navigate(routes.PRODUCTDETAILS, item.id)

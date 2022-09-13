@@ -34,7 +34,7 @@ const categoriesSample = [
 const CatergorySampleCard = () => (
   <View style={styles.bgLoaderContainer}>
     <SkeletonPlaceholder>
-      <View style={{width: wp(60), height: wp(60), borderRadius: 5}} />
+      <View style={{width: wp(63), height: wp(63), borderRadius: 5}} />
     </SkeletonPlaceholder>
     <View style={styles.iconContainer}>
       <Eshop_LoaderIcon width={25} height={25} opacity={0.5} />

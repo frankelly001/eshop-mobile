@@ -10,7 +10,8 @@ import routes from '../navigation/routes';
 import {formatData} from '../utilities/formatData';
 
 const RecentlyViewed = ({navigation}) => {
-  const {idRecentlyViewed, products, loading} = useContext(AuthContext);
+  const {idRecentlyViewed, products, loading, addToCart} =
+    useContext(AuthContext);
 
   if (loading.products) return <ProductsLoader />;
   const recentlyViewed = products.filter(el =>
@@ -37,6 +38,7 @@ const RecentlyViewed = ({navigation}) => {
                 onPress={() =>
                   navigation.navigate(routes.PRODUCTDETAILS, item.id)
                 }
+                btnOnPress={() => addToCart(item.id)}
                 btnLabel="Buy Now"
               />
             );

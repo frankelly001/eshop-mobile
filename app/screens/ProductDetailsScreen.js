@@ -215,6 +215,17 @@ const ProductDetailsScreen = ({route}) => {
               {product.description}
             </AppText>
           </View>
+          <View style={{alignItems: 'center', paddingHorizontal: 5}}>
+            <TouchableOpacity>
+              <AppText
+                style={{
+                  fontFamily: fonts.bold,
+                  color: colors.purple,
+                }}>
+                READ MORE
+              </AppText>
+            </TouchableOpacity>
+          </View>
         </View>
       </View>
 
@@ -236,6 +247,7 @@ const ProductDetailsScreen = ({route}) => {
                   product={item}
                   onPress={() => checkRelatedItem(item)}
                   small
+                  removeSaveBtn
                 />
               );
             }}

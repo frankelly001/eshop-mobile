@@ -179,7 +179,7 @@ const Store = ({children}) => {
         const data = [];
         documentSnapshot.forEach(el => {
           // console.log(el.data());
-          data.push(el.data());
+          data.push({id: el.id, ...el.data()});
         });
 
         // setCategories({...categories, data});
@@ -303,7 +303,7 @@ const Store = ({children}) => {
         const data = [];
         snapshot.forEach(el => {
           // console.log(el.data());
-          data.push(el.data());
+          data.push({id: el.id, ...el.data()});
         });
         setTimeout(() => {
           setCategories({...categories, data, loading: false});

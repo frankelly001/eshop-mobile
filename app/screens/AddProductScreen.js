@@ -40,7 +40,7 @@ const initialValues = {
   description: '',
 };
 
-const UploadScreen = () => {
+const AddProductScreen = () => {
   const {categories} = useContext(AuthContext);
   const [loading, setLoading] = useState(false);
 
@@ -129,6 +129,7 @@ const UploadScreen = () => {
   return (
     <>
       <ActivityIndicator visible={loading} />
+
       <Screen>
         {/* <AppButton onPress={handleCategories} label="power" /> */}
         {/* <AppSelectInputOld /> */}
@@ -223,4 +224,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default UploadScreen;
+export default AddProductScreen;

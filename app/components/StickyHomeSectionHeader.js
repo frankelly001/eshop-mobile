@@ -32,7 +32,7 @@ const StickyHomeSectionHeader = ({categories}) => {
                 searchField: 'CATEGORY',
               })
             }
-            key={category}
+            key={category.title}
             style={{
               width: wp(63),
               height: wp(63),
@@ -42,7 +42,8 @@ const StickyHomeSectionHeader = ({categories}) => {
             }}>
             <Image
               style={{width: '100%', height: '100%'}}
-              source={require('../assets/images/carouselimage_3.jpg')}
+              source={{uri: category.img}}
+              resizeMode="cover"
             />
             <View
               style={{
@@ -64,7 +65,7 @@ const StickyHomeSectionHeader = ({categories}) => {
                   textAlign: 'center',
                   textTransform: 'capitalize',
                 }}>
-                {category}
+                {category.title}
               </AppText>
             </View>
           </TouchableOpacity>

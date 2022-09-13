@@ -55,18 +55,29 @@ const SocialAuthentication = ({authLabel}) => {
     // {"displayName": "Franklyn Okeke", "email": "frankelly344@gmail.com", "emailVerified": false, "isAnonymous": false, "metadata": "[Object]", "phoneNumber": null, "photoURL": "https://graph.facebook.com/2359066214241715/picture", "providerData": [], "providerId": "firebase", "tenantId": null, "uid": "DBhJTKVzuaSV0RpDoHhovTHRGql2"}
 
     facebookRequest()
-      .then(snapshot => {
-        console.log('Success', snapshot);
-        // const [firstname, lastname] =
-        //   response.snapshot.user?.displayName.split(' ');
-        // const userAuthData = {
-        //   firstname,
-        //   lastname,
-        //   email: response.snapshot.user?.email ?? '',
-        //   phone: response.snapshot.user?.phoneNumber ?? '',
-        //   verified: response.snapshot.user?.emailVerified,
-        //   uid: response.snapshot.user?.uid,
-        // };
+      .then(response => {
+        if (response.newUser) {
+          const [firstname, lastname] =
+            response.snapshot.user?.displayName.split(' ');
+          const userAuthData = {
+            firstname,
+            lastname,
+            email: response.snapshot.user?.email ?? '',
+            phone: response.snapshot.user?.phoneNumber ?? '',
+            verified: response.snapshot.user?.emailVerified,
+            uid: response.snapshot.user?.uid,
+          };
+          navigation.navigate(routes.ADDITIONALINFO, userAuthData);
+        } else {
+          showToast(
+            toast.types.SUCCESS,
+            `Welcome ${response.snapshot?.name.firstname}${
+              !response.snapshot.verified ? ', Please Verify your Account' : ''
+            }`,
+          );
+          storeUserData(authStorageKeys.USER_DATA, response.snapshot);
+          setUser(response.snapshot);
+        }
       })
       .then(error => {
         console.log('Error:', error);

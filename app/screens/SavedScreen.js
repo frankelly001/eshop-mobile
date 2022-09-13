@@ -13,7 +13,7 @@ import routes from '../navigation/routes';
 import {formatData} from '../utilities/formatData';
 
 const SavedScreen = ({navigation}) => {
-  const {savedItems, products, loading} = useContext(AuthContext);
+  const {savedItems, products, loading, addToCart} = useContext(AuthContext);
 
   if (loading.products) return <ProductsLoader />;
   const savedProducts = products.filter(el => savedItems.includes(el.id));
@@ -46,6 +46,7 @@ const SavedScreen = ({navigation}) => {
                 onPress={() =>
                   navigation.navigate(routes.PRODUCTDETAILS, item.id)
                 }
+                btnOnPress={() => addToCart(product.id)}
                 btnLabel="Buy Now"
               />
             );

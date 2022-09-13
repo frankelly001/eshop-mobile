@@ -1,21 +1,34 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {StyleSheet, View} from 'react-native';
 import AppGradientBtn from '../AppGradientBtn';
 import ImagePicker from 'react-native-image-crop-picker';
 // import {uploadFile} from '../../api/setup/uploadFile';
 import {firestore} from '../../api/setup/config';
 import stateRegion from '../../utilities/stateRegion';
+import {uploadFile} from '../../api/setup/uploadFile';
+import collectionRefs from '../../api/setup/collectionRefs';
+import AuthContext from '../../auth/AuthContext';
 
 const flyoutMenu = [
   {
     title: 'Phones & Tablets'.toLowerCase(),
+    img: 'file:///storage/emulated/0/DCIM/MyAlbums/Upload/health & beauty.jpg',
     groups: [
       {
         title: 'MOBILE PHONES'.toLowerCase(),
         types: [
-          'SmartPhones'.toLowerCase(),
-          'Basic Phones'.toLowerCase(),
-          'Refurbished Phones'.toLowerCase(),
+          {
+            title: 'SmartPhones'.toLowerCase(),
+            img: 'file:///storage/emulated/0/DCIM/MyAlbums/Upload/health & beauty.jpg',
+          },
+          {
+            title: 'Basic Phones'.toLowerCase(),
+            img: 'file:///storage/emulated/0/DCIM/MyAlbums/Upload/health & beauty.jpg',
+          },
+          {
+            title: 'Refurbished Phones'.toLowerCase(),
+            img: 'file:///storage/emulated/0/DCIM/MyAlbums/Upload/health & beauty.jpg',
+          },
         ],
       },
       {
@@ -644,6 +657,10 @@ const flyoutMenu = [
   },
 ];
 
+const updateUserData = (catId, data) => {
+  return collectionRefs.categoryCollectionRef.doc(catId).update(data);
+};
+
 const ImageUploadTest = props => {
   // https://locus.fkkas.com/api/states
   // https://locus.fkkas.com/api/regions/imo
@@ -673,18 +690,100 @@ const ImageUploadTest = props => {
     // }
   };
 
-  const categoriesRef = firestore().collection('categories');
+  const categoriesRef = firestore().collection('categoriesTest');
+
+  const {categories} = useContext(AuthContext);
+
+  const updateCat = [
+    {
+      id: '1659126814416',
+      title: 'phones & tablets',
+      img: 'file:///storage/emulated/0/DCIM/MyAlbums/Upload/phone&tab.jpg',
+    },
+    {
+      id: '1659126815066',
+      title: 'computing',
+      img: 'file:///storage/emulated/0/DCIM/MyAlbums/Upload/computing2.jpg',
+    },
+    {
+      id: '1659126815526',
+      title: 'electronics',
+      img: 'file:///storage/emulated/0/DCIM/MyAlbums/Upload/elect.jpg',
+    },
+    {
+      id: '1659126816008',
+      title: 'fashion',
+      img: 'file:///storage/emulated/0/DCIM/MyAlbums/Upload/fashion.jpg',
+    },
+    {
+      id: '1659126816527',
+      title: 'automobiles',
+      img: 'file:///storage/emulated/0/DCIM/MyAlbums/Upload/automobile.jpg',
+    },
+    {
+      id: '1659126816967',
+      title: 'home & office',
+      img: 'file:///storage/emulated/0/DCIM/MyAlbums/Upload/home-office.jpg',
+    },
+    {
+      id: '1659126817367',
+      title: 'supermarket',
+      img: 'file:///storage/emulated/0/DCIM/MyAlbums/Upload/grocery.jpg',
+    },
+    {
+      id: '1659126817806',
+      title: 'baby products',
+      img: 'file:///storage/emulated/0/DCIM/MyAlbums/Upload/baby.jpg',
+    },
+    {
+      id: '1659126818182',
+      title: 'health & beauty',
+      img: 'file:///storage/emulated/0/DCIM/MyAlbums/Upload/health & beauty.jpg',
+    },
+    {
+      id: '1659126818612',
+      title: 'sporting goods',
+      img: 'file:///storage/emulated/0/DCIM/MyAlbums/Upload/sporting.jpg',
+    },
+    {
+      id: '1659126819052',
+      title: 'other cateories',
+      img: 'file:///storage/emulated/0/DCIM/MyAlbums/Upload/others.jpg',
+    },
+  ];
 
   const handleSubmit = async () => {
-    // for (let i = 0; i < flyoutMenu.length; i++) {
-    //   await categoriesRef.doc(`${Date.now()+i}`).set(flyoutMenu[i])
-    //   .then(()=>{
-    //     console.log(flyoutMenu[i].title, 'category added')
-    //   })
-    //   .catch((error)=> {
-    //     console.log(error);
-    //   })
+    // const data = flyoutMenu[0];
+    for (let i = 0; i < updateCat.length; i++) {
+      const data = updateCat[i];
+
+      const img = await uploadFile(`${'CATEGORY_IMAGES/CATEGORIES'}`, data.img);
+
+      updateUserData(data.id, {['img']: img}).then(() => {
+        console.log(data.title, 'success');
+      });
+      // await categoriesRef
+      //   .doc(`${Date.now() + i}`)
+      //   .set(flyoutMenu[i])
+      //   .then(() => {
+      //     console.log(flyoutMenu[i].title, 'category added');
+      //   })
+      //   .catch(error => {
+      //     console.log(error);
+      //   });
+    }
+    // require('../../assets/images/Categories/automobile.jpg');
+    // let imageUrls = [];
+    // for (let i = 0; i < '1'.length; i++) {
+    //   imageUrls.push(
+    //     await uploadFile(
+    //       `${'CATEGORY_IMAGES'}`,
+    //       'file:///storage/emulated/0/DCIM/MyAlbums/Upload/health & beauty.jpg',
+    //       // require('../../assets/images/Categories/automobile.jpg'),
+    //     ),
+    //   );
     // }
+    // console.log(data, 'confirm');
   };
 
   // console.log(stateRegion);
@@ -693,11 +792,16 @@ const ImageUploadTest = props => {
     return {label: key, value: key};
   });
 
-  // console.log(stateList, 'frank');
+  console.log(
+    categories.map(el => {
+      return {id: el.id, title: el.title};
+    }),
+    'frank',
+  );
 
   return (
     <View style={styles.container}>
-      <AppGradientBtn label="upload to firebase" />
+      <AppGradientBtn label="upload to firebase" onPress={handleSubmit} />
     </View>
   );
 };

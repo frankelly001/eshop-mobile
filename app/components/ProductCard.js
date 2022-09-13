@@ -18,13 +18,19 @@ import LikeBtn from './LikeBtn';
 
 const dimenson = Dimensions.get('screen');
 
-const ProductCard = ({product, onPress, small, medium, btnLabel}) => {
-  const {addToCart} = useContext(AuthContext);
+const ProductCard = ({
+  product,
+  onPress,
+  small,
+  btnLabel,
+  btnOnPress,
+  removeSaveBtn,
+}) => {
   // console.log(height);
   // const styles = small ? mediumCardstyles : bigCardstyles;
   const styles = (() => {
     if (small) return smallCardstyles;
-    else if (medium) return mediumCardstyles;
+    // else if (medium) return mediumCardstyles;
     return bigCardstyles;
   })();
 
@@ -48,17 +54,17 @@ const ProductCard = ({product, onPress, small, medium, btnLabel}) => {
           {formatToCurrency(product.price)}
           {/* {product.price} */}
         </AppText>
-        {!small && !medium && (
+        {!small && (
           <AppGradientBtn
             label={btnLabel ? btnLabel : 'add to cart'}
             labelStyle={styles.btnLabel}
             // containerStyle={{height: hp(35)}}
             // onPress={() => dispatch({type: 'addToCart', id: product.id})}
-            onPress={() => addToCart(product.id)}
+            onPress={btnOnPress}
           />
         )}
       </View>
-      {!small && !medium && (
+      {!removeSaveBtn && (
         <View style={{position: 'absolute', right: 5, top: 5}}>
           <LikeBtn productId={product.id} size={20} />
         </View>
@@ -184,59 +190,59 @@ const smallCardstyles = StyleSheet.create({
   },
 });
 
-const mediumCardstyles = StyleSheet.create({
-  container: {
-    flex: 1,
-    borderRadius: 20,
-    margin: 2,
-    backgroundColor: colors.white,
+// const mediumCardstyles = StyleSheet.create({
+//   container: {
+//     flex: 1,
+//     borderRadius: 20,
+//     margin: 2,
+//     backgroundColor: colors.white,
 
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 1,
-    },
-    shadowOpacity: 0.22,
-    shadowRadius: 2.22,
+//     shadowColor: '#000',
+//     shadowOffset: {
+//       width: 0,
+//       height: 1,
+//     },
+//     shadowOpacity: 0.22,
+//     shadowRadius: 2.22,
 
-    elevation: 3,
-  },
+//     elevation: 3,
+//   },
 
-  imageContainer: {
-    overflow: 'hidden',
-    width: '100%',
-    height: 0.36 * dimenson.width,
-  },
+//   imageContainer: {
+//     overflow: 'hidden',
+//     width: '100%',
+//     height: 0.36 * dimenson.width,
+//   },
 
-  image: {
-    width: '100%',
-    height: '100%',
-  },
+//   image: {
+//     width: '100%',
+//     height: '100%',
+//   },
 
-  description: {
-    alignItems: 'center',
-    padding: 3,
-  },
+//   description: {
+//     alignItems: 'center',
+//     padding: 3,
+//   },
 
-  title: {
-    // fontSize: fontSz(12),
-    fontSize: fontSz(10),
-    fontFamily: fonts.semi_bold,
-  },
+//   title: {
+//     // fontSize: fontSz(12),
+//     fontSize: fontSz(10),
+//     fontFamily: fonts.semi_bold,
+//   },
 
-  price: {
-    fontSize: fontSz(15),
-    fontFamily: fonts.bold,
-    marginVertical: 3,
-    color: colors.grey_dark_2,
-  },
+//   price: {
+//     fontSize: fontSz(15),
+//     fontFamily: fonts.bold,
+//     marginVertical: 3,
+//     color: colors.grey_dark_2,
+//   },
 
-  btnLabel: {
-    textTransform: 'uppercase',
-    fontSize: fontSz(10),
-    fontFamily: fonts.bold,
-  },
-});
+//   btnLabel: {
+//     textTransform: 'uppercase',
+//     fontSize: fontSz(10),
+//     fontFamily: fonts.bold,
+//   },
+// });
 
 export default ProductCard;
 

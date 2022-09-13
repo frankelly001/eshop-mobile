@@ -59,6 +59,7 @@ const RenderItem = ({section, index, numColumns = 1}) => {
 const SectionComponent = props => {
   const {products} = useContext(AuthContext);
 
+  return null;
   return (
     <SectionList
       //   ItemSeparatorComponent={() => <ItemSeparator />}

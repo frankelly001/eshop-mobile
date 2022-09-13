@@ -1,5 +1,6 @@
 import {LoginManager, AccessToken} from 'react-native-fbsdk-next';
 import {auth} from '../../config';
+import {getUser} from '../../getApi/getUser';
 
 async function onFacebookButtonPress() {
   // Attempt login with permissions
@@ -33,12 +34,38 @@ export const facebookSignin = async () => {
     // LoginManager.logOut();
     onFacebookButtonPress()
       .then(snapshot => {
-        resolve(snapshot);
-        console.log('Signed in with Facebook!', snapshot);
+        if (snapshot.additionalUserInfo.isNewUser) {
+          // console.log('Am a new User', snapshot);
+          resolve({
+            newUser: snapshot.additionalUserInfo?.isNewUser,
+            snapshot,
+          });
+        } else {
+          getUser(snapshot.user.uid).then(response => {
+            if (!response._data) {
+              resolve({
+                newUser: true,
+                snapshot,
+              });
+            } else {
+              const data = {
+                id: snapshot.user.uid,
+                ...response._data,
+                verified: snapshot.user?.emailVerified,
+              };
+
+              resolve({
+                newUser: snapshot.additionalUserInfo?.isNewUser,
+                snapshot: data,
+              });
+            }
+          });
+        }
       })
       .catch(error => {
-        reject(error);
-        console.log('Error:', error);
+        if (error) reject(formatErrorMessage(error));
       });
+  }).catch(error => {
+    if (error) reject(formatErrorMessage(error));
   });
 };
