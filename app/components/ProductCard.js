@@ -136,9 +136,10 @@ const smallCardstyles = StyleSheet.create({
   container: {
     // width: 0.3 * dimenson.width,
     width: wp(120),
-    borderRadius: 20,
+    borderRadius: 10,
     // overflow: 'hidden',
     margin: 1,
+    marginHorizontal: 3,
     backgroundColor: colors.white,
 
     shadowColor: '#000',
@@ -146,10 +147,10 @@ const smallCardstyles = StyleSheet.create({
       width: 0,
       height: 1,
     },
-    shadowOpacity: 0.22,
-    shadowRadius: 2.22,
+    shadowOpacity: 0.18,
+    shadowRadius: 1.0,
 
-    elevation: 3,
+    elevation: 1,
   },
 
   imageContainer: {

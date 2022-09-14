@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 import collectionRefs from '../api/setup/collectionRefs';
 import {auth} from '../api/setup/config';
 import {getCategories} from '../api/setup/getApi/getCategories';
@@ -325,22 +325,54 @@ const Store = ({children}) => {
     return authSubscriber;
   }, []);
 
+  const recentlyViewed = useMemo(() => {
+    const viewed = [];
+    for (let i = 0; i < idRecentlyViewed.length; i++) {
+      products.data.forEach(el => {
+        if (idRecentlyViewed[i] === el.id) viewed.push(el);
+      });
+    }
+    return viewed;
+  }, [idRecentlyViewed]);
+
+  const savedProducts = useMemo(() => {
+    const saved = [];
+    for (let i = 0; i < savedItems.length; i++) {
+      products.data.forEach(el => {
+        if (savedItems[i] === el.id) saved.push(el);
+      });
+    }
+    return saved;
+  }, [savedItems]);
+
   // useEffect(()=> {
 
   // })
 
   useEffect(() => {
-    const cartItemIDs = cartItems.map(el => el.productId);
+    // const cartItemIDs = cartItems.map(el => el.productId);
+    // const filteredProductsInCart = products.data.filter(el =>
+    //   cartItemIDs.includes(el.id),
+    // );
+    // const cartProducts = filteredProductsInCart.map(el => {
+    //   return {
+    //     ...el,
+    //     quantity: cartItems.find(item => item.productId === el.id).quantity,
+    //   };
+    // });
 
-    const filteredProductsInCart = products.data.filter(el =>
-      cartItemIDs.includes(el.id),
-    );
-    const cartProducts = filteredProductsInCart.map(el => {
-      return {
-        ...el,
-        quantity: cartItems.find(item => item.productId === el.id).quantity,
-      };
-    });
+    const cartProducts = [];
+
+    for (let i = 0; i < cartItems.length; i++) {
+      products.data.forEach(el => {
+        if (cartItems[i].productId === el.id)
+          cartProducts.push({
+            ...el,
+            quantity: cartItems[i].quantity,
+          });
+      });
+    }
+
     setProductsInCart(cartProducts);
     setNumOfCartItems(
       cartItems.map(el => el.quantity).reduce((prev, cur) => prev + cur, 0),
@@ -381,11 +413,14 @@ const Store = ({children}) => {
         addToRecentView,
         recentQueries,
         idRecentlyViewed,
+        recentlyViewed,
         clearRecentQuery,
         clearRecentView,
         addToCart,
         addToOrders,
         savedItems,
+
+        savedProducts,
         orderedItems,
         subFromCart,
         mutateCart,

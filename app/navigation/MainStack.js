@@ -26,6 +26,7 @@ import OrdersScreen from '../screens/OrdersScreen';
 import AuthNavigator from './AuthNavigator';
 import OrderDetailsScreen from '../screens/OrderDetailsScreen';
 import AdminNavigator from './AdminNavigator';
+import ProductDescriptionScreen from '../screens/ProductDescriptionScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -71,6 +72,13 @@ const MainStack = props => {
         options={{
           title: 'Details',
           headerStyle: {},
+        }}
+      />
+      <Stack.Screen
+        name={routes.PRODUCTDESCRIPTION}
+        component={ProductDescriptionScreen}
+        options={{
+          animation: 'slide_from_bottom',
         }}
       />
       <Stack.Screen

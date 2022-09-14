@@ -1,4 +1,4 @@
-import React, {useContext, useState, useRef, useEffect} from 'react';
+import React, {useContext, useState, useRef, useEffect, useMemo} from 'react';
 import {
   StyleSheet,
   View,
@@ -24,12 +24,14 @@ import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 import {fontSz, hp, wp} from '../config/responsiveSize';
 import fonts from '../config/fonts';
 import ProductDetailsLoader from '../components/SkeletonLoader/ProductDetailsLoader';
+import {navigationRef} from '../navigation/rootNavigation';
+import routes from '../navigation/routes';
 
 const {width, height} = Dimensions.get('screen');
 
-const ProductDetailsScreen = ({route}) => {
+const ProductDetailsScreen = ({navigation, route}) => {
   const [productId, setProductId] = useState(route.params);
-  const {products, productsInCart, addToCart, addToRecentView} =
+  const {recentlyViewed, products, productsInCart, addToCart, addToRecentView} =
     useContext(AuthContext);
 
   // const [product, setProduct] = useState({});
@@ -46,6 +48,10 @@ const ProductDetailsScreen = ({route}) => {
   const quantityInCart = productsInCart.find(
     el => el.id === product.id,
   )?.quantity;
+
+  // const recentlyViewed = products.filter(el =>
+  //   idRecentlyViewed.includes(el.id),
+  // );
 
   useEffect(() => {
     addToRecentView(productId);
@@ -215,12 +221,20 @@ const ProductDetailsScreen = ({route}) => {
               {product.description}
             </AppText>
           </View>
-          <View style={{alignItems: 'center', paddingHorizontal: 5}}>
-            <TouchableOpacity>
+          <View
+            style={{alignItems: 'center', paddingHorizontal: 5, marginTop: 5}}>
+            <TouchableOpacity
+              onPress={() =>
+                navigation.navigate(
+                  routes.PRODUCTDESCRIPTION,
+                  product.description,
+                )
+              }>
               <AppText
                 style={{
                   fontFamily: fonts.bold,
                   color: colors.purple,
+                  fontSize: fontSz(10),
                 }}>
                 READ MORE
               </AppText>
@@ -238,6 +252,31 @@ const ProductDetailsScreen = ({route}) => {
             horizontal
             showsHorizontalScrollIndicator={false}
             data={productCategogies}
+            style={{marginBottom: 20}}
+            contentContainerStyle={{padding: 5, paddingTop: 0}}
+            key={product => product.id.toString()}
+            renderItem={({item}) => {
+              return (
+                <ProductCard
+                  product={item}
+                  onPress={() => checkRelatedItem(item)}
+                  small
+                  removeSaveBtn
+                />
+              );
+            }}
+          />
+        </View>
+      )}
+      {recentlyViewed.length > 0 && (
+        <View>
+          <AppText style={[styles.headerLabel, styles.relatedHeader]}>
+            Recently Viewed
+          </AppText>
+          <FlatList
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            data={recentlyViewed}
             style={{marginBottom: 20}}
             contentContainerStyle={{padding: 5, paddingTop: 0}}
             key={product => product.id.toString()}

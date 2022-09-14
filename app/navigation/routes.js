@@ -11,6 +11,7 @@ export default Object.freeze({
   HELPTAB: 'HelpTab',
   HELP: 'Help',
   PRODUCTDETAILS: 'ProductDetails',
+  PRODUCTDESCRIPTION: 'Product Description',
   CART: 'Cart',
   NOTIFICATION: 'Notification',
   CHECKOUT: 'Checkout',

@@ -13,10 +13,11 @@ import routes from '../navigation/routes';
 import {formatData} from '../utilities/formatData';
 
 const SavedScreen = ({navigation}) => {
-  const {savedItems, products, loading, addToCart} = useContext(AuthContext);
+  const {savedItems, savedProducts, products, loading, addToCart} =
+    useContext(AuthContext);
 
   if (loading.products) return <ProductsLoader />;
-  const savedProducts = products.filter(el => savedItems.includes(el.id));
+  // const savedProducts = products.filter(el => savedItems.includes(el.id));
 
   // const save = () => {
   //   const savedProds = [];
