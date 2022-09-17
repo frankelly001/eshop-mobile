@@ -1,21 +1,44 @@
 import React, {useContext} from 'react';
 import {FlatList, StyleSheet, TouchableOpacity, View} from 'react-native';
+import {deleteFileFromStorage} from '../api/setup/deleteApi/deleteFileFromStorage';
+import {deleteProduct} from '../api/setup/deleteApi/deleteProduct';
 import AuthContext from '../auth/AuthContext';
+import ActivityIndicator from '../components/ActivityIndicator';
+import {showToast} from '../components/AppToast/showToast';
+import toast from '../components/AppToast/toast';
 import Icon, {Icons} from '../components/Icons';
 import ProductCard from '../components/ProductCard';
 import ProductsLoader from '../components/SkeletonLoader/ProductsLoader';
 import colors from '../config/colors';
 import {wp} from '../config/responsiveSize';
+import {useApi} from '../hooks/useApi';
 import routes from '../navigation/routes';
 import {formatData} from '../utilities/formatData';
+import {formatErrorMessage} from '../utilities/formatErrorMessage';
 
 const UpdateProductsScreen = ({navigation}) => {
   const {products, categories, loading, errors, addToCart} =
     useContext(AuthContext);
+  const {loading: deleteLoading, request} = useApi(deleteProduct);
 
   if (loading.products) return <ProductsLoader />;
+
+  const handleDelete = async product => {
+    request(product.id)
+      .then(async () => {
+        for (let i = 0; i < product?.images.length; i++) {
+          await deleteFileFromStorage(product?.images[i], product);
+        }
+        showToast(toast.types.SUCCESS, 'Product successfully deleted');
+      })
+      .catch(error => {
+        showToast(toast.types.ERROR, formatErrorMessage(error));
+      });
+  };
+
   return (
     <>
+      <ActivityIndicator visible={deleteLoading} portal />
       <FlatList
         showsVerticalScrollIndicator={false}
         numColumns={2}
@@ -32,7 +55,7 @@ const UpdateProductsScreen = ({navigation}) => {
               product={item}
               removeSaveBtn
               btnLabel="Delete"
-              // btnOnPress={() => addToCart(item.id)}
+              btnOnPress={() => handleDelete(item)}
               onPress={() => navigation.navigate(routes.PRODUCTUPDATE, item.id)}
               // onPress={() =>
               //   navigation.navigate(routes.PRODUCTDETAILS, item.id)

@@ -1,6 +1,7 @@
 import React, {useEffect, useMemo, useState} from 'react';
 import collectionRefs from '../api/setup/collectionRefs';
 import {auth} from '../api/setup/config';
+import {getCarousel} from '../api/setup/getApi/getCarousel';
 import {getCategories} from '../api/setup/getApi/getCategories';
 import {getProducts} from '../api/setup/getApi/getProducts';
 import {
@@ -14,6 +15,7 @@ import {showToast} from '../components/AppToast/showToast';
 import toast from '../components/AppToast/toast';
 import {useCartState} from '../hooks/useCartState';
 import {useCheckNetworkStatus} from '../hooks/useCheckNetworkStatus';
+import {formatErrorMessage} from '../utilities/formatErrorMessage';
 
 const Store = ({children}) => {
   const [products, setProducts] = useState({
@@ -22,6 +24,16 @@ const Store = ({children}) => {
     error: null,
   });
   const [categories, setCategories] = useState({
+    loading: true,
+    data: [],
+    error: null,
+  });
+  const [feeds, setFeeds] = useState({
+    loading: true,
+    data: [],
+    error: null,
+  });
+  const [carousel, setCarousel] = useState({
     loading: true,
     data: [],
     error: null,
@@ -175,18 +187,45 @@ const Store = ({children}) => {
     setCategories({...categories, loading: true});
     const subscriber = collectionRefs.categoryCollectionRef.onSnapshot(
       documentSnapshot => {
-        // if (!categories.loading && categories.data.length) {
         const data = [];
         documentSnapshot.forEach(el => {
           // console.log(el.data());
           data.push({id: el.id, ...el.data()});
         });
 
-        // setCategories({...categories, data});
-        // console.log(data, 'snappppp');
-        // setTimeout(() => {
         setCategories({...categories, data, loading: false});
-        // }, 2000);
+      },
+    );
+    return () => subscriber();
+  };
+
+  const onCarouselSubscriber = () => {
+    setCarousel({...carousel, loading: true});
+    const subscriber = collectionRefs.carouselCollectionRef.onSnapshot(
+      documentSnapshot => {
+        const data = [];
+        documentSnapshot.forEach(el => {
+          // console.log(el.data());
+          data.push({id: el.id, ...el.data()});
+        });
+
+        setCarousel({...carousel, data, loading: false});
+      },
+    );
+    return () => subscriber();
+  };
+
+  const onFeedSubscriber = () => {
+    setFeeds({...feeds, loading: true});
+    const subscriber = collectionRefs.feedsCollectionRef.onSnapshot(
+      documentSnapshot => {
+        const data = [];
+        documentSnapshot.forEach(el => {
+          // console.log(el.data());
+          data.push({id: el.id, ...el.data()});
+        });
+
+        setFeeds({...feeds, data, loading: false});
       },
     );
     return () => subscriber();
@@ -195,6 +234,8 @@ const Store = ({children}) => {
   useEffect(() => {
     onProductSubscriber();
     onCategorySubscriber();
+    onFeedSubscriber();
+    onCarouselSubscriber();
   }, []);
 
   const getAllUserDataFromAsynStorage = () => {
@@ -260,15 +301,6 @@ const Store = ({children}) => {
     onUserSubscriber();
   }, [user?.id]);
 
-  // useEffect(() => {
-  //   const {isConnected, isInternetReachable} = netinfo;
-  //   if (isConnected && isInternetReachable) {
-  //     showToast(toast.types.SUCCESS, 'Connected');
-  //   } else {
-  //     showToast(toast.types.ERROR, "There's no Internet Connection");
-  //   }
-  // }, [netinfo]);
-
   const fetchProducts = () => {
     setProducts({...products, loading: true});
 
@@ -284,8 +316,12 @@ const Store = ({children}) => {
       })
       .catch(error => {
         console.log(error, 'fetchProducts Error');
-        setProducts({...products, error: error.message, loading: false});
-        showToast(toast.types.ERROR, error.message);
+        setProducts({
+          ...products,
+          error: formatErrorMessage(error),
+          loading: false,
+        });
+        showToast(toast.types.ERROR, formatErrorMessage(error));
       });
   };
 
@@ -311,10 +347,36 @@ const Store = ({children}) => {
       })
       .catch(error => {
         console.log(error, 'fetchCategories Error');
-        setCategories({...categories, error: error.message, loading: false});
-        showToast(toast.types.ERROR, error.message);
+        setCategories({
+          ...categories,
+          error: formatErrorMessage(error),
+          loading: false,
+        });
+        showToast(toast.types.ERROR, formatErrorMessage(error));
       });
   };
+
+  // const fetchCarousel = () => {
+  //   setCarousel({...carousel, loading: true});
+  //   getCarousel()
+  //     .then(documentSnapshot => {
+  //       const data = [];
+  //       documentSnapshot.forEach(el => {
+  //         // console.log(el.data());
+  //         data.push({id: el.id, ...el.data()});
+  //       });
+
+  //       setCarousel({...carousel, data, loading: false});
+  //     })
+  //     .catch(error => {
+  //       setProducts({
+  //         ...carousel,
+  //         error: formatErrorMessage(error),
+  //         loading: false,
+  //       });
+  //       showToast(toast.types.ERROR, formatErrorMessage(error));
+  //     });
+  // };
 
   useEffect(() => {
     // fetchCategories();
@@ -377,18 +439,21 @@ const Store = ({children}) => {
     setNumOfCartItems(
       cartItems.map(el => el.quantity).reduce((prev, cur) => prev + cur, 0),
     );
-    setDelivery(
+
+    const deliveryFee =
       cartProducts.map(el => el.quantity).reduce((prev, cur) => prev + cur, 0) *
-        1000,
-    );
-    setSubTotal(
+      1000;
+
+    const subTotalFee =
       Math.round(
         cartProducts
           .map(el => el.price * el.quantity)
           .reduce((prev, cur) => prev + cur, 0) * 10,
-      ) / 10,
-    );
-    setTotal(subTotal + delivery);
+      ) / 10;
+
+    setDelivery(deliveryFee);
+    setSubTotal(subTotalFee);
+    setTotal(subTotalFee + deliveryFee);
   }, [cartItems, products?.data]);
 
   if (initializing) return null;
@@ -398,8 +463,20 @@ const Store = ({children}) => {
       value={{
         products: products.data,
         categories: categories.data,
-        loading: {products: products.loading, categories: categories.loading},
-        errors: {products: products.error, categories: categories.error},
+        feeds: feeds.data,
+        carousel: carousel.data,
+        loading: {
+          products: products.loading,
+          categories: categories.loading,
+          feeds: feeds.loading,
+          carousel: carousel.loading,
+        },
+        errors: {
+          products: products.error,
+          categories: categories.error,
+          feeds: feeds.error,
+          carousel: carousel.error,
+        },
         productsInCart,
         onLike: handleSave,
         numOfCartItems,

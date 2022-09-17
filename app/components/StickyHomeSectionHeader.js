@@ -27,7 +27,7 @@ const StickyHomeSectionHeader = ({categories}) => {
           <TouchableOpacity
             onPress={() =>
               navigation.navigate(routes.SEARCHED, {
-                query: category,
+                query: category.title,
                 searchType: 'categoryFieldSearch',
                 searchField: 'CATEGORY',
               })

@@ -28,13 +28,13 @@ export const loginWithEmailAndPassword = ({email, password}) => {
           })
           .catch(error => {
             reject(formatErrorMessage(error));
-            console.log('GET_USER ERROR:', error.code);
+            // console.log('GET_USER ERROR:', error.code);
           });
         // resolve(snapshot);
       })
       .catch(error => {
         reject(formatErrorMessage(error));
-        console.log('LOGIN_WITH_EMAIL_AND_PASSWORD ERROR:', error.code);
+        // console.log('LOGIN_WITH_EMAIL_AND_PASSWORD ERROR:', error.code);
       });
   });
 };

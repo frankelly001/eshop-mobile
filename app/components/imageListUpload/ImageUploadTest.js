@@ -8,6 +8,7 @@ import stateRegion from '../../utilities/stateRegion';
 import {uploadFile} from '../../api/setup/uploadFile';
 import collectionRefs from '../../api/setup/collectionRefs';
 import AuthContext from '../../auth/AuthContext';
+import {addCategory} from '../../api/setup/postApi/addCategory';
 
 const flyoutMenu = [
   {
@@ -692,7 +693,7 @@ const ImageUploadTest = props => {
 
   const categoriesRef = firestore().collection('categoriesTest');
 
-  const {categories} = useContext(AuthContext);
+  // const {categories} = useContext(AuthContext);
 
   const updateCat = [
     {
@@ -762,9 +763,7 @@ const ImageUploadTest = props => {
       updateUserData(data.id, {['img']: img}).then(() => {
         console.log(data.title, 'success');
       });
-      // await categoriesRef
-      //   .doc(`${Date.now() + i}`)
-      //   .set(flyoutMenu[i])
+      // await addCategory(`${Date.now() + i}`, flyoutMenu[i])
       //   .then(() => {
       //     console.log(flyoutMenu[i].title, 'category added');
       //   })
@@ -788,20 +787,20 @@ const ImageUploadTest = props => {
 
   // console.log(stateRegion);
 
-  const stateList = Object.keys(stateRegion).map((key, index) => {
-    return {label: key, value: key};
-  });
+  // const stateList = Object.keys(stateRegion).map((key, index) => {
+  //   return {label: key, value: key};
+  // });
 
-  console.log(
-    categories.map(el => {
-      return {id: el.id, title: el.title};
-    }),
-    'frank',
-  );
+  // console.log(
+  //   categories.map(el => {
+  //     return {id: el.id, title: el.title};
+  //   }),
+  //   'frank',
+  // );
 
   return (
     <View style={styles.container}>
-      <AppGradientBtn label="upload to firebase" onPress={handleSubmit} />
+      <AppGradientBtn label="upload to firebase" onPress={uploadImage} />
     </View>
   );
 };

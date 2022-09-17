@@ -1,4 +1,5 @@
 import {LoginManager, AccessToken} from 'react-native-fbsdk-next';
+import {formatErrorMessage} from '../../../../utilities/formatErrorMessage';
 import {auth} from '../../config';
 import {getUser} from '../../getApi/getUser';
 

@@ -14,6 +14,17 @@ import * as Yup from 'yup';
 import AppFormImagePicker from '../components/form/AppFormImagePicker';
 import AppFormTextArea from '../components/form/AppFormTextArea';
 import ActivityIndicator from '../components/ActivityIndicator';
+import {dirNames, uploadFile} from '../api/setup/uploadFile';
+import storage from '@react-native-firebase/storage';
+import {
+  productDataTypes,
+  updateProductData,
+} from '../api/setup/patchApi/updateProductData';
+import {showToast} from '../components/AppToast/showToast';
+import toast from '../components/AppToast/toast';
+import {formatErrorMessage} from '../utilities/formatErrorMessage';
+import {compareTwoArray} from '../utilities/compareTwoArray';
+import {deleteFileFromStorage} from '../api/setup/deleteApi/deleteFileFromStorage';
 
 const upload_VS = Yup.object().shape({
   images: validationSchema.images,
@@ -25,7 +36,7 @@ const upload_VS = Yup.object().shape({
   description: validationSchema.description,
 });
 
-const ProductUpdateScreen = ({route}) => {
+const ProductUpdateScreen = ({navigation, route}) => {
   const {categories, products} = useContext(AuthContext);
   const [loading, setLoading] = useState(false);
 
@@ -76,63 +87,93 @@ const ProductUpdateScreen = ({route}) => {
       : [{label: 'Category not selected'}];
   };
 
-  const handleSubmit = async (values, {resetForm}) => {
-    // setLoading(true);
-    // const imagePaths = values['images'];
-    // let imageUrls = [];
-    // for (let i = 0; i < imagePaths.length; i++) {
-    //   imageUrls.push(
-    //     await uploadFile(
-    //       `${dirNames.PRODUCTS_IMAGES}/${values['category']}/${
-    //         values['categoryGroupTitle']
-    //       }/${values['categoryGroupType']}/${values['title'].replace(
-    //         /[^A-Z0-9']+/gi,
-    //         '-',
-    //       )}`,
-    //       imagePaths[i],
-    //     ),
-    //   );
-    // }
-    // const newValues = {
-    //   date: firestore.FieldValue.serverTimestamp(),
-    //   title: values['title'].toLowerCase(),
-    //   price: +values['price'],
-    //   images: imageUrls,
-    //   category: {
-    //     title: values['category'].toLowerCase(),
-    //     group: {
-    //       title: values['categoryGroupTitle'].toLowerCase(),
-    //       type: values['categoryGroupType'].toLowerCase(),
-    //     },
-    //   },
-    //   description: values['description'],
-    //   rating: {
-    //     count: parseInt(Math.random() * 500),
-    //     rate: parseFloat((Math.random() * 5).toFixed(1)),
-    //   },
-    // };
-    // // console.log(newValues);
-    // addProducts(newValues)
-    //   .then(data => {
-    //     // console.log('product added successfully', data);
-    //     alert('product added successfully');
-    //     resetForm();
-    //   })
-    //   .catch(error => {
-    //     console.log('product add failed:', error.message);
-    //   });
-    // setLoading(false);
+  const handleSubmit = async values => {
+    const imagePaths = values['images'];
+    const imageUrls = [];
+
+    const dataToUpdate = {
+      ...(values['title'].toLowerCase() !=
+        initialValues.title.toLowerCase() && {
+        [productDataTypes.TITLE]: values['title'].toLowerCase(),
+      }),
+      ...(!compareTwoArray(values['images'], initialValues.images) && {
+        [productDataTypes.IMAGES]: imageUrls,
+      }),
+      ...(values['price'].toLowerCase() !=
+        initialValues.price.toLowerCase() && {
+        [productDataTypes.PRICE]: +values['price'],
+      }),
+      ...(values['category'].toLowerCase() !=
+        initialValues.category.toLowerCase() && {
+        [productDataTypes.CATEGORYTITLE]: values['category'].toLowerCase(),
+      }),
+      ...(values['categoryGroupTitle'].toLowerCase() !=
+        initialValues.categoryGroupTitle.toLowerCase() && {
+        [productDataTypes.CATEGORYGROUPTITLE]:
+          values['categoryGroupTitle'].toLowerCase(),
+      }),
+      ...(values['categoryGroupType'].toLowerCase() !=
+        initialValues.categoryGroupType.toLowerCase() && {
+        [productDataTypes.CATEGORYGROUPTYPE]:
+          values['categoryGroupType'].toLowerCase(),
+      }),
+      ...(values['description'].toLowerCase() !=
+        initialValues.description.toLowerCase() && {
+        [productDataTypes.DESCRIPTION]: values['description'],
+      }),
+    };
+
+    if (Object.entries(dataToUpdate).length) {
+      setLoading(true);
+      const length =
+        product?.images.length > imagePaths.length
+          ? product?.images.length
+          : imagePaths.length;
+
+      for (let i = 0; i < length; i++) {
+        if (imagePaths[i] === product?.images[i]) {
+          imageUrls.push(imagePaths[i]);
+        } else {
+          if (product?.images[i]) {
+            await deleteFileFromStorage(product?.images[i], product);
+          }
+
+          if (imagePaths[i]) {
+            imageUrls.push(
+              await uploadFile(
+                `${dirNames.PRODUCTS_IMAGES}/${values['category']}/${
+                  values['categoryGroupTitle']
+                }/${
+                  values['categoryGroupType']
+                    ? `${values['categoryGroupType']}/`
+                    : ''
+                }${values['title'].replace(/[^A-Z0-9']+/gi, '-')}`,
+                imagePaths[i],
+              ),
+            );
+          }
+        }
+      }
+
+      updateProductData(product.id, dataToUpdate)
+        .then(() => {
+          setLoading(false);
+          showToast(toast.types.SUCCESS, 'Product successfully updated');
+          navigation.goBack();
+        })
+        .catch(error => {
+          setLoading(false);
+          showToast(toast.types.ERROR, formatErrorMessage(error));
+        });
+    }
   };
 
   return (
     <>
-      <ActivityIndicator visible={loading} />
+      <ActivityIndicator visible={loading} portal />
 
       <Screen>
-        {/* <AppButton onPress={handleCategories} label="power" /> */}
-        {/* <AppSelectInputOld /> */}
         <View style={styles.container}>
-          {/* <ImageUploadTest /> */}
           <AppText style={styles.header}>Upload product to Server</AppText>
           <AppForm
             initialValues={initialValues}

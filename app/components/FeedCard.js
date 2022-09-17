@@ -19,7 +19,11 @@ const FeedCard = ({feed, onPress}) => {
     <View style={styles.container}>
       <TouchableOpacity style={styles.feedContent} onPress={onPress}>
         <View style={styles.imageContainer}>
-          <Image resizeMode="cover" style={styles.image} source={feed.image} />
+          <Image
+            resizeMode="cover"
+            style={styles.image}
+            source={{uri: feed.image}}
+          />
         </View>
         <View style={styles.textContainer}>
           <AppGradientText numberOfLines={1} style={styles.title}>
@@ -73,6 +77,7 @@ const styles = StyleSheet.create({
     borderWidth: 5,
     borderColor: colors.white,
     zIndex: 1,
+    backgroundColor: colors.grey_light,
     // flex: 1,
     // backgroundColor: 'blue',
   },

@@ -1,23 +1,27 @@
-import React, {useState, useRef, useEffect} from 'react';
+import React, {useState, useRef, useEffect, useContext} from 'react';
 import {StyleSheet, View, ScrollView, Dimensions, Image} from 'react-native';
+import AuthContext from '../auth/AuthContext';
 
-const images = [
-  require('../assets/images/carouselimage_1.jpg'),
-  require('../assets/images/carouselimage_2.jpg'),
-  require('../assets/images/carouselimage_3.jpg'),
-  require('../assets/images/carouselimage_4.jpg'),
-  require('../assets/images/carouselimage_5.jpg'),
-  require('../assets/images/carouselimage_6.jpg'),
-  require('../assets/images/carouselimage_7.jpg'),
-  require('../assets/images/carouselimage_8.jpg'),
-];
+// const images = [
+//   require('../assets/images/carouselimage_1.jpg'),
+//   require('../assets/images/carouselimage_2.jpg'),
+//   require('../assets/images/carouselimage_3.jpg'),
+//   require('../assets/images/carouselimage_4.jpg'),
+//   require('../assets/images/carouselimage_5.jpg'),
+//   require('../assets/images/carouselimage_6.jpg'),
+//   require('../assets/images/carouselimage_7.jpg'),
+//   require('../assets/images/carouselimage_8.jpg'),
+// ];
 
 const {width, height} = Dimensions.get('screen');
 
 const ImageCarousel = () => {
   const [selectedIndex, setSelectedIndex] = useState(0);
+  const {carousel, loading} = useContext(AuthContext);
 
   const scrollRef = useRef(null);
+
+  const images = carousel;
 
   useEffect(() => {
     const currentIndex =
@@ -51,20 +55,20 @@ const ImageCarousel = () => {
         onMomentumScrollEnd={uptSelectedIndex}
         // onScroll={uptSelectedIndex}
         ref={scrollRef}>
-        {images.map(img => (
+        {images.map(caro => (
           // <Image key={img} source={{uri: img}} style={styles.carouselImage} />
           <Image
             resizeMode="stretch"
-            key={img}
-            source={img}
+            key={caro.image}
+            source={{uri: caro.image}}
             style={styles.carouselImage}
           />
         ))}
       </ScrollView>
       <View style={styles.circleContainer}>
-        {images.map((img, i) => (
+        {images.map((caro, i) => (
           <View
-            key={img}
+            key={caro.image}
             style={[
               styles.whiteCircle,
               {opacity: i !== selectedIndex ? 0.5 : 1},

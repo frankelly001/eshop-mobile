@@ -26,6 +26,9 @@ import {showToast} from './app/components/AppToast/showToast';
 import toast from './app/components/AppToast/toast';
 import {useCheckNetworkStatus} from './app/hooks/useCheckNetworkStatus';
 import Store from './app/Store/Store';
+import AppButton from './app/components/AppButton';
+import {addAllFeed} from './app/api/Feed';
+import ImageUploadTest from './app/components/imageListUpload/ImageUploadTest';
 
 const App = () => {
   useCheckNetworkStatus();
@@ -45,6 +48,8 @@ const App = () => {
 
   return (
     <>
+      {/* <AppButton onPress={() => addAllFeed()} /> */}
+      {/* <ImageUploadTest /> */}
       <StatusBar backgroundColor={colors.white} barStyle={'dark-content'} />
       <Store>
         <NavigationContainer ref={navigationRef} theme={navigationTheme}>

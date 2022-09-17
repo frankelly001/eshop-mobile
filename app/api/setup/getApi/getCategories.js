@@ -1,4 +1,3 @@
-import {firestore} from '../config';
 import collectionRefs from '../collectionRefs';
 
 export const getCategories = () => {

@@ -21,7 +21,9 @@ const ImageInputList = ({imageUris = [], onRemoveImage, onAddImage}) => {
               />
             </View>
           ))}
-          <ImageInput onChangeImage={uri => onAddImage(uri)} />
+          {imageUris.length < 5 && (
+            <ImageInput onChangeImage={uri => onAddImage(uri)} />
+          )}
         </View>
       </ScrollView>
     </View>

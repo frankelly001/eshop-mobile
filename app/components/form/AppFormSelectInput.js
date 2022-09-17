@@ -29,7 +29,7 @@ const AppFormSelectInput = ({
       <AnimatedFormPlaceholder isFocus={isFocus} placeholder={placeholder} />
       <AppSelectInput
         dropdownStyle={[
-          !data.length && {opacity: 0.2},
+          !data.length && {opacity: 0.5},
           isFocus && {borderColor: colors.purple, borderWidth: 0.5},
         ]}
         data={data}

@@ -9,10 +9,11 @@ import Header from './Header';
 import routes from './routes';
 import UpdateProductsScreen from '../screens/UpdateProductsScreen';
 import ProductUpdateScreen from '../screens/ProductUpdateScreen';
+import UpdateFeedsScreen from '../screens/UpdateFeedsScreen';
 
 const Stack = createNativeStackNavigator();
 
-const UPDATEPRODUCTSTACK = () => {
+const ProductsStack = () => {
   return (
     <Stack.Navigator
       screenOptions={{header: ({...allProps}) => <Header {...allProps} />}}>
@@ -30,6 +31,24 @@ const UPDATEPRODUCTSTACK = () => {
   );
 };
 
+const FeedsStacks = () => {
+  return (
+    <Stack.Navigator
+      screenOptions={{header: ({...allProps}) => <Header {...allProps} />}}>
+      <Stack.Screen
+        name={routes.UPDATEFEEDS}
+        component={UpdateFeedsScreen}
+        options={{title: 'Add | Update | Delete Feed'}}
+      />
+      {/* <Stack.Screen name={routes.ADDPRODUCT} component={AddProductScreen} />
+      <Stack.Screen
+        name={routes.PRODUCTUPDATE}
+        component={ProductUpdateScreen}
+      /> */}
+    </Stack.Navigator>
+  );
+};
+
 const AdminNavigator = () => {
   return (
     <Stack.Navigator
@@ -40,11 +59,15 @@ const AdminNavigator = () => {
       />
       <Stack.Screen
         name={routes.UPDATEPRODUCTSSTACK}
-        component={UPDATEPRODUCTSTACK}
+        component={ProductsStack}
         options={{headerShown: false}}
       />
       {/* <Stack.Screen name={routes.UPDATEPRODUCT} component={UploadScreen} /> */}
-      <Stack.Screen name={routes.UPDATEFEEDS} component={AddProductScreen} />
+      <Stack.Screen
+        name={routes.UPDATEFEEDSSTACK}
+        component={FeedsStacks}
+        options={{headerShown: false}}
+      />
       <Stack.Screen
         name={routes.UPDATECAROUSELIMAGES}
         component={AddProductScreen}

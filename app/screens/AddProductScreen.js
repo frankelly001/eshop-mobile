@@ -19,6 +19,9 @@ import {firestore} from '../api/setup/config';
 import AuthContext from '../auth/AuthContext';
 import AppFormSelectInput from '../components/form/AppFormSelectInput';
 import ActivityIndicator from '../components/ActivityIndicator';
+import {showToast} from '../components/AppToast/showToast';
+import toast from '../components/AppToast/toast';
+import {formatErrorMessage} from '../utilities/formatErrorMessage';
 
 const upload_VS = Yup.object().shape({
   images: validationSchema.images,
@@ -40,7 +43,7 @@ const initialValues = {
   description: '',
 };
 
-const AddProductScreen = () => {
+const AddProductScreen = ({navigation}) => {
   const {categories} = useContext(AuthContext);
   const [loading, setLoading] = useState(false);
 
@@ -86,10 +89,9 @@ const AddProductScreen = () => {
         await uploadFile(
           `${dirNames.PRODUCTS_IMAGES}/${values['category']}/${
             values['categoryGroupTitle']
-          }/${values['categoryGroupType']}/${values['title'].replace(
-            /[^A-Z0-9']+/gi,
-            '-',
-          )}`,
+          }/${
+            values['categoryGroupType'] ? `${values['categoryGroupType']}/` : ''
+          }${values['title'].toLowerCase().replace(/[^A-Z0-9']+/gi, '-')}`,
           imagePaths[i],
         ),
       );
@@ -115,15 +117,17 @@ const AddProductScreen = () => {
     };
     // console.log(newValues);
     addProducts(newValues)
-      .then(data => {
+      .then(() => {
         // console.log('product added successfully', data);
-        alert('product added successfully');
+        showToast(toast.types.SUCCESS, 'product added successfully');
         resetForm();
+        setLoading(false);
+        navigation.goBack();
       })
       .catch(error => {
-        console.log('product add failed:', error.message);
+        showToast(toast.types.SUCCESS, formatErrorMessage(error));
+        setLoading(false);
       });
-    setLoading(false);
   };
 
   return (

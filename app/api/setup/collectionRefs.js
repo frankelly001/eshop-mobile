@@ -9,4 +9,6 @@ export default {
   productsCollectionRef: getCollectionRef('products'),
   categoryCollectionRef: getCollectionRef('categories'),
   usersOrderCollectionRef: getCollectionRef('users_order'),
+  feedsCollectionRef: getCollectionRef('feeds'),
+  carouselCollectionRef: getCollectionRef('carousel'),
 };

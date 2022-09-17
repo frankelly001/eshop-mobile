@@ -9,13 +9,16 @@ const adminRoutes = [
     title: 'Add | Update | Delete Product',
   },
   {
-    routeName: routes.UPDATEFEEDS,
+    routeName: routes.UPDATEFEEDSSTACK,
+    title: 'Update Feed',
   },
   {
     routeName: routes.UPDATECAROUSELIMAGES,
+    title: 'Update Carousel images',
   },
   {
     routeName: routes.UPDATECATEGORYIMAGES,
+    title: 'Update Category images',
   },
 ];
 
@@ -32,7 +35,7 @@ const AdminDashboardScreen = ({navigation}) => {
       {adminRoutes.map(item => (
         <AppGradientBtn
           key={item.routeName}
-          label={item.routeName}
+          label={item.title}
           onPress={() => navigation.navigate(item.routeName)}
           containerStyle={{marginVertical: 20}}
         />
