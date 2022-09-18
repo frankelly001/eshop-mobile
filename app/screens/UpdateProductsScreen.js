@@ -1,11 +1,16 @@
-import React, {useContext} from 'react';
+import React, {useContext, useState} from 'react';
 import {FlatList, StyleSheet, TouchableOpacity, View} from 'react-native';
-import {deleteFileFromStorage} from '../api/setup/deleteApi/deleteFileFromStorage';
+import {
+  deleteFileFromStorage,
+  deleteProductImageFileFromStorage,
+  folderRefs,
+} from '../api/setup/deleteApi/deleteFileFromStorage';
 import {deleteProduct} from '../api/setup/deleteApi/deleteProduct';
 import AuthContext from '../auth/AuthContext';
 import ActivityIndicator from '../components/ActivityIndicator';
 import {showToast} from '../components/AppToast/showToast';
 import toast from '../components/AppToast/toast';
+import DeleteNotice from '../components/DeteteNotice';
 import Icon, {Icons} from '../components/Icons';
 import ProductCard from '../components/ProductCard';
 import ProductsLoader from '../components/SkeletonLoader/ProductsLoader';
@@ -20,6 +25,8 @@ const UpdateProductsScreen = ({navigation}) => {
   const {products, categories, loading, errors, addToCart} =
     useContext(AuthContext);
   const {loading: deleteLoading, request} = useApi(deleteProduct);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [productToDelete, setProductToDelete] = useState(null);
 
   if (loading.products) return <ProductsLoader />;
 
@@ -27,7 +34,10 @@ const UpdateProductsScreen = ({navigation}) => {
     request(product.id)
       .then(async () => {
         for (let i = 0; i < product?.images.length; i++) {
-          await deleteFileFromStorage(product?.images[i], product);
+          await deleteFileFromStorage(
+            product?.images[i],
+            folderRefs.PRODUCT(product),
+          );
         }
         showToast(toast.types.SUCCESS, 'Product successfully deleted');
       })
@@ -55,13 +65,27 @@ const UpdateProductsScreen = ({navigation}) => {
               product={item}
               removeSaveBtn
               btnLabel="Delete"
-              btnOnPress={() => handleDelete(item)}
+              btnOnPress={() => {
+                setProductToDelete(item);
+                setShowDeleteModal(true);
+              }}
               onPress={() => navigation.navigate(routes.PRODUCTUPDATE, item.id)}
               // onPress={() =>
               //   navigation.navigate(routes.PRODUCTDETAILS, item.id)
               // }
             />
           );
+        }}
+      />
+      <DeleteNotice
+        visible={showDeleteModal}
+        onDelete={() => {
+          productToDelete && handleDelete(productToDelete);
+          setShowDeleteModal(false);
+        }}
+        onCancel={() => {
+          setShowDeleteModal(false);
+          setProductToDelete(null);
         }}
       />
       <TouchableOpacity
@@ -76,6 +100,15 @@ const UpdateProductsScreen = ({navigation}) => {
           right: 20,
           alignItems: 'center',
           justifyContent: 'center',
+          shadowColor: '#000',
+          shadowOffset: {
+            width: 0,
+            height: 6,
+          },
+          shadowOpacity: 0.37,
+          shadowRadius: 7.49,
+
+          elevation: 12,
         }}>
         <Icon type={Icons.AntDesign} name="plus" color={colors.white} />
       </TouchableOpacity>

@@ -10,7 +10,14 @@ import ImagePicker from 'react-native-image-crop-picker';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import colors from '../../config/colors';
 
-const ImageInput = ({imageUri, onChangeImage}) => {
+const ImageInput = ({
+  imageUri,
+  onChangeImage,
+  cropWidth = 400,
+  cropHeight = 400,
+  containerStyles,
+  iconSize = 40,
+}) => {
   const handlePress = () => {
     if (!imageUri) selectedImage();
     else
@@ -22,8 +29,8 @@ const ImageInput = ({imageUri, onChangeImage}) => {
 
   const selectedImage = async () => {
     ImagePicker.openPicker({
-      width: 400,
-      height: 400,
+      width: cropWidth,
+      height: cropHeight,
       cropping: true,
       //   multiple: true,
     })
@@ -47,12 +54,12 @@ const ImageInput = ({imageUri, onChangeImage}) => {
 
   return (
     <TouchableWithoutFeedback onPress={handlePress}>
-      <View style={styles.container}>
+      <View style={[styles.container, containerStyles]}>
         {!imageUri && (
           <MaterialCommunityIcons
             name="camera"
             color={colors.grey_dark}
-            size={40}
+            size={iconSize}
           />
         )}
         {imageUri && (

@@ -31,8 +31,12 @@ const handleValidation = step => {
   else
     schema = {
       email: validationSchema.email,
-      password: validationSchema.password,
-      confirm_password: validationSchema.confirm_password,
+      password: validationSchema.password('password'),
+      confirm_password: validationSchema.confirm_password(
+        'Confirm password',
+        'password',
+        'password',
+      ),
     };
 
   return Yup.object().shape(schema);
@@ -104,28 +108,28 @@ const SignupScreen = ({navigation}) => {
         welcomeMessage="Welcome to eShop"
         authTypeLabel="Sign Up"
         initialValues={{
-          firstname: '',
-          lastname: '',
-          gender: '',
-          state: '',
-          city: '',
-          address: '',
-          phone: '',
-          additional_phone: '',
-          email: '',
-          password: '',
-          confirm_password: '',
-          // firstname: 'Franklyn',
-          // lastname: 'Okeke',
-          // gender: 'Male',
-          // state: 'Imo',
-          // city: 'Orsu',
-          // address: '56 sowemimo Street',
-          // phone: '08176507344',
+          // firstname: '',
+          // lastname: '',
+          // gender: '',
+          // state: '',
+          // city: '',
+          // address: '',
+          // phone: '',
           // additional_phone: '',
-          // email: 'Frankelly3344@gmail.com',
-          // password: '123456',
-          // confirm_password: '123456',
+          // email: '',
+          // password: '',
+          // confirm_password: '',
+          firstname: 'Franklyn',
+          lastname: 'Okeke',
+          gender: 'Male',
+          state: 'Imo',
+          city: 'Orsu',
+          address: '56 sowemimo Street',
+          phone: '08176507344',
+          additional_phone: '',
+          email: 'Frankelly3344@gmail.com',
+          password: '123456Fr',
+          confirm_password: '123456',
         }}
         error={error}
         validationSchema={handleValidation(step)}

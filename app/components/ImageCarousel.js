@@ -59,7 +59,7 @@ const ImageCarousel = () => {
           // <Image key={img} source={{uri: img}} style={styles.carouselImage} />
           <Image
             resizeMode="stretch"
-            key={caro.image}
+            key={caro.id}
             source={{uri: caro.image}}
             style={styles.carouselImage}
           />
@@ -68,7 +68,7 @@ const ImageCarousel = () => {
       <View style={styles.circleContainer}>
         {images.map((caro, i) => (
           <View
-            key={caro.image}
+            key={caro.id}
             style={[
               styles.whiteCircle,
               {opacity: i !== selectedIndex ? 0.5 : 1},

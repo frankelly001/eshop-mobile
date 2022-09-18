@@ -43,9 +43,7 @@ import routes from '../navigation/routes';
 //   });
 const login_VS = Yup.object().shape({
   email: validationSchema.email,
-  password: validationSchema.deafaultPassword.required(
-    'Please Enter your password',
-  ),
+  password: validationSchema.defaultPassword('password'),
 });
 
 const LoginScreen = ({navigation}) => {

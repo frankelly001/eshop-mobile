@@ -71,12 +71,18 @@ const caro = [
 ];
 
 export const addAllFeed = async () => {
-  for (let i = 0; i < caro.length; i++) {
-    const image = await uploadFile(dirNames.FEED_IMAGES, caro[i].image);
-    addCarousel(`${Date.now() + i}`, {...caro[i], image}).then(() => {
-      console.log(caro[i].title, 'Added succesfully');
-    });
-  }
+  // for (let i = 0; i < caro.length; i++) {
+  //   const image = await uploadFile(dirNames.CAROUSEL_IMAGES, caro[i].image);
+  //   addCarousel(`${Date.now() + i}`, {...caro[i], image}).then(() => {
+  //     console.log(caro[i].title, 'Added succesfully');
+  //   });
+  // }
+  // for (let i = 0; i < feed.length; i++) {
+  //   const image = await uploadFile(dirNames.FEED_IMAGES, feed[i].image);
+  //   addFeed(`${Date.now() + i}`, {...feed[i], image}).then(() => {
+  //     console.log(feed[i].title, 'Added succesfully');
+  //   });
+  // }
 };
 
 export function getFeed() {

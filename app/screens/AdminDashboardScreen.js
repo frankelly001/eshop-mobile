@@ -6,20 +6,20 @@ import routes from '../navigation/routes';
 const adminRoutes = [
   {
     routeName: routes.UPDATEPRODUCTSSTACK,
-    title: 'Add | Update | Delete Product',
+    title: 'Update Products',
   },
   {
     routeName: routes.UPDATEFEEDSSTACK,
     title: 'Update Feed',
   },
   {
-    routeName: routes.UPDATECAROUSELIMAGES,
-    title: 'Update Carousel images',
+    routeName: routes.UPDATECAROUSELSSTACK,
+    title: 'Update Carousel',
   },
-  {
-    routeName: routes.UPDATECATEGORYIMAGES,
-    title: 'Update Category images',
-  },
+  // {
+  //   routeName: routes.UPDATECATEGORYIMAGES,
+  //   title: 'Update Category',
+  // },
 ];
 
 const AdminDashboardScreen = ({navigation}) => {

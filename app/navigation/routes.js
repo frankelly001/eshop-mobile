@@ -41,7 +41,11 @@ export default Object.freeze({
   UPDATEFEEDSSTACK: 'Update Feeds Stack',
   UPDATEFEEDS: 'Update Feeds',
   ADDFEED: 'Add Feed',
-  // UPDATEFEEDS: 'Add | Update | Delete Feed',
-  UPDATECAROUSELIMAGES: 'Update Carousel images',
+  FEEDUPDATE: 'Feed Update',
+  // UPDATECAROUSELIMAGES: 'Update Carousel images',
   UPDATECATEGORYIMAGES: 'Update Category images',
+  UPDATECAROUSELSSTACK: 'Update Carousels Stack',
+  UPDATECAROUSELS: 'Update Carousels',
+  ADDCAROUSEL: 'Add Carousel',
+  CAROUSELUPDATE: 'Carousel Update',
 });

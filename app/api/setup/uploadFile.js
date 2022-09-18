@@ -6,7 +6,8 @@ import {formatErrorMessage} from '../../utilities/formatErrorMessage';
 
 export const dirNames = {
   PRODUCTS_IMAGES: 'product_images',
-  FEED_IMAGES: 'feed_imgaes',
+  FEED_IMAGES: 'feed_images',
+  CAROUSEL_IMAGES: 'carousel_images',
 };
 
 export const uploadFile = async (dirName, imageUri) => {

@@ -20,11 +20,13 @@ import {fontSz} from '../config/responsiveSize';
 import colors from '../config/colors';
 
 const validation = Yup.object().shape({
-  currentPassword: validationSchema.deafaultPassword.required(
-    'Please your current password',
+  currentPassword: validationSchema.defaultPassword('current password'),
+  newPassword: validationSchema.password('new password'),
+  confirm_newPassword: validationSchema.confirm_password(
+    'Confirm new password',
+    'new password',
+    'newPassword',
   ),
-  newPassword: validationSchema.newPassword,
-  confirm_newPassword: validationSchema.confirm_newPassword,
 });
 
 const ChangePasswordScreen = ({navigation}) => {

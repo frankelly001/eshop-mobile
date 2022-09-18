@@ -2,11 +2,20 @@ import React, {useRef} from 'react';
 import {StyleSheet, View, ScrollView} from 'react-native';
 import ImageInput from './ImageInput';
 
-const ImageInputList = ({imageUris = [], onRemoveImage, onAddImage}) => {
+const ImageInputList = ({
+  imageUris = [],
+  onRemoveImage,
+  onAddImage,
+  maxNumofImage = 5,
+}) => {
   const scrollView = useRef();
 
   return (
-    <View style={{width: '100%'}}>
+    <View
+      style={{
+        width: '100%',
+        alignItems: maxNumofImage <= 3 ? 'center' : 'flex-start',
+      }}>
       <ScrollView
         ref={scrollView}
         horizontal
@@ -21,7 +30,7 @@ const ImageInputList = ({imageUris = [], onRemoveImage, onAddImage}) => {
               />
             </View>
           ))}
-          {imageUris.length < 5 && (
+          {imageUris.length < maxNumofImage && (
             <ImageInput onChangeImage={uri => onAddImage(uri)} />
           )}
         </View>

@@ -24,7 +24,10 @@ import {showToast} from '../components/AppToast/showToast';
 import toast from '../components/AppToast/toast';
 import {formatErrorMessage} from '../utilities/formatErrorMessage';
 import {compareTwoArray} from '../utilities/compareTwoArray';
-import {deleteFileFromStorage} from '../api/setup/deleteApi/deleteFileFromStorage';
+import {
+  deleteFileFromStorage,
+  folderRefs,
+} from '../api/setup/deleteApi/deleteFileFromStorage';
 
 const upload_VS = Yup.object().shape({
   images: validationSchema.images,
@@ -33,7 +36,7 @@ const upload_VS = Yup.object().shape({
   category: validationSchema.category,
   categoryGroupTitle: validationSchema.categoryGroupTitle,
   categoryGroupType: validationSchema.categoryGroupType,
-  description: validationSchema.description,
+  description: validationSchema.description(20, 5000),
 });
 
 const ProductUpdateScreen = ({navigation, route}) => {
@@ -135,7 +138,10 @@ const ProductUpdateScreen = ({navigation, route}) => {
           imageUrls.push(imagePaths[i]);
         } else {
           if (product?.images[i]) {
-            await deleteFileFromStorage(product?.images[i], product);
+            await deleteFileFromStorage(
+              product?.images[i],
+              folderRefs.PRODUCT(product),
+            );
           }
 
           if (imagePaths[i]) {
@@ -174,7 +180,7 @@ const ProductUpdateScreen = ({navigation, route}) => {
 
       <Screen>
         <View style={styles.container}>
-          <AppText style={styles.header}>Upload product to Server</AppText>
+          {/* <AppText style={styles.header}>Upload product to Server</AppText> */}
           <AppForm
             initialValues={initialValues}
             validationSchema={upload_VS}
@@ -226,7 +232,7 @@ const ProductUpdateScreen = ({navigation, route}) => {
               />
             </View>
             <SubmitButton
-              label="Proceed payment"
+              label="Update"
               containerStyle={styles.btnContainerStyle}
             />
           </AppForm>

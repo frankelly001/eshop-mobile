@@ -4,7 +4,7 @@ import {StyleSheet} from 'react-native';
 import ErrorMessage from './ErrorMessage';
 import ImageInputList from '../imageListUpload/ImageInputList';
 
-const AppFormImagePicker = ({name}) => {
+const AppFormImagePicker = ({name, maxNumofImage}) => {
   const {errors, setFieldValue, values, touched} = useFormikContext();
   const imageUris = values[name];
 
@@ -26,6 +26,7 @@ const AppFormImagePicker = ({name}) => {
         imageUris={imageUris}
         onAddImage={handleAdd}
         onRemoveImage={handleRemove}
+        maxNumofImage={maxNumofImage}
       />
       <ErrorMessage error={errors[name]} visible={touched[name]} />
     </>

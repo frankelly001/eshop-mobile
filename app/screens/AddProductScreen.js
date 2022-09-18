@@ -30,7 +30,7 @@ const upload_VS = Yup.object().shape({
   category: validationSchema.category,
   categoryGroupTitle: validationSchema.categoryGroupTitle,
   categoryGroupType: validationSchema.categoryGroupType,
-  description: validationSchema.description,
+  description: validationSchema.description(20, 5000),
 });
 
 const initialValues = {
@@ -139,7 +139,7 @@ const AddProductScreen = ({navigation}) => {
         {/* <AppSelectInputOld /> */}
         <View style={styles.container}>
           {/* <ImageUploadTest /> */}
-          <AppText style={styles.header}>Upload product to Server</AppText>
+
           <AppForm
             initialValues={initialValues}
             validationSchema={upload_VS}
@@ -190,7 +190,7 @@ const AddProductScreen = ({navigation}) => {
               />
             </View>
             <SubmitButton
-              label="Proceed payment"
+              label="Add"
               containerStyle={styles.btnContainerStyle}
             />
           </AppForm>
