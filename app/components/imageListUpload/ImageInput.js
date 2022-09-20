@@ -65,7 +65,7 @@ const ImageInput = ({
         {imageUri && (
           <Image
             source={{uri: imageUri}}
-            resizeMode="cover"
+            resizeMode="stretch"
             style={styles.image}
           />
         )}

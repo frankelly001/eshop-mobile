@@ -7,11 +7,16 @@ import AppText from './AppText';
 import ModalOverlay from './ModalOverlay';
 
 const {width} = Dimensions.get('screen');
-const DeleteNotice = ({visible, onDelete, onCancel}) => {
+const DeleteNotice = ({
+  visible,
+  onDelete,
+  onCancel,
+  noticeLabel = 'Are you sure, you want to Delete item?',
+}) => {
   if (!visible) return null;
 
   return (
-    <ModalOverlay portal>
+    <ModalOverlay>
       <View
         style={{
           width: width * 0.85,
@@ -22,8 +27,8 @@ const DeleteNotice = ({visible, onDelete, onCancel}) => {
           // marginTop: -50,
           // margin: 20,
         }}>
-        <AppText style={{textAlign: 'center'}}>
-          Are you sure, you want to Delete item?
+        <AppText style={{textAlign: 'center', marginBottom: 5}}>
+          {noticeLabel}
         </AppText>
 
         <View style={{flexDirection: 'row'}}>

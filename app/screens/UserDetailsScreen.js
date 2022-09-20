@@ -49,34 +49,50 @@ const UserDetailsScreen = ({navigation}) => {
 
   const handleSubmit = (userNewInFo, {resetForm}) => {
     const {firstname, lastname, gender, phone, additional_phone} = userNewInFo;
-    request(user.id, {
-      [userDataTypes.FIRSTNAME]: firstname,
-      [userDataTypes.LASTNAME]: lastname,
-      [userDataTypes.GENDER]: gender,
-      [userDataTypes.PHONE]: phone,
-      [userDataTypes.ADDITIONAL_PHONE]: additional_phone,
-    })
-      .then(() => {
-        resetForm();
-        showToast(toast.types.SUCCESS, 'User information successfully updated');
-        navigation.navigate(routes.ACCOUNT);
-        const userNewInfo = {
-          ...user,
-          gender,
-          name: {
-            firstname,
-            lastname,
-          },
-          phone: {
-            phone,
-            additional_phone,
-          },
-        };
-        setUser(userNewInfo);
-      })
-      .catch(error => {
-        showToast(toast.types.ERROR, formatErrorMessage(error));
-      });
+
+    const dataToUpdate = {
+      ...(firstname.toLowerCase() != initialValues.firstname.toLowerCase() && {
+        [userDataTypes.FIRSTNAME]: firstname,
+      }),
+      ...(lastname.toLowerCase() != initialValues.lastname.toLowerCase() && {
+        [userDataTypes.LASTNAME]: lastname,
+      }),
+      ...(gender.toLowerCase() != initialValues.gender.toLowerCase() && {
+        [userDataTypes.GENDER]: gender,
+      }),
+      ...(phone != initialValues.phone && {[userDataTypes.PHONE]: phone}),
+      ...(additional_phone !== initialValues.additional_phone && {
+        [userDataTypes.ADDITIONAL_PHONE]: additional_phone,
+      }),
+    };
+
+    if (Object.entries(dataToUpdate).length) {
+      request(user.id, dataToUpdate)
+        .then(() => {
+          resetForm();
+          showToast(
+            toast.types.SUCCESS,
+            'User information successfully updated',
+          );
+          navigation.navigate(routes.ACCOUNT);
+          const userNewInfo = {
+            ...user,
+            gender,
+            name: {
+              firstname,
+              lastname,
+            },
+            phone: {
+              phone,
+              additional_phone,
+            },
+          };
+          setUser(userNewInfo);
+        })
+        .catch(error => {
+          showToast(toast.types.ERROR, formatErrorMessage(error));
+        });
+    }
   };
 
   return (

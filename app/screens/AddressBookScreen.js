@@ -59,28 +59,42 @@ const AddressBookScreen = ({navigation}) => {
 
   const handleSubmit = (userNewLocation, {resetForm}) => {
     const {state, city, address} = userNewLocation;
-    request(user.id, {
-      [userDataTypes.STATE]: state,
-      [userDataTypes.CITY]: city,
-      [userDataTypes.ADDRESS]: address,
-    })
-      .then(() => {
-        resetForm();
-        showToast(toast.types.SUCCESS, 'User information successfully updated');
-        navigation.navigate(routes.ACCOUNT);
-        const userNewInfo = {
-          ...user,
-          location: {
-            state,
-            city,
-            address,
-          },
-        };
-        setUser(userNewInfo);
-      })
-      .catch(error => {
-        showToast(toast.types.ERROR, formatErrorMessage(error));
-      });
+
+    const dataToUpdate = {
+      ...(state.toLowerCase() != initialValues.state.toLowerCase() && {
+        [userDataTypes.STATE]: state,
+      }),
+      ...(city.toLowerCase() != initialValues.city.toLowerCase() && {
+        [userDataTypes.CITY]: city,
+      }),
+      ...(address.toLowerCase() != initialValues.address.toLowerCase() && {
+        [userDataTypes.ADDRESS]: address,
+      }),
+    };
+
+    if (Object.entries(dataToUpdate).length) {
+      request(user.id, dataToUpdate)
+        .then(() => {
+          resetForm();
+          showToast(
+            toast.types.SUCCESS,
+            'User information successfully updated',
+          );
+          navigation.navigate(routes.ACCOUNT);
+          const userNewInfo = {
+            ...user,
+            location: {
+              state,
+              city,
+              address,
+            },
+          };
+          setUser(userNewInfo);
+        })
+        .catch(error => {
+          showToast(toast.types.ERROR, formatErrorMessage(error));
+        });
+    }
   };
 
   return (
