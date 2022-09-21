@@ -1,4 +1,10 @@
-import React, {useContext, useState, useEffect, useRef} from 'react';
+import React, {
+  useContext,
+  useState,
+  useEffect,
+  useRef,
+  useCallback,
+} from 'react';
 import {
   StyleSheet,
   View,
@@ -6,6 +12,7 @@ import {
   TouchableHighlight,
   TouchableOpacity,
   ScrollView,
+  BackHandler,
 } from 'react-native';
 import SearchIcon from '../assets/icons/search.svg';
 import NoficationActiveIcon from '../assets/icons/notification_active.svg';
@@ -24,6 +31,7 @@ import fonts from '../config/fonts';
 import {authStorageKeys, storeUserData} from '../api/storage/authStorage';
 import queryApi from '../api/setup/queryApi/queryApi';
 import Icon, {Icons} from '../components/Icons';
+import {useFocusEffect} from '@react-navigation/native';
 
 const Header = ({navigation, options, route}) => {
   const {numOfCartItems, recentQueries, addToRecentQuery} =
@@ -60,20 +68,26 @@ const Header = ({navigation, options, route}) => {
     routes.HELP,
   ];
 
+  useFocusEffect(
+    useCallback(() => {
+      const onBackHandler = () => {
+        searchToggle ? setSearchToggle(false) : navigation.goBack();
+        return true;
+      };
+      BackHandler.addEventListener('hardwareBackPress', onBackHandler);
+
+      return () =>
+        BackHandler.removeEventListener('hardwareBackPress', onBackHandler);
+    }, [searchToggle]),
+  );
+
   // console.log(recentQueries, 'recent');
 
   const handleSearch = recentQuery => {
     setSearchToggle(!searchToggle);
     const newQuery = recentQuery ? recentQuery : query;
-    let results;
+
     if (searchToggle && newQuery) {
-      // if (!recentQuery)
-      // results = [
-      //   newQuery,
-      //   ...recentQueries.filter(el => el !== newQuery),
-      // ].slice(0, 10);
-      // storeUserData(authStorageKeys.RECENT_QUERIES, results);
-      // setRecentQueries(results);
       addToRecentQuery(newQuery);
       // console.log(results, 'kkkkkklop');
       navigation.navigate(routes.SEARCHED, {
@@ -139,6 +153,7 @@ const Header = ({navigation, options, route}) => {
             value={query}
             onChangeText={text => setQuery(text)}
             inputRef={inputRef}
+            onSubmitEditing={() => handleSearch()}
             // autoFocus={searchToggle}
             placeholder="Search eShop"
           />
@@ -198,7 +213,7 @@ const Header = ({navigation, options, route}) => {
                 flexDirection: 'row',
                 alignItems: 'center',
                 // backgroundColor: 'red',
-                padding: 5,
+                padding: 8,
                 marginVertical: 2,
                 paddingHorizontal: 15,
               }}>

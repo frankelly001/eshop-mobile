@@ -69,7 +69,7 @@ const SearchResultScreen = ({navigation, route}) => {
           numColumns={2}
           data={formatData(searchedProduct, 2)}
           // style={{flex: 1}}
-          // contentContainerStyle={styles.container}
+          contentContainerStyle={{padding: 2}}
           key={product => product.id.toString()}
           renderItem={({item}) => {
             if (item.empty)

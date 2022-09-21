@@ -437,7 +437,7 @@ const Store = ({children}) => {
 
     setProductsInCart(cartProducts);
     setNumOfCartItems(
-      cartItems.map(el => el.quantity).reduce((prev, cur) => prev + cur, 0),
+      cartProducts.map(el => el.quantity).reduce((prev, cur) => prev + cur, 0),
     );
 
     const deliveryFee =

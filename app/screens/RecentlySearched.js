@@ -31,7 +31,7 @@ const RecentlySearched = ({navigation}) => {
                   flexDirection: 'row',
                   alignItems: 'center',
                   // backgroundColor: 'red',
-                  padding: 5,
+                  padding: 8,
                   marginVertical: 2,
                   paddingHorizontal: 15,
                 }}>

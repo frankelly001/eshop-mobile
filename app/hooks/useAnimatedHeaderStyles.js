@@ -73,30 +73,30 @@ const useAnimatedHeaderStyles = (animationSwitch, inputRef) => {
     };
   });
 
-  // useEffect(() => {
-  if (animationSwitch) {
-    headerLeftTranlateX.value = -wp(500);
-    headerRightTranlateX.value = wp(78);
-    searchBtnStyleVal.value = 10;
+  useEffect(() => {
+    if (animationSwitch) {
+      headerLeftTranlateX.value = -wp(500);
+      headerRightTranlateX.value = wp(78);
+      searchBtnStyleVal.value = 10;
 
-    searchBtnColor.value = colors.purple;
-    inputWidth.value = '85%';
-    inputDisplay.value = 'flex';
-    inputFieldpaddingX.value = 15;
-    recentSearchContainerHeight.value = height;
-    inputRef.current?.focus();
-  } else {
-    inputRef.current?.blur();
-    headerLeftTranlateX.value = 0;
-    headerRightTranlateX.value = 0;
-    searchBtnStyleVal.value = 0;
+      searchBtnColor.value = colors.purple;
+      inputWidth.value = '85%';
+      inputDisplay.value = 'flex';
+      inputFieldpaddingX.value = 15;
+      recentSearchContainerHeight.value = height;
+      inputRef.current?.focus();
+    } else {
+      inputRef.current?.blur();
+      headerLeftTranlateX.value = 0;
+      headerRightTranlateX.value = 0;
+      searchBtnStyleVal.value = 0;
 
-    searchBtnColor.value = 'transparent';
-    inputWidth.value = 0;
-    inputDisplay.value = 'none';
-    recentSearchContainerHeight.value = 0;
-  }
-  // }, [animationSwitch]);
+      searchBtnColor.value = 'transparent';
+      inputWidth.value = 0;
+      inputDisplay.value = 'none';
+      recentSearchContainerHeight.value = 0;
+    }
+  }, [animationSwitch]);
 
   return {
     headerLeftAnimatedStyle,
