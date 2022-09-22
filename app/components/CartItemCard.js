@@ -84,30 +84,15 @@ const CartItemCard = ({product, renderRightActions}) => {
                 onChangeText={text => handleChange(text)}
                 add={add}
                 sub={sub}
-                // dispatchAdd={{type: 'addToCart', id: product.id}}
-                // dispatchSub={{type: 'subFromCart', id: product.id}}
-                // dispatchInput={{type: 'mutateCart', id: product.id}}
               />
             </View>
           </View>
         </View>
-        {/* <TouchableOpacity
-            style={styles.options}
-            onPress={() => setId(product.id)}>
-            <SimpleLineIcons size={fontSz(15)} name="options-vertical" />
-          </TouchableOpacity>
-          {product.id === id && (
-            <ActionRemoveBtn
-              contentContainerStyle={styles.actionBtnContainer}
-            />
-          )} */}
       </View>
     </Swipeable>
     // </GestureHandlerRootView>
   );
 };
-
-// console.log(dimensions, scdimensions);
 
 const styles = StyleSheet.create({
   container: {

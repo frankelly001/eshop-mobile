@@ -39,51 +39,6 @@ const AuthForm = ({
   const oppositeAuthTypeLabel = authTypeLabel === 'Login' ? 'Sign up' : 'Login';
   const routeName = authTypeLabel === 'Login' ? routes.SIGNUP : routes.LOGIN;
 
-  // const {setUser} = useContext(AuthContext);
-  // const [loading, setLoading] = useState(false);
-
-  // const handleGoogleAuth = () => {
-  //   setLoading(true);
-  //   LoginInwithGoogle()
-  //     .then(response => {
-  //       setLoading(false);
-  //       if (response.newUser) {
-  //         console.log('Am a new User', response);
-  //       } else {
-  //         setUser(response.snapshot);
-  //         storeUserData(authStorageKeys.USER_DATA, response.snapshot);
-  //         showToast(
-  //           toast.types.SUCCESS,
-  //           `Welcome ${response.snapshot?.name.firstname}${
-  //             !response.snapshot.verified ? ', Please Verify your Account' : ''
-  //           }`,
-  //         );
-  //         console.log('Am not a new User', response);
-  //       }
-  //     })
-  //     .then(error => {
-  //       setLoading(false);
-  //       console.log('Error:', error);
-  //     });
-  // };
-
-  // const handleFacebookAuth = () => {
-  //   facebookSignin()
-  //     .then(snapshot => {
-  //       console.log('Success', snapshot);
-  //     })
-  //     .then(error => {
-  //       console.log('Error:', error);
-  //     });
-  // };
-
-  // const handleTwitterAuth = () => {
-  //   showToast(
-  //     toast.types.INFO,
-  //     'Sorry! Twitter authentication is not yet available',
-  //   );
-  // };
-
   return (
     <View style={styles.container}>
       <AppText style={styles.welcome}>{welcomeMessage}</AppText>

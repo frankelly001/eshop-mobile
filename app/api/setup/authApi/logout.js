@@ -8,17 +8,14 @@ export const logoutUser = () => {
         auth()
           .signOut()
           .then(() => {
-            // console.log('data deleted');
             resolve('User Succesfully Logged out');
           })
           .catch(error => {
             reject(formatErrorMessage(error));
-            // console.log('SIGN OUT ERROR:', error.message);
           });
       })
       .catch(error => {
         reject(error.message);
-        // console.log('ASYNC_STORAGE REMOVE_USER_DATA ERROR', error.message);
       });
   });
 };

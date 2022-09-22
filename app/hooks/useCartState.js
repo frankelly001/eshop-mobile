@@ -124,7 +124,6 @@ export const useCartState = user => {
         .catch(error => {
           setSavedItems(previousLikeProducts);
           errorAlert('wishlist failed to be updated');
-          console.log(error, 'heyyyyyyyyy');
         });
     } else {
       infoAlert();

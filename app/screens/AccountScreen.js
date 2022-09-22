@@ -80,11 +80,8 @@ const AccountScreen = ({navigation}) => {
           const userVerified = auth()?.currentUser?.emailVerified;
           if (userVerified) {
             updateUserData_verified(userVerified);
-            // stopCurrentUserReload();
             setMailNotice(false);
-            console.log('i am now  Verified!!!!!!!!!');
           } else {
-            console.log('i am not  Verified');
           }
         });
     }, 2000);
@@ -133,10 +130,6 @@ const AccountScreen = ({navigation}) => {
       updateUserData_verified(userVerified);
     }
   };
-
-  // if (1) return <UploadScreen />;
-
-  // console.log(user, 'make i check user');
 
   return (
     <>

@@ -8,8 +8,6 @@ import AppFormTextArea from './form/AppFormTextArea';
 import AppFormSelectInput from './form/AppFormSelectInput';
 import stateRegion from '../utilities/stateRegion';
 
-// console.log(stateRegion['Lagos']);
-
 const SignupScreen1 = () => {
   return (
     <View style={[styles.container, {justifyContent: 'center'}]}>

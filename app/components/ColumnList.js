@@ -15,14 +15,13 @@ const ColumnList = ({
 
     for (let i = index; i < index + numOfColumns; i++) {
       if (i >= data.length) {
-        console.log('break');
         break;
       }
 
       items.push(renderItem(data[i]));
       keys.push(data[i]);
     }
-    // console.log(keys, 'keyyyy');
+
     return (
       <View
         key={keyExtractor(_)}

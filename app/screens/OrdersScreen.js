@@ -27,8 +27,6 @@ import {convertToReadableDate} from '../utilities/convertToReadableDate';
 import OrdersLoader from '../components/SkeletonLoader/OrdersLoader';
 
 const OrderCard = ({product}) => {
-  // console.log(product.images, 'images');
-
   const colorOrderStatus = {
     pending: colors.orange,
     delivered: colors.green,

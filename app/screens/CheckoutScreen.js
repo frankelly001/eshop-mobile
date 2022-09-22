@@ -17,10 +17,9 @@ const CheckoutScreen = ({navigation}) => {
   const paymentView = selectedTab === 'payment';
 
   const handleSubmit = (values, {resetForm}) => {
-    console.log(values, 'how far.........');
     setSavedValues(values);
     setSelectedTab('payment');
-    // console.log(values, 'checkout');
+
     resetForm();
   };
 

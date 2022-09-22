@@ -43,7 +43,6 @@ const ChangePasswordScreen = ({navigation}) => {
       .catch(error => {
         showToast(toast.types.ERROR, error);
       });
-    // console.log(passwordData, 'kkkkkkkkk');/
   };
   return (
     <Screen>

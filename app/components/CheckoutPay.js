@@ -55,7 +55,6 @@ const CheckoutPay = ({deliveryInfo, onGoBack}) => {
     }, [showSuccessModal]),
   );
 
-  // console.log(animatedIconSource);
   return (
     <>
       <PaySuccessModal

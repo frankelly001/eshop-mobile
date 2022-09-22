@@ -37,7 +37,7 @@ const LogoutNotice = ({visible, onHandleLogout, onCancel}) => {
         <View style={{flexDirection: 'row'}}>
           <AppButton
             label="Yes"
-            bgStyle={{flex: 1, margin: 10}}
+            bgStyle={{flex: 1, margin: 10, backgroundColor: colors.red_dark}}
             onPress={onHandleLogout}
           />
           <AppButton

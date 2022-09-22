@@ -114,10 +114,9 @@ const Store = ({children}) => {
   };
 
   const onAuthStateChanged = account => {
-    // console.log(account, 'checking verification outside condition');
     // if (account && account.emailVerified) {
     //   // if (user && !user.verified) {
-    //   console.log(account, 'checking verification inside condition');
+
     //   updateUserData(
     //     account.uid,
     //     userDataTypes.VERIFIED,
@@ -127,7 +126,7 @@ const Store = ({children}) => {
     //   });
     //   // }
     // } else {
-    //   console.log('Your account is not verified');
+
     // }
 
     setInitializing(false);
@@ -189,7 +188,6 @@ const Store = ({children}) => {
       documentSnapshot => {
         const data = [];
         documentSnapshot.forEach(el => {
-          // console.log(el.data());
           data.push({id: el.id, ...el.data()});
         });
 
@@ -205,7 +203,6 @@ const Store = ({children}) => {
       documentSnapshot => {
         const data = [];
         documentSnapshot.forEach(el => {
-          // console.log(el.data());
           data.push({id: el.id, ...el.data()});
         });
 
@@ -221,7 +218,6 @@ const Store = ({children}) => {
       documentSnapshot => {
         const data = [];
         documentSnapshot.forEach(el => {
-          // console.log(el.data());
           data.push({id: el.id, ...el.data()});
         });
 
@@ -241,7 +237,6 @@ const Store = ({children}) => {
   const getAllUserDataFromAsynStorage = () => {
     getUserData(authStorageKeys.USER_DATA)
       .then(user => {
-        // console.log(user, 'user................');
         if (user) setUser(user);
 
         if (user && !user.verified)
@@ -292,11 +287,8 @@ const Store = ({children}) => {
   useEffect(() => {
     if (user) {
       initializeCartState(user);
-
-      console.log('heyyyy, am initializing cart data');
     } else {
       clearCartState(user);
-      console.log('heyyyy, am clearing cart data');
     }
     onUserSubscriber();
   }, [user?.id]);
@@ -315,7 +307,6 @@ const Store = ({children}) => {
         }, 2000);
       })
       .catch(error => {
-        console.log(error, 'fetchProducts Error');
         setProducts({
           ...products,
           error: formatErrorMessage(error),
@@ -330,15 +321,12 @@ const Store = ({children}) => {
     if (!categories.data.length) fetchCategories();
   };
 
-  console.log('App.js rendering');
-
   const fetchCategories = () => {
     setCategories({...categories, loading: true});
     getCategories()
       .then(snapshot => {
         const data = [];
         snapshot.forEach(el => {
-          // console.log(el.data());
           data.push({id: el.id, ...el.data()});
         });
         setTimeout(() => {
@@ -346,7 +334,6 @@ const Store = ({children}) => {
         }, 2000);
       })
       .catch(error => {
-        console.log(error, 'fetchCategories Error');
         setCategories({
           ...categories,
           error: formatErrorMessage(error),
@@ -362,7 +349,7 @@ const Store = ({children}) => {
   //     .then(documentSnapshot => {
   //       const data = [];
   //       documentSnapshot.forEach(el => {
-  //         // console.log(el.data());
+  //
   //         data.push({id: el.id, ...el.data()});
   //       });
 

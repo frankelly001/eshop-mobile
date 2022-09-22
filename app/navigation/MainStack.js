@@ -36,7 +36,6 @@ const MainStack = props => {
 
   useEffect(() => {
     getUserData(authStorageKeys.APP_USE_READY).then(readyForUse => {
-      console.log(readyForUse, 'appUse');
       if (readyForUse) setAppUseReady(true);
       else setAppUseReady(false);
     });

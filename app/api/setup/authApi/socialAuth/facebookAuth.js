@@ -36,7 +36,6 @@ export const facebookSignin = async () => {
     onFacebookButtonPress()
       .then(snapshot => {
         if (snapshot.additionalUserInfo.isNewUser) {
-          // console.log('Am a new User', snapshot);
           resolve({
             newUser: snapshot.additionalUserInfo?.isNewUser,
             snapshot,

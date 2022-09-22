@@ -13,26 +13,20 @@ const storeUserData = async (key, value) => {
   try {
     const jsonValue = JSON.stringify(value);
     await AsyncStorage.setItem(key, jsonValue);
-  } catch (error) {
-    // console.log(error);
-  }
+  } catch (error) {}
 };
 
 const getUserData = async key => {
   try {
     const jsonValue = await AsyncStorage.getItem(key);
     return jsonValue != null ? JSON.parse(jsonValue) : null;
-  } catch (error) {
-    // error reading value
-  }
+  } catch (error) {}
 };
 
 const removeUserData = async key => {
   try {
     await AsyncStorage.removeItem(key);
-  } catch (error) {
-    console.log('REMOVE DATA FROM ASYNC STORAGE', error);
-  }
+  } catch (error) {}
 };
 
 export {storeUserData, getUserData, removeUserData, authStorageKeys};

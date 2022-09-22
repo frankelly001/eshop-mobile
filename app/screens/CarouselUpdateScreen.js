@@ -59,8 +59,6 @@ const CarouselUpdateScreen = ({navigation, route}) => {
   };
 
   const handleSubmit = async (values, {resetForm}) => {
-    // console.log(values['image'][0], 'kkkkkk');
-    // return;
     const imageChanged = !compareTwoArray(
       values['image'],
       initialValues?.image,

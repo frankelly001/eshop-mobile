@@ -1,6 +1,7 @@
 import {useState} from 'react';
 import {showToast} from '../components/AppToast/showToast';
 import toast from '../components/AppToast/toast';
+import {formatErrorMessage} from '../utilities/formatErrorMessage';
 
 export const useApi = apiFunc => {
   // const [data, setData] = useState();
@@ -22,7 +23,7 @@ export const useApi = apiFunc => {
         .catch(error => {
           setError(error);
           setLoading(false);
-          showToast(toast.types.ERROR, error);
+          showToast(toast.types.ERROR, formatErrorMessage(error));
           reject(error);
         });
       // .finally(() => {

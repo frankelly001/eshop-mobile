@@ -33,8 +33,6 @@ import ImageUploadTest from './app/components/imageListUpload/ImageUploadTest';
 const App = () => {
   useCheckNetworkStatus();
 
-  console.log('App.js rendering');
-
   useEffect(() => {
     SplashScreen.hide();
   }, []);
@@ -48,8 +46,6 @@ const App = () => {
 
   return (
     <>
-      {/* <AppButton onPress={() => addAllFeed()} /> */}
-      {/* <ImageUploadTest /> */}
       <StatusBar backgroundColor={colors.white} barStyle={'dark-content'} />
       <Store>
         <NavigationContainer ref={navigationRef} theme={navigationTheme}>
@@ -62,48 +58,6 @@ const App = () => {
       <Toast config={toastConfig} topOffset={5} />
     </>
   );
-
-  // return (
-  //   <>
-  //     <StatusBar backgroundColor={colors.white} barStyle={'dark-content'} />
-  //     <AuthContext.Provider
-  //       value={{
-  //         products: products.data,
-  //         categories: categories.data,
-  //         loading: {products: products.loading, categories: categories.loading},
-  //         errors: {products: products.error, categories: categories.error},
-  //         productsInCart,
-  //         onLike: handleSave,
-  //         numOfCartItems,
-  //         subTotal,
-  //         delivery,
-  //         total,
-  //         // setRecentQueries,
-  //         user,
-  //         setUser,
-  //         addToRecentQuery,
-  //         addToRecentView,
-  //         recentQueries,
-  //         idRecentlyViewed,
-  //         clearRecentQuery,
-  //         clearRecentView,
-  //         addToCart,
-  //         savedItems,
-  //         subFromCart,
-  //         mutateCart,
-  //         removeFromCart,
-  //         onAuthStateChanged,
-  //         retryFetch,
-  //       }}>
-  //       <NavigationContainer ref={navigationRef} theme={navigationTheme}>
-  //         <Host>
-  //           <MainStack />
-  //         </Host>
-  //       </NavigationContainer>
-  //     </AuthContext.Provider>
-  //     <Toast config={toastConfig} topOffset={5} />
-  //   </>
-  // );
 };
 
 export default App;

@@ -115,10 +115,9 @@ const AddProductScreen = ({navigation}) => {
         rate: parseFloat((Math.random() * 5).toFixed(1)),
       },
     };
-    // console.log(newValues);
+
     addProducts(newValues)
       .then(() => {
-        // console.log('product added successfully', data);
         showToast(toast.types.SUCCESS, 'product added successfully');
         resetForm();
         setLoading(false);

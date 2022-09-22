@@ -110,28 +110,3 @@ const styles = StyleSheet.create({
 });
 
 export default HomeLoader;
-
-// {productsSample.map((sample, index) => {
-//   const numColumns = 2;
-//   if (index % numColumns !== 0) return null;
-
-//   const items = [];
-
-//   for (let i = index; i < index + numColumns; i++) {
-//     if (i >= productsSample.length) {
-//       console.log('break');
-//       break;
-//     }
-
-//     items.push(
-//       <ProductCardSampleLoader key={productsSample[i].product} />,
-//     );
-//   }
-//   // console.log(items, 'key.....');
-//   return (
-//     <View key={sample.product} style={styles.container}>
-//       {items}
-//     </View>
-//   );
-//   // console.log('kkkkkkkk');
-// })}

@@ -17,8 +17,6 @@ const HomeScreen = ({navigation}) => {
     useContext(AuthContext);
 
   const numOfCols = 2;
-  // console.log(newProducts, 'new..................');
-  // console.log(errors.products, 'products error');
 
   if (loading.products || loading.categories) return <HomeLoader />;
 

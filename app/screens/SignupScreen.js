@@ -93,12 +93,10 @@ const SignupScreen = ({navigation}) => {
             navigation.replace(routes.LOGIN);
           })
           .catch(error => {
-            console.log(error);
+            showToast(toast.types.ERROR, formatErrorMessage(error));
           });
       })
-      .catch(error => {
-        console.log(error);
-      });
+      .catch(error => {});
   };
 
   return (
@@ -108,28 +106,28 @@ const SignupScreen = ({navigation}) => {
         welcomeMessage="Welcome to eShop"
         authTypeLabel="Sign Up"
         initialValues={{
-          // firstname: '',
-          // lastname: '',
-          // gender: '',
-          // state: '',
-          // city: '',
-          // address: '',
-          // phone: '',
-          // additional_phone: '',
-          // email: '',
-          // password: '',
-          // confirm_password: '',
-          firstname: 'Franklyn',
-          lastname: 'Okeke',
-          gender: 'Male',
-          state: 'Imo',
-          city: 'Orsu',
-          address: '56 sowemimo Street',
-          phone: '08176507344',
+          firstname: '',
+          lastname: '',
+          gender: '',
+          state: '',
+          city: '',
+          address: '',
+          phone: '',
           additional_phone: '',
-          email: 'Frankelly3344@gmail.com',
-          password: '123456Fr',
-          confirm_password: '123456',
+          email: '',
+          password: '',
+          confirm_password: '',
+          // firstname: 'Franklyn',
+          // lastname: 'Okeke',
+          // gender: 'Male',
+          // state: 'Imo',
+          // city: 'Orsu',
+          // address: '56 sowemimo Street',
+          // phone: '08176507344',
+          // additional_phone: '',
+          // email: 'Frankelly3344@gmail.com',
+          // password: '123456Fr',
+          // confirm_password: '123456',
         }}
         error={error}
         validationSchema={handleValidation(step)}

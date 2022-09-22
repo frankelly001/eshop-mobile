@@ -119,8 +119,6 @@ const Square = ({scrollX}) => {
     outputRange: [0, -height, 0],
   });
 
-  //   console.log(rotate);
-
   return (
     <Animated.View
       style={{
@@ -148,8 +146,6 @@ const OnBoardingScreen = ({navigation}) => {
   const scrollX = React.useRef(new Animated.Value(0)).current;
 
   const focus = useIsFocused();
-
-  // console.log(scrollX, 'XXXXX');
 
   return (
     <View style={styles.container}>

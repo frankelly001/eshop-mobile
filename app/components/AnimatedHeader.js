@@ -73,8 +73,6 @@ const AnimatedHeader = ({navigation, options, route}) => {
     }
   }, [route.name]);
 
-  // console.log(recentQueries, 'recent');
-
   const handleSearch = recentQuery => {
     setSearchToggle(!searchToggle);
     const newQuery = recentQuery ? recentQuery : query;

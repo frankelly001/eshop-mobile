@@ -32,10 +32,7 @@ const ForgottenPasswordScreen = ({navigation}) => {
         navigation.navigate(routes.LOGIN);
       })
       .catch(error => showToast(toast.types.ERROR, error));
-    // console.log(data.email);
   };
-
-  console.log(error, 'kkkkk');
 
   return (
     <Screen>

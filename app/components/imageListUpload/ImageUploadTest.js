@@ -663,8 +663,6 @@ const updateUserData = (catId, data) => {
 };
 
 const ImageUploadTest = props => {
-  // https://locus.fkkas.com/api/states
-  // https://locus.fkkas.com/api/regions/imo
   const uploadImage = async () => {
     ImagePicker.openPicker({
       width: 400,

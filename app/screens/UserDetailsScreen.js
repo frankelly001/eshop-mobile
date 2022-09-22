@@ -45,8 +45,6 @@ const UserDetailsScreen = ({navigation}) => {
 
   const {loading, request} = useApi(updateUserData);
 
-  console.log(user, 'user');
-
   const handleSubmit = (userNewInFo, {resetForm}) => {
     const {firstname, lastname, gender, phone, additional_phone} = userNewInFo;
 

@@ -32,45 +32,6 @@ export const SignOutwithGoogle = () => {
   });
 };
 
-// export const LoginInwithGoogle = () => {
-//   return new Promise((resolve, reject) => {
-//     SignOutwithGoogle()
-//       .then(() => {
-//         onGoogleButtonPress()
-//           .then(snapshot => {
-//             getUser(snapshot.user.uid).then(response => {
-//               if (!response._data) {
-//                 resolve({
-//                   newUser: false,
-//                   snapshot,
-//                 });
-//               } else {
-//                 const data = {
-//                   id: snapshot.user.uid,
-//                   ...response._data,
-//                   verified: snapshot.user.emailVerified,
-//                 };
-
-//                 resolve({
-//                   newUser: snapshot.additionalUserInfo?.isNewUser,
-//                   snapshot: data,
-//                 });
-//               }
-//             });
-
-//             // console.log(snapshot, 'google sign in successful');
-//           })
-//           .catch(error => {
-//             if (error) reject(formatErrorMessage(error));
-//             // console.log(error, 'google sign in failed');
-//           });
-//       })
-//       .catch(error => {
-//         if (error) reject(formatErrorMessage(error));
-//       });
-//   });
-// };
-
 export const LoginInwithGoogle = () => {
   return new Promise((resolve, reject) => {
     SignOutwithGoogle()
@@ -78,7 +39,6 @@ export const LoginInwithGoogle = () => {
         onGoogleButtonPress()
           .then(snapshot => {
             if (snapshot.additionalUserInfo.isNewUser) {
-              // console.log('Am a new User', snapshot);
               resolve({
                 newUser: snapshot.additionalUserInfo?.isNewUser,
                 snapshot,
@@ -104,11 +64,9 @@ export const LoginInwithGoogle = () => {
                 }
               });
             }
-            // console.log(snapshot, 'google sign in successful');
           })
           .catch(error => {
             if (error) reject(formatErrorMessage(error));
-            // console.log(error, 'google sign in failed');
           });
       })
       .catch(error => {

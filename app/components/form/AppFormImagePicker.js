@@ -9,7 +9,6 @@ const AppFormImagePicker = ({name, maxNumofImage}) => {
   const imageUris = values[name];
 
   const handleAdd = uri => {
-    console.log(uri, 'hey zucci its uri');
     setFieldValue(name, [...imageUris, uri]);
   };
 

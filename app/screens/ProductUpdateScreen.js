@@ -62,8 +62,6 @@ const ProductUpdateScreen = ({navigation, route}) => {
       : [{label: 'Category not selected'}];
   };
 
-  // console.log(route, 'kkkkk');
-
   const initialValues = {
     images: product?.images,
     title: product?.title,

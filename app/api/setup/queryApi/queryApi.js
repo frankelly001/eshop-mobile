@@ -85,23 +85,6 @@ const AllFieldsSearch = query => {
   });
 };
 
-// const samplesRef = firestore()
-//   .collectionGroup('examples')
-//   .where('title', '==', 'fashion')
-//   .where('category', '==', 'fashion')
-//   .where('group', '==', 'fashion')
-//   .where('type', '==', 'fashion');
-
-// const handleQuery = () => {
-//   samplesRef.get().then(querySnapShot => {
-//     const data = [];
-//     querySnapShot.forEach(el => {
-//       data.push({id: el.id, ...el.data()});
-//     });
-//     console.log(data, 'This is the Query Snapshot');
-//   });
-// };
-
 export default {
   searchFields,
   singleFieldSearch,

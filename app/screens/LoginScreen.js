@@ -17,92 +17,17 @@ import {authStorageKeys, storeUserData} from '../api/storage/authStorage';
 import {showToast} from '../components/AppToast/showToast';
 import toast from '../components/AppToast/toast';
 import routes from '../navigation/routes';
-// import navigation from '../navigation/rootNavigation';
+import {formatErrorMessage} from '../utilities/formatErrorMessage';
 
-// GoogleSignin.configure({
-//   scopes: ['https://www.googleapis.com/auth/userinfo.profile'],
-//   webClientId:
-//     '55467029004-jo4ssf47lkg4e482m5elgcevf0or1dgs.apps.googleusercontent.com',
-// });
-
-// ./gradlew signingReport
-// keytool -keystore debug.keystore -list -v
-// keytool -genkey -v -keystore debug.keystore -alias androiddebugkey -storepass android -keypass android -keyalg RSA -validity 10000
-
-// GoogleSignin.hasPlayServices({autoResolve: true})
-//   .then(snapshot => {
-//     console.log(snapshot, 'checking snapshot');
-//   })
-//   .catch(err => {
-//     console.log(
-//       'Play services code::>',
-//       err.code,
-//       'Play services message::>',
-//       err.message,
-//     );
-//   });
 const login_VS = Yup.object().shape({
   email: validationSchema.email,
   password: validationSchema.defaultPassword('password'),
 });
 
 const LoginScreen = ({navigation}) => {
-  // const [user, setUser] = useState();
-  // const productCollectionRef = firestore().collection('products');
   const {setUser} = useContext(AuthContext);
-  // console.log(usersCollection);
 
-  // const onFetchData = () => {
-  //   productCollectionRef
-  //     .get()
-  //     .then(snapshot => {
-  //       snapshot.forEach(el => {
-  //         console.log(el.data());
-  //       });
-  //     })
-  //     .catch(error => {
-  //       console.log(error);
-  //     });
-  // };
-
-  // const handleVerification = () => {
-  //   auth().onAuthStateChanged(user => {
-  //     user
-  //       .sendEmailVerification()
-  //       .then(snapshot => {
-  //         console.log(snapshot, 'success HV');
-  //       })
-  //       .catch(error => {
-  //         console.log(error, 'error HV');
-  //       });
-  //   });
-  // };
-  // const signup = ({email, password}) => {
-  //   auth()
-  //     .createUserWithEmailAndPassword(email, password)
-  //     .then(snapshot => {
-  //       console.log(snapshot, 'heyyyy');
-  //       handleVerification(snapshot.user.email);
-  //     })
-  //     .catch(error => {
-  //       console.log(error, 'heyyy');
-  //     });
-  //   // console.log(email, password);
-  // };
-
-  // const logout = () => {
-  //   auth().signOut();
-  // };
-
-  // const [func, setFunc] = useState(loginWithEmailAndPassword);
-
-  // const onAuthStateChanged = user => {
-  //   return user ? navigation.navigate(routes.ACCOUNT) : null;
-  // };
-
-  // const {data, error, loading, request} = useApi(loginWithEmailAndPassword);
   const {error, loading, request} = useApi(loginWithEmailAndPassword);
-  // const [error, setError] = useState();
 
   const handleSubmit = (userInfo, {resetForm}) => {
     request(userInfo)
@@ -118,24 +43,9 @@ const LoginScreen = ({navigation}) => {
         );
       })
       .catch(error => {
-        console.log(error);
+        showToast(toast.types.ERROR, formatErrorMessage(error));
       });
   };
-  console.log(loading, 'Loading state');
-  // const handleSubmit = userInfo => {
-  //   loginWithEmailAndPassword(userInfo)
-  //     .then(() => {
-  //       alert('Sign in Successful');
-  //       navigation.replace(routes.ACCOUNT);
-  //     })
-  //     .catch(error => {
-  //       setError(error.message);
-  //     });
-  //   // request(userInfo);
-  // };
-
-  // useEffect(() => {
-  // }, [user]);
 
   return (
     <>
@@ -146,8 +56,8 @@ const LoginScreen = ({navigation}) => {
         initialValues={{
           // email: '',
           // password: '',
-          email: 'frankelly3344@gmail.com',
-          password: '123456',
+          email: '',
+          password: '',
         }}
         validationSchema={login_VS}
         navigation={navigation}

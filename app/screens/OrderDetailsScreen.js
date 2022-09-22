@@ -23,15 +23,6 @@ import {firestore} from '../api/setup/config';
 import dayjs from 'dayjs';
 
 const OrderCard = ({product, onPress}) => {
-  // console.log(product.images, 'images');
-  const convertToReadableTime = time => {
-    var timestamp = new Date('2022-07-26T16:53:54.921Z').getTime();
-    var formatedTime = new Date(timestamp);
-    return formatedTime.toLocaleTimeString('fr');
-  };
-  const convertToTime = date => dayjs(date).format('DD MMM YY, h:mm a');
-  // console.log(convertToTime(Date.now()), 'kkkkkk');
-
   return (
     <TouchableOpacity
       style={orderCardStyles.container}

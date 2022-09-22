@@ -9,7 +9,7 @@ import {wp} from '../config/responsiveSize';
 const LikeBtn = ({productId, size = 22}) => {
   const {onLike, savedItems} = useContext(AuthContext);
   const heartType = savedItems.includes(productId) ? 'heart' : 'heart-o';
-  // console.log('LikeBtn rendering', 'check---', product.like);
+
   return (
     <TouchableOpacity
       style={[

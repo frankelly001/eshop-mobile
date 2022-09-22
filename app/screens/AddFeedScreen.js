@@ -47,7 +47,7 @@ const AddFeedScreen = ({navigation}) => {
       image: await uploadFile(dirNames.FEED_IMAGES, values['images'][0]),
       description: values['description'],
     };
-    // console.log(newValues);
+
     await addFeed(`${Date.now()}`, feedDetails)
       .then(() => {
         showToast(toast.types.SUCCESS, 'feed added successfully');

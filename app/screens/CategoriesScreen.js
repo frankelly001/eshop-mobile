@@ -1,4 +1,4 @@
-import React, {useContext, useState} from 'react';
+import React, {useCallback, useContext, useState} from 'react';
 import {
   StyleSheet,
   View,
@@ -20,14 +20,12 @@ const CategoriesScreen = ({navigation}) => {
   const [selectedCategory, setSelectedCategory] = useState('Select Category');
   const {categories} = useContext(AuthContext);
 
-  // console.log(selectedCategory, 'group...........');
-
-  // const handlePress = useCallback(category => {
-  //   setSelectedCategory(categories.find(cat => cat.title === category));
-  // }, []);
-  const handlePress = category => {
-    setSelectedCategory(categories.find(cat => cat.title === category));
-  };
+  const handlePress = useCallback(
+    category => {
+      setSelectedCategory(categories.find(cat => cat.title === category));
+    },
+    [categories],
+  );
 
   return (
     <View style={styles.container}>

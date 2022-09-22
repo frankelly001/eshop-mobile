@@ -81,15 +81,13 @@ const Header = ({navigation, options, route}) => {
     }, [searchToggle]),
   );
 
-  // console.log(recentQueries, 'recent');
-
   const handleSearch = recentQuery => {
     setSearchToggle(!searchToggle);
     const newQuery = recentQuery ? recentQuery : query;
 
     if (searchToggle && newQuery) {
       addToRecentQuery(newQuery);
-      // console.log(results, 'kkkkkklop');
+
       navigation.navigate(routes.SEARCHED, {
         query: newQuery,
         searchType: 'AllFieldsSearch',

@@ -24,17 +24,13 @@ export const loginWithEmailAndPassword = ({email, password}) => {
               verified: snapshot.user.emailVerified,
             };
             resolve(data);
-            // console.log(response, 'check response.............');
           })
           .catch(error => {
             reject(formatErrorMessage(error));
-            // console.log('GET_USER ERROR:', error.code);
           });
-        // resolve(snapshot);
       })
       .catch(error => {
         reject(formatErrorMessage(error));
-        // console.log('LOGIN_WITH_EMAIL_AND_PASSWORD ERROR:', error.code);
       });
   });
 };

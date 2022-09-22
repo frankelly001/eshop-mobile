@@ -5,7 +5,6 @@ import AppText from '../AppText';
 import SummaryStyles from './SummaryStyles';
 
 const DeliverySummary = ({deliveryInfo}) => {
-  console.log(deliveryInfo, 'paddo');
   return (
     <>
       <View style={SummaryStyles.modalHeaderContainer}>

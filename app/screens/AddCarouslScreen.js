@@ -51,7 +51,7 @@ const AddCarouslScreen = ({navigation}) => {
       title: values['title'].toLowerCase(),
       image: await uploadFile(dirNames.CAROUSEL_IMAGES, values['images'][0]),
     };
-    // console.log(newValues);
+
     await addCarousel(`${Date.now()}`, carouselDetails)
       .then(() => {
         showToast(toast.types.SUCCESS, 'carousel added successfully');

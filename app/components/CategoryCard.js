@@ -39,7 +39,7 @@ const groupCard = ({item}) => (
 );
 
 const CategoryGroupCard = ({item}) => {
-  // console.log(item, 'kkkkkkkkkk');
+
   return (
     <View key={item.title} style={styles.container}>
       <View style={styles.titleContainer}>

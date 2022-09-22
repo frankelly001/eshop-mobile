@@ -49,36 +49,13 @@ const ProductDetailsScreen = ({navigation, route}) => {
     el => el.id === product.id,
   )?.quantity;
 
-  // const recentlyViewed = products.filter(el =>
-  //   idRecentlyViewed.includes(el.id),
-  // );
-
   useEffect(() => {
     addToRecentView(productId);
   }, [productId]);
 
-  // console.log('lollllli');
-
   const scrollView = useRef();
   const [value, setValue] = useState(1);
   const scrollRef = useRef(null);
-
-  // useEffect(() => {
-  //   const productObj = products.find(product => product.id === productId);
-  //   const productObjCategogies = products.filter(
-  //     el =>
-  //       el.category?.group?.type === productObj.category?.group?.type &&
-  //       el.id !== productObj.id,
-  //   );
-  //   const qtyOrdered = ordered.find(el => el.id === productObj.id)?.quantity;
-
-  //   setProduct(productObj);
-  //   setProductCategogies(productObjCategogies);
-  //   setQuantityOrdered(qtyOrdered);
-  //   addToRecentView(productId);
-
-  //   return function cleanUp() {};
-  // }, [productId, ordered]);
 
   const checkRelatedItem = ({id}) => {
     setProductId(id);
@@ -122,9 +99,8 @@ const ProductDetailsScreen = ({navigation, route}) => {
     setSelectedIndex(currentIndex);
   };
 
-  // console.log('Product Details Screen rendering ');
   if (!Object.entries(product).length) return <ProductDetailsLoader />;
-  // if (1) return <ProductDetailsLoader />;
+
   return (
     <Screen scrollView={scrollView}>
       <View style={styles.container}>

@@ -210,8 +210,6 @@ const AdditionalInfoScreen = ({route}) => {
     address: '',
   };
 
-  console.log(route?.params, 'yesssss');
-
   const handleTouched = step => {
     let touched;
     if (step === 1) {
@@ -280,9 +278,7 @@ const AdditionalInfoScreen = ({route}) => {
           }`,
         );
       })
-      .catch(error => {
-        console.log(error);
-      });
+      .catch(error => {});
   };
 
   return (

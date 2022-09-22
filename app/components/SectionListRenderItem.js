@@ -14,7 +14,6 @@ const SectionListRenderItem = ({
 
   for (let i = index; i < index + numColumns; i++) {
     if (i >= section.data.length) {
-      console.log('break');
       break;
     }
     items.push(ItemComponent(section.data[i]));
@@ -26,10 +25,7 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    // backgroundColor: 'red',
   },
 });
 
 export default SectionListRenderItem;
-
-// ({itm)=>decodeURI(item)

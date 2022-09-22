@@ -19,8 +19,7 @@ const AppFormInput = ({
     useFormikContext();
   const [isFocus, setIsFocus] = useState(false);
   const [secureText, setSecureText] = useState(true);
-  // console.log(touched);
-  // console.log(errors);
+
   const isPasswordInput = textContentType === 'password';
 
   return (

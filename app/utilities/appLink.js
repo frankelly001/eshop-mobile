@@ -1,4 +1,7 @@
 import AppLink from 'react-native-app-link';
+import {showToast} from '../components/AppToast/showToast';
+import toast from '../components/AppToast/toast';
+import {formatErrorMessage} from './formatErrorMessage';
 
 export const appNames = {
   FACEBOOK: 'Facebook',
@@ -46,6 +49,6 @@ export const openSocialLink = nameOfLink => {
   AppLink.maybeOpenURL(linkType[nameOfLink], LinkInfo[nameOfLink])
     .then(() => {})
     .catch(error => {
-      console.log(error.message);
+      showToast(toast.types.ERROR, formatErrorMessage(error));
     });
 };

@@ -26,15 +26,11 @@ const ProductCard = ({
   btnOnPress,
   removeSaveBtn,
 }) => {
-  // console.log(height);
-  // const styles = small ? mediumCardstyles : bigCardstyles;
   const styles = (() => {
     if (small) return smallCardstyles;
-    // else if (medium) return mediumCardstyles;
     return bigCardstyles;
   })();
 
-  // console.log(pro);
   return (
     <TouchableOpacity style={styles.container} onPress={onPress}>
       <View style={styles.imageContainer}>

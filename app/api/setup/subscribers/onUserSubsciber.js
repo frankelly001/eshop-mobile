@@ -6,9 +6,7 @@ const onUserSubscriber = user => {
     const subscriber = firestore()
       .collection('Users')
       .doc(user.id)
-      .onSnapshot(documentSnapshot => {
-        console.log('User data: ', documentSnapshot.data());
-      });
+      .onSnapshot(documentSnapshot => {});
 
     // Stop listening for updates when no longer required
     return () => subscriber();

@@ -9,6 +9,9 @@ import {
 import ImagePicker from 'react-native-image-crop-picker';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import colors from '../../config/colors';
+import {formatErrorMessage} from '../../utilities/formatErrorMessage';
+import {showToast} from '../AppToast/showToast';
+import toast from '../AppToast/toast';
 
 const ImageInput = ({
   imageUri,
@@ -35,21 +38,11 @@ const ImageInput = ({
       //   multiple: true,
     })
       .then(image => {
-        // console.log(typeof image.path, 'heyyyyyyyyyyyyyy');
         onChangeImage(image.path);
       })
       .catch(error => {
-        console.log(error, 'failed.........');
+        showToast(toast.types.ERROR, formatErrorMessage(error));
       });
-    // try {
-    //   const result = await ImagePicker.launchImageLibraryAsync({
-    //     mediaTypes: ImagePicker.MediaTypeOptions.Images,
-    //     quality: 0.5,
-    //   });
-    //   if (!result.cancelled) onChangeImage(result.uri);
-    // } catch (error) {
-    //   console.log("Error reading an Image", error);
-    // }
   };
 
   return (

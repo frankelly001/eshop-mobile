@@ -23,23 +23,6 @@ import {formatToCurrency} from '../utilities/formatToCurr';
 
 const CartScreen = ({navigation}) => {
   const {productsInCart, subTotal, delivery, total} = useContext(AuthContext);
-  // const [keyboardStatus, setKeyboardStatus] = useState(undefined);
-
-  // useEffect(() => {
-  //   const showSubscription = Keyboard.addListener('keyboardDidShow', () => {
-  //     setKeyboardStatus(true);
-  //   });
-  //   const hideSubscription = Keyboard.addListener('keyboardDidHide', () => {
-  //     setKeyboardStatus(false);
-  //   });
-
-  //   return () => {
-  //     showSubscription.remove();
-  //     hideSubscription.remove();
-  //   };
-  // }, [keyboardStatus]);
-
-  // console.log(keyboardStatus);
 
   return (
     <>

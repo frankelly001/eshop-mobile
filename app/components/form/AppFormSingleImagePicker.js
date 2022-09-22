@@ -16,7 +16,6 @@ const AppFormSingleImagePicker = ({
 
   const handleImageChange = uri => {
     uri ? setFieldValue(name, [uri]) : setFieldValue(name, []);
-    // console.log(uri, 'yessss');
   };
 
   return (

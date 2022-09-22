@@ -9,7 +9,6 @@ export const signup = userInfo => {
     auth()
       .createUserWithEmailAndPassword(email, password)
       .then(snapshot => {
-        // console.log(snapshot, 'User created successful');
         addUser(snapshot.user.uid, userInfo, snapshot.user.emailVerified)
           .then(snapshot => {
             resolve(snapshot);
@@ -18,17 +17,13 @@ export const signup = userInfo => {
             auth()
               .currentUser.delete()
               .then(response => {
-                console.log('Account deleted', response);
                 reject(formatErrorMessage(error));
               });
           });
-        //   handleVerification(snapshot.user.email);
       })
       .catch(error => {
         reject(formatErrorMessage(error));
-        // console.log('CREATE_USER_WITH_EMAIL_AND_PASSWORD ERROR:', error.code);
       });
-    // console.log(email, password);
   });
 };
 

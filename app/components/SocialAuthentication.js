@@ -79,9 +79,7 @@ const SocialAuthentication = ({authLabel}) => {
           setUser(response.snapshot);
         }
       })
-      .then(error => {
-        console.log('Error:', error);
-      });
+      .then(error => {});
   };
 
   const handleTwitterAuth = () => {
