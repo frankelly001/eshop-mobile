@@ -186,14 +186,17 @@ const OnBoardingScreen = ({navigation}) => {
                 <AppText
                   style={{
                     fontFamily: fonts.extra_bold,
-                    fontSize: fontSz(20),
+                    fontSize: fontSz(15),
                     marginBottom: 10,
                     color: colors.white,
                   }}>
                   {item.title}
                 </AppText>
                 <AppText
-                  style={{color: colors.white, fontFamily: fonts.semi_bold}}>
+                  style={{
+                    color: colors.white,
+                    fontFamily: fonts.semi_bold,
+                  }}>
                   {item.description}
                 </AppText>
               </View>

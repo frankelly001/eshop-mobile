@@ -59,7 +59,7 @@ const StickyHomeSectionHeader = ({categories}) => {
               }}>
               <AppText
                 style={{
-                  fontSize: fontSz(6.5),
+                  fontSize: fontSz(7),
                   color: colors.white,
                   fontFamily: fonts.extra_bold,
                   textAlign: 'center',

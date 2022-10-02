@@ -13,6 +13,7 @@ import {
   TouchableOpacity,
   ScrollView,
   BackHandler,
+  ToastAndroid,
 } from 'react-native';
 import SearchIcon from '../assets/icons/search.svg';
 import NoficationActiveIcon from '../assets/icons/notification_active.svg';
@@ -41,6 +42,7 @@ const Header = ({navigation, options, route}) => {
   // const [backIcon, setBackIcon] = useState('arrow-left');
   const [searchToggle, setSearchToggle] = useState(false);
   const [query, setQuery] = useState('');
+  const [backPress, setBackPress] = useState(1);
 
   const inputRef = useRef();
   const size = 20;
@@ -71,14 +73,26 @@ const Header = ({navigation, options, route}) => {
   useFocusEffect(
     useCallback(() => {
       const onBackHandler = () => {
-        searchToggle ? setSearchToggle(false) : navigation.goBack();
+        if (searchToggle) {
+          setSearchToggle(false);
+        } else if (route.name === routes.HOME && !searchToggle) {
+          if (backPress != 2) {
+            setBackPress(backPress + 1);
+            ToastAndroid.show('Press again to exit', ToastAndroid.SHORT);
+            setTimeout(() => {
+              setBackPress(1);
+            }, 1000);
+          } else BackHandler.exitApp();
+        } else {
+          navigation.goBack();
+        }
         return true;
       };
       BackHandler.addEventListener('hardwareBackPress', onBackHandler);
 
       return () =>
         BackHandler.removeEventListener('hardwareBackPress', onBackHandler);
-    }, [searchToggle]),
+    }, [searchToggle, backPress]),
   );
 
   const handleSearch = recentQuery => {
@@ -272,7 +286,7 @@ const styles = StyleSheet.create({
     fontFamily: fonts.bold,
   },
   title: {
-    fontSize: fontSz(15),
+    fontSize: fontSz(13),
     fontFamily: fonts.bold,
   },
   headerLeft: {

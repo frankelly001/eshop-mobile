@@ -4,6 +4,7 @@ const {width: SCREEN_WIDTH} = Dimensions.get('window');
 const pixelRatio = PixelRatio.get();
 const deviceHeight = Dimensions.get('window').height;
 const deviceWidth = Dimensions.get('window').width;
+const fontScale = Dimensions.get('window').fontScale;
 
 import {
   widthPercentageToDP,
@@ -23,7 +24,9 @@ export const wp = val => {
 };
 
 export const fontSz = sizeNum => {
-  const size = sizeNum + 1.5;
+  // const size = sizeNum + 1.5;
+  const size = sizeNum + 1.5 - fontScale * (fontScale < 1 ? 1.5 : 3);
+  // const size = sizeNum + 1.5 - fontScale;
   // return sizeNum;
   if (pixelRatio >= 2 && pixelRatio < 3) {
     // iphone 5s and older Androids
@@ -41,6 +44,7 @@ export const fontSz = sizeNum => {
     // older phablets
     return size * 1.25;
   }
+
   if (pixelRatio >= 3 && pixelRatio < 3.5) {
     // catch Android font scaling on small machines
     // where pixel ratio / font scale ratio => 3:3

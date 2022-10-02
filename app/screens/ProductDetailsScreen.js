@@ -104,7 +104,7 @@ const ProductDetailsScreen = ({navigation, route}) => {
   return (
     <Screen scrollView={scrollView}>
       <View style={styles.container}>
-        <View style={[styles.imageContainer, {backgroundColor: 'red'}]}>
+        <View style={[styles.imageContainer]}>
           <ScrollView
             horizontal
             pagingEnabled
