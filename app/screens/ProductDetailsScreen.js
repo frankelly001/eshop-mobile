@@ -26,6 +26,7 @@ import fonts from '../config/fonts';
 import ProductDetailsLoader from '../components/SkeletonLoader/ProductDetailsLoader';
 import {navigationRef} from '../navigation/rootNavigation';
 import routes from '../navigation/routes';
+import DisplayMesssage from '../components/DisplayMesssage';
 
 const {width, height} = Dimensions.get('screen');
 
@@ -42,11 +43,11 @@ const ProductDetailsScreen = ({navigation, route}) => {
   const product = products.find(prod => prod.id === productId);
   const productCategogies = products.filter(
     el =>
-      el.category?.group?.type === product.category?.group?.type &&
-      el.id !== product.id,
+      el.category?.group?.type === product?.category?.group?.type &&
+      el.id !== product?.id,
   );
   const quantityInCart = productsInCart.find(
-    el => el.id === product.id,
+    el => el.id === product?.id,
   )?.quantity;
 
   useEffect(() => {
@@ -99,151 +100,174 @@ const ProductDetailsScreen = ({navigation, route}) => {
     setSelectedIndex(currentIndex);
   };
 
-  if (!Object.entries(product).length) return <ProductDetailsLoader />;
+  if (product && !Object?.entries(product).length)
+    return <ProductDetailsLoader />;
 
   return (
     <Screen scrollView={scrollView}>
-      <View style={styles.container}>
-        <View style={[styles.imageContainer]}>
-          <ScrollView
-            horizontal
-            pagingEnabled
-            onMomentumScrollEnd={uptSelectedIndex}
-            // onScroll={uptSelectedIndex}
-            showsHorizontalScrollIndicator={false}
-            ref={scrollRef}>
-            {product.images.map(img => (
-              // <Image key={img} source={{uri: img}} style={styles.carouselImage} />
-              <Image
-                resizeMode="stretch"
-                key={img}
-                source={{uri: img}}
-                style={styles.image}
-              />
-            ))}
-          </ScrollView>
-          <View style={styles.selectionContainer}>
-            {product.images.map((img, i) => (
-              <Pressable
-                style={[
-                  styles.selectImage,
-                  {opacity: i !== selectedIndex ? 0.3 : 1},
-                ]}
-                key={img}
-                onPress={() => setSelectedIndex(i)}>
-                <Image
-                  resizeMode="stretch"
-                  key={img}
-                  source={{uri: img}}
-                  style={{width: '100%', height: '100%'}}
-                />
-              </Pressable>
-            ))}
-          </View>
-        </View>
-        <View style={{padding: 12}}>
-          <AppText style={styles.title}>{product.title}</AppText>
-          <AppText style={styles.price}>
-            {formatToCurrency(product.price)}
-          </AppText>
-          <View style={styles.actionContainer}>
-            <View style={styles.iconRatings}>
-              {starRating(product.rating.rate).map(starType => (
-                <FontAwesomeIcon
-                  color={colors.yellow}
-                  size={18}
-                  key={starType.id}
-                  name={starType.star}
-                />
-              ))}
+      {product ? (
+        <>
+          <View style={styles.container}>
+            <View style={[styles.imageContainer]}>
+              <ScrollView
+                horizontal
+                pagingEnabled
+                onMomentumScrollEnd={uptSelectedIndex}
+                // onScroll={uptSelectedIndex}
+                showsHorizontalScrollIndicator={false}
+                ref={scrollRef}>
+                {product.images.map(img => (
+                  // <Image key={img} source={{uri: img}} style={styles.carouselImage} />
+                  <Image
+                    resizeMode="stretch"
+                    key={img}
+                    source={{uri: img}}
+                    style={styles.image}
+                  />
+                ))}
+              </ScrollView>
+              <View style={styles.selectionContainer}>
+                {product.images.map((img, i) => (
+                  <Pressable
+                    style={[
+                      styles.selectImage,
+                      {opacity: i !== selectedIndex ? 0.3 : 1},
+                    ]}
+                    key={img}
+                    onPress={() => setSelectedIndex(i)}>
+                    <Image
+                      resizeMode="stretch"
+                      key={img}
+                      source={{uri: img}}
+                      style={{width: '100%', height: '100%'}}
+                    />
+                  </Pressable>
+                ))}
+              </View>
             </View>
-            <AppText style={styles.label}>
-              ({product.rating.count} verified rating)
-            </AppText>
-          </View>
-          <View style={styles.actionContainer}>
-            <LikeBtn productId={product.id} />
-            <AppText style={styles.label}>Save for later</AppText>
-          </View>
-          <View style={styles.quantityContainer}>
-            <AppText style={styles.headerLabel}>
-              Quantity{' '}
-              {quantityInCart && (
-                <AppText style={styles.quantityInCart}>
-                  ({quantityInCart})
-                </AppText>
-              )}
-            </AppText>
-            <PlusMinusInputBtn
-              add={add}
-              sub={sub}
-              onBlur={updateInput}
-              onChangeText={handleChange}
-              value={value}
-            />
-            <AppGradientBtn
-              label="add to Cart"
-              labelStyle={styles.btnLabel}
-              style={styles.addToCartBtn}
-              onPress={() => {
-                addToCart(product.id, value < 1 ? 1 : value);
-                setValue(1);
-              }}
-            />
-          </View>
-          <View>
-            <AppText style={styles.headerLabel}>Product Description</AppText>
-            <AppText style={styles.description} numberOfLines={20}>
-              {product.description}
-            </AppText>
-          </View>
-          <View
-            style={{alignItems: 'center', paddingHorizontal: 5, marginTop: 5}}>
-            <TouchableOpacity
-              onPress={() =>
-                navigation.navigate(
-                  routes.PRODUCTDESCRIPTION,
-                  product.description,
-                )
-              }>
-              <AppText
-                style={{
-                  fontFamily: fonts.bold,
-                  color: colors.purple,
-                  fontSize: fontSz(10),
-                }}>
-                READ MORE
+            <View style={{padding: 12}}>
+              <AppText style={styles.title}>{product.title}</AppText>
+              <AppText style={styles.price}>
+                {formatToCurrency(product.price)}
               </AppText>
-            </TouchableOpacity>
-          </View>
-        </View>
-      </View>
-
-      {productCategogies.length > 0 && (
-        <View>
-          <AppText style={[styles.headerLabel, styles.relatedHeader]}>
-            Related Product
-          </AppText>
-          <FlatList
-            horizontal
-            showsHorizontalScrollIndicator={false}
-            data={productCategogies}
-            style={{marginBottom: 20}}
-            contentContainerStyle={{padding: 5, paddingTop: 0}}
-            key={product => product.id.toString()}
-            renderItem={({item}) => {
-              return (
-                <ProductCard
-                  product={item}
-                  onPress={() => checkRelatedItem(item)}
-                  small
-                  removeSaveBtn
+              <View style={styles.actionContainer}>
+                <View style={styles.iconRatings}>
+                  {starRating(product.rating.rate).map(starType => (
+                    <FontAwesomeIcon
+                      color={colors.yellow}
+                      size={18}
+                      key={starType.id}
+                      name={starType.star}
+                    />
+                  ))}
+                </View>
+                <AppText style={styles.label}>
+                  ({product.rating.count} verified rating)
+                </AppText>
+              </View>
+              <View style={styles.actionContainer}>
+                <LikeBtn productId={product.id} />
+                <AppText style={styles.label}>Save for later</AppText>
+              </View>
+              <View style={styles.quantityContainer}>
+                <AppText style={styles.headerLabel}>
+                  Quantity{' '}
+                  {quantityInCart && (
+                    <AppText style={styles.quantityInCart}>
+                      ({quantityInCart})
+                    </AppText>
+                  )}
+                </AppText>
+                <PlusMinusInputBtn
+                  add={add}
+                  sub={sub}
+                  onBlur={updateInput}
+                  onChangeText={handleChange}
+                  value={value}
                 />
-              );
-            }}
-          />
-        </View>
+                <AppGradientBtn
+                  label="add to Cart"
+                  labelStyle={styles.btnLabel}
+                  style={styles.addToCartBtn}
+                  onPress={() => {
+                    addToCart(product.id, value < 1 ? 1 : value);
+                    setValue(1);
+                  }}
+                />
+              </View>
+              <View>
+                <AppText style={styles.headerLabel}>
+                  Product Description
+                </AppText>
+                <AppText style={styles.description} numberOfLines={20}>
+                  {product.description}
+                </AppText>
+              </View>
+              <View
+                style={{
+                  alignItems: 'center',
+                  paddingHorizontal: 5,
+                  marginTop: 5,
+                }}>
+                <TouchableOpacity
+                  onPress={() =>
+                    navigation.navigate(
+                      routes.PRODUCTDESCRIPTION,
+                      product.description,
+                    )
+                  }>
+                  <AppText
+                    style={{
+                      fontFamily: fonts.bold,
+                      color: colors.purple,
+                      fontSize: fontSz(10),
+                    }}>
+                    READ MORE
+                  </AppText>
+                </TouchableOpacity>
+              </View>
+            </View>
+          </View>
+          {productCategogies.length > 0 && (
+            <View>
+              <AppText style={[styles.headerLabel, styles.relatedHeader]}>
+                Related Product
+              </AppText>
+              <FlatList
+                horizontal
+                showsHorizontalScrollIndicator={false}
+                data={productCategogies}
+                style={{marginBottom: 20}}
+                contentContainerStyle={{padding: 5, paddingTop: 0}}
+                key={product => product.id.toString()}
+                renderItem={({item}) => {
+                  return (
+                    <ProductCard
+                      product={item}
+                      onPress={() => checkRelatedItem(item)}
+                      small
+                      removeSaveBtn
+                    />
+                  );
+                }}
+              />
+            </View>
+          )}
+        </>
+      ) : (
+        <DisplayMesssage
+          animatedIconSource={require('../assets/icons/animatedIcons/ladypagenotfound.json')}
+          animatedIconStyles={styles.animatedIcon}
+          containerStyles={styles.activityContainer}>
+          <AppText style={[styles.text, {color: colors.red_dark}]}>
+            Product not found
+          </AppText>
+          <AppText style={styles.subText}>
+            Try searching another Product
+          </AppText>
+        </DisplayMesssage>
       )}
+
       {recentlyViewed.length > 0 && (
         <View>
           <AppText style={[styles.headerLabel, styles.relatedHeader]}>
@@ -379,6 +403,23 @@ const styles = StyleSheet.create({
   },
   relatedHeader: {
     paddingHorizontal: 10,
+  },
+  animatedIcon: {
+    width: wp(380),
+    height: wp(380),
+  },
+  activityContainer: {
+    backgroundColor: colors.white,
+    width: '100%',
+    height: height * 0.67,
+    position: undefined,
+    zIndex: undefined,
+  },
+  text: {
+    fontFamily: fonts.semi_bold,
+  },
+  subText: {
+    marginBottom: 100,
   },
 });
 

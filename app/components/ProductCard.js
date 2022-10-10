@@ -83,9 +83,9 @@ const bigCardstyles = StyleSheet.create({
       height: 1,
     },
     shadowOpacity: 0.22,
-    shadowRadius: 2.22,
+    shadowRadius: 1.5,
 
-    elevation: 3,
+    elevation: 1.5,
   },
 
   imageContainer: {

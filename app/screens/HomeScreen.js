@@ -30,16 +30,6 @@ const HomeScreen = ({navigation}) => {
             <ImageCarousel categories={[...categories.map(el => el.title)]} />
           )}
           renderSectionHeader={() => (
-            // <View
-            //   style={{
-            //     backgroundColor: colors.grey_light_4,
-            //     width: '100%',
-            //     height: 40,
-            //     justifyContent: 'center',
-            //     paddingHorizontal: 10,
-            //   }}>
-            //   <AppText>New Arrivals</AppText>
-            // </View>
             <StickyHomeSectionHeader
               categories={[
                 ...categories.map(el => {

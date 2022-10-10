@@ -1,10 +1,4 @@
-import React, {
-  useCallback,
-  useContext,
-  useEffect,
-  useMemo,
-  useState,
-} from 'react';
+import React, {useCallback, useContext, useEffect, useState} from 'react';
 import {
   BackHandler,
   FlatList,
@@ -121,7 +115,7 @@ const OrdersScreen = ({navigation, route}) => {
         <FlatList
           data={ordered}
           style={{flex: 1}}
-          // contentContainerStyle={styles.container}
+          contentContainerStyle={{paddingBottom: 20}}
           key={item => item.id}
           renderItem={({item}) => {
             return !item.empty && <OrderCard product={item} />;

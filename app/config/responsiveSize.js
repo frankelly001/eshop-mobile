@@ -25,7 +25,7 @@ export const wp = val => {
 
 export const fontSz = sizeNum => {
   // const size = sizeNum + 1.5;
-  const size = sizeNum + 1.5 - fontScale * (fontScale < 1 ? 1.5 : 3);
+  const size = sizeNum + 1.5 - fontScale * (fontScale < 1 ? 1 : 2);
   // const size = sizeNum + 1.5 - fontScale;
   // return sizeNum;
   if (pixelRatio >= 2 && pixelRatio < 3) {
