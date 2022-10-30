@@ -25,6 +25,7 @@ const AnimatedHeader = ({navigation, options, route}) => {
   const {numOfCartItems, recentQueries, setRecentQueries} =
     useContext(AuthContext);
   const size = wp(20);
+
   const [disableBackBtn, setDisableBackBtn] = useState(false);
   const [disableSearchBtn, setDisableSearchBtn] = useState(false);
   const [disableNotifyBtn, setDisableNotifyBtn] = useState(false);
