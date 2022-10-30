@@ -116,14 +116,27 @@ const ProductDetailsScreen = ({navigation, route}) => {
                 // onScroll={uptSelectedIndex}
                 showsHorizontalScrollIndicator={false}
                 ref={scrollRef}>
-                {product.images.map(img => (
+                {product.images.map((img, index) => (
                   // <Image key={img} source={{uri: img}} style={styles.carouselImage} />
-                  <Image
-                    resizeMode="stretch"
+                  <TouchableOpacity
+                    // style={[
+                    //   styles.selectImage,
+                    //   {opacity: i !== selectedIndex ? 0.3 : 1},
+                    // ]}
                     key={img}
-                    source={{uri: img}}
-                    style={styles.image}
-                  />
+                    onPress={() =>
+                      navigation.navigate(routes.IMAGEVIEW, {
+                        imageUris: product.images,
+                        currentIndex: index,
+                      })
+                    }>
+                    <Image
+                      resizeMode="stretch"
+                      key={img}
+                      source={{uri: img}}
+                      style={styles.image}
+                    />
+                  </TouchableOpacity>
                 ))}
               </ScrollView>
               <View style={styles.selectionContainer}>

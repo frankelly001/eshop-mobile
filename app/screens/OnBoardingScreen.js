@@ -41,7 +41,7 @@ const DATA = [
     description:
       'Shop Online for All Kinds of Products, Services & Enjoy Great Prices, Deals And Offers.',
     image:
-      'https://rukminim1.flixcart.com/image/416/416/kj7gwi80-0/stuffed-toy/m/w/m/3-feet-blue-american-style-extra-large-jumbo-huggable-teddy-bear-original-imafytxshhm6fvny.jpeg?q=70',
+      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTcvK7EtesmM7rCG9lNqhmh8_kyQRx3zEq4QyiKicr50Mcx99Jwd_pLi5wM4dAy9i-UCWw&usqp=CAU',
   },
   {
     key: '3571747',
@@ -49,7 +49,7 @@ const DATA = [
     description:
       'An online shop you can trust with your payments. Order now and enjoy pay on delivery!',
     image:
-      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTcvK7EtesmM7rCG9lNqhmh8_kyQRx3zEq4QyiKicr50Mcx99Jwd_pLi5wM4dAy9i-UCWw&usqp=CAU',
+      'https://rukminim1.flixcart.com/image/416/416/kj7gwi80-0/stuffed-toy/m/w/m/3-feet-blue-american-style-extra-large-jumbo-huggable-teddy-bear-original-imafytxshhm6fvny.jpeg?q=70',
   },
   {
     key: '3571680',

@@ -27,6 +27,7 @@ import AuthNavigator from './AuthNavigator';
 import OrderDetailsScreen from '../screens/OrderDetailsScreen';
 import AdminNavigator from './AdminNavigator';
 import ProductDescriptionScreen from '../screens/ProductDescriptionScreen';
+import ImageView from '../components/ImageView';
 
 const Stack = createNativeStackNavigator();
 
@@ -71,6 +72,14 @@ const MainStack = props => {
         options={{
           title: 'Details',
           headerStyle: {},
+        }}
+      />
+      <Stack.Screen
+        name={routes.IMAGEVIEW}
+        component={ImageView}
+        options={{
+          animation: 'fade',
+          title: ' ',
         }}
       />
       <Stack.Screen

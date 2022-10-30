@@ -13,7 +13,6 @@ import {addCategory} from '../../api/setup/postApi/addCategory';
 const flyoutMenu = [
   {
     title: 'Phones & Tablets'.toLowerCase(),
-    img: 'file:///storage/emulated/0/DCIM/MyAlbums/Upload/health & beauty.jpg',
     groups: [
       {
         title: 'MOBILE PHONES'.toLowerCase(),
@@ -758,7 +757,10 @@ const ImageUploadTest = props => {
 
       const img = await uploadFile(`${'CATEGORY_IMAGES/CATEGORIES'}`, data.img);
 
-      updateUserData(data.id, {['img']: img}).then(() => {
+      // updateUserData(data.id, {['img']: img}).then(() => {
+      //   console.log(data.title, 'success');
+      // });
+      updateUserData(data.id, {['groups']: img}).then(() => {
         console.log(data.title, 'success');
       });
       // await addCategory(`${Date.now() + i}`, flyoutMenu[i])
