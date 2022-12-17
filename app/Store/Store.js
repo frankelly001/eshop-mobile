@@ -399,17 +399,6 @@ const Store = ({children}) => {
   // })
 
   useEffect(() => {
-    // const cartItemIDs = cartItems.map(el => el.productId);
-    // const filteredProductsInCart = products.data.filter(el =>
-    //   cartItemIDs.includes(el.id),
-    // );
-    // const cartProducts = filteredProductsInCart.map(el => {
-    //   return {
-    //     ...el,
-    //     quantity: cartItems.find(item => item.productId === el.id).quantity,
-    //   };
-    // });
-
     const cartProducts = [];
 
     for (let i = 0; i < cartItems.length; i++) {
@@ -422,7 +411,7 @@ const Store = ({children}) => {
       });
     }
 
-    setProductsInCart(cartProducts);
+    setProductsInCart(cartProducts.reverse());
     setNumOfCartItems(
       cartProducts.map(el => el.quantity).reduce((prev, cur) => prev + cur, 0),
     );

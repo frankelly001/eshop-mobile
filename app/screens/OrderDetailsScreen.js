@@ -118,12 +118,6 @@ const OrderDetailsScreen = ({route}) => {
   return (
     <View style={styles.container}>
       <View style={styles.subContainer}>
-        {/* <View style={styles.feeTitleContainer}>
-          <AppText>Order ID</AppText>
-          <AppText style={styles.labelValue}>
-            #{selectedOrder.transaction_info.transaction_id}
-          </AppText>
-        </View> */}
         <GradientBackground
           style={[styles.feeTitleContainer, {paddingHorizontal: 10}]}>
           <AppText style={{color: colors.white, fontFamily: fonts.bold}}>

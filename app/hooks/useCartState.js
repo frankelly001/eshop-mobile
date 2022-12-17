@@ -25,7 +25,7 @@ export const useCartState = user => {
       if (
         !nextCartItems.some(elCartItem => elCartItem.productId === productId)
       ) {
-        nextCartItems.unshift({
+        nextCartItems.push({
           productId,
           quantity: payload ? parseInt(payload) : 1,
         });
@@ -115,7 +115,7 @@ export const useCartState = user => {
         );
         successAlert(`Product successfully removed from your wishlist`);
       } else {
-        nextLikedProducts.unshift(productId);
+        nextLikedProducts.push(productId);
         successAlert(`Product successfully added to your wishlist`);
       }
       setSavedItems(nextLikedProducts);

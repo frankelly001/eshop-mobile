@@ -61,7 +61,7 @@ const useAnimatedHeaderStyles = (animationSwitch, inputRef) => {
 
   const recentSearchContainerAnimatedStyle = useAnimatedStyle(() => {
     return {
-      // backgroundColor: 'yellow',
+      backgroundColor: colors.white,
       width: '100%',
       height: withTiming(recentSearchContainerHeight.value),
       zIndex: 99999,

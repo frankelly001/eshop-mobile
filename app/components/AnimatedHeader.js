@@ -159,7 +159,7 @@ const AnimatedHeader = ({navigation, options, route}) => {
           )}
         </Animated.View>
       </View>
-      <Animated.View style={recentSearchContainerAnimatedStyle}>
+      <Animated.View  style={recentSearchContainerAnimatedStyle}>
         <AppText
           style={{
             fontSize: fontSz(12),
