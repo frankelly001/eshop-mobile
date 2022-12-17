@@ -11,14 +11,11 @@ import routes from '../navigation/routes';
 import {formatData} from '../utilities/formatData';
 
 const RecentlyViewed = ({navigation}) => {
-  const {idRecentlyViewed, products, loading, addToCart, clearRecentView} =
+  const {recentlyViewed, loading, addToCart, clearRecentView} =
     useContext(AuthContext);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
 
   if (loading.products) return <ProductsLoader />;
-  const recentlyViewed = products.filter(el =>
-    idRecentlyViewed.includes(el.id),
-  );
 
   return (
     <>

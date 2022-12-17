@@ -13,19 +13,9 @@ import routes from '../navigation/routes';
 import {formatData} from '../utilities/formatData';
 
 const SavedScreen = ({navigation}) => {
-  const {savedItems, savedProducts, products, loading, addToCart} =
-    useContext(AuthContext);
+  const {savedProducts, loading, addToCart} = useContext(AuthContext);
 
   if (loading.products) return <ProductsLoader />;
-  // const savedProducts = products.filter(el => savedItems.includes(el.id));
-
-  // const save = () => {
-  //   const savedProds = [];
-  //   for (let i = 0; i < savedItems.length; i++) {
-  //     products.forEach(el => savedItems[i] === el.id && savedProds.push(el));
-  //   }
-  //   return savedProds;
-  // };
 
   return (
     <>

@@ -47,7 +47,7 @@ const MainStack = props => {
     <Stack.Navigator
       // initialRouteName={appUseReady ? routes.ESHOP : routes.ONBOARDINGSCREEN}
       screenOptions={{
-        header: ({...allProps}) => <Header {...allProps} />,
+        header: Header,
       }}>
       {!appUseReady && (
         <Stack.Screen
