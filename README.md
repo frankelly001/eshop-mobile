@@ -2,7 +2,8 @@
 
 ### eShop Nigeria the #1 Online store in Nigeria - Shop Online for All Kinds of Products & Enjoy Great Prices, Deals And Offers ✓ Best prices in Nigeria ✓ Online shop you can trust ✓ Order now and enjoy pay on delivery!
 
-![App Screens](doc/img/longmockup.png)
+![App Screens](doc/img/eshop_icon.jpg)
+![App Screens](doc/img/eshop_overview.jpg)
 
 ## Features
 
@@ -72,16 +73,16 @@ $ react-native run-ios
 ```
 
 <p float="left">
-<img src="doc/img/1.png" width="300" height="550">
-<img src="doc/img/2.png" width="300" height="550">
-<img src="doc/img/3.png" width="300" height="550">
-<img src="doc/img/4.png" width="300" height="550">
-<img src="doc/img/5.png" width="300" height="550">
-<img src="doc/img/6.png" width="300" height="550">
-<img src="doc/img/7.png" width="300" height="550">
-<img src="doc/img/8.png" width="300" height="550">
-<img src="doc/img/9.png" width="300" height="550">
-<img src="doc/img/10.png" width="300" height="550">
+<img src="doc/img/1.jpg" width="300" height="550">
+<img src="doc/img/2.jpg" width="300" height="550">
+<img src="doc/img/3.jpg" width="300" height="550">
+<img src="doc/img/4.jpg" width="300" height="550">
+<img src="doc/img/5.jpg" width="300" height="550">
+<img src="doc/img/6.jpg" width="300" height="550">
+<img src="doc/img/7.jpg" width="300" height="550">
+<img src="doc/img/8.jpg" width="300" height="550">
+<img src="doc/img/9.jpg" width="300" height="550">
+<img src="doc/img/10.jpg" width="300" height="550">
 </p>
 
 <br />
