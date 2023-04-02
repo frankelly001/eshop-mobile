@@ -1,5 +1,12 @@
 import React, {useState, useRef, useEffect, useContext} from 'react';
-import {StyleSheet, View, ScrollView, Dimensions, Image} from 'react-native';
+import {
+  StyleSheet,
+  View,
+  ScrollView,
+  Dimensions,
+  Image,
+  Animated,
+} from 'react-native';
 import AuthContext from '../auth/AuthContext';
 
 // const images = [
@@ -20,6 +27,7 @@ const ImageCarousel = () => {
   const {carousel, loading} = useContext(AuthContext);
 
   const scrollRef = useRef(null);
+  const scrollX = React.useRef(new Animated.Value(0)).current;
 
   const images = carousel;
 
@@ -49,11 +57,23 @@ const ImageCarousel = () => {
 
   return (
     <View style={styles.container}>
-      <ScrollView
+      <Animated.ScrollView
         horizontal
         pagingEnabled
         onMomentumScrollEnd={uptSelectedIndex}
-        // onScroll={uptSelectedIndex}
+        onScroll={Animated.event(
+          [
+            {
+              nativeEvent: {
+                contentOffset: {
+                  x: scrollX,
+                },
+              },
+            },
+          ],
+          {useNativeDriver: false},
+        )}
+        showsHorizontalScrollIndicator={false}
         ref={scrollRef}>
         {images.map(caro => (
           // <Image key={img} source={{uri: img}} style={styles.carouselImage} />
@@ -64,18 +84,32 @@ const ImageCarousel = () => {
             style={styles.carouselImage}
           />
         ))}
-      </ScrollView>
+      </Animated.ScrollView>
       <View style={styles.circleContainer}>
-        {images.map((caro, i) => (
-          <View
-            key={caro.id}
-            style={[
-              styles.whiteCircle,
-              {opacity: i !== selectedIndex ? 0.5 : 1},
-              {width: i === selectedIndex ? 10 : 6},
-            ]}
-          />
-        ))}
+        {images.map((caro, i) => {
+          const inputRange = [(i - 1) * width, i * width, (i + 1) * width]; // next slide // current slide // prev slide
+
+          const opacity = scrollX.interpolate({
+            inputRange,
+            outputRange: [0.5, 1, 0.5],
+            extrapolate: 'clamp',
+          });
+          const w = scrollX.interpolate({
+            inputRange,
+            outputRange: [6, 10, 6],
+            extrapolate: 'clamp',
+          });
+          return (
+            <Animated.View
+              key={caro.id}
+              style={{
+                ...styles.whiteCircle,
+                width: w,
+                opacity,
+              }}
+            />
+          );
+        })}
       </View>
     </View>
   );
@@ -103,7 +137,6 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   whiteCircle: {
-    width: 6,
     height: 6,
     borderRadius: 3,
     margin: 5,

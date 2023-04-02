@@ -6,6 +6,9 @@ install! 'cocoapods', :deterministic_uuids => false
 
 target 'eShop' do
   config = use_native_modules!
+  use_frameworks! :linkage => :static
+  $RNFirebaseAsStaticFramework = true
+  
 
   # Flags change depending on the env values.
   flags = get_default_flags()
@@ -19,7 +22,6 @@ target 'eShop' do
     :app_path => "#{Pod::Config.instance.installation_root}/.."
   )
 
-  pod 'react-native-splash-screen', :path => '../node_modules/react-native-splash-screen'
 
   target 'eShopTests' do
     inherit! :complete
