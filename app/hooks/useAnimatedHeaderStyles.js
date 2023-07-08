@@ -46,7 +46,7 @@ const useAnimatedHeaderStyles = (animationSwitch, inputRef) => {
     return {
       display: inputDisplay.value,
       flexDirection: 'row',
-      width: inputWidth.value, // 80%
+      width: inputWidth.value, // 80% maybe
       position: 'absolute',
       right: '11%',
       justifyContent: 'flex-end',
