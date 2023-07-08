@@ -82,7 +82,7 @@ const useAnimatedHeaderStyles = (animationSwitch, inputRef) => {
       inputWidth.value = '85%';
       inputDisplay.value = 'flex';
       inputFieldpaddingX.value = 15;
-      recentSearchContainerHeight.value = height;
+      recentSearchContainerHeight.value = 0;
       inputRef.current?.focus();
     } else {
       inputRef.current?.blur();
