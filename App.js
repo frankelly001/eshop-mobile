@@ -46,7 +46,10 @@ const App = () => {
 
   return (
     <>
-      <StatusBar backgroundColor={colors.green} barStyle={'dark-content'} />
+      <StatusBar
+        backgroundColor={colors.grey_light}
+        barStyle={'dark-content'}
+      />
       <Store>
         <NavigationContainer ref={navigationRef} theme={navigationTheme}>
           <Host>
