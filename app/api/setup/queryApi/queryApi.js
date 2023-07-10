@@ -1,18 +1,41 @@
 import collectionRefs from '../collectionRefs';
 import {firestore} from '../config';
 
-const searchFields = {
+export const searchFields = {
   TITLE: 'title',
   CATEGORY: 'category.title',
   CATEGORY_GROUP: 'category.group.title',
   CATEGORY_GROUP_TYPE: 'category.group.type',
 };
 
+export const searchType = {
+  AllFIELDSEARCH: 'allFieldsSearch',
+  CATEGORYFIELDSEARCH: 'categoryFieldSearch',
+};
+
 // This is only for meant exact match
-const categoryFieldSearch = (categoryName, catSearchField) => {
+const categoryFieldSearch = ({catName, catGroupName, catGroupTypeName}) => {
+  const collectionRef = collectionRefs.productsCollectionRef;
+  let docRef = collectionRef;
+
+  if (catName) {
+    docRef = docRef.where(searchFields.CATEGORY, '==', catName);
+
+    if (catGroupName) {
+      docRef = docRef.where(searchFields.CATEGORY_GROUP, '==', catGroupName);
+
+      if (catGroupTypeName) {
+        docRef = docRef.where(
+          searchFields.CATEGORY_GROUP_TYPE,
+          '==',
+          catGroupTypeName,
+        );
+      }
+    }
+  }
+
   return new Promise((resolve, reject) => {
-    collectionRefs.productsCollectionRef
-      .where(catSearchField, '==', categoryName)
+    docRef
       .get()
       .then(snapshot => {
         const data = [];
@@ -50,7 +73,7 @@ function getUniqueListBy(arr, key) {
   return [...new Map(arr.map(item => [item[key], item])).values()];
 }
 
-const AllFieldsSearch = query => {
+const allFieldsSearch = query => {
   return new Promise((resolve, reject) => {
     singleFieldSearch(query, searchFields.TITLE)
       .then(querySnapShot1 => {
@@ -88,6 +111,6 @@ const AllFieldsSearch = query => {
 export default {
   searchFields,
   singleFieldSearch,
-  AllFieldsSearch,
+  allFieldsSearch,
   categoryFieldSearch,
 };

@@ -1,5 +1,6 @@
 import React, {useContext, useState} from 'react';
 import {StyleSheet, TouchableOpacity, View} from 'react-native';
+import {searchType} from '../api/setup/queryApi/queryApi';
 import AuthContext from '../auth/AuthContext';
 import AppText from '../components/AppText';
 import DeleteNotice from '../components/DeteteNotice';
@@ -24,7 +25,7 @@ const RecentlySearched = ({navigation}) => {
                 onPress={() =>
                   navigation.navigate(routes.SEARCHED, {
                     query,
-                    searchType: 'AllFieldsSearch',
+                    searchType: searchType.AllFIELDSEARCH,
                   })
                 }
                 style={{

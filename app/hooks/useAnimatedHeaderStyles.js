@@ -7,8 +7,6 @@ import {
   withTiming,
 } from 'react-native-reanimated';
 import colors from '../config/colors';
-import {hp, wp} from '../config/responsiveSize';
-
 const {height} = Dimensions.get('screen');
 const useAnimatedHeaderStyles = (animationSwitch, inputRef) => {
   const headerLeftTranlateX = useSharedValue(0);
@@ -67,6 +65,7 @@ const useAnimatedHeaderStyles = (animationSwitch, inputRef) => {
       zIndex: 99999,
       // position: 'absolute',
       // elevation: 10,
+      overflow: 'hidden',
       top: 0,
       bottom: 0,
       left: 0,

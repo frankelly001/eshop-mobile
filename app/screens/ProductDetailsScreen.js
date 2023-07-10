@@ -8,6 +8,7 @@ import {
   FlatList,
   TouchableOpacity,
   Pressable,
+  Animated,
 } from 'react-native';
 import AppButton from '../components/AppButton';
 import AppText from '../components/AppText';
@@ -34,10 +35,6 @@ const ProductDetailsScreen = ({navigation, route}) => {
   const [productId, setProductId] = useState(route.params);
   const {recentlyViewed, products, productsInCart, addToCart, addToRecentView} =
     useContext(AuthContext);
-
-  // const [product, setProduct] = useState({});
-  // const [productCategogies, setProductCategogies] = useState([]);
-  // const [quantityOrdered, setQuantityOrdered] = useState();
   const [selectedIndex, setSelectedIndex] = useState(0);
 
   const product = products.find(prod => prod.id === productId);
@@ -56,6 +53,7 @@ const ProductDetailsScreen = ({navigation, route}) => {
 
   const scrollView = useRef();
   const [value, setValue] = useState(1);
+  const scrollX = React.useRef(new Animated.Value(0)).current;
   const scrollRef = useRef(null);
 
   const checkRelatedItem = ({id}) => {
@@ -109,20 +107,26 @@ const ProductDetailsScreen = ({navigation, route}) => {
         <>
           <View style={styles.container}>
             <View style={[styles.imageContainer]}>
-              <ScrollView
+              <Animated.ScrollView
                 horizontal
                 pagingEnabled
                 onMomentumScrollEnd={uptSelectedIndex}
-                // onScroll={uptSelectedIndex}
+                onScroll={Animated.event(
+                  [
+                    {
+                      nativeEvent: {
+                        contentOffset: {
+                          x: scrollX,
+                        },
+                      },
+                    },
+                  ],
+                  {useNativeDriver: false},
+                )}
                 showsHorizontalScrollIndicator={false}
                 ref={scrollRef}>
                 {product.images.map((img, index) => (
-                  // <Image key={img} source={{uri: img}} style={styles.carouselImage} />
                   <TouchableOpacity
-                    // style={[
-                    //   styles.selectImage,
-                    //   {opacity: i !== selectedIndex ? 0.3 : 1},
-                    // ]}
                     key={img}
                     onPress={() =>
                       navigation.navigate(routes.IMAGEVIEW, {
@@ -138,24 +142,43 @@ const ProductDetailsScreen = ({navigation, route}) => {
                     />
                   </TouchableOpacity>
                 ))}
-              </ScrollView>
+              </Animated.ScrollView>
               <View style={styles.selectionContainer}>
-                {product.images.map((img, i) => (
-                  <Pressable
-                    style={[
-                      styles.selectImage,
-                      {opacity: i !== selectedIndex ? 0.3 : 1},
-                    ]}
-                    key={img}
-                    onPress={() => setSelectedIndex(i)}>
-                    <Image
-                      resizeMode="stretch"
-                      key={img}
-                      source={{uri: img}}
-                      style={{width: '100%', height: '100%'}}
-                    />
-                  </Pressable>
-                ))}
+                {product.images.map((img, i) => {
+                  const inputRange = [
+                    (i - 1) * width,
+                    i * width,
+                    (i + 1) * width,
+                  ]; // next slide // current slide // prev slide
+                  const scale = scrollX.interpolate({
+                    inputRange,
+                    outputRange: [1, 1.1, 1],
+                    extrapolate: 'clamp',
+                  });
+                  const opacity = scrollX.interpolate({
+                    inputRange,
+                    outputRange: [0.3, 1, 0.3],
+                    extrapolate: 'clamp',
+                  });
+
+                  return (
+                    <Pressable key={img} onPress={() => setSelectedIndex(i)}>
+                      <Animated.View
+                        style={{
+                          ...styles.selectImage,
+                          opacity,
+                          transform: [{scale}],
+                        }}>
+                        <Image
+                          resizeMode="stretch"
+                          key={img}
+                          source={{uri: img}}
+                          style={{width: '100%', height: '100%'}}
+                        />
+                      </Animated.View>
+                    </Pressable>
+                  );
+                })}
               </View>
             </View>
             <View style={{padding: 12}}>

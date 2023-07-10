@@ -8,7 +8,7 @@ import ActivityIndicator from '../components/ActivityIndicator';
 import colors from '../config/colors';
 import ProductsLoader from '../components/SkeletonLoader/ProductsLoader';
 import collectionRefs from '../api/setup/collectionRefs';
-import queryApi from '../api/setup/queryApi/queryApi';
+import queryApi, {searchType} from '../api/setup/queryApi/queryApi';
 import {useApi} from '../hooks/useApi';
 import {showToast} from '../components/AppToast/showToast';
 import AppText from '../components/AppText';
@@ -27,8 +27,13 @@ const SearchResultScreen = ({navigation, route}) => {
 
   useEffect(() => {
     request(
-      route.params.query,
-      queryApi.searchFields[route.params?.searchField],
+      route.params.searchType === searchType.AllFIELDSEARCH
+        ? route.params.query
+        : {
+            catName: route?.params?.catName,
+            catGroupName: route?.params?.catGroupName,
+            catGroupTypeName: route?.params?.catGroupTypeName,
+          },
     ).then(data => {
       setSearchedProduct(data);
     });

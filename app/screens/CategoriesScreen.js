@@ -73,7 +73,12 @@ const CategoriesScreen = ({navigation}) => {
             style={{flex: 1}}
             showsVerticalScrollIndicator={false}
             keyExtractor={(key, i) => key?.title + i}
-            renderItem={CategoryGroupCard}
+            renderItem={({item, index}) => (
+              <CategoryGroupCard
+                item={item}
+                categoryName={selectedCategory?.title}
+              />
+            )}
           />
         ) : (
           <View style={styles.noProductCatView}>

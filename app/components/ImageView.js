@@ -8,6 +8,7 @@ import {
   View,
 } from 'react-native';
 import colors from '../config/colors';
+import {wp} from '../config/responsiveSize';
 import ReactNativeZoomableView from './ReactNativeZoomableView';
 const {height} = Dimensions.get('screen');
 const ImageView = ({route}) => {
@@ -20,20 +21,24 @@ const ImageView = ({route}) => {
         backgroundColor: colors.grey_light,
         height: '100%',
         backfaceVisibility: 'visible',
+        alignItems: 'center',
+        justifyContent: 'center',
       }}>
-      <ReactNativeZoomableView
-        maxZoom={2}
-        minZoom={1}
-        zoomStep={0.5}
-        initialZoom={1}
-        bindToBorders={true}
-        captureEvent={true}>
-        <Image
-          resizeMode="contain"
-          source={{uri: imageUris[selectedIndex]}}
-          style={{width: '100%', height: '100%'}}
-        />
-      </ReactNativeZoomableView>
+      <View style={{width: wp(400), height: wp(400)}}>
+        <ReactNativeZoomableView
+          maxZoom={2}
+          minZoom={1}
+          zoomStep={0.5}
+          initialZoom={1}
+          bindToBorders={true}
+          captureEvent={true}>
+          <Image
+            resizeMode="contain"
+            source={{uri: imageUris[selectedIndex]}}
+            style={{width: '100%', height: '100%'}}
+          />
+        </ReactNativeZoomableView>
+      </View>
       <View style={styles.selectionContainer}>
         {imageUris.map((img, i) => (
           <Pressable

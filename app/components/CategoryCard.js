@@ -14,32 +14,36 @@ import {fontSz, hp, wp} from '../config/responsiveSize';
 import AppText from './AppText';
 import navigation from '../navigation/rootNavigation';
 import routes from '../navigation/routes';
+import {searchFields, searchType} from '../api/setup/queryApi/queryApi';
 
 const img =
   'https://images.unsplash.com/photo-1580910051074-3eb694886505?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxfDB8MXxyYW5kb218MHx8cGhvbmV8fHx8fHwxNjU4NDkzODI1&ixlib=rb-1.2.1&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=1080';
 
-const groupCard = ({item}) => (
-  <TouchableOpacity
-    key={item}
-    style={styles.groupTypeContainer}
-    onPress={() =>
-      navigation.navigate(routes.SEARCHED, {
-        query: item,
-        searchType: 'categoryFieldSearch',
-        searchField: 'CATEGORY_GROUP_TYPE',
-      })
-    }>
-    <View style={styles.imageContainer}>
-      <Image style={styles.image} resizeMode="stretch" source={{uri: img}} />
-    </View>
-    <AppText numberOfLines={1} style={styles.typeTitle}>
-      {item}
-    </AppText>
-  </TouchableOpacity>
-);
+const CategoryGroupTypeCard = ({item, categoryName, categoryGroupName}) => {
+  return (
+    <TouchableOpacity
+      key={item}
+      style={styles.groupTypeContainer}
+      onPress={() =>
+        navigation.navigate(routes.SEARCHED, {
+          query: item,
+          catName: categoryName,
+          catGroupName: categoryGroupName,
+          catGroupTypeName: item,
+          searchType: searchType.CATEGORYFIELDSEARCH,
+        })
+      }>
+      <View style={styles.imageContainer}>
+        <Image style={styles.image} resizeMode="stretch" source={{uri: img}} />
+      </View>
+      <AppText numberOfLines={1} style={styles.typeTitle}>
+        {item}
+      </AppText>
+    </TouchableOpacity>
+  );
+};
 
-const CategoryGroupCard = ({item}) => {
-
+const CategoryGroupCard = ({item, categoryName}) => {
   return (
     <View key={item.title} style={styles.container}>
       <View style={styles.titleContainer}>
@@ -48,8 +52,9 @@ const CategoryGroupCard = ({item}) => {
           onPress={() =>
             navigation.navigate(routes.SEARCHED, {
               query: item.title,
-              searchType: 'categoryFieldSearch',
-              searchField: 'CATEGORY_GROUP',
+              catName: categoryName,
+              catGroupName: item.title,
+              searchType: searchType.CATEGORYFIELDSEARCH,
             })
           }>
           <AppText style={styles.clickable}>See all</AppText>
@@ -60,7 +65,13 @@ const CategoryGroupCard = ({item}) => {
         showsHorizontalScrollIndicator={false}
         data={item.types}
         keyExtractor={key => key}
-        renderItem={groupCard}
+        renderItem={({item: groupItem}) => (
+          <CategoryGroupTypeCard
+            item={groupItem}
+            categoryName={categoryName}
+            categoryGroupName={item?.title}
+          />
+        )}
         contentContainerStyle={styles.contentContainer}
       />
 

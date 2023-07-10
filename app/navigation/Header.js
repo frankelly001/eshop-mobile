@@ -24,22 +24,17 @@ import routes from './routes';
 import {wp, fontSz, hp} from '../config/responsiveSize';
 import AppText from '../components/AppText';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import Octicons from 'react-native-vector-icons/Octicons';
 import Animated from 'react-native-reanimated';
 import AppTextInput from '../components/AppTextInput';
 import useAnimatedHeaderStyles from '../hooks/useAnimatedHeaderStyles';
 import fonts from '../config/fonts';
-import {authStorageKeys, storeUserData} from '../api/storage/authStorage';
-import queryApi from '../api/setup/queryApi/queryApi';
 import Icon, {Icons} from '../components/Icons';
 import {useFocusEffect} from '@react-navigation/native';
+import {searchType} from '../api/setup/queryApi/queryApi';
 
 const Header = ({navigation, options, route}) => {
   const {numOfCartItems, recentQueries, addToRecentQuery} =
     useContext(AuthContext);
-  // const [disableBackBtn, setDisableBackBtn] = useState(true);
-  // const [disableHeaderRight, setDisableHeaderRight] = useState(true);
-  // const [backIcon, setBackIcon] = useState('arrow-left');
   const [searchToggle, setSearchToggle] = useState(false);
   const [query, setQuery] = useState('');
   const [backPress, setBackPress] = useState(1);
@@ -104,7 +99,7 @@ const Header = ({navigation, options, route}) => {
 
       navigation.navigate(routes.SEARCHED, {
         query: newQuery,
-        searchType: 'AllFieldsSearch',
+        searchType: searchType.AllFIELDSEARCH,
       });
       setQuery('');
     }
